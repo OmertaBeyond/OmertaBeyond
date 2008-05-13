@@ -8,29 +8,7 @@
 // @namespace      omertabeyond.com
 // @identifier     http://www.omertabeyond.com/newbeyond.user.js
 // @description    Omerta Beyond 1.6.2 (The greatest addon for Omerta available!)
-// @include        http://www.omertabeyond.com/*
-// @include        http://barafranca.com/*
-// @include        http://www.barafranca.com/*
 // ==/UserScript==
-//
-// --------------------------------------------------------------
-//   Most parts of this script is under GPL licence except those
-// that we have permission to use. All 3rd party code was and will 
-// be properly credited.
-// --------------------------------------------------------------
-//
-// This script was made for our own personal use but we decided
-// to make it public because of all the support we got. You are
-// welcome to use this script for your own use, you may edit the
-// source but make sure you tell us what you did so we can maybe
-// use it ourselves, and of course give you the credit :)
-//
-// --------------------------------------------------------------
-//
-// We would like to thank to all our users and to all who reported
-// bugs and gave ideas for future releases.
-//
-// ---------------------------------------------------------------
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.6.2';
@@ -1710,7 +1688,7 @@ var GM_update = function(title, scriptName, version, updateUrl, versionUrl) {
 					answer = confirm("Update " + scriptName + " to version " + current.join(".") + "?");
 					if(answer) {	GM_openInTab(updateUrl); }
 				} else {
-					alert("Beyond " + version + " is up to date")
+					alert("Beyond " + ScriptVersion + " is up to date")
 				}
 			}
 		}
