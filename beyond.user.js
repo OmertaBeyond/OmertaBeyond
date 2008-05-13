@@ -215,8 +215,8 @@ if(lh == 'http://www.omertabeyond.com/beyond/prefs.html' + ls ) {
 			if(Math.round((i+1)/11)==((i+1)/11)) { string += '</tr>'; }
 		}
 		string += '<tr><td bgcolor="#ffffff" id="colorPickerSelectedColor" colspan="9" style="background-color: rgb(0, 0, 102);"></td><td align="center" id="colorPickerSelectedColorValue" colspan="9">FFFFFF</td></tr></tbody></table></td></tr></tbody></table></div>';
-
-		xpath("/html/body").snapshotItem(0).innerHTML = xpath("/html/body").snapshotItem(0).innerHTML + string;
+    
+    $X('/html/body').innerHTML = $X('/html/body').innerHTML + string;
 			
 		var prefs = decbin(GM_getValue('prefs', 0),maxbit);
 		if(ls.length > 1) {
@@ -773,7 +773,7 @@ if(dlp + dls == '/BeO/webroot/index.php?module=Crimes') {
                 body = xpath("//html/body").snapshotItem(0).innerHTML;
                 if (body.search(/Do a crime/i) != -1) {
 
-                    function gsPATH(path) {
+                  function gsPATH(path) {
                       var r = document.evaluate(path, document, null, 6, null);
                       var r = r.snapshotItem(0).innerHTML;
                       return r.replace(/%| |/g,'');
@@ -1665,7 +1665,7 @@ var comlogoxpath = "//img[contains(@src, 'logo0.gif')] | //img[contains(@src, 'o
 $x(comlogoxpath).forEach(function(node){node.src = comlogo});
 
 //---------------- Title changer ----------------
-if((dlp == '/' || dlp == '/index.php' || dlp == '/game.php') && prefs[11] && lh.indexOf('beyond') == -1) document.title = "Omerta (COM)";
+if((dlp == '/' || dlp == '/index.php' || dlp == '/game.php') && prefs[11] && lh.indexOf('beyond') == -1) document.title = "Omerta Beyond 1.6.1 (COM)";
 
 //---------------- Update Notifier --------------
 var GM_update = function(title, scriptName, version, updateUrl, versionUrl) {
