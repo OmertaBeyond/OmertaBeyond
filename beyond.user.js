@@ -653,8 +653,7 @@ if(dlp == '/bullets2.php'){
 			else { 
           getTAG('input')[0].value = str;
           getTAG('input')[1].focus(); 
-      }
-			
+      }	
 		
 			var xpath = "//html/body/center[2]/table/tbody/tr[3]/td";
 		  var results = document.evaluate(xpath, document, null, 7, null);
@@ -758,9 +757,7 @@ if(dlp == '/messages.php' && (dls == '' || dls.indexOf('action=delete') !=-1)) {
 		}
 	}
  }
-
 }
-
 
 //---------------- Crime page ----------------
 if(dlp + dls == '/BeO/webroot/index.php?module=Crimes') {
@@ -830,6 +827,7 @@ if(dlp + dls == '/BeO/webroot/index.php?module=Crimes&action=docrime' && prefs[1
 		setTimeout("history.back()",1000);
 	}
 }
+
 //----------------- Cars Page --------------------
 if(dlp + dls == '/BeO/webroot/index.php?module=Cars') {
 	//var x = document.evaluate("/html/body", document, null, 7, null);
@@ -1164,12 +1162,6 @@ if(dlp + dls == '/compress.php?r=statistics') {
 	}
 }
 
-//---------------- users online ---------------
-if(dlp + dls == '/compress.php?r=usersonline') {	
-   //move Family Boss, Bullet factory owner or casino owner, User Group, Translator, Times Member to their own lines
-}
-
-
 //---------------- Append Beyond's changelog to Omerta's ----------------
 if(dlp == '/changelog.php') {
 		$X('/html/body').innerHTML = "<table class='thinline' width='95%' rules='none' cellspacing='0' cellpadding='2'><tbody><tr><td class='tableheader' align='center' colspan='4'><b>Omerta Beyond's Changelog</b></td></tr><tr></tr><td colspan='3' bgcolor='black' height='1'></td></tr><tr bgcolor='white'><td width='10%'><b>Version</b></td><td width='90%'><b>Change</b></td></tr><tr><td colspan='3' bgcolor='black' height='1'></td></tr></tbody></table><br><br><br>" + $X('/html/body').innerHTML;	
@@ -1181,9 +1173,7 @@ if(dlp == '/credits.php') {
 }
 
 // ----------------- Clean up of index page -----------
-//if(dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') {
-
-if(/\/(index|game(-login|-recover-password))\.php/.test(document.location.pathname)) {
+if(dlp == '/' || (/\/(index|game(-login|-recover-password))\.php/.test(document.location.pathname))) {
   //remove language bar
   del("/html/body/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table");
   //remove fav/share bar
@@ -1373,27 +1363,7 @@ if(prefs[10]) {
         GM_setValue('bloodType',bloodType);
       }
       if(dlp == '/bloodbank.php'){ //fill the missing blood into box
-      /*
-        if(GM_getValue('bloodType') == 'A') { compare A and 0 }
-        if(GM_getValue('bloodType') == 'B') { compare B and 0 }
-        if(GM_getValue('bloodType') == 'AB') { compare A, B, AB and 0 }
-        if(GM_getValue('bloodType') == '0') { select 0 }
-      
-        var typeA = $X('/html/body/table/tbody/tr[2]/td/blockquote/font/table/tbody/tr[3]/td[2]/font').textContent.replace('\$','');
-        var typeB = $X('/html/body/table/tbody/tr[2]/td/blockquote/font/table/tbody/tr[3]/td[3]/font').textContent.replace('\$','');
-        var typeAB = $X('/html/body/table/tbody/tr[2]/td/blockquote/font/table/tbody/tr[3]/td[4]/font').textContent.replace('\$','');
-        var type0 = $X('/html/body/table/tbody/tr[2]/td/blockquote/font/table/tbody/tr[3]/td[5]/font').textContent.replace('\$','');
-   
-        console.log(typeA)
-        console.log(typeB)
-        console.log(typeAB)
-        console.log(type0)
-    */   
-       getTAG('input')[0].value = GM_getValue('missingHealth');
-
-
-        
-            
+       getTAG('input')[0].value = GM_getValue('missingHealth');      
       }
 }
 
@@ -1555,6 +1525,7 @@ if(prefs[10]) {
 		getTAG('input')[18].focus();
 	}
 }
+
 //-------------- OBAY thingie ---------------
 if(prefs[21] && dlp == '/obay.php' && $X('/html/body').innerHTML.indexOf('<table') != -1)
 	if(dls.indexOf('specific') == -1 ) {
@@ -1739,11 +1710,11 @@ var GM_update = function(title, scriptName, version, updateUrl, versionUrl) {
 					answer = confirm("Update " + scriptName + " to version " + current.join(".") + "?");
 					if(answer) {	GM_openInTab(updateUrl); }
 				} else {
-					alert("Beyond is up to date")
+					alert("Beyond " + version + " is up to date")
 				}
 			}
 		}
 		//start
 		this.init();
 	}
-GM_update('OBUpdate', 'Omerta Beyond', '1.6.1', 'http://www.omertabeyond.com', 'http://www.omertabeyond.com/version.txt');
+GM_update('OBUpdate', 'Omerta Beyond', '1.6.1', 'http://www.omertabeyond.com/update.php', 'http://www.omertabeyond.com/version.txt');
