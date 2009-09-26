@@ -16,23 +16,23 @@
 // @include			http://barafranca.nl/*
 // @exclude			http://gamewiki.barafranca.com/*
 // @exclude			http://ircwiki.barafranca.com/*
-// @require			http://www.omertabeyond.com/omerta3/scripts/libs.js
-// @require			http://www.omertabeyond.com/omerta3/scripts/lang.js
-// @resource	color		http://www.omertabeyond.com/omerta3/scripts/color.js
-// @resource	css		http://www.omertabeyond.com/omerta3/scripts/beyond.css
-// @resource	trash		http://www.omertabeyond.com/omerta3/img/del.png
-// @resource	colorpicker	http://www.omertabeyond.com/omerta3/img/colorpicker.gif
-// @resource	comLogo		http://www.omertabeyond.com/omerta3/img/logo-com.png
-// @resource	nlLogo		http://www.omertabeyond.com/omerta3/img/logo-nl.png
-// @resource	buttonMenu	http://www.omertabeyond.com/omerta3/img/menu.png
-// @resource	buttonKey	http://www.omertabeyond.com/omerta3/img/key.png
-// @resource	buttonReset	http://www.omertabeyond.com/omerta3/img/reset.png
-// @resource	favoriteIco	http://www.omertabeyond.com/omerta3/img/favicon.png
-// @resource	updateIco	http://www.omertabeyond.com/omerta3/img/updateicon.png
-// @resource	brcGear		http://www.omertabeyond.com/omerta3/img/brcgear.png
-// @resource	deleteIcon	http://www.omertabeyond.com/omerta3/img/deleteicon.png
-// @resource	reply		http://www.omertabeyond.com/omerta3/img/reply.png
-// @resource	loading		http://www.omertabeyond.com/omerta3/img/loading.gif
+// @require			http://omertabeyond.googlecode.com/svn/scripts/libs.js
+// @require			http://omertabeyond.googlecode.com/svn/scripts/lang.js
+// @resource	color		http://omertabeyond.googlecode.com/svn/scripts/color.js
+// @resource	css		http://omertabeyond.googlecode.com/svn/scripts/beyond.css
+// @resource	trash		http://omertabeyond.googlecode.com/svn/img/del.png
+// @resource	colorpicker	http://omertabeyond.googlecode.com/svn/img/colorpicker.gif
+// @resource	comLogo		http://omertabeyond.googlecode.com/svn/img/logo-com.png
+// @resource	nlLogo		http://omertabeyond.googlecode.com/svn/img/logo-nl.png
+// @resource	buttonMenu	http://omertabeyond.googlecode.com/svn/img/menu.png
+// @resource	buttonKey	http://omertabeyond.googlecode.com/svn/img/key.png
+// @resource	buttonReset	http://omertabeyond.googlecode.com/svn/img/reset.png
+// @resource	favoriteIco	http://omertabeyond.googlecode.com/svn/img/favicon.png
+// @resource	updateIco	http://omertabeyond.googlecode.com/svn/img/updateicon.png
+// @resource	brcGear		http://omertabeyond.googlecode.com/svn/img/brcgear.png
+// @resource	deleteIcon	http://omertabeyond.googlecode.com/svn/img/deleteicon.png
+// @resource	reply		http://omertabeyond.googlecode.com/svn/img/reply.png
+// @resource	loading		http://omertabeyond.googlecode.com/svn/img/loading.gif
 // ==/UserScript==
 
 //---------------- (Omerta==0)?refresh:go ----------------
