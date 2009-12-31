@@ -1,0 +1,145 @@
+/*
+// -------------------------------------------------------------------------------------
+//
+// This file contains some basic css style we use for Project Omerta Beyond
+//
+// Changing these values are at your own risk. If you make bug changes or bugfixes,
+// please inform us too so we can make any changes if we think are necesary.
+//
+// -------------------------------------------------------------------------------------
+*/
+
+/* vers: 1.9.2.43 */
+
+
+/*	@Smart Fampage, we use style attribute to check for online status, thus add style by class	*/
+
+.top {
+	text-decoration: underline;
+}
+.obj {
+	font-style: italic;
+}
+
+/*	@Custom menu	*/
+
+#beyondadd {
+	padding-left: 5px;
+	width: 20px;
+	background: #808F8F;
+	BORDER-BOTTOM: #707f7f 1px solid;
+}
+#beyondadd input {
+	width: 20px;
+}
+a.menuOmertaBeyond {
+	background-color: #808f8f;
+	border-bottom: 1px solid #707f7f;
+	color: #fff;
+	display: block;
+	font-size: 11px;
+	margin: 0;
+	padding: 5px 5px;
+	text-decoration: none;
+}
+a.menuOmertaBeyond:hover {
+	background-color: #606f6f;
+	color: #dddd00;
+	text-decoration: none;
+}
+#save_button {
+	width: 70px;
+	height: 22px;
+	font-weight: bold;
+}
+
+/*	@Nick-Reader	*/
+
+#NRstatus {
+	background-color: #3F505F;
+	color: #FFFFFF !important;
+	text-decoration: none;
+	padding: 5px;
+	width: 150px;
+	border: 2px double gray;
+	opacity: .90;
+	position: fixed;
+	display: block;
+	-moz-border-radius: 5px;
+}
+.NRInfo {
+	background-color: #3F505F;
+	color: #FFFFAA !important;
+	text-decoration: none;
+	padding: 5px;
+	width: 300px;
+	border: 2px double gray;
+	opacity: .90;
+	position: absolute;
+	display: block;
+	-moz-border-radius: 5px;
+}
+#NRtable {
+	color: white !important;
+	-moz-border-radius: 5px;
+}
+
+/*	@Jail Page Footer	*/
+
+body > div#footerwrap {
+	position: fixed;
+}
+div#footerwrap {
+	bottom: 0;
+	height: 106px;
+	position: absolute;
+	width: 698px;
+}
+div#footer {
+	color: #000000;
+	height: 106px;
+	margin: 0 auto;
+	width: 598px;
+}
+#footerwrap #footer td {
+	color: #000000;
+}
+#footerwrap #footerr td a {
+	color: #000000;
+}
+#footerwrap #footer td a:hover {
+	text-decoration: underline;
+}
+
+/*	@Preferences page	*/
+
+#cat {
+	background-color: #809999;
+	cursor: pointer;
+}
+
+/* @Global stuff */
+
+.green {
+	color: #008000 !important;
+}
+.red {
+	color: #FF0000 !important;
+}
+.orange {
+	color: #FFA500 !important;
+}
+.blue {
+	color: #0000FF !important;
+}
+
+/*	@Garage	*/
+.heistCar {
+	background-color: #C0C0C0;
+}
+.ocCar {
+	background-color: #AAAAAA;
+}
+.mocCar {
+	background-color: #999999;
+}
