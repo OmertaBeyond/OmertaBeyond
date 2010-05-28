@@ -1,0 +1,199 @@
+/*
+// -------------------------------------------------------------------------------------
+//
+// This file contains some basic css style we use for Project Omerta Beyond
+//
+// Changing these values are at your own risk. If you make bug changes or bugfixes,
+// please inform us too so we can make any changes if we think are necesary.
+//
+// -------------------------------------------------------------------------------------
+
+// vers: 1.9.3.43
+
+/*
+$Rev$:  Revision of last commit
+$Author$:  Author of last commit
+$Date$:  Date of last commit
+*/
+
+// @Smart Fampage, we use style attribute to check for online status, thus add style by class	*/
+
+.menuLink,[class="menuLink rightMenuLink"] a,.story a {
+color:#FFF !important
+}
+
+.menuLink:hover,[class="menuLink rightMenuLink"] a:hover,.story a:hover {
+color:#DD0 !important
+}
+
+.top {
+text-decoration:underline
+}
+
+.obj {
+font-style:italic
+}
+
+.loginHL {
+height:24px;
+vertical-align:middle;
+-moz-border-radius:4px
+}
+
+[type="text"].loginHL,[type="password"].loginHL {
+width:200px
+}
+
+[type="submit"].loginHL:active {
+color:#FF0
+}
+
+.loginHL:focus {
+border-color:#FF0
+}
+
+/*	@Custom menu	*/
+#beyondadd {
+padding-left:5px;
+width:20px;
+background-color:transparent
+}
+
+#beyondadd input {
+width:20px
+}
+
+#beyondadd input:focus {
+border:2px solid #EE0
+}
+
+a.menuOmertaBeyond {
+background-color:transparent;
+color:#fff;
+display:block;
+font-size:11px;
+text-decoration:none;
+margin:0;
+padding:5px
+}
+
+a.menuOmertaBeyond:hover {
+background-color:transparent;
+color:#dd0;
+text-decoration:none
+}
+
+#save_button {
+background-color:#0F202F;
+border:1px solid #000;
+color:#EE0;
+font-size:9px;
+font-weight:700;
+margin-bottom:4px;
+width:70px;
+height:22px;
+-moz-border-radius:5px
+}
+
+#save_button:hover {
+border-color:#EE0
+}
+
+/*	@Nick-Reader	*/
+#NRstatus {
+background-color:#3F505F;
+color:#fff !important;
+text-decoration:none;
+width:150px;
+border:2px double gray;
+opacity:.90;
+position:fixed;
+display:block;
+-moz-border-radius:5px;
+padding:5px
+}
+
+.NRInfo {
+background-color:#3F505F;
+color:#FFA !important;
+text-decoration:none;
+width:300px;
+border:2px double gray;
+opacity:.90;
+position:absolute;
+display:block;
+-moz-border-radius:5px;
+padding:5px
+}
+
+#NRtable {
+color:#FFF !important;
+-moz-border-radius:5px
+}
+
+/*	@Jail Page Footer	*/
+body > div#footerwrap {
+position:fixed
+}
+
+div#footerwrap {
+bottom:0;
+height:106px;
+position:absolute;
+width:698px
+}
+
+div#footer {
+color:#222;
+height:106px;
+width:598px;
+margin:0 auto
+}
+
+#footerwrap #footer td {
+color:#222
+}
+
+#footerwrap #footerr td a {
+color:#222
+}
+
+#footerwrap #footer td a:hover {
+text-decoration:underline
+}
+
+/*	@Preferences page	*/
+#cat {
+background-color:#809999;
+cursor:pointer
+}
+
+/* @Global stuff */
+.green {
+color:green !important
+}
+
+.red {
+color:red !important
+}
+
+.orange {
+color:orange !important
+}
+
+.blue {
+color:#00F !important
+}
+
+/*	@Garage	*/
+.heistCar {
+background-color:silver
+}
+
+.ocCar {
+background-color:#AAA
+}
+
+.mocCar {
+background-color:#999
+}
