@@ -1182,7 +1182,7 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 			item.href = news[i][0];
 			item.setAttribute('style','font-size: 11px !important;');//manuall override to make sure it keeps font-size
 			if(item.href.search('barafranca')==-1) {
-				item.parentNode.parentNode.setAttribute('style','background:url(\''+getResource('finfavi')+'\') no-repeat 90% 20%;');
+				item.parentNode.parentNode.setAttribute('style','background:url(\''+GM_getResourceURL('finfavi')+'\') no-repeat 90% 20%;');
 			}
 			if(news[i][1].search(lang.login[2])!=-1 && lang.version=='_nl'){
 				item.setAttribute('target', 'main');
