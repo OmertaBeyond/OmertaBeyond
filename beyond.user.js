@@ -129,7 +129,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '43';
+var ScriptSubVersion = '44';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1593,7 +1593,22 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 
 		var status = $X('//span[@id="status"]');
 		var alive = (status.innerHTML.indexOf(lang.profile[3])==-1);//alive/dead
-
+		
+		if (status.innerHTML == lang.lastontime[0]) { // show last online time on profile
+			status.innerHTML = 'hoi';
+			GM_xmlhttpRequest({
+				method: 'GET',
+				url: 'http://rix.omertabeyond.com/laston.xml.php?v='+lang.version.replace('_','')+'&ing='+$X('//span[@id="username"]').innerHTML,
+				headers: {'User-agent': ScriptName + ' ' + ScriptVersion + '.'+ ScriptSubVersion, 'Accept': 'application/xml,text/xml'},
+				onload: function (resp) {
+					status.innerHTML = 'hoi2';
+					var parser = new DOMParser();
+					var dom = parser.parseFromString(resp.responseText, "application/xml");
+					status.innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
+				}
+			});
+		}
+		
 		if(prefs[30]){
 			$Del('//*[@name="forumPosts"]');
 		}
@@ -2377,9 +2392,19 @@ if (dls == '?module=Spots' && prefs[34]) {
 			var protnum = getID('jsprogbar_div_protection_'+id).innerHTML; // the actual % of protection
 			var prot = $x('//table')[((y * 5) + 1)].innerHTML
 			prot = prot.replace('<div id="jsprogbar_div_protection_'+id+'" style="font-size: smaller; height: 15px; overflow: hidden; text-align: center; position: absolute; width: 100px; color: rgb(255, 255, 255);">'+protnum+'</div>', '<div id="jsprogbar_div_protection_'+id+'" style="text-align:center; position:absolute; width:100px;"><font color="#000">'+protnum+'%</font></div>');
-
+			var rpform = '';
+			var rex = new RegExp('\\(([\\w\\s]+)\\)');
+			var rpfam = owner.match(rex);
+			if (rpfam != null) {
+				if (rpfam[1] != getValue('family', '')) {
+					rpform = '<form name="startraid" method="post" style="display:inline;" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
+				}
+			}
+			else {
+				rpform = '<form name="startraid" method="post" style="display:inline;" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
+			}
 			//parsing everything
-			divdump += '<tr height="22px"><td style="padding-left:5px;">'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?page=user&nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px;">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px;"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center;">'+time+'</td><td style="text-align:center;"><form name="startraid" method="post" style="display:inline;" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form></td></tr>';
+			divdump += '<tr height="22px"><td style="padding-left:5px;">'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?page=user&nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px;">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px;"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center;">'+time+'</td><td style="text-align:center;">'+rpform+'</td></tr>';
 		}
 		divdump += '</table>';
 		div.innerHTML = divdump;
@@ -2394,17 +2419,29 @@ if (dls == '?module=Spots' && prefs[34]) {
 		c.appendChild(div);
 		db.appendChild(c);
 
-		getID('raidpagebullets').addEventListener('click', function() {
+		getID('raidpagebullets').addEventListener('keyup', function() {
 			for (y = 1; y <= am; y+=1) {
-				getELNAME('bullets')[y].value = getID('raidpagebullets').value;
+				if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
 			}
 		}, true);
+		
+		if (getID('raidpagebullets').value != '') {
+			for (y = 1; y <= am; y+=1) {
+				if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
+			}
+		}
 
-		getID('raidpagedriver').addEventListener('click', function() {
+		getID('raidpagedriver').addEventListener('keyup', function() {
 			for (y = 1; y <= am; y+=1) {
-				getELNAME('driver')[y].value = getID('raidpagedriver').value;
+				if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = getID('raidpagedriver').value; }
 			}
 		}, true);
+		
+		if (getID('raidpagedriver').value != '') {
+			for (y = 1; y <= am; y+=1) {
+				if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = getID('raidpagedriver').value; }
+			}
+		}
 	}
 }
 
@@ -2967,7 +3004,7 @@ if (dlp == '/scratch.php' && prefs[32]) {
 	} else {
 		var profit = "$"+commafy(monin - monout);
 	}
-	var ppk = (monout - monin) / bullets;
+	var ppk = Math.round(((monout - monin) / bullets) * 100000) / 100000;
 	if (isNaN(ppk) || bullets == 0) {
 		ppk = 0;
 	}
@@ -2988,13 +3025,13 @@ if (dlp == '/scratch.php' && prefs[32]) {
 	db.appendChild(div);
 
 	if (on == 1) { //Scratcher Active
-		/*if (db.innerHTML.indexOf('Sorry, but 10 per minute is enough.') != 1) {
-			msec = rand(16000, 21400);
-			var t = setTimeout(function () { document.location.reload(true); }, msec);
-		} else if (db.innerHTML.indexOf('<h1>503 Service Unavailable</h1>') != 1) {
+		if (db.innerHTML.indexOf('Sorry, but 10 per minute is enough.') != -1) {
+			msec = rand(8000, 13400);
+			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
+		} else if (hOne == '504 Gateway Time-out' || hOne == '502 Bad Gateway' || hOne == '503 Service Unavailable' || hOne == '500 Internal Server Error') {
 			msec = rand(800, 1600);
-			//reload
-		} else {*///doesn't work yet
+			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
+		} else {
 			msec = rand(1800, 2400);
 			if (db.innerHTML.indexOf('color="red"') != -1 && getELNAME('codescratch')[0] != null) {
 				setValue('unopened', 1);
@@ -3011,7 +3048,7 @@ if (dlp == '/scratch.php' && prefs[32]) {
 					var t = setTimeout(function () { getELNAME('scratch')[0].click(); }, msec);
 				}
 			}
-		//}
+		}
 	}
 
 	getID('resetscratcher').addEventListener('click', function() {
@@ -3056,7 +3093,7 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 	if (btbullets == 0) {
 		btdolpbul = 0;
 	} else {
-		btdolpbul = (btmoney / btbullets).toFixed(2);
+		btdolpbul = Math.round((btmoney / btbullets) * 100) / 100;
 	}
 	var div = cEL('div');
 	div.id = 'btracker';
@@ -3070,6 +3107,79 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 		setValue('btbullets', 0);
 		setValue('btmoney', 0);
 	}, true);
+}
+
+//---------------- PokerTracker ----------------
+if (dls == '?module=Poker' || dls == '?module=Poker&action=actionChooser' || dls == '?module=Poker&action=') {//pref needed
+	if (db.innerHTML.indexOf('<img src="/static/images/game/casino/cards') != -1) {//game active
+		var ptgplay = getValue('ptgplay', 0);
+		var ptspent = getValue('ptspent', 0);
+		var ptgwon = getValue('ptgwon', 0);
+		var ptmwon = getValue('ptmwon', 0);
+		var ptoldbet = getValue('ptoldbet', 0);
+		var ptself = getValue('nick', '');
+		var str = db.innerHTML.replace(',', '');
+		if (db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[1]) != -1) {// game started
+			setValue('ptoldbet', 0);
+			ptoldbet = 0;
+			ptgplay += 1; //games played +1;
+			setValue('ptgplay', ptgplay);
+			var rex = new RegExp('<td><li><a href="/user.php\\?nick=', 'g');
+			var amplayers = (db.innerHTML.match(rex).length - 1) / 2; // get amount of players
+			var rex = new RegExp('<td>\\$(\\d+)<\\/td>');
+			var pot = str.match(rex);
+			ptspent += (parseInt(pot[1], 10) / amplayers);
+			setValue('ptspent', ptspent);
+		}
+		if ((db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[2]) != -1 || db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[3]) != -1 || db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[9]) != -1) && db.innerHTML.indexOf('name="leave"') == -1) { // user checked
+			var rex = new RegExp('<a href="\\/user\\.php\\?nick=(\\w+)">', 'g');
+			var r = db.innerHTML.match(rex);
+			var tot = (r.length - 1) / 2; // total players
+			for (y = 0; y < tot; y += 1) {
+				if (r[y] == '<a href="/user.php?nick='+ptself+'">') { var myownnum = y; } // get # player you are listed from top
+			}
+			var rex = new RegExp(' \\(\\$(\\d+)\\)', 'g');
+			var r = str.match(rex);
+			var ptnewbet = r[myownnum].replace(' ($', ''); // get own placed bet on page
+			ptnewbet = parseInt(ptnewbet.replace(')', ''), 10);
+			if (ptnewbet != ptoldbet) {
+				ptspent -= ptoldbet;
+				ptspent += ptnewbet;
+				setValue('ptoldbet', ptnewbet); //set it for comparising next time
+			}
+		}
+		if (db.innerHTML.indexOf('name="leave"') != -1) {// game's over
+			setValue('ptoldbet', 0);
+			var rex = new RegExp('<tr align="center"><td>(\\w+)</td><td>(.*)</td><td>\\$(\\d+)</td></tr>');
+			var r = str.match(rex);
+			if (r[1] == ptself) { // we won?
+				var pttype = r[2];
+				ptgwon += 1;
+				ptmwon += parseInt(r[3], 10);
+				setValue('ptgwon', ptgwon);
+				setValue('ptmwon', ptmwon);
+			}
+		}
+		var ptprofit = ptmwon - ptspent;
+		if (ptspent > 0) {
+			if (ptprofit >= 0) ptprofit = '$'+commafy(ptprofit);
+			else ptprofit = '-$'+commafy(ptspent - ptmwon);
+		}
+		else { ptprofit = 0; }
+		var div = cEL('div');
+		div.id = 'ptracker';
+		div.setAttribute("style", "position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px;");
+		div.innerHTML = '<center><b>'+lang.pokertracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="ptstats">'+lang.pokertracker[4]+'<font style="float: right;"><b>'+ptgplay+'</b></font><br />'+lang.pokertracker[5]+'<font style="float: right;"><b>'+ptgwon+'</b></font><br />'+lang.pokertracker[6]+'<font style="float: right;"><b>$'+commafy(ptspent)+'</b></font><br />'+lang.pokertracker[7]+'<font style="float: right;"><b>$'+commafy(ptmwon)+'</b></font><br />'+lang.pokertracker[8]+'<font style="float: right;"><b>'+ptprofit+'</b></font></div><br />&nbsp;<div id="resetpt" align="right" style="position: absolute; bottom: 2px; right: 2px; border: 2px solid grey; -moz-border-radius: 5px 5px 5px 5px;" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL("deleteIcon")+'" style="vertical-align: -3px;" /></div>';
+		db.appendChild(div);
+
+		getID('resetpt').addEventListener('click', function() {
+			getID("resetpt").innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
+			setValue('ptgplay', 0);
+			setValue('ptspent', 0);
+			setValue('ptgwon', 0);
+			setValue('ptmwon', 0);
+		}, true);
+	}
 }
 
 //---------------- 1-Click Voter ----------------

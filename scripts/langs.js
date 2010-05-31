@@ -6,7 +6,7 @@
 //
 // -------------------------------------------------------------------------------------
 
-// vers: 1.9.3.43
+// vers: 1.9.3.44
 
 /*
 $Rev$:  Revision of last commit
@@ -281,6 +281,23 @@ var langs = {
 			'Invite',
 			'Local Mob'
 		],
+		lastontime: [
+			'Alive',
+			'Last on:',
+			'ago'
+		],
+		pokertracker: [
+			'PokerTracker',
+			'You have joined the game.',
+			'You have called the current bet.',
+			'You have raised the bet.',
+			'Games played: ',
+			'Games won: ',
+			'Money spent: ',
+			'Money won: ',
+			'Profit: ',
+			'You have checked the current bet.'
+		],
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: "All cities",
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?']
@@ -549,6 +566,23 @@ var langs = {
 			'Information',
 			'Invite',
 			'Local Mob'
+		],
+		lastontime: [
+			'Alive',
+			'Last on:',
+			'ago'
+		],
+		pokertracker: [
+			'PokerTracker',
+			'You have joined the game.',
+			'You have called the current bet.',
+			'You have raised the bet.',
+			'Games played: ',
+			'Games won: ',
+			'Money spent: ',
+			'Money won: ',
+			'Profit: ',
+			'You have checked the current bet.'
 		],
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: "All cities",
@@ -826,6 +860,23 @@ var langs = {
 			'Gegevens',
 			'Verstuur',
 			'Lokale bende'
+		],
+		lastontime: [
+			'Levend',
+			'Laatst on:',
+			'geleden'
+		],
+		pokertracker: [
+			'PokerVolger',
+			'Je doet nu mee aan het spel.',
+			'Je hebt de huidige inzet gecalled.',
+			'Je hebt de inzet verhoogd.',
+			'Potjes gespeeld:',
+			'Potjes gewonnen:',
+			'Geld uitgegeven:',
+			'Geld gewonnen:',
+			'Winst:',
+			'Je hebt de huidige inzet gecalled.',
 		],
 		killpage: "Alle steden",
 		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?']
