@@ -72,8 +72,6 @@ while
 with
 
 #KEYWORD=Beyond functions
-del
-delall
 $x
 $X
 $i
@@ -110,9 +108,20 @@ toHex
 decbin
 prefsArray
 setIcon
+$del
+$Del
+$Cut
+getActual
+getActualHex
+selectedTab
+insertAfter
+clearSettings
+rand
+hOne
 
 #KEYWORD=Beyond objects
 dl
+ds
 db
 dlp
 dls
@@ -136,6 +145,13 @@ PrefsLink
 arr
 gCode
 BETA
+minFFVersion
+PricesLink
+ContactLink
+PollLink
+EdoUrl
+ff
+ob
 
 #KEYWORD=Greasemonkey functions
 GM_addStyle
@@ -149,6 +165,8 @@ GM_registerMenuCommand
 GM_xmlhttpRequest
 unsafeWindow
 console.log
+console.time
+console.timeEnd
 
 #KEYWORD=Built-in objects
 Anchor
@@ -190,4 +208,5 @@ Submit
 Text
 Textarea
 window
+prototype
 #

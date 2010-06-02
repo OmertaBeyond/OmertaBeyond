@@ -8,7 +8,7 @@
 //
 // -------------------------------------------------------------------------------------
 
-// vers: 1.9.3.44
+// vers: 1.9.3.45
 
 /*
 $Rev$:  Revision of last commit
@@ -16,7 +16,7 @@ $Author$:  Author of last commit
 $Date$:  Date of last commit
 */
 
-// @Smart Fampage, we use style attribute to check for online status, thus add style by class	*/
+/* @Smart Fampage, we use style attribute to check for online status, thus add style by class	*/
 
 .menuLink,[class="menuLink rightMenuLink"] a,.story a {
 color:#FFF !important

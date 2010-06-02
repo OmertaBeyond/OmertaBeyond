@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			28-05-2010
+// @date			01-06-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
@@ -57,27 +57,27 @@ $Date$:  Date of last commit
 
 //---------------- (Omerta==0)?refresh:go ----------------
 if (db.innerHTML.indexOf('clicklimit') != -1 && dlp != '/menu.php') {
-	GM_log("Reload in 60 seconds");
+	GM_log('Reload in 60 seconds');
 	setTimeout(function () {
 		window.location.reload();
 	}, 60000);
 } else if (hOne == '504 Gateway Time-out') {
-	GM_log("Reload in 20 seconds");
+	GM_log('Reload in 20 seconds');
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
 } else if (hOne == '502 Bad Gateway') {
-	GM_log("Reload in 20 seconds");
+	GM_log('Reload in 20 seconds');
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
 } else if (hOne == '503 Service Unavailable') {
-	GM_log("Reload in 20 seconds");
+	GM_log('Reload in 20 seconds');
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
 } else if (db.innerHTML.indexOf('Downtime. We\'ll be back shortly. Hopefully. ') != -1) {
-	GM_log("Reload in 3 minutes");
+	GM_log('Reload in 3 minutes');
 	setTimeout(function () {
 		window.location.reload();
 	}, 300000);
@@ -129,7 +129,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '44';
+var ScriptSubVersion = '45';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -139,14 +139,14 @@ var ContactLink = ScriptLink + lang.contactlink;
 var PollLink = SiteLink + lang.polllink;
 var FingonUrl = 'http://89.149.221.178/~fingon';
 var EdoUrl = 'http://www.edo-nieuws.nl/news.php';
-var ff = navigator.userAgent.split("/")[3].split(" ")[0];
+var ff = navigator.userAgent.split('/')[3].split(' ')[0];
 var ob = ScriptVersion + '.' + ScriptSubVersion;
 
-GM_registerMenuCommand("[" + ScriptName + "] v" + ob, function () {
+GM_registerMenuCommand('[' + ScriptName + '] v' + ob, function () {
     alert('You are using ' + ScriptName + '\nVersion:\t' + ScriptVersion + '\nRevision:\t' + ScriptSubVersion);
 });
 
-GM_registerMenuCommand("[" + ScriptName + "] Reset values to default.", function () {
+GM_registerMenuCommand('[' + ScriptName + '] Reset values to default.', function () {
     clearSettings();
     window.location.href = window.location;
 });
@@ -184,7 +184,7 @@ var descr = [
 ];
 //beyond menu links
 var qlinks = [
-	PrefsLink +"&ob="+ob,
+	PrefsLink +'&ob='+ob,
 	PollLink,
 	ContactLink,
 	ScriptLink + '/faq.php',
@@ -219,7 +219,7 @@ if (typeof txt == 'number') {
 /*
 Disabled till FS#180 is fixed
 if(!String.prototype.trim){
-	alert("You're using Firefox "+ff+"!\nIt is highly recommended that you upgrade to Firefox 3.6+\nSome features of OBeyond might not work properly if you don't upgrade");
+	alert('You're using Firefox '+ff+'!\nIt is highly recommended that you upgrade to Firefox 3.6+\nSome features of OBeyond might not work properly if you don\'t upgrade');
 }
 */
 
@@ -239,7 +239,7 @@ if (dlp == '/prefs.php') {
 	var prefstr = lang.prefs;
 	var prefsTitle = lang.prefsTitle;
 
-	var string = '<tr height="25" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + ScriptVersion + '.' + ScriptSubVersion + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <a href="#" onClick="" name="updater" ><img src="'+GM_getResourceURL("updateIco")+'" border="0" title="'+lang.prefsPage[0]+'" /></a></td></tr>';
+	var string = '<tr height="25" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + ScriptVersion + '.' + ScriptSubVersion + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <a href="#" onClick="" name="updater" ><img src="'+GM_getResourceURL('updateIco')+'" border="0" title="'+lang.prefsPage[0]+'" /></a></td></tr>';
 
 	function addCat(title) { //pref category
 		toggleStr = 'var node = this; while(node.nextSibling.innerHTML.search(/<input/)!=-1){ var node = node.nextSibling; var show = ((node.style.display == \'none\') ? \'\' : \'none\'); node.style.display = show; };'; //js to toggle hiding prefs for category
@@ -295,10 +295,10 @@ if (dlp == '/prefs.php') {
 
 	var nick = getValue('nick','');
 
-	grabPrefs  = "javascript:var prefslist='';";
-	grabPrefs += "for(i=0;i<"+maxbit+";i++){ if(document.getElementById('check'+i)){";
-	grabPrefs += "prefslist += (document.getElementById('check'+i).checked ? 1 : 0);}";
-	grabPrefs += "else prefslist += '0'}; window.location = '" + PrefsLink + "&nick="+nick+"&ob="+ob+"&prefs='+prefslist;";
+	grabPrefs  = 'javascript:var prefslist=\'\';';
+	grabPrefs += 'for(i=0;i<'+maxbit+';i++){ if(document.getElementById(\'check\'+i)){';
+	grabPrefs += 'prefslist += (document.getElementById(\'check\'+i).checked ? 1 : 0);}';
+	grabPrefs += 'else prefslist += \'0\'}; window.location = \'' + PrefsLink + '&nick='+nick+'&ob='+ob+'&prefs=\'+prefslist;';
 
 	string += grabPrefs;//grab all current checked values and send to url
 	string += '">'+lang.prefsPage[2]+' '+lang.prefsname+'</button></td></tr>';
@@ -314,58 +314,58 @@ if (dlp == '/prefs.php') {
 	}
 
 	if(prefs[3]){//JHL stuff
-		var family = getValue('bust', '').split(",");
-		var colour = getValue('colours', '').split(",");
-		var priority = getValue('priority', '').split(",");
-		var nobust = getValue('nobust', '').split(",");
+		var family = getValue('bust', '').split(',');
+		var colour = getValue('colours', '').split(',');
+		var priority = getValue('priority', '').split(',');
+		var nobust = getValue('nobust', '').split(',');
 		var nbint = getValue('nbint', 3);
 		var jailint = getValue('jailint', 4);
-		var maxHL = getValue('maxHL',5);
-		var hotkeys = getValue('rawkeyprefs','');
-		var buyout = getValue('buyout','/');
-		var FL_prior = getValue('FL_prior',3);
-		var Fam_prior = getValue('Fam_prior',9);
-		var defpri = getValue('defpri',5);
-		var defcol = getValue('defcol','33FF66');
+		var maxHL = getValue('maxHL', 5);
+		var hotkeys = getValue('rawkeyprefs', '');
+		var buyout = getValue('buyout', '/');
+		var FL_prior = getValue('FL_prior', 3);
+		var Fam_prior = getValue('Fam_prior', 9);
+		var defpri = getValue('defpri', 5);
+		var defcol = getValue('defcol', '33FF66');
 
 		var savestring = '<button type="button" class="button" name="#" onClick="location.href = \''+PrefsLink+'&maxHL=\' + document.getElementById(\'maxHL\').value + \'&buyout=\' + document.getElementById(\'buyout\').value + \'&FL_prior=\' + document.getElementById(\'FL_prior\').value + \'&Fam_prior=\' + document.getElementById(\'Fam_prior\').value + \'&defpri=\' + document.getElementById(\'defpri\').value + \'&defcol=\' + document.getElementById(\'defcol\').value + \'&bust=\'';
 		fam_list = col_list = pri_list = nb_list = '';
 
 		for(i=-1;++i<jailint;){
-			fam_list += " + document.getElementById('family" +i+ "').value.toUpperCase() + ','";
-			col_list += " + document.getElementById('colour" +i+ "').value.replace('#', '') + ','";
-			pri_list += " + document.getElementById('priority" +i+ "').value + ','";
+			fam_list += ' + document.getElementById(\'family' +i+ '\').value.toUpperCase() + \', \'';
+			col_list += ' + document.getElementById(\'colour' +i+ '\').value.replace("#", "") + \', \'';
+			pri_list += ' + document.getElementById(\'priority' +i+ '\').value + \', \'';
 		}
 		for(i=-1;++i<nbint;){
-			nb_list += " + document.getElementById('nobust" +i+ "').value.replace('&','%26').toUpperCase() + ','";
+			nb_list += ' + document.getElementById(\'nobust' +i+ '").value.replace("&","%26").toUpperCase() + ", "';
 		}
-		savestring += fam_list + " + '&colours='" + col_list + " + '&priority='" + pri_list + " + '&nobust='" + nb_list;
+		savestring += fam_list + ' + "&colours="' + col_list + ' + "&priority="' + pri_list + ' + "&nobust="' + nb_list;
 		savestring += '">'+lang.jhl[6]+'</button>';
 
 		var string = '<tr height="25"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
 		string += '<tr height="25" class="tr"><td class="td">&nbsp;</td><td width="210" class="td"><b>'+lang.jhl[1]+'</b></td><td width="75" class="td"><b>'+lang.jhl[2]+'</b></td><td width="76" class="td">&nbsp;</td><td width="50" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
 		for(i=-1;++i<jailint;){
-			if(family[i] == null) { family[i] = ""; }
-			if(colour[i] == null) { colour[i] = ""; }
-			if(priority[i] == null) { priority[i] = ""; }
-			if(!colour[i]) { colour[i] = "CCCCCC"; }
-			string += '<tr height="25" class="tr"><td>&nbsp;</td><td><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'"></img><input id="family' + i + '" value="' + family[i].replace('%20',' ').replace('%26','&') + '" type="text" name="#" class="inputbig"></td>';
-			string += '<td><input id="colour'+i+'" value="'+colour[i]+'" type="text" name="color'+(i+1)+'" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCCCCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:75px;" /></td>';
-			string += '<td><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'colour'+i+'\').color.showPicker()" /></td>';
+			if(family[i] == null) { family[i] = ''; }
+			if(colour[i] == null) { colour[i] = ''; }
+			if(priority[i] == null) { priority[i] = ''; }
+			if(!colour[i]) { colour[i] = 'CCC'; }
+			string += '<tr height="25" class="tr"><td>&nbsp;</td><td><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL('trash')+'"></img><input id="family' + i + '" value="' + family[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig"></td>';
+			string += '<td><input id="colour'+i+'" value="'+colour[i]+'" type="text" name="color'+(i+1)+'" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:75px;" /></td>';
+			string += '<td><img src="'+GM_getResourceURL('colorpicker')+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'colour'+i+'\').color.showPicker()" /></td>';
 			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall"></td><td>&nbsp;</td></tr>';
 		}
 		string += '<tr class="tr" height="25" align="center"><td colspan=6 class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
 
 		string += '<tr height="25" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
 		for(i=-1;++i<nbint;){
-			if(nobust[i] == null){ nobust[i] = ""; }
-			string += '<tr height="25" class="tr"><td>&nbsp;</td><td colspan="5"><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'"></img><input id="nobust' + i + '" value="' + nobust[i].replace('%20',' ').replace('%26','&') + '" type="text" name="#" class="inputbig"></td>';
+			if(nobust[i] == null){ nobust[i] = ''; }
+			string += '<tr height="25" class="tr"><td>&nbsp;</td><td colspan="5"><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL('trash')+'"></img><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig"></td>';
 		}
 		string += '<tr class="tr" height="25" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
 
 		string += '<tr height="25" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2"><center><b>'+lang.jhl[8]+'</b></center><td class="td" colspan="2"><center><b>'+lang.jhl[9]+'</b></center></td><td class="td">&nbsp;</td></tr>';
 		string += '<tr height="25" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle"></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall"></td></tr>';
-		string += '<tr height="25" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="inputmiddle"></td><td width="10">&nbsp;&nbsp;<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL("colorpicker")+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall"></td></tr>';
+		string += '<tr height="25" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="inputmiddle"></td><td width="10">&nbsp;&nbsp;<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL('colorpicker')+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall"></td></tr>';
 		string += '<tr height="25" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall"></td></tr>';
 		string += '<tr height="25" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall"></td></tr>';
 
@@ -379,7 +379,7 @@ if (dlp == '/prefs.php') {
 	$x('//table | //td[@class="toptd"] | //button | //input[@type="text"] | //div[@id="credits"]').forEach(function ($n) {
 		var $N = $n.nodeName;
 		var $s = $n.style;
-		if ($N == "TABLE" && $n.parentNode.nodeName != 'TD' && $n.innerHTML.search('<td') != -1) {
+		if ($N == 'TABLE' && $n.parentNode.nodeName != 'TD' && $n.innerHTML.search('<td') != -1) {
 			$s.MozBorderRadius = '10px';
 			//bottom cells
 			var last = $n.getElementsByTagName('td');
@@ -390,17 +390,17 @@ if (dlp == '/prefs.php') {
 			last.style.MozBorderRadiusBottomright = '7.5px';
 			last.style.MozBorderRadiusBottomleft = '7.5px';
 		}
-		if ($N == "TD") {
+		if ($N == 'TD') {
 			$s.MozBorderRadiusTopleft = '7.5px';
 			$s.MozBorderRadiusTopright = '7.5px';
 		}
-		if ($N == "DIV" || $N == "INPUT" || $N == "BUTTON") {
+		if ($N == 'DIV' || $N == 'INPUT' || $N == 'BUTTON') {
 			$s.MozBorderRadius = '5px';
-			if ($N == "INPUT") {
+			if ($N == 'INPUT') {
 				$s.paddingLeft = '3px';
 			}
-			if ($N == "BUTTON") {
-				$n.setAttribute('onmouseover', 'style.cursor = "pointer";');
+			if ($N == 'BUTTON') {
+				$n.setAttribute('onmouseover', 'this.style.cursor = "pointer";');
 			}
 		}
 	});
@@ -420,14 +420,14 @@ if(dlp == '/marquee.php'){
 	if(prefs[1]){
 		GM_xmlhttpRequest({
 			method: 'GET',
-			url: 'http://gm.omertabeyond.com/prices.xml.php?v='+lang.version.replace('_',''),
+			url: 'http://gm.omertabeyond.com/prices.xml.php?v='+lang.version.replace('_', ''),
 			headers: {'User-agent': ScriptName + ' ' + ScriptVersion + '.'+ ScriptSubVersion, 'Accept': 'application/xml,text/xml'},
 			onload: function(resp){
 				var marquee = document.getElementsByTagName('div')[0];
-				marquee.innerHTML = "";
+				marquee.innerHTML = '';
 
 				var parser = new DOMParser();
-				var dom = parser.parseFromString(resp.responseText, "application/xml");
+				var dom = parser.parseFromString(resp.responseText, 'application/xml');
 
 				function getPrice(drug, city) {
 					return dom.getElementsByTagName(drug)[0].getElementsByTagName(city.replace(' ', ''))[0].textContent;
@@ -436,11 +436,11 @@ if(dlp == '/marquee.php'){
 				var p = [];
 				var q = new Array;
 				var p_C = [langs.en.cities[6], langs.en.cities[1], langs.en.cities[3], langs.en.cities[5], langs.en.cities[0], langs.en.cities[4], langs.en.cities[7], langs.en.cities[2]];
-				var p_id = ["6", "1", "3", "5", "nul", "4", "7", "2"];
+				var p_id = ['6', '1', '3', '5', 'nul', '4', '7', '2'];
 
-				for(i=0;i<=7;i++){ p[i]=getPrice('Cocaine',p_C[i]); q[i]=p[i]; }
+				for(i=0;i<=7;i++){ p[i]=getPrice('Cocaine', p_C[i]); q[i]=p[i]; }
 
-				var max = p.sort( function(a,b){ return b-a; } )[0];
+				var max = p.sort( function(a, b){ return b-a; } )[0];
 				var min = p[(p.length-1)];
 
 				i=0;
@@ -457,15 +457,15 @@ if(dlp == '/marquee.php'){
 
 				var hoverdiv = cEL('div');
 				hoverdiv.id = 'hiddenbox';
-				hoverdiv.setAttribute("style", "display:none; position:absolute; background-color:#000; border:1px solid #FFF; font-size:9px; top:2px; width:520px; text-align:center;");
+				hoverdiv.setAttribute('style', 'display:none; position:absolute; background-color:#000; border:1px solid #FFF; font-size:9px; top:2px; width:520px; text-align:center');
 				marquee.appendChild(hoverdiv);
 
 				function hoverlink(city, priceStr) {
 					var link = cEL('a');
-					link.href = "#";
-					link.style.color = '#ffffff';
+					link.href = '#';
+					link.style.color = '#FFF';
 					link.style.fontSize = '10px';
-					if (city == "Palermo" || city == "Corleone" || city == "Las Vegas" || city == "Detroit") {
+					if (city == 'Palermo' || city == 'Corleone' || city == 'Las Vegas' || city == 'Detroit') {
 						link.addEventListener('mouseover', function (event) {
 							hovermenu(city, event.clientX - 525);
 						}, true);
@@ -484,13 +484,13 @@ if(dlp == '/marquee.php'){
 				function hovermenu(city, x) {
 					var hoverdiv = getID('hiddenbox');
 					hoverdiv.style.display = 'inline';
-					hoverdiv.style.left = x + "px";
-					hoverdiv.innerHTML = 'Morphine: ' + getPrice("Morphine", city) + ' | ' + 'Heroin: ' + getPrice("Heroin", city) + ' | ' + 'Opium: ' + getPrice("Opium", city) + ' | ' + 'Whiskey: ' + getPrice("Whiskey", city) + ' | ' + 'Amaretto: ' + getPrice("Amaretto", city) + ' | ' + 'Rum: ' + getPrice("Rum", city);
+					hoverdiv.style.left = x + 'px';
+					hoverdiv.innerHTML = 'Morphine: ' + getPrice('Morphine', city) + ' | ' + 'Heroin: ' + getPrice('Heroin', city) + ' | ' + 'Opium: ' + getPrice('Opium', city) + ' | ' + 'Whiskey: ' + getPrice('Whiskey', city) + ' | ' + 'Amaretto: ' + getPrice('Amaretto', city) + ' | ' + 'Rum: ' + getPrice('Rum', city);
 				}
 
 				function flytolink(city, priceStr, priceToFly, cityId) {
 					var link = cEL('a');
-					link.href = "#";
+					link.href = '#';
 					link.id = city;
 					link.style.color = '#FFF';
 					link.style.fontSize = '10px';
@@ -504,7 +504,7 @@ if(dlp == '/marquee.php'){
 					}, true);
 
 					if (prefs[17]) {
-						if (city == "Palermo" || city == "Corleone" || city == "Las Vegas" || city == "Detroit") {
+						if (city == 'Palermo' || city == 'Corleone' || city == 'Las Vegas' || city == 'Detroit') {
 							link.addEventListener('mouseover', function (event) {
 								hovermenu(city, event.clientX - 525);
 								this.style.textDecoration = 'underline';
@@ -537,7 +537,7 @@ if(dlp == '/marquee.php'){
 
 				i=0;
 				p.forEach(function($n){
-					span.style.color = 'white';
+					span.style.color = '#FFF';
 					span.appendChild(flytolink(p_C[i], p_C[i]+':'+q[i], 500, p_id[i]));
 					var separator = cEL('span');
 					separator.innerHTML = ' | ';
@@ -550,21 +550,21 @@ if(dlp == '/marquee.php'){
 
 				link.target = 'main';
 				link.innerHTML = lang.marquee[1];
-				link.style.color = '#ffffff';
+				link.style.color = '#FFF';
 				link.style.fontSize = '10px';
 				link.addEventListener('mouseover', function(){ this.style.textDecoration='underline' }, true);
 				link.addEventListener('mouseout', function(){ this.style.textDecoration='none' }, true);
 				span.appendChild(link);
 				priceandtime.innerHTML = lang.marquee[2] + time + ' | ';
-				span.style.color = '#ffffff';
+				span.style.color = '#FFF';
 				span.style.fontSize = '10px';
 				marquee.appendChild(span);
 
-				city = getPow('bninfo',2,-1);
+				city = getPow('bninfo', 2, -1);
 				if(city > 0){
 					city = langs.en.cities[city-4];
 					owncity = city;
-					getID(city).setAttribute('style',getID(city).getAttribute('style')+'font-style: italic;');
+					getID(city).setAttribute('style',getID(city).getAttribute('style')+'font-style:italic');
 				}
 				window.onload = setTimeout(function(){ window.location.reload(); }, 60000);
 			}
@@ -592,7 +592,7 @@ if (dlp == '/menu.php') {
 
 	//add beyond menu
 	var subMenu = cEL('table');
-	var innerHTML = '<tbody><tr><th onclick="Menu.toggle(this);">Beyond</th></tr><tr><td><div class="subnav" style="overflow: hidden;"><table cellspacing="0" cellpadding="0"><tbody>';
+	var innerHTML = '<tbody><tr><th onclick="Menu.toggle(this);">Beyond</th></tr><tr><td><div class="subnav" style="overflow:hidden"><table cellspacing="0" cellpadding="0"><tbody>';
 	for(i=0;i<qlinks.length;i++){
 		innerHTML += '<tr><td><a target="main" onmousedown="return false;" href="'+ qlinks[i] +'" class="menuLink" title="'+qtitle[i]+'">'+descr[i]+'</a></td></tr>';
 	}
@@ -659,10 +659,10 @@ if (dlp == '/menu.php') {
 
 //--customs script
 	//add action buttons
-	var buttonMenu = GM_getResourceURL("buttonMenu");
-	var buttonKey = GM_getResourceURL("buttonKey");
-	var buttonReset = GM_getResourceURL("buttonReset");
-	$X(QL_xp).innerHTML = $X(QL_xp).innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+buttonMenu+'"> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+buttonKey+'"> <img onMouseover="style.cursor=\'pointer\'" title="Reset menu" onClick="location.href=\'menu.php?reset\'" src="'+buttonReset+'"></span>';
+	var buttonMenu = GM_getResourceURL('buttonMenu');
+	var buttonKey = GM_getResourceURL('buttonKey');
+	var buttonReset = GM_getResourceURL('buttonReset');
+	$X(QL_xp).innerHTML = $X(QL_xp).innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+buttonMenu+'"> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+buttonKey+'"> <img onMouseover="style.cursor=\'pointer\'" title="Reset menu" onClick="location.href=\'menu.php?reset\'" src="'+buttonReset+'"></span>'; //LANG
 
 	//check 'mode' and add corresponding stuff
 	if(!dls || dls.indexOf('reset') != -1 || dls.indexOf('buttons') != -1){//mode = normal or user reseted
@@ -686,7 +686,7 @@ if (dlp == '/menu.php') {
 			}
 			else uptodate=0;
 			if(uptodate==0){
-				alert(lang.newmenu);setValue('submenus','0');
+				alert(lang.newmenu);setValue('submenus', '0');
 			} else {//clear to go
 				for(i=subs;i>=1;i--){
 					if(mprefs[i-1]==0){
@@ -696,13 +696,13 @@ if (dlp == '/menu.php') {
 							xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
 							kpref = keyprefs[i-1].slice(j-1,j);
 
-							if(menuprefs[i-1].slice(j-1,j) == 0){
+							if(menuprefs[i-1].slice(j-1, j) == 0){
 								$Del(xp_tr);//delete it!
 							} else if(kpref != '*'){//look for a hotkey
 								var but = $X(xp_tr + '/td/a');
 								but.accessKey = kpref;//add it too!
-								but.innerHTML = but.innerHTML + " ("+ kpref.toUpperCase() +")";
-								but.addEventListener('focus',function(){this.blur();},false);
+								but.innerHTML = but.innerHTML + ' ('+ kpref.toUpperCase() +')';
+								but.addEventListener('focus', function(){this.blur();}, false);
 							}
 						}
 					}
@@ -711,29 +711,29 @@ if (dlp == '/menu.php') {
 		}
 	} else {//custom menu interface
 		//saving part
-		if(dls.indexOf('?newmenu=') != -1){ modeArr = ['Menu','newmenu','rawmenuprefs','buttonpref']; }
-		if(dls.indexOf('?newkeys=') != -1){ modeArr = ['Hotkey','newkeys','rawkeyprefs','keypref']; }
+		if(dls.indexOf('?newmenu=') != -1){ modeArr = ['Menu', 'newmenu', 'rawmenuprefs', 'buttonpref']; }
+		if(dls.indexOf('?newkeys=') != -1){ modeArr = ['Hotkey', 'newkeys', 'rawkeyprefs', 'keypref']; }
 		if(dls.indexOf('?newmenu=') != -1 || dls.indexOf('?newkeys=') != -1){//mode = user clicked save
 			//update Settings
 			newprefs = GetParam(modeArr[1]);
-			setValue(modeArr[2],newprefs);
+			setValue(modeArr[2], newprefs);
 			for(i=0;i<=buttons.length-1;i++){
-				setValue(modeArr[3]+(i+1),newprefs.slice(0,buttons[i]));
+				setValue(modeArr[3]+(i+1), newprefs.slice(0, buttons[i]));
 				newprefs = newprefs.slice(buttons[i]);
 			}
-			setValue('submenus',i);
-			$X('html/body').innerHTML = "<span class='red'>" + modeArr[0] + lang.customs + "</span>" + $X('html/body').innerHTML;//succes msg
+			setValue('submenus', i);
+			$X('html/body').innerHTML = '<span class="red">' + modeArr[0] + lang.customs + '</span>' + $X('html/body').innerHTML;//succes msg
 			$X('html/body').style.backgroundColor='#3F505F';
 
 			setTimeout(function(){ location.href='menu.php'; }, 1500);//refresh to see our results
 		}
 
 		//add already used hotkey script
-		buyout = getValue('buyout','/');//this is also a used hotkey
-		script = cEL("script");
-		script.setAttribute('type','text/javascript');
+		buyout = getValue('buyout', '/');//this is also a used hotkey
+		script = cEL('script');
+		script.setAttribute('type', 'text/javascript');
 		script.innerHTML = 'function checkKey(id){for(i=0;i<=document.getElementsByTagName(\'input\').length-1;i++){var val = document.getElementsByTagName(\'input\')[i].value.toUpperCase();if((val == document.getElementById(id).value.toUpperCase() && \'ip\'+(i+1) != id && document.getElementById(id).value.toUpperCase() != \'\') || val == \''+buyout+'\'){ alert("You\'re already using that key!"); document.getElementById(id).value = \'\'; i=100; }}}';
-		$X("//head").appendChild(script);
+		$X('//head').appendChild(script);
 
 		//mode = user doing customizing
 		upmenu = 0;
@@ -741,8 +741,8 @@ if (dlp == '/menu.php') {
 		if(dls.indexOf('menu') != -1){ upmenu=1; }
 		if(dls.indexOf('keys') != -1){ upkeys=1; }
 		if(upmenu || upkeys){//we updating buttons or keys?
-			window.addEventListener("load", function(){
-				raw = upmenu ? getValue('rawmenuprefs','*') : getValue('rawkeyprefs','0');
+			window.addEventListener('load', function(){
+				raw = upmenu ? getValue('rawmenuprefs', '*') : getValue('rawkeyprefs', '0');
 				for(i=1,q=1;i<=subs;i++){
 					for(j=1;j<=buttons[i-1];j++,q++){
 						xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
@@ -757,7 +757,7 @@ if (dlp == '/menu.php') {
 								getID('ip'+q).checked = false;
 							}
 						} else {
-							$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="text" onChange="checkKey(this.id)" style="text-align: center; -moz-border-radius:4px; padding-left:3px;" maxlength="1" id="ip'+q+'"/></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
+							$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="text" onChange="checkKey(this.id)" style="text-align:center; -moz-border-radius:4px; padding-left:3px" maxlength="1" id="ip'+q+'"/></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
 							if(raw != '0' && prefx != '*' && submenus != 0){
 								getID('ip'+q).value = prefx;
 							}
@@ -775,13 +775,13 @@ if (dlp == '/menu.php') {
 
 			//add right save button for the job
 			save = upmenu ? 'var query=\'\';for(i=1;i<='+(inputs-1)+';i++){query += document.getElementById(\'ip\'+i).checked;}location.search = \'?newmenu=\'+query.replace(/false/g,0).replace(/true/g,1);' : 'var query=\'\';for(i=1;i<='+(inputs-1)+';i++){query += document.getElementById(\'ip\'+i).value;if(document.getElementById(\'ip\'+i).value==\'\'){query +=\'*\'}}location.search = \'?newkeys=\'+query;';
-			$X(QL_xp).setAttribute('style', 'padding: 5px; padding-left: 30px !important;');
-			$X(QL_xp).innerHTML = '<input type="button" onclick="' + save + '" value="Save!" id="save_button"/>';
+			$X(QL_xp).setAttribute('style', 'padding: 5px; padding-left: 30px !important');
+			$X(QL_xp).innerHTML = '<input type="button" onclick="' + save + '" value="Save!" id="save_button" />';
 		}
-		$X(QL_xp).setAttribute("colspan", "2");//addept quick lookup colspan to match customs interface's
+		$X(QL_xp).setAttribute('colspan', '2');//addept quick lookup colspan to match customs interface's
 	}
 	//beautify for fully collapsed menu in dark theme
-	$X('//div[@id="menubg"]').style.borderRight = '1px solid #666666';
+	$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
 	$X('//div[@id="menubg"]').style.width = '99.5%';
 
 	//extra city checker
@@ -838,11 +838,11 @@ if (dlp == '/jail.php' || dlp == '/iminjail.php' || (dlp == '/kill.php' && dls !
 		if (input[0]) {
 			CP(input[0]);
 		} else {
-			var input = getELNAME("ver_sys"); //bullets
+			var input = getELNAME('ver_sys'); //bullets
 			if (input[0]) {
 				CP(input[0]);
 			}
-			var input = getELNAME("ver_bull"); //bullets
+			var input = getELNAME('ver_bull'); //bullets
 			if (input[0]) {
 				CP(input[0]);
 			} else {
@@ -862,7 +862,7 @@ function bnUpdate(current){
 	var tables = $x(xpath + '//table[@class="thinline"]');
 	var values = tables[0].getElementsByTagName('td');
 
-	var nick = values[3].textContent.split(" ")[0];
+	var nick = values[3].textContent.split(' ')[0];
 	var rank = values[13].textContent;
 	var city = values[19].textContent;
 	var type = values[17].textContent;
@@ -874,7 +874,7 @@ function bnUpdate(current){
 	setValue('nick',nick);
 
 	//define max b/n judging by rank
-	var ranks = ['Empty-suit','Delivery Boy','Delivery Boy','Picciotto','Shoplifter','Pickpocket','Thief','Associate','Mobster','Soldier','Swindler','Assassin','Local Chief','Chief','Bruglione','Capodecina','Godfather','First Lady'];
+	var ranks = ['Empty-suit', 'Delivery Boy', 'Delivery Boy', 'Picciotto', 'Shoplifter', 'Pickpocket', 'Thief', 'Associate', 'Mobster', 'Soldier', 'Swindler', 'Assassin', 'Local Chief', 'Chief', 'Bruglione', 'Capodecina', 'Godfather', 'First Lady'];
 	var maxBooze = [1, 2, 2, 5, 7, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 70, 70];
 	var maxNarcs = [0, 0, 0, 1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 20, 20, 20];
 	for(booze=0,narc=0, i=0;i<=17;i++){
@@ -896,23 +896,23 @@ function bnUpdate(current){
 	setPow('bninfo', 2, cityCode);//save
 
 	//parse plane to ID
-	var rides = ['none','geen','Fokker DR-1','Havilland DH 82A','Fleet 7','Douglas DC-3'];
+	var rides = ['none', 'geen', 'Fokker DR-1' ,'Havilland DH 82A' ,'Fleet 7', 'Douglas DC-3'];
 	for(plane=0, i=0;i<=5;i++){
 		if(rides[i] == ride){
 			plane = [0, 0, 1, 2, 3, 4][i];
 			break;
 		}
 	}
-	setPow('bninfo',3,plane);//save
+	setPow('bninfo', 3, plane);//save
 }
 
 var d = new Date();//check once every hour for new info
-if(getValue('nick','')=='' || getValue('bninfo',-1)==-1 || getValue('brcDate',-1) != d.getHours()){
+if(getValue('nick', '')=='' || getValue('bninfo', -1)==-1 || getValue('brcDate', -1) != d.getHours()){
 	var d = new Date();//set check date
-	setValue('brcDate',d.getHours());
+	setValue('brcDate', d.getHours());
 	GM_xmlhttpRequest({
-		method:"GET",
-		url:"/information.php", //get info from /information.php
+		method:'GET',
+		url:'/information.php', //get info from /information.php
 		onload:function(response){
 			var a = response.responseText.split('<tbody');
 			if(a[2]){//fails on clicklimit or other error
@@ -924,8 +924,8 @@ if(getValue('nick','')=='' || getValue('bninfo',-1)==-1 || getValue('brcDate',-1
 				bnUpdate(0);//call update fucntion
 
 				GM_xmlhttpRequest({//grab family and position from profile
-					method:"GET",
-					url:"/user.php?nick="+getValue('nick',''),
+					method:'GET',
+					url:'/user.php?nick='+getValue('nick', ''),
 					onload:function(resp){
 						var dummy = cEL('div');//we'd like to use DOM here
 						dummy.style.display = 'none';
@@ -957,7 +957,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Travel&action=TravelNow') { //Ge
 		var text = $X('//font').textContent;
 		text = text.split(' ');
 		text = text[(text.length - 1)];
-		var citys = ["Detroit", "Chicago", "Palermo", "New", "Las", "Philadelphia", "Baltimore", "Corleone"];
+		var citys = ['Detroit', 'Chicago', 'Palermo', 'New', 'Las', 'Philadelphia', 'Baltimore', 'Corleone'];
 		for (i = 0; i < citys.length; i++) {
 			if (citys[i] == text) {
 				city = (i + 4);
@@ -995,36 +995,36 @@ if(dls == '?module=Launchpad'){
 			}
 
 			if(/user/.test($X(x+'5]/td[2]').innerHTML)){
-				isCapo = $X(x+'5]/td[2]').textContent.split(" ")[1];
+				isCapo = $X(x+'5]/td[2]').textContent.split(' ')[1];
 				if(prefs[12] && /Capo/.test(isCapo)){//if remove Capo Money is on
-					capo = $X(x+'5]/td[2]').textContent.split(" ")[0];
-					$X(x+'5]/td[2]').innerHTML = "<a href=/user.php?nick=" + capo + ">"+ capo +"</a>";
+					capo = $X(x+'5]/td[2]').textContent.split(' ')[0];
+					$X(x+'5]/td[2]').innerHTML = '<a href="/user.php?nick=' + capo + '">'+ capo +'</a>';
 				}
 			}
 
 			//linkify player nick
-			$X(x+'12]/td[2]').innerHTML = "<a href=/user.php?nick=" + getTXT(x+'12]/td[2]').split("\t")[1] + ">"+ getTXT(x+'12]/td[2]').split("\t")[1] +"</a>";
+			$X(x+'12]/td[2]').innerHTML = '<a href="/user.php?nick=' + getTXT(x+'12]/td[2]').split('\t')[1] + '">'+ getTXT(x+'12]/td[2]').split('\t')[1] +'</a>';
 
 			if(/\bTranslation\b/.test($X(x+'6]/td[2]').textContent)){//Translation link
-				$I(x+'6]/td[2]',"<a href='http://dev.barafranca.com/translate/' target='_blank'>"+ $X(x+'6]/td[2]').textContent +"</a>");
+				$I(x+'6]/td[2]', '<a href="http://dev.barafranca.com/translate/" target="_blank">'+ $X(x+'6]/td[2]').textContent +'</a>');
 			}
 
 			if($X(famXP) && lang.status[1].match($X(famXP).textContent)){//Family status
-				$I(famXP,"<a href='/family_recruitment.php'><b>"+ $X(famXP).textContent +"</b></a>");
+				$I(famXP, '<a href="/family_recruitment.php"><b>'+ $X(famXP).textContent +'</b></a>');
 			}
 
-			$x('//a[contains(@href,"shoptabs=9")]')[1].setAttribute('href','/BeO/webroot/index.php?module=Bloodbank&action=');//timer
-			$x('//a[contains(@href,"shoptabs=9")]')[0].setAttribute('href','/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
-			$X('//a[contains(@href,"shoptabs=8")]').setAttribute('href','/BeO/webroot/index.php?module=Bloodbank&action=');//healthbar
-			$X(bguardsXP).innerHTML = "<a href='/BeO/webroot/index.php?module=Bodyguards&action='>"+$X(bguardsXP).innerHTML+"</a>";
+			$x('//a[contains(@href,"shoptabs=9")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
+			$x('//a[contains(@href,"shoptabs=9")]')[0].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
+			$X('//a[contains(@href,"shoptabs=8")]').setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//healthbar
+			$X(bguardsXP).innerHTML = '<a href="/BeO/webroot/index.php?module=Bodyguards&action=">'+$X(bguardsXP).innerHTML+'</a>';
 			if($X(planeXP) && lang.status[0].match($X(planeXP).textContent)){
-				$I(planeXP,"<a href='/BeO/webroot/index.php?module=Shop&action=display_section&id=7'><b>"+ $X(planeXP).textContent +"</b></a>");
+				$I(planeXP, '<a href="/BeO/webroot/index.php?module=Shop&action=display_section&id=7"><b>'+ $X(planeXP).textContent +'</b></a>');
 			}
 			if($X(handgunXP) && lang.status[0].match($X(handgunXP).textContent)){
-				$I(handgunXP,"<a href='javascript:if(confirm(\""+lang.myacc[0]+"\")){window.location = \"http://"+dlh+"/BeO/webroot/index.php?module=Shop&action=buy_item&item=3\";}'><b>"+ $X(handgunXP).textContent +"</b></a>");
+				$I(handgunXP, '<a href="javascript:if(confirm(\''+lang.myacc[0]+'\')){window.location = \'http://'+dlh+'/BeO/webroot/index.php?module=Shop&action=buy_item&item=3\';}"><b>'+ $X(handgunXP).textContent +'</b></a>');
 			}
 			if($X(tommygunXP) && lang.status[0].match($X(tommygunXP).textContent)){
-				$I(tommygunXP,"<a href='javascript:if(confirm(\""+lang.myacc[1]+"\")){window.location = \"http://"+dlh+"/BeO/webroot/index.php?module=Shop&action=buy_item&item=4\";}'><b>"+ $X(tommygunXP).textContent +"</b></a>");
+				$I(tommygunXP, '<a href="javascript:if(confirm(\''+lang.myacc[1]+'\')){window.location = \'http://'+dlh+'/BeO/webroot/index.php?module=Shop&action=buy_item&item=4\';}"><b>'+ $X(tommygunXP).textContent +'</b></a>');
 			}
 		}
 		if(tab=='/profile.php' && prefs[14]){//remove kill passwords
@@ -1045,19 +1045,19 @@ if(dls == '?module=Launchpad'){
 
 	//Try and grab info on page load
 	var attempt = setInterval(function(){//using setInterval to enable use of setValue which fails in eventListener above
-		if($X("//a[contains(@href, '/BeO/webroot/index.php?module=Bloodbank&action=')]")){//if page contains health bar
+		if($X('//a[contains(@href, "/BeO/webroot/index.php?module=Bloodbank&action=")]')){//if page contains health bar
 			clearInterval(attempt);
 			bnUpdate(1);//call update function
 		}
 	},1000);//no rush on updating bninfo, wait for page to load properly
 
 	//Grab latest theme colors for our external pages
-	setValue('bodyBg',getActualHex($X('//body'),'background-color'));
-	setValue('titleBg',getActualHex($X('//a[@class="selected"]'),'background-color'));
-	var dummy = cEL('table'); dummy.id = 'dummyT'; dummy.setAttribute('class','thinline'); db.appendChild(dummy);
-	setValue('tableBg',getActualHex($X('//table[@id="dummyT"]'),'background-color'));
+	setValue('bodyBg', getActualHex($X('//body'), 'background-color'));
+	setValue('titleBg' ,getActualHex($X('//a[@class="selected"]'), 'background-color'));
+	var dummy = cEL('table'); dummy.id = 'dummyT'; dummy.setAttribute('class', 'thinline'); db.appendChild(dummy);
+	setValue('tableBg', getActualHex($X('//table[@id="dummyT"]'), 'background-color'));
 	$Del('//table[@id="dummyT"]');
-	setValue('fontClr',getActualHex($X('//body'), 'color'));
+	setValue('fontClr', getActualHex($X('//body'), 'color'));
 }
 
 //---------------- External pages theme matching ----------------
@@ -1067,18 +1067,18 @@ if (dlp == '/contact.php' || dlp == '/faq.php' || dlp == '/prices.php' || dlp ==
 		$n.setAttribute('style', 'background-color: ' + getValue('tableBg', '#F0F0F0'));
 	});
 	$x('//td[@class="tableheader"] | //td[@bgcolor="#3f505f"]').forEach(function ($n) {
-		$n.setAttribute('style', 'background-color: ' + getValue('titleBg', '#3F505F') + '; border: 1px solid black; color: #FFFFFF; font-family: Tahoma, Verdana;');
+		$n.setAttribute('style', 'background-color: ' + getValue('titleBg', '#3F505F') + '; border:1px solid black; color:#FFF; font-family:Tahoma, Verdana');
 	});
 }
 
 //---------------- Strip forum avatars ----------------
 if (prefs[19]) {
 	if (dlp == '/forums/view-topic.php') {
-		var avatarXP = "//img[contains(@src, 'omertao.png')] | //img[contains(@src, 'userimg')]";
+		var avatarXP = '//img[contains(@src, "omertao.png")] | //img[contains(@src, "userimg")]';
 		$x(avatarXP).forEach(function ($n) {
-			$n.width = "";
-			$n.style.border = "none";
-			$n.src = "";
+			$n.width = '';
+			$n.style.border = 'none';
+			$n.src = '';
 		});
 	}
 }
@@ -1098,30 +1098,30 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 	BFTextXp = x + '[2]/table/tbody/tr/td';
 	if (prefs[25]) {
 		var maxBul = (lang.version == '_dm' ? 3000 : 1000);
-		window.addEventListener("load", function () {
+		window.addEventListener('load', function () {
 			$x('//input')[1].focus();
 		}, true);
-		lbf = $I(x + path).split("<br>")[3].match(/\d+/g)[0];
+		lbf = $I(x + path).split('<br>')[3].match(/\d+/g)[0];
 		$X('//fieldset//input[@type="text"][@name="amount_sys"]').value = (lbf >= maxBul) ? maxBul : lbf;
-		bf = $I(x + '[2]' + path).split("<br>")[4].replace(',', '').match(/\d+/g)[0];
+		bf = $I(x + '[2]' + path).split('<br>')[4].replace(',', '').match(/\d+/g)[0];
 		$X('//fieldset//input[@type="text"][@name="amount_bull"]').value = bf;
 	}
 	arr = $I(BFTextXp).split(' ');
 	if (lang.version == '_com') {
-		arr[3] = "<u>" + setArr(3).replace('</b>', '') + "</u>";
+		arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
 	} else if (lang.version == '_nl') {
-		arr[7] = "<u>" + arr[7] + "</u>";
-		arr[4] = "<u>" + setArr(4).replace('</b>', '') + "</u>";
+		arr[7] = '<u>' + arr[7] + '</u>';
+		arr[4] = '<u>' + setArr(4).replace('</b>', '') + '</u>';
 	} else {
-		arr[6] = "<u>" + arr[6] + "</u>";
-		arr[3] = "<u>" + setArr(3).replace('</b>', '') + "</u>";
+		arr[6] = '<u>' + arr[6] + '</u>';
+		arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
 	}
-	$I(BFTextXp, arr.join(" "));
+	$I(BFTextXp, arr.join(' '));
 	$x('//input[@type="text"]')[1].focus();
 }
-if (prefs[7] && dlp == "/bullets2.php") { //if return back after wrong buy is on
+if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
 	if (db.innerHTML.search(lang.failedBullets[0]) != -1 || db.innerHTML.search(lang.failedBullets[1]) != -1 || db.innerHTML.search(lang.failedBullets[2]) != -1 || db.innerHTML.search(lang.failedBullets[3]) != -1 || db.innerHTML.search(lang.failedBullets[4]) != -1 || db.innerHTML.search(lang.failedBullets[5]) != -1) {
-		db.innerHTML += "<br><b>Auto Refresh in 1 sec</b>";
+		db.innerHTML += '<br><b>Auto Refresh in 1 sec</b>';
 		setTimeout(function () {
 			history.back();
 		}, 1000);
@@ -1135,14 +1135,14 @@ if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
 	});
 	$x('//td[@background="images/topic.gif"]').forEach(function ($n) {
 		$n.setAttribute('background', 'http://www.barafranca.com/static/images/game/generic/headershine.png');
-		$n.setAttribute('style', 'background-color: ' + getValue('titleBg', '#F0F0F0') + '; height: 23px; color: white;');
+		$n.setAttribute('style', 'background-color:' + getValue('titleBg', '#F0F0F0') + '; height:23px; color:white;');
 	});
 	db.style.backgroundColor = getValue('bodyBg', '#B0B0B0');
-	db.style.color = getValue('fontClr', '#000000');
+	db.style.color = getValue('fontClr', '#000');
 
 	var p = cEL('p');
 	p.style.textAlign = 'center';
-	p.innerHTML = '<a style="color: #EEEEEE !important; font-weight: bold;" href="http://89.149.221.178/~fingon/index.php' + dls + '" target="_blank">Click here to go to the actual news post</a>';
+	p.innerHTML = '<a style="color:#EEE !important; font-weight:bold;" href="http://89.149.221.178/~fingon/index.php' + dls + '" target="_blank">Click here to go to the actual news post</a>';
 	$X('//td[@class="overallpadding"]').appendChild(p);
 }
 
@@ -1180,9 +1180,9 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 		for(i=0;i<oNews.length;i++){//add to page
 			var item = oNews[i].getElementsByTagName('a')[0];
 			item.href = news[i][0];
-			item.setAttribute('style','font-size: 11px !important;');//manuall override to make sure it keeps font-size
+			item.setAttribute('style', 'font-size:11px !important;');//manuall override to make sure it keeps font-size
 			if(item.href.search('barafranca')==-1) {
-				item.parentNode.parentNode.setAttribute('style','background:url(\''+GM_getResourceURL('finfavi')+'\') no-repeat 90% 20%;');
+				item.parentNode.parentNode.setAttribute('style', 'background:url(\''+GM_getResourceURL('finfavi')+'\') no-repeat 90% 20%;');
 			}
 			if(news[i][1].search(lang.login[2])!=-1 && lang.version=='_nl'){
 				item.setAttribute('target', 'main');
@@ -1208,7 +1208,7 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 			url: 'http://89.149.221.178/~fingon/rss.php',
 			onload: function(resp){
 				var parser = new DOMParser();
-				var dom = parser.parseFromString(resp.responseText, "application/xml");
+				var dom = parser.parseFromString(resp.responseText, 'application/xml');
 
 				item = dom.getElementsByTagName('item');
 				for(i=-1; ++i<item.length-1;){//loop news items
@@ -1217,7 +1217,7 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 
 					if(/\d?\d-\d?\d/.test(fArticles[i])){//check for a date
 						fDay.push(parseInt(/ \d?\d-/.exec(fArticles[i])[0],10));//parse date from title
-						fMonth.push(parseInt(/-\d?\d /.exec(fArticles[i])[0].replace('-',''),10));
+						fMonth.push(parseInt(/-\d?\d /.exec(fArticles[i])[0].replace('-', ''),10));
 
 						//booleans for versions
 						var fNewsC = lang.version == '_com' && /Com /.test(fArticles[i]);
@@ -1262,7 +1262,7 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 					var	n = news[(i+1)];
 					fUrl.push(n.slice(0,n.indexOf('\' id')));
 					fArticles.push(n.slice(n.indexOf('/a>')+3,n.indexOf('</b>')));
-					n = n.slice(n.indexOf('Geplaatst door'),n.indexOf("<img src='themes/Tweaked-Blue/images/border/news/readmore.gif'>"));
+					n = n.slice(n.indexOf('Geplaatst door'),n.indexOf('<img src="themes/Tweaked-Blue/images/border/news/readmore.gif">'));
 					n = n.slice(n.indexOf('</a>')+8,n.indexOf('-20'));
 					fDay.push(parseInt(n.slice(n.indexOf('>')+1,n.indexOf('-')),10));
 					fMonth.push(parseInt(n.slice(n.indexOf('-')+1,n.indexOf('-')+3),10));
@@ -1276,17 +1276,17 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 //---------------- Jail Highlighter and Jail autoform ----------------
 if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	//assemble prefs
-	var words = replaceLast(getValue('bust',''),',','',1).split(",");
-	var bgColors = replaceLast(getValue('colours',''),',','',1).split(",");
-	var prioritys = replaceLast(getValue('priority',''),',','',1).split(",");
-	var nobust = replaceLast(getValue('nobust',''),',','',1).split(",");
-	var maxHL = getValue('maxHL',5);
-	var FL_prior = getValue('FL_prior',3);
-	var Fam_prior = getValue('Fam_prior',9);
+	var words = replaceLast(getValue('bust', ''), ',', '', 1).split(',');
+	var bgColors = replaceLast(getValue('colours', ''), ',', '', 1).split(',');
+	var prioritys = replaceLast(getValue('priority', ''), ',', '', 1).split(',');
+	var nobust = replaceLast(getValue('nobust', ''), ',', '', 1).split(',');
+	var maxHL = getValue('maxHL', 5);
+	var FL_prior = getValue('FL_prior', 3);
+	var Fam_prior = getValue('Fam_prior', 9);
 	var lowlifes = 0;
 
 	var span = cEL('span');
-	var count = $X('/html/body//form/center').innerHTML.split("<br>")[1].match(/\d+/g)[0];
+	var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
 	span.innerHTML = '<br> &nbsp;In jail: ' + count + '<br><br> &nbsp;[#] = alt+shift hotkey';
 	$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 
@@ -1295,18 +1295,18 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	if(famRGB==''){
 		famHex = '';
 	} else {
-		famRGB = famRGB.replace(/[^0-9,]/g,'');
+		famRGB = famRGB.replace(/[^0-9,]/g, '');
 		famRGB = famRGB.split(',');
-		famHex = '#'+RGBtoHex(famRGB[0],famRGB[1],famRGB[2]);
+		famHex = '#'+RGBtoHex(famRGB[0], famRGB[1], famRGB[2]);
 	}
 
 	var friendRGB = $x('//td[@width="125px"]')[1].style.backgroundColor;
 	if(friendRGB==''){
 		friendHex = '';
 	} else {
-		friendRGB = friendRGB.replace(/[^0-9,]/g,'');
+		friendRGB = friendRGB.replace(/[^0-9,]/g, '');
 		friendRGB = friendRGB.split(',');
-		friendHex = '#'+RGBtoHex(friendRGB[0],friendRGB[1],friendRGB[2]);
+		friendHex = '#'+RGBtoHex(friendRGB[0], friendRGB[1], friendRGB[2]);
 	}
 
 	HL_row = new Array(maxHL);
@@ -1319,40 +1319,40 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	inJail.forEach(function($n){
 		nicka = $n.getElementsByTagName('td')[0].innerHTML;
 		if(nicka.indexOf('<a ')!=-1){
-			nicka = nicka.slice(nicka.indexOf('<a'),nicka.indexOf('/a>')+3);
+			nicka = nicka.slice(nicka.indexOf('<a'), nicka.indexOf('/a>')+3);
 		}
-		nick = nicka.slice(nicka.indexOf('>')+1,nicka.indexOf('</')).toUpperCase();
+		nick = nicka.slice(nicka.indexOf('>')+1, nicka.indexOf('</')).toUpperCase();
 		nick = nick.slice(nick.lastIndexOf('>')+1);
 
 		fama = $n.getElementsByTagName('td')[1].innerHTML;
-		fam = fama.slice(fama.indexOf('>')+1,fama.indexOf('</')).toUpperCase();
+		fam = fama.slice(fama.indexOf('>')+1, fama.indexOf('</')).toUpperCase();
 		fam = fam.slice(fam.lastIndexOf('>')+1);
 
-		$n.setAttribute('priority',10);//set default priority, then check for friends and fam
+		$n.setAttribute('priority', 10);//set default priority, then check for friends and fam
 		if($n.getAttribute('bgcolor') != ''){
 			if($n.getAttribute('bgcolor').toLowerCase() == famHex.toLowerCase()){
-				$n.setAttribute('priority',Fam_prior);
+				$n.setAttribute('priority', Fam_prior);
 			}
 			if($n.getAttribute('bgcolor').toLowerCase() == friendHex.toLowerCase()){
-				$n.setAttribute('priority',FL_prior);
+				$n.setAttribute('priority', FL_prior);
 			}
 		}
 
 		for(i=0;i<=words.length-1;i++){//loop players and see if either nick or fam matches with prefs
 			ItemPriority = (prioritys[i]) ? prioritys[i] : 10;
-			if((fam == words[i].replace('%20',' ').replace('%26','&')||fama.toUpperCase() == words[i].replace('%20',' ').replace('%26','&')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the fam is higher
-				$n.setAttribute('bgcolor',bgColors[i]);
-				$n.setAttribute('priority',ItemPriority);
+			if((fam == words[i].replace('%20', ' ').replace('%26', '&')||fama.toUpperCase() == words[i].replace('%20', ' ').replace('%26', '&')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the fam is higher
+				$n.setAttribute('bgcolor', bgColors[i]);
+				$n.setAttribute('priority', ItemPriority);
 			}
-			if((nick == words[i].replace('%20',' ')||nicka.toUpperCase() == words[i].replace('%20',' ')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the nick is higher
-				$n.setAttribute('bgcolor',bgColors[i]);
-				$n.setAttribute('priority',ItemPriority);
+			if((nick == words[i].replace('%20', ' ')||nicka.toUpperCase() == words[i].replace('%20', ' ')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the nick is higher
+				$n.setAttribute('bgcolor', bgColors[i]);
+				$n.setAttribute('priority', ItemPriority);
 			}
 		}
 		for(i=0;i<=nobust.length-1;i++){//check for nobusts
-			if(nobust[i]!='' && (nick == nobust[i].replace('%20',' ').replace('%26','&') || nicka.toUpperCase() == nobust[i].replace('%20',' ').replace('%26','&') || fam == nobust[i].replace('%20',' ').replace('%26','&') || fama.toUpperCase() == nobust[i].replace('%20',' ').replace('%26','&'))){
-				$n.setAttribute('bgcolor','');
-				$n.setAttribute('priority',99);
+			if(nobust[i]!='' && (nick == nobust[i].replace('%20', ' ').replace('%26', '&') || nicka.toUpperCase() == nobust[i].replace('%20', ' ').replace('%26', '&') || fam == nobust[i].replace('%20', ' ').replace('%26', '&') || fama.toUpperCase() == nobust[i].replace('%20', ' ').replace('%26', '&'))){
+				$n.setAttribute('bgcolor', '');
+				$n.setAttribute('priority', 99);
 				$n.getElementsByTagName('input')[0].parentNode.removeChild($n.getElementsByTagName('input')[0]);
 				lowlifes++;
 			}
@@ -1362,9 +1362,9 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 			k = count+1;
 			HL_row[count] = $n.cloneNode(1);//clone node for "friends" display and add hotkey
 			span = cEL('span');
-			span.innerHTML = '<a accesskey="'+k+'" style="color: '+HL_row[count].childNodes[7].firstChild.getAttribute('color')+'!important;" href=' + '"javascript:document.getElementById(' + "'" + j + "'" + ').click();">['+k+']</a>';
+			span.innerHTML = '<a accesskey="'+k+'" style="color:'+HL_row[count].childNodes[7].firstChild.getAttribute('color')+'!important;" href=' + '"javascript:document.getElementById(' + "'" + j + "'" + ').click();">['+k+']</a>';
 			HL_row[count].childNodes[7].insertBefore(span,HL_row[count].childNodes[7].firstChild.nextSibling);
-			HL_row[count].childNodes[9].firstChild.setAttribute('onChange','javascript:document.getElementById(' + "'" + j + "'" + ').click();this.checked=false;');
+			HL_row[count].childNodes[9].firstChild.setAttribute('onChange', 'javascript:document.getElementById(' + '"' + j + '"' + ').click();this.checked=false;');
 			count++;
 		}
 		j++;
@@ -1381,17 +1381,17 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 			playerRow = playerRowTmp;//get player node
 			button.checked = 1;
 		}
-		func = "changed = document.getElementById("+i+");"+
-			"if(changed.checked){"+
+		func = 'changed = document.getElementById('+i+');'+
+			'if(changed.checked){'+
 				'newsel=changed.parentNode.parentNode.cloneNode(1);'+
-				'oldsel=document.getElementById("show");'+
+				'oldsel=document.getElementById(\'show\');'+
 				'oldsel.parentNode.replaceChild(newsel,oldsel);'+
-				'newsel.setAttribute("id","show");'+
+				'newsel.setAttribute(\'id\', \'show\');'+
 				'buy=newsel.lastChild.previousSibling.firstChild;' + //node to add buy-out hotkey
-				'buy.setAttribute("accessKey","0");' +
-				'buy.firstChild.innerHTML+=" [0]";' +
-			"}";
-		button.setAttribute('onChange',func);//add changer for 'show selected player'
+				'buy.setAttribute(\'accessKey\', \'0\');' +
+				'buy.firstChild.innerHTML+=\' [0]\';' +
+			'}';
+		button.setAttribute('onChange', func);//add changer for 'show selected player'
 	}
 	if(prior == 10 && inJail.length > lowlifes){//if no highlights set a random
 		i = (Math.ceil(Math.random()*(inJail.length-lowlifes))-1);
@@ -1406,13 +1406,13 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 
 	//add selected player on top of table
 	tr = $X('/html/body//form/center/table/tbody/tr[2]').cloneNode(1);//black line
-	$X('//table[@class="thinline"]/tbody').insertBefore(tr,$X('//table[@class="thinline"]/tbody/tr'));
+	$X('//table[@class="thinline"]/tbody').insertBefore(tr, $X('//table[@class="thinline"]/tbody/tr'));
 	tr = playerRow.cloneNode(1);//clone of selected player row
 	tr.id = 'show';
 	buy = tr.lastChild.previousSibling.firstChild;//node to add buy-out hotkey
-	buy.setAttribute('accessKey','0');
+	buy.setAttribute('accessKey', '0');
 	buy.firstChild.innerHTML += ' [0]';
-	$X('//center/table[@class="thinline"]/tbody').insertBefore(tr,$X('//center/table[@class="thinline"]/tbody/tr'));
+	$X('//center/table[@class="thinline"]/tbody').insertBefore(tr, $X('//center/table[@class="thinline"]/tbody/tr'));
 
 	if(maxHL!=0&&prior!=10){//no need to add stuff with max=0 or no HL
 		//add footer
@@ -1425,15 +1425,15 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		GM_addStyle('div#footerwrap{left:'+findPos($X('//table[@class="thinline"]'))[0]+'px;}');
 
 		wrap = cEL('div');
-		wrap.id = "footerwrap";
+		wrap.id = 'footerwrap';
 		footer = cEL('div');
-		footer.id = "footer";
-		footer.align = "center";
+		footer.id = 'footer';
+		footer.align = 'center';
 		footer.style.position = 'fixed';
 		footer.style.border = '0px !important';
-		footer.setAttribute('class','otable');
+		footer.setAttribute('class', 'otable');
 
-		friends = '<table id="friends" class="thinline" cellspacing="0" cellpadding="2" width="599" rules="none"><tr bgcolor="#000000" height="0">';
+		friends = '<table id="friends" class="thinline" cellspacing="0" cellpadding="2" width="599" rules="none"><tr bgcolor="#000" height="0">';
 		cols = $x('//td[@class="tableheader"]');
 		for(i=0;i<6;i++){
 			friends += '<td width="'+ cols[i].offsetWidth +'"></td>';
@@ -1452,7 +1452,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 }
 
 //---------------- In jail page ----------------
-if (dlp == '/iminjail.php' && db.innerHTML.indexOf("<img") != -1) {
+if (dlp == '/iminjail.php' && db.innerHTML.indexOf('<img') != -1) {
 
 	if ($X('//img[@id="imgcode"]')) { // ADD autofocus if captcha is missing
 		$X('//input[@name="ver"]').focus();
@@ -1463,12 +1463,12 @@ if (dlp == '/iminjail.php' && db.innerHTML.indexOf("<img") != -1) {
 	}
 
 	if (prefs[3]) { //add buy out hotkey
-		$X("//input").id = 'button';
+		$X('//input').id = 'button';
 		var click = cEL('a'); //add dummy link to tie accessKey to
 		click.href = 'javascript: document.getElementById("button").click();';
 		click.style.display = 'none';
 		click.accessKey = getValue('buyout', '/');
-		$X("//input").parentNode.appendChild(click);
+		$X('//input').parentNode.appendChild(click);
 	}
 	if (prefs[23]) { //if go to jailpage is on
 		if ($I('/html').indexOf('<body></body>') != -1 || $I('/html').indexOf('<body>') == -1 || !db) {
@@ -1484,7 +1484,7 @@ if (dlp == '/iminjail.php' && db.innerHTML.indexOf("<img") != -1) {
 		}, (((min * 60) + parseInt(sec) + 2) * 1000));
 	}
 }
-if (dlp == '/iminjail.php' && db.innerHTML.indexOf("<img") == -1 && prefs[23]) {
+if (dlp == '/iminjail.php' && db.innerHTML.indexOf('<img') == -1 && prefs[23]) {
 	window.location = 'http://' + dlh + '/jail.php';
 }
 if (dlp + dls == '/iminjail.php?buymeout=yes' && prefs[23]) {
@@ -1510,7 +1510,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
 		$x('//input[@type="radio"]')[4].checked = true;
 	} else if (prefs[10]) {
-		refreshIn("/BeO/webroot/index.php?module=Crimes");
+		refreshIn('/BeO/webroot/index.php?module=Crimes');
 	}
 	if ($X('//input[@type="text"]')) {
 		$X('//input[@type="text"]').focus();
@@ -1527,7 +1527,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 		}
 		$x('//input')[(p.indexOf(p.max() + '') + 1)].checked = true; //select radio by %
 	} else if (prefs[10]) {
-		refreshIn("/BeO/webroot/index.php?module=Cars");
+		refreshIn('/BeO/webroot/index.php?module=Cars');
 	}
 	if ($X('//input[@type="text"]')) {
 		$X('//input[@type="text"]').focus();
@@ -1537,14 +1537,14 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 }
 
 //--------------- we got the car ---------------
-if (urlsearch == "/BeO/webroot/index.php?module=Cars&action=docar") {
+if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 	var worth = db.innerHTML.match(/\[\$(.*)\]/);
 	if (worth != null) {
 		var worth2 = parseInt(worth[1].replace(',', '').trim(), 10);
 		if (worth2 >= 5000) {
-			$X("//input[@type='submit']").focus();
+			$X('//input[@type="submit"]').focus();
 		} else {
-			$x("//input[@type='submit']")[1].focus();
+			$x('//input[@type="submit"]')[1].focus();
 		}
 	}
 }
@@ -1570,13 +1570,13 @@ if (dlp == '/mid.php') {
 	boXp = x2 + '[3]/td[5]';
 	if ($X(healthXpBar)) {
 		setValue('missingHealth', '100' - getTXT(healthXpBar).replace('%', ''));
-		$I(cashXp, "<a href='/bank.php' target='main'><b>C</b>ash:</a>");
-		$I(bulletXp, "<a href='/bullets2.php' target='main'><b>B</b>ullets:</a>");
-		$I(rpXp, "<a href='BeO/webroot/index.php?module=Launchpad' target='main'><b>R</b>ank progress:</a>");
-		$I(healthXp, "<a href='/BeO/webroot/index.php?module=Bloodbank&action=' target='main'><b>H</b>ealth:</a>");
+		$I(cashXp, '<a href="/bank.php" target="main"><b>C</b>ash:</a>');
+		$I(bulletXp, '<a href="/bullets2.php" target="main"><b>B</b>ullets:</a>');
+		$I(rpXp, '<a href="BeO/webroot/index.php?module=Launchpad" target="main"><b>R</b>ank progress:</a>');
+		$I(healthXp, '<a href="/BeO/webroot/index.php?module=Bloodbank&action=" target="main"><b>H</b>ealth:</a>');
 		$I(healthXpBar, '<a href="/BeO/webroot/index.php?module=Bloodbank&action=" target="main">' + $I(healthXpBar) + '</a>');
-		$I(boXp, "<a href='jail.php' target='main'><b>B</b>usting skill:</a>");
-		$I(bgXp, "<a href='/BeO/webroot/index.php?module=Bodyguards&action=' target='main'><b>B</b>odyguards:</a>");
+		$I(boXp, '<a href="jail.php" target="main"><b>B</b>usting skill:</a>');
+		$I(bgXp, '<a href="/BeO/webroot/index.php?module=Bodyguards&action=" target="main"><b>B</b>odyguards:</a>');
 		if (prefs[6]) { //remove busting skill bar
 			$Del('//div[@id="panel"]//table//tr[3]//td[6]');
 			$Del('//div[@id="panel"]//table//tr[3]//td[5]');
@@ -1588,35 +1588,33 @@ if (dlp == '/mid.php') {
 if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 	if(db.innerHTML.search('table') != -1){
 		var tbody = $X('//tbody');
-		tbody.lastChild.previousSibling.previousSibling.previousSibling.setAttribute("name","forumPosts");
-		tbody.lastChild.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.setAttribute("name","FL");
+		tbody.lastChild.previousSibling.previousSibling.previousSibling.setAttribute('name', 'forumPosts');
+		tbody.lastChild.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.setAttribute('name', 'FL');
 
 		var status = $X('//span[@id="status"]');
 		var alive = (status.innerHTML.indexOf(lang.profile[3])==-1);//alive/dead
-		
+
 		if (status.innerHTML == lang.lastontime[0]) { // show last online time on profile
-			status.innerHTML = 'hoi';
 			GM_xmlhttpRequest({
 				method: 'GET',
 				url: 'http://rix.omertabeyond.com/laston.xml.php?v='+lang.version.replace('_','')+'&ing='+$X('//span[@id="username"]').innerHTML,
 				headers: {'User-agent': ScriptName + ' ' + ScriptVersion + '.'+ ScriptSubVersion, 'Accept': 'application/xml,text/xml'},
 				onload: function (resp) {
-					status.innerHTML = 'hoi2';
 					var parser = new DOMParser();
-					var dom = parser.parseFromString(resp.responseText, "application/xml");
+					var dom = parser.parseFromString(resp.responseText, 'application/xml');
 					status.innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
 				}
 			});
 		}
-		
+
 		if(prefs[30]){
 			$Del('//*[@name="forumPosts"]');
 		}
 
 		if(prefs[19]){
-			var avatarXP = "//*[@name='FL']//img[contains(@src, 'omertao.png')] | //*[@name='FL']//img[contains(@src, 'userimg')]";
+			var avatarXP = '//*[@name="FL"]//img[contains(@src, "omertao.png")] | //*[@name="FL"]//img[contains(@src, "userimg")]';
 			$x(avatarXP).forEach(function($n){
-					$n.setAttribute("id","flnames");
+					$n.setAttribute('id', 'flnames');
 					$X('//*[@id="flnames"]').parentNode.removeChild($X('//*[@id="flnames"]').parentNode.children[0]);
 				}
 			);
@@ -1632,14 +1630,14 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		if(x==-1){ tr--; }
 		if(y==-1){ tr--; }
 		if(z==-1){ tr--; }
-		xpath = "/html/body//center/table/tbody/tr["+tr+"]/td[2]";
+		xpath = '/html/body//center/table/tbody/tr['+tr+']/td[2]';
 		var wlth = $I(xpath);
 
-		var kind = ["", " ($0 - $50.000)", " ($50.001 - $100.000)", " ($100.001 - $500.000)", " ($1.000.001 - $5.000.000)", " ($5.000.001 - $15.000.000)", " ( > $15.000.001)", " ($500.001 - $1.000.000)"], i=1;
+		var kind = ['', ' ($0 - $50.000)', ' ($50.001 - $100.000)', ' ($100.001 - $500.000)', ' ($1.000.001 - $5.000.000)', ' ($5.000.001 - $15.000.000)', ' ( > $15.000.001)', ' ($500.001 - $1.000.000)'], i=1;
 		lang.wealth.forEach(function($n){ if(wlth.search($n) != -1){ $I(xpath,$I(xpath) + kind[i]); i=0; } if(i!=0){ i++; }});
 
 		//Raceform
-		var xpath2 = "/html/body//center/table/tbody/tr["+(tr+1)+"]/td[2]";
+		var xpath2 = '/html/body//center/table/tbody/tr['+(tr+1)+']/td[2]';
 		var rf = $X(xpath2).textContent;
 		var q = lang.driver;
 		for(i=0;i<=10;i++){
@@ -1655,7 +1653,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		//DEAD or AKILLED ?
 		if(!alive){
 			if($X('//img').parentNode.nodeName != 'A'){
-				var akill = "<span style='color: red; font-weight: bold;'> (Akill) </span>";
+				var akill = '<span style="color:red; font-weight:bold;"> (Akill) </span>';
 				status.innerHTML += akill;
 			}
 		}
@@ -1670,9 +1668,9 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					tr = cEL('tr');
 					tdl = cEL('td');
 					tdr = tdl.cloneNode(1);
-					tdl.setAttribute('class','subtableheader');
+					tdl.setAttribute('class', 'subtableheader');
 					tdl.innerHTML = 'Actions:';
-					tdr.setAttribute('class','profilerow');
+					tdr.setAttribute('class', 'profilerow');
 
 					links = '<table cellspacing="0" cellpadding="0" border="0" width="100%"><tbody><tr>';
 					links += '<td align="left" valign="top">';
@@ -1759,12 +1757,12 @@ if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
 			setValue('bust', names.join(',')); //join and save values
 			setValue('colours', cols.join(','));
 			setValue('priority', pris.join(','));
-			alert(who + ' added to jail highlighter using default color and priority');
+			alert(who + ' added to jail highlighter using default color and priority'); //LANG
 			link = $X('/html/body//center/table/tbody/tr[3]/td[2]/a[3]');
 			link.href = dlp + '?nick=' + who + '&jh=0';
-			link.innerHTML = '<span class="red">Remove from busting list</span>';
+			link.innerHTML = '<span class="red">Remove from busting list</span>'; //LANG
 		} else {
-			alert('Oops! ' + who + ' is already in your busting list!');
+			alert('Oops! ' + who + ' is already in your busting list!'); //LANG
 		}
 	} else if (add == 0) {
 		length = getValue('jailint', 0)
@@ -1785,17 +1783,17 @@ if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
 		setValue('bust', names.join(',')); //join and save values
 		setValue('colours', cols.join(','));
 		setValue('priority', pris.join(','));
-		alert(who + ' was removed from the busting list');
+		alert(who + ' was removed from the busting list'); //LANG
 		link = $X('/html/body//center/table/tbody/tr[3]/td[2]/a[3]');
 		link.href = dlp + '?nick=' + who + '&jh=1';
-		link.innerHTML = '<span class="red">Add to busting list</span>';
+		link.innerHTML = '<span class="red">Add to busting list</span>'; //LANG
 	}
 }
 
 //---------------- Bank ----------------
 if (dlp == '/bank.php') {
 	if (db.innerHTML.search(lang.bank) != -1) {
-		db.innerHTML += "<br><b>Auto Refresh in 1 sec</b>";
+		db.innerHTML += '<br><b>Auto Refresh in 1 sec</b>'; //LANG
 		setTimeout(function () {
 			history.back();
 		}, 1000);
@@ -1807,9 +1805,9 @@ if (dlp == '/bank.php') {
 	}
 
 	//add amt of interest next to %
-	money = $x("//table")[2].getElementsByTagName("td")[2].textContent; //check for banked money
+	money = $x('//table')[2].getElementsByTagName('td')[2].textContent; //check for banked money
 	if (!money.split(' ')[1]) { //money in bank
-		rx = $x("//table")[2].getElementsByTagName("td")[6].textContent; //get recieved amt
+		rx = $x('//table')[2].getElementsByTagName('td')[6].textContent; //get recieved amt
 		tmp = 1 * rx.replace(/\D/g, '') - 1 * money.replace(/\D/g, ''); //calc interest
 		str = '';
 		while (tmp > 0) {
@@ -1823,7 +1821,7 @@ if (dlp == '/bank.php') {
 			str = dec + str;
 			tmp = Math.floor(tmp / 1000);
 		}
-		intLine = $x("//table")[2].getElementsByTagName("td")[4];
+		intLine = $x('//table')[2].getElementsByTagName('td')[4];
 		intLine.innerHTML += ' &rarr ($' + str + ')';
 	}
 
@@ -1840,19 +1838,19 @@ if (dlp == '/bank.php') {
 	var tbl = '<table class="thinline" width="100% rules="none" align="center">';
 	tbl += '<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
 	tbl += '<br>';
-	tbl += '<tr><td align="right" width="25%">You send:</td>';
+	tbl += '<tr><td align="right" width="25%">You send:</td>'; //LANG
 	tbl += '<td align="center" width="25%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'get' + func2 + '*0.9' + func3 + '">';
-	tbl += '</td><td align="right" width="25%">User gets:</td><td align="center" id="get" width="25%">$0</td></tr>';
-	tbl += '<tr><td align="right" width="25%">You want:</td>';
+	tbl += '</td><td align="right" width="25%">User gets:</td><td align="center" id="get" width="25%">$0</td></tr>'; //LANG
+	tbl += '<tr><td align="right" width="25%">You want:</td>'; //LANG
 	tbl += '<td align="center" width="25%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'give' + func2 + '/0.9' + func3 + '">';
-	tbl += '</td><td align="right" width="25%">User sends:</td><td align="center" id="give" width="25%">$0</td></tr>';
+	tbl += '</td><td align="right" width="25%">User sends:</td><td align="center" id="give" width="25%">$0</td></tr>'; //LANG
 	tbl += '<br>';
-	tbl += '<tr><td align="right" width="25%">You put into bank:</td>';
+	tbl += '<tr><td align="right" width="25%">You put into bank:</td>'; //LANG
 	tbl += '<td align="center" width="25%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'int' + func2 + func_switch + func3 + '">';
-	tbl += '</td><td align="right" width="25%">You will recieve:</td><td align="center" id="int" width="25%">$0</td></tr>';
+	tbl += '</td><td align="right" width="25%">You will recieve:</td><td align="center" id="int" width="25%">$0</td></tr>'; //LANG
 	tbl += '<br>';
 	tbl += '</table>';
 
@@ -1899,23 +1897,23 @@ if(dlp == '/garage.php'){
 
 	if(prefs[24]){
 		for(i=2;i<rows-2;i++){
-			y = "/html/body//form//center/table/tbody/tr["+(i+2)+"]/td[2]/a";//get car
+			y = '/html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
 			car = $X(y).href.match(/\d+/g)[0];
 			hcar = occar = moccar = 0;
 			checkcar(car);
 
-			z = "/html/body//form//center/table/tbody/tr["+(i+2)+"]";//get the row
+			z = '/html/body//form//center/table/tbody/tr['+(i+2)+']';//get the row
 			if(hcar==1){
-				$X(z).setAttribute('class','heistCar');
-				$X(z).setAttribute('onmouseout','this.className="heistCar";');
+				$X(z).setAttribute('class', 'heistCar');
+				$X(z).setAttribute('onmouseout', 'this.className="heistCar";');
 			}
 			if(occar==1){
-				$X(z).setAttribute('class','ocCar');
-				$X(z).setAttribute('onmouseout','this.className="ocCar";');
+				$X(z).setAttribute('class', 'ocCar');
+				$X(z).setAttribute('onmouseout', 'this.className="ocCar";');
 			}
 			if(moccar==1){
-				$X(z).setAttribute('class','mocCar');
-				$X(z).setAttribute('onmouseout','this.className="mocCar";');
+				$X(z).setAttribute('class', 'mocCar');
+				$X(z).setAttribute('onmouseout', 'this.className="mocCar";');
 			}
 		}
 	}
@@ -1923,27 +1921,27 @@ if(dlp == '/garage.php'){
 	head = $X('//h2');
 	cars = head.textContent.match(/\d+/g)[2];
 	if(cars>0){
-		head.textContent = head.textContent + ' Potential Bullets: ' + cars*12;
+		head.textContent = head.textContent + ' Potential Bullets: ' + cars*12; //LANG
 	}
 
-	var xpath = "/html/body//form//center/table/tbody/tr[" + rows + "]/td";//add menu
+	var xpath = '/html/body//form//center/table/tbody/tr[' + rows + ']/td';//add menu
 	var string = '<td><label><input type="checkbox" checked="1" ';
 	$I(xpath, $I(xpath) +
 	' <br><br><hr><br>' +
-	' Select if worth is <select size="1" id="X"><option value="1">under</option><option value="0">above</option></select>: $ <input type="text" value="6000" maxlength="5" size="8" id="max"/>' +
-	'<table><tr>'+string+'id="heist">Skip Heist cars</label></td>'+string+'id="oc">Skip OC cars</label></td>'+'</tr><tr>'+string+
-	'id="truck">Skip Trucks</label></td>'+string+'id="moc">Skip MOC cars</label></td>'+'</tr><tr>'+string+'id="nodam">Skip 0% cars</label></td><td>&nbsp;</td>'+'</tr></table>'+
-	' <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="Go" name="action"/>');
+	' Select if worth is <select size="1" id="X"><option value="1">under</option><option value="0">above</option></select>: $ <input type="text" value="6000" maxlength="5" size="8" id="max"/>' + //LANG
+	'<table><tr>'+string+'id="heist">Skip Heist cars</label></td>'+string+'id="oc">Skip OC cars</label></td>'+'</tr><tr>'+string+ //LANG
+	'id="truck">Skip Trucks</label></td>'+string+'id="moc">Skip MOC cars</label></td>'+'</tr><tr>'+string+'id="nodam">Skip 0% cars</label></td><td>&nbsp;</td>'+'</tr></table>'+ //LANG
+	' <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="Go" name="action" />');
 
 	if(ls.length > 1){//select cars
 		if(ls.indexOf('heist') != -1 || ls.indexOf('nodam') != -1 || ls.indexOf('max') != -1 || ls.indexOf('oc') != -1){
 			var max=GetPost('max'), truck=GetPost('truck'), oc=GetPost('oc'), moc=GetPost('moc'), heist=GetPost('heist'), nodam=GetPost('nodam'), select=GetPost('select'), a=0, y, car, z, perc, types;
 			for(i=2;i<rows-2;i++){
-				y = "/html/body//form/center/table/tbody/tr["+(i+2)+"]/td[2]/a";//get car
+				y = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
 				car = $X(y).href.match(/\d+/g)[0];
-				z = "/html/body//form/center/table/tbody/tr["+(i+2)+"]/td[3]";//get percentage damage
+				z = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[3]';//get percentage damage
 				perc = $I(z);
-				perc = parseInt(perc.slice(0,perc.indexOf("%")));
+				perc = parseInt(perc.slice(0, perc.indexOf('%')));
 
 				var hcar=0, occar=0, trcar=0, moccar=0;
 				checkcar(car);
@@ -1954,17 +1952,17 @@ if(dlp == '/garage.php'){
 				}
 
 				if(stop == 0){
-					tr = $i('//tr',(i+1));//get worth
-					tr = (tr.indexOf(")") == -1) ? tr.slice(tr.indexOf("%")) : tr.slice(tr.indexOf(")"));
-					tr = tr.replace("<td>","");
-					tr = tr.slice(tr.indexOf("$")+6);
-					tr = tr.replace("<td>","");
-					tr = tr.slice(0,tr.indexOf("<")-3);
-					tr = tr.replace(",","");
+					tr = $i('//tr', (i+1));//get worth
+					tr = (tr.indexOf(')') == -1) ? tr.slice(tr.indexOf('%')) : tr.slice(tr.indexOf(')'));
+					tr = tr.replace('<td>', '');
+					tr = tr.slice(tr.indexOf('$')+6);
+					tr = tr.replace('<td>', '');
+					tr = tr.slice(0, tr.indexOf('<')-3);
+					tr = tr.replace(',', '');
 					tr = parseInt(tr);
 
 					if((tr < max && select==1)||(tr > max && select==0)){
-						$X("/html/body//form/center/table/tbody/tr["+(i+2)+"]/td[6]/input[2]").checked = true;
+						$X('/html/body//form/center/table/tbody/tr['+(i+2)+']/td[6]/input[2]').checked = true;
 					}
 				}
 			}
@@ -1975,7 +1973,7 @@ if(dlp == '/garage.php'){
 //---------------- Statistics ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 	//change all users link
-	$X("//a[contains(@href, '/allusers.php')]").href = '/allusers.php?start=0&order=lastrank&sort=DESC&dead=HIDE';
+	$X('//a[contains(@href, "/allusers.php")]').href = '/allusers.php?start=0&order=lastrank&sort=DESC&dead=HIDE';
 
 	info = cEL('div');
 	info.id = 'info';
@@ -1986,22 +1984,22 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 	function runCode(tab) {
 		if (tab.indexOf('action=global_stats') != -1) {
 			var a, b, x, y, ql, qLinks, keys;
-			a = "//center/table[";
-			b = "]/tbody/tr/td";
+			a = '//center/table[';
+			b = ']/tbody/tr/td';
 			y = ['dfams', 'honour', 'cdtc', 'fams', 'bf', 'roul', 'num', 'slot', 'bj', 'book', 'pb'];
 			ql = lang.stats[1];
-			qLinks = "<table class='thinline' width='90%' rules='none' cellspacing='0' cellpadding='2'><tbody><tr><td class='tableheader' align='center'>";
+			qLinks = '<table class="thinline" width="90%" rules="none" cellspacing="0" cellpadding="2"><tbody><tr><td class="tableheader" align="center">';
 			keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '-', '='];
 			for (i = 0; i <= 10; i++) {
 				qLinks += ((i > 0) ? ' - ' : '') + '<a href="#' + y[i] + '" accessKey="' + keys[i] + '"><b>' + ql[i] + '</b></a>';
-				$I(a + (i + 4) + b, "<a name='" + y[i] + "'>" + $I(a + (i + 4) + b) + "</a>&nbsp;&nbsp;&nbsp;<a href='#'>&uarr; <u>" + lang.stats[0] + "</u> &uarr;</a>");
+				$I(a + (i + 4) + b, '<a name="' + y[i] + '">' + $I(a + (i + 4) + b) + '</a>&nbsp;&nbsp;&nbsp;<a href="#">&uarr; <u>' + lang.stats[0] + '</u> &uarr;</a>');
 			}
 			qLinks += '</td></tr><tr><td height="1" bgcolor="black"></tr></tbody></table>' + $X('//center').innerHTML;
 			$X('//center').innerHTML = qLinks;
 			nickReader(); //apply nickReader again
 		}
 		if (tab.indexOf('allusers.php') != -1 || tab.indexOf('action=users_online') != -1 || tab.indexOf('action=global_stats') != -1) {
-			var nick = $I('//div[@id="info"]').split(" ")[0]; //look it's me
+			var nick = $I('//div[@id="info"]').split(' ')[0]; //look it's me
 			if (nick !== '') {
 				var names = $x('//a');
 				names.forEach(function ($n) {
@@ -2015,7 +2013,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 	}
 
 	getID('smsdivcontainer').addEventListener('DOMNodeInserted', function (event) {
-		if (event.target.nodeName == "CENTER") {
+		if (event.target.nodeName == 'CENTER') {
 			runCode(selectedTab());
 		}
 	}, false);
@@ -2124,35 +2122,35 @@ if(prefs[13] && dlp == '/family.php'){
 
 	//add legend to members table
 	memTable = $x('//table[@class="thinline"]')[6].getElementsByTagName('tr');
-	memTable[0].innerHTML = "<td class='tableheader' style='text-align: left!important;'>&nbsp;Members:</td><td class='tableheader' style='font-weight: normal !important;text-align: right!important;'><span><sup>(<u>capo/top3</u>) - (online > <span class='blue'>member</span> | <span class='green'>objectowner</span> | <span class='orange'>capo</span> | <span class='red'>top3</span>)</sup></span>&nbsp;</td>";
+	memTable[0].innerHTML = '<td class="tableheader" style="text-align:left !important">&nbsp;Members:</td><td class="tableheader" style="font-weight:normal !important; text-align:right !important;"><span><sup>(<u>capo/top3</u>) - (online > <span class="blue">member</span> | <span class="green">objectowner</span> | <span class="orange">capo</span> | <span class="red">top3</span>)</sup></span>&nbsp;</td>'; //LANG
 
 	for(i=0; ++i<memTable.length;){//cosmetical fix for colspan
-		memTable[i].getElementsByTagName('td')[0].setAttribute('colspan','2');
+		memTable[i].getElementsByTagName('td')[0].setAttribute('colspan', '2');
 	}
 
 	//add % online
 	membersL = $X('//table//table//tr['+(nTop+8)+']/td');
 	membersR = $X('//table//table//tr['+(nTop+8)+']/td[2]');
-	mem = parseInt(membersR.textContent,10);
+	mem = parseInt(membersR.textContent, 10);
 	membersR.innerHTML = Math.round(aOnline.length / mem * 100) + '% ('+aOnline.length + ' / ' + membersR.textContent + ' )';
-	membersL.innerHTML = membersL.textContent.replace(':','') + ' Online:';
+	membersL.innerHTML = membersL.textContent.replace(':', '') + ' Online:';
 
 	//add # space left
 	HQ = $X('//table//table//tr['+(nTop+10)+']/td[2]');
-	HQ.innerHTML = HQ.textContent + ' (' + (parseInt(HQ.textContent,10)-mem) + ' open )';
+	HQ.innerHTML = HQ.textContent + ' (' + (parseInt(HQ.textContent, 10)-mem) + ' open )';
 
 	//calc CD/GF promos
 	promo = $x('//table[@class="thinline"]//td[@class="tableitem"]//table//tr');
 
-	var chiefP = promo[2].getElementsByTagName('td')[7].textContent.replace(/\D/g,'');
-	var brugP = promo[3].textContent.replace(/\D/g,'');
+	var chiefP = promo[2].getElementsByTagName('td')[7].textContent.replace(/\D/g, '');
+	var brugP = promo[3].textContent.replace(/\D/g, '');
 	if(brugP != '0' && chiefP !='0'){
 		var percentage = ((brugP-chiefP)/chiefP);
 	} else {
 		var percentage = 0;
 	}
-	var cdP = (parseInt((brugP*percentage),10)+parseInt(brugP,10));
-	var gfP = (parseInt((cdP*percentage),10)+parseInt(cdP,10));
+	var cdP = (parseInt((brugP*percentage), 10)+parseInt(brugP, 10));
+	var gfP = (parseInt((cdP*percentage), 10)+parseInt(cdP, 10));
 
 	promo[3].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
 }
@@ -2168,22 +2166,22 @@ if(dlp == '/cpuser.php' && db.innerHTML.search('type="password"')==-1){
 //--Add Capo Money list + calc
 	txt = $x('//td[@class="tableitem"]');//CapoMoney txt
 	nick = $x('//td[@class="tableheader"]/b');//Capo's
-	nick.splice(0,1);//remove first table (not a capo table)
+	nick.splice(0, 1);//remove first table (not a capo table)
 	table = $X('//table');//select first table
 	input = $X('//input[@value="Promote"]');//select first input
-	a = "//table[";
-	b = "]//tr/td[@class='tableheader']/b";
+	a = '//table[';
+	b = ']//tr/td[@class="tableheader"]/b';
 
 	//setup new table
 	newTable = cEL('table');
-	newTable.setAttribute('cellspacing','0');
-	newTable.setAttribute('cellpadding','3');
-	newTable.setAttribute('bordercolor','black');
-	newTable.setAttribute('cellspacing','0');
-	newTable.setAttribute('border','1');
-	newTable.setAttribute('bgcolor','#a8a8a8');
-	newTable.setAttribute('width','600');
-	newTable.setAttribute('rules','none');
+	newTable.setAttribute('cellspacing', '0');
+	newTable.setAttribute('cellpadding', '3');
+	newTable.setAttribute('bordercolor', 'black');
+	newTable.setAttribute('cellspacing', '0');
+	newTable.setAttribute('border', '1');
+	newTable.setAttribute('bgcolor', '#a8a8a8');
+	newTable.setAttribute('width', '600');
+	newTable.setAttribute('rules', 'none');
 	//clone header from existing table
 		headTr = table.getElementsByTagName('tr')[0].cloneNode(1);
 		headTr.getElementsByTagName('td')[0].innerHTML = '<b>Capomoney\'s</b>';
@@ -2202,25 +2200,25 @@ if(dlp == '/cpuser.php' && db.innerHTML.search('type="password"')==-1){
 					list += '<tr><td><a href="#'+name+'">&darr;</a></td><td><a href="http://'+dlh+'/user.php?nick='+name+'">'+name+'</a>('+member+')';
 					list += '</td><td>';
 					CM = txt[i].innerHTML.slice(0,txt[i].innerHTML.indexOf('<'));
-					CM = CM.replace(/[a-zA-Z]| |\s/g,'');
-					list += CM.replace('$','$ ') + '</td><td>';
+					CM = CM.replace(/[a-zA-Z]| |\s/g, '');
+					list += CM.replace('$', '$ ') + '</td><td>';
 					CM = CM.replace(/[^0-9]/g,'');
 					list += (5000000 - CM)>0 ? '$ ' + commafy((5000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//CD
 					list += (7500000 - CM)>0 ? '$ ' + commafy((7500000 - CM)) + '<td></tr>' : '<b>X</b></td><tr>';//GF
-					$I(a+(i+2)+b,"<a name='" + name + "'>" + $I(a+(i+2)+b) + "</a>&nbsp;<a href='#'>&uarr; <u>"+lang.stats[0]+"</u> &uarr;</a>");
+					$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
 				}
 				list += '</table>';
 			newTd.innerHTML = list;
 		newTr.appendChild(newTd);
 	newTable.appendChild(newTr);
 
-	table.parentNode.insertBefore(newTable,input.nextSibling);//add newTable to page
-	table.parentNode.insertBefore(cEL('p'),input.nextSibling);//need more space ;)
+	table.parentNode.insertBefore(newTable, input.nextSibling);//add newTable to page
+	table.parentNode.insertBefore(cEL('p'), input.nextSibling);//need more space ;)
 }
 if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 	//Shortcut to send
 	bank = $x('//table[@class="thinline"]//td[@class="tableheader"]/b');
-	name = bank[3].textContent.slice(bank[3].textContent.indexOf(' '),bank[3].textContent.lastIndexOf(':')).replace(/\s/,'');
+	name = bank[3].textContent.slice(bank[3].textContent.indexOf(' '), bank[3].textContent.lastIndexOf(':')).replace(/\s/, '');
 	bank[2].innerHTML += '&nbsp;<a href="#'+name+'">&darr;</a>';
 	bank[3].innerHTML += '&nbsp;<a name="'+name+'"><a href="#">&uarr;</a>';
 	//Calculators
@@ -2236,22 +2234,22 @@ if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 	var tbl = '<table class="thinline" width="600" rules="none" align="center">';
 	tbl +='<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
 	tbl +='<br>';
-	tbl +='<tr><td align="right" width="25%">You send:</td>';
+	tbl +='<tr><td align="right" width="25%">You send:</td>'; //LANG
 	tbl +='<td align="center" width="25%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'get'+func2+'*0.85'+func3+'">';
-	tbl += '</td><td align="right" width="25%">User gets:</td><td align="center" id="get" width="25%">$0</td></tr>';
-	tbl +='<tr><td align="right" width="25%">You want:</td>';
+	tbl += '</td><td align="right" width="25%">User gets:</td><td align="center" id="get" width="25%">$0</td></tr>'; //LANG
+	tbl +='<tr><td align="right" width="25%">You want:</td>'; //LANG
 	tbl +='<td align="center" width="25%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'give'+func2+'/0.85'+func3+'">';
-	tbl += '</td><td align="right" width="25%">User sends:</td><td align="center" id="give" width="25%">$0</td></tr>';
+	tbl += '</td><td align="right" width="25%">User sends:</td><td align="center" id="give" width="25%">$0</td></tr>'; //LANG
 	tbl +='<br>';
 	tbl += '</table>';
-	$X("//table").innerHTML += '<br>'+tbl;
+	$X('//table').innerHTML += '<br>'+tbl;
 
 	if(prefs[5]){
 		var inputs = $x('//input[@name="amount"] | //input[@name="amounttpob"]');
 		inputs.forEach(function($n){
-			$n.setAttribute('onkeydown','javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 		});
 	}
 }
@@ -2265,7 +2263,7 @@ if (prefs[26]) {
 				getELNAME('bullets')[0].value = 50;
 			}
 			if (getELNAME('gun')[0]) {
-				getELNAME('gun')[0].value = "real";
+				getELNAME('gun')[0].value = 'real';
 			}
 			dr = getELNAME('driver')[0];
 			if (dls.indexOf('who') != -1) {
@@ -2311,23 +2309,23 @@ if (prefs[26]) {
 	if ((/MegaOC/).test(dls)) {
 		if (/action=setexplosives/.test(db.innerHTML)) { //as EE
 			$x('//input[@type="radio"]')[2].checked = true;
-			window.addEventListener("load", function () {
+			window.addEventListener('load', function () {
 				$x('//input')[3].focus();
 			}, true);
 		}
 		if (/action=setcar/.test(db.innerHTML)) { //as DR
-			window.addEventListener("load", function () {
+			window.addEventListener('load', function () {
 				$x('//input')[0].focus();
 			}, true);
 		}
 		if (/action=setbullets/.test(db.innerHTML)) { //as WE
 			$x('//input[@type="text"]')[0].value = 500;
-			window.addEventListener("load", function () {
+			window.addEventListener('load', function () {
 				$x('//input[@type="submit"]')[0].focus();
 			}, true);
 		}
 		if (/drivers/.test(db.innerHTML)) { //as LE
-			window.addEventListener("load", function () {
+			window.addEventListener('load', function () {
 				$x('//input')[0].focus();
 			}, true);
 		}
@@ -2351,12 +2349,12 @@ if (prefs[26]) {
 
 //---------------- Raidpage ----------------
 if (dls == '?module=Spots' && prefs[34]) {
- 	if (db.innerHTML.indexOf('<div style="position: absolute; background: url(&quot;/static/images/cities/maps') != -1) {
+ 	if (db.innerHTML.indexOf('<div style="position:absolute; background:url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@onmouseover, "Spots.popup")]').length; // get total amount of spots
 
 		var div = cEL('div'); // the main div
-		div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; font-family:Tahoma,Verdana;');
-		divdump = '<table class="thinline" style="width:600px;" cellpadding="0"><tr class="tableheader"><td>'+lang.raidpage[3]+'</td><td>'+lang.raidpage[4]+'</td><td>'+lang.raidpage[5]+'</td><td>'+lang.raidpage[6]+'</td><td>'+lang.raidpage[7]+'</td><td>'+lang.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="6"></td></tr>';
+		div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; font-family:Tahoma,Verdana');
+		divdump = '<table class="thinline" style="width:600px" cellpadding="0"><tr class="tableheader"><td>'+lang.raidpage[3]+'</td><td>'+lang.raidpage[4]+'</td><td>'+lang.raidpage[5]+'</td><td>'+lang.raidpage[6]+'</td><td>'+lang.raidpage[7]+'</td><td>'+lang.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="6"></td></tr>';
 
 		var rex = new RegExp('\<b\>(.*)<\/b\>', 'g');
 		var r = db.innerHTML.match(rex); // getting types, do NOT use $x/getTAG since that fails
@@ -2397,22 +2395,22 @@ if (dls == '?module=Spots' && prefs[34]) {
 			var rpfam = owner.match(rex);
 			if (rpfam != null) {
 				if (rpfam[1] != getValue('family', '')) {
-					rpform = '<form name="startraid" method="post" style="display:inline;" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
+					rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
 				}
 			}
 			else {
-				rpform = '<form name="startraid" method="post" style="display:inline;" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
+				rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
 			}
 			//parsing everything
-			divdump += '<tr height="22px"><td style="padding-left:5px;">'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?page=user&nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px;">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px;"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center;">'+time+'</td><td style="text-align:center;">'+rpform+'</td></tr>';
+			divdump += '<tr height="22px"><td style="padding-left:5px">'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?page=user&nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
 		}
 		divdump += '</table>';
 		div.innerHTML = divdump;
 		db.innerHTML = '';
 
 		var div2 = cEL('div2'); // Div with forms
-		div2.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF;');
-		div2.innerHTML = '<table class="thinline" style="width:600px;"><tr><td colspan="2" class="tableheader">'+lang.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+';"><td style="text-align:right;">'+lang.raidpage[8]+'</td><td style="padding-left:40px;"><input style="-moz-border-radius:5px; padding-left:4px;" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+';"><td style="text-align:right;">'+lang.raidpage[9]+'</td><td style="padding-left:40px;"><input style="-moz-border-radius:5px; padding-left:4px;" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
+		div2.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
+		div2.innerHTML = '<table class="thinline" style="width:600px"><tr><td colspan="2" class="tableheader">'+lang.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+lang.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+lang.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
 		var c = cEL('center');
 		c.appendChild(div2);
 		c.appendChild(cEL('br'));
@@ -2424,7 +2422,7 @@ if (dls == '?module=Spots' && prefs[34]) {
 				if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
 			}
 		}, true);
-		
+
 		if (getID('raidpagebullets').value != '') {
 			for (y = 1; y <= am; y+=1) {
 				if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
@@ -2436,7 +2434,7 @@ if (dls == '?module=Spots' && prefs[34]) {
 				if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = getID('raidpagedriver').value; }
 			}
 		}, true);
-		
+
 		if (getID('raidpagedriver').value != '') {
 			for (y = 1; y <= am; y+=1) {
 				if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = getID('raidpagedriver').value; }
@@ -2557,11 +2555,11 @@ if (dlp == '/honorpoints.php' && dls) {
 //---------------- Compatibility page ----------------
 if (dlp == '/servers.php') {
 	var x = $x('//ul/font/li');
-	//x.forEach(function($n){ $n.style.listStyleImage = 'url(\'' + GM_getResourceURL("brcGear") + '\')'; });
-	x[0].innerHTML += " - Compatible";
-	x[2].innerHTML += " - Compatible";
-	x[7].innerHTML += " - Compatible";
-	x[9].innerHTML += " - Compatible";
+	//x.forEach(function($n){ $n.style.listStyleImage = 'url(\'' + GM_getResourceURL('brcGear') + '\')'; });
+	x[0].innerHTML += ' - Compatible';
+	x[2].innerHTML += ' - Compatible';
+	x[7].innerHTML += ' - Compatible';
+	x[9].innerHTML += ' - Compatible';
 }
 
 //---------------- sell ws ----------------
@@ -2578,7 +2576,7 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 	function addPrice(num) {
 		var bullets = parseInt($X(xpath).getElementsByTagName('td')[(1 + num)].innerHTML.replace(/[^0-9.]/g, ''), 10);
 		var price = parseInt($X(xpath).getElementsByTagName('td')[(2 + num)].innerHTML.replace(/[^0-9.]/g, ''), 10);
-		$X(xpath).getElementsByTagName('td')[(1 + num)].innerHTML = $X(xpath).getElementsByTagName('td')[(1 + num)].innerHTML + " ($ " + Math.round(price / bullets) + ")";
+		$X(xpath).getElementsByTagName('td')[(1 + num)].innerHTML = $X(xpath).getElementsByTagName('td')[(1 + num)].innerHTML + ' ($ ' + Math.round(price / bullets) + ')';
 	}
 	trlen = $x('//center/table[3]/tbody/tr').length;
 	for (i = 4; i <= trlen; i++) {
@@ -2606,10 +2604,10 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 		if (db.innerHTML.indexOf(lang.obay) != -1) { //on objects page
 			var xpath = '/html/body//center/table/tbody/tr[3]/td[3]';
 			var xpath2 = '/html/body//center/table/tbody/tr[4]/td';
-			if (lang.obay.match($I(xpath).split("<br>")[0])) {
-				var price = $I(xpath).split("<br>")[3].replace(/[^0-9.]/g, '');
+			if (lang.obay.match($I(xpath).split('<br>')[0])) {
+				var price = $I(xpath).split('<br>')[3].replace(/[^0-9.]/g, '');
 				var bullets = $I(xpath2).replace(/[^0-9.]/g, '');
-				$I(xpath2, $I(xpath2) + "<br><b>$ " + Math.round(price / bullets) + "</b>");
+				$I(xpath2, $I(xpath2) + '<br><b>$ ' + Math.round(price / bullets) + '</b>');
 				$x('//input')[1].select();
 			}
 		}
@@ -2620,32 +2618,30 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 
 //---------------- INBOX -----------------------
 if (dls.indexOf('action=inbox') != -1 || dls.indexOf('action=delMsg') != -1) {
-
 	var br = cEL('br');
 	var span = document.getElementsByTagName('span')[0];
 	var chkbutton = cEL('input');
 
-	chkbutton.setAttribute("type", "button");
-	chkbutton.setAttribute("value", "  (Un)Select All   ");
-	chkbutton.setAttribute("style", "margin-top: 3px;");
-	chkbutton.setAttribute("onclick", "var box = document.getElementsByName(\"selective[]\"); var length = box.length; for(var i=-1; ++i<length;){ if(box[i].checked==1){ box[i].checked=false; } else { box[i].checked=true; } };");
+	chkbutton.setAttribute('type', 'button');
+	chkbutton.setAttribute('value', '  (Un)Select All   ');
+	chkbutton.setAttribute('style', 'margin-top:3px;');
+	chkbutton.setAttribute('onclick', 'var box = document.getElementsByName(\'selective[]\'); var length = box.length; for(var i=-1; ++i<length;){ if(box[i].checked==1){ box[i].checked=false; } else { box[i].checked=true; } };');
 
 	span.appendChild(br);
 	span.appendChild(chkbutton);
 
 	var num = 1;
-
 	$x('//tr[@class="color1"] | //tr[@class="color2"]').forEach(function ($n) {
-		var space = document.createTextNode(" ");
-		var id = $n.cells[1].innerHTML.split("?")[1].match(/\d+/g)[0];
+		var space = document.createTextNode(' ');
+		var id = $n.cells[1].innerHTML.split('?')[1].match(/\d+/g)[0];
 		var target = $n.cells[0].getElementsByTagName('input')[0] ? $n.cells[0].getElementsByTagName('input')[0] : false;
 
 		//add delete icon
 		var delImg = cEL('img');
-		delImg.setAttribute('title', "Delete");
-		delImg.setAttribute('src', GM_getResourceURL("deleteIcon"));
-		delImg.setAttribute("onClick", "location.href='/BeO/webroot/index.php?module=Mail&action=delMsg&iId=" + id + "&iParty=2'");
-		delImg.setAttribute('style', 'cursor:pointer;padding-right:3px;padding-left:4px;height:16px;width:16px;border:1px;');
+		delImg.setAttribute('title', 'Delete');
+		delImg.setAttribute('src', GM_getResourceURL('deleteIcon'));
+		delImg.setAttribute('onClick', 'location.href="/BeO/webroot/index.php?module=Mail&action=delMsg&iId=' + id + '&iParty=2"');
+		delImg.setAttribute('style', 'cursor:pointer; padding-right:3px; padding-left:4px; height:16px; width:16px; border:1px');
 		$n.cells[0].setAttribute('width', '80');
 
 		if (target) { //before the select box
@@ -2657,10 +2653,10 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('action=delMsg') != -1) {
 
 		if ($n.cells[2].innerHTML.indexOf('user.php?nick=') != -1) { //add reply icon
 			var replyImg = cEL('img');
-			replyImg.setAttribute('title', "Reply");
-			replyImg.setAttribute('src', GM_getResourceURL("reply"));
-			replyImg.setAttribute("onClick", "location.href='/BeO/webroot/index.php?module=Mail&action=sendMsg&iReply=" + id + "'");
-			replyImg.setAttribute('style', 'cursor:pointer;padding-right:3px;padding-left:3px;height:16px;width:16px;border:1px;');
+			replyImg.setAttribute('title', 'Reply');
+			replyImg.setAttribute('src', GM_getResourceURL('reply'));
+			replyImg.setAttribute('onClick', 'location.href="/BeO/webroot/index.php?module=Mail&action=sendMsg&iReply=' + id + '"');
+			replyImg.setAttribute('style', 'cursor:pointer; padding-right:3px; padding-left:3px; height:16px; width:16px; border:1px;');
 			$n.cells[0].setAttribute('width', '95');
 
 			$n.cells[0].appendChild(replyImg);
@@ -2690,12 +2686,12 @@ if (dls.indexOf('action=showMsg') != -1) {
 	if (prefs[31]) { //add hotkeys to showMsg
 		var linkz = $x('//table[@class="thinline"]/tbody/tr[7]/td/a').reverse();
 		if (linkz.length == 1) {
-			linkz[0].innerHTML = '<img src="' + GM_getResourceURL("deleteIcon") + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
+			linkz[0].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
 			linkz[0].setAttribute('accesskey', '[');
 		} else {
-			linkz[0].innerHTML = '<img src="' + GM_getResourceURL("reply") + '" onMouseover="style.cursor=\'pointer\'" title="Reply (])" width="16" height="16" border="0" /> ';
+			linkz[0].innerHTML = '<img src="' + GM_getResourceURL('reply') + '" onMouseover="style.cursor=\'pointer\'" title="Reply (])" width="16" height="16" border="0" /> ';
 			linkz[0].setAttribute('accesskey', ']');
-			linkz[1].innerHTML = '<img src="' + GM_getResourceURL("deleteIcon") + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
+			linkz[1].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
 			linkz[1].setAttribute('accesskey', '[');
 		}
 	}
@@ -2717,7 +2713,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 		if (arr[2] == lang.inbox[2]) { //check if this is invitation
 			setArr(0);
 			setArr(13);
-			$I(msgTxt, arr.join(" "));
+			$I(msgTxt, arr.join(' '));
 		} else {
 			$I(msgTxt);
 		}
@@ -2729,12 +2725,12 @@ if (dls.indexOf('action=showMsg') != -1) {
 			if (arr[7] == lang.inbox[3] || arr[7] == lang.inbox[5]) {
 				setArr(0);
 				setArr(13);
-				$I(msgTxt, arr.join(" "));
+				$I(msgTxt, arr.join(' '));
 			}
 			if (arr[7] == lang.inbox[4]) {
 				setArr(0);
 				setArr(12);
-				$I(msgTxt, arr.join(" "));
+				$I(msgTxt, arr.join(' '));
 			}
 		} else {
 			$I(msgTxt);
@@ -2747,89 +2743,89 @@ if (dls.indexOf('action=showMsg') != -1) {
 		var last = $X(msgTxt).innerHTML.indexOf(')');
 		var between = $X(msgTxt).innerHTML.slice(first, last + 1);
 		setArr(arr.length - 2);
-		$I(msgTxt, arr.join(" "));
-		$X(msgTxt).innerHTML = $X(msgTxt).innerHTML.replace(between, "<a href='/tickets/index.php?action=view-my-tickets' title='click to open tickets page' target='_blank'><b>" + between + "</b></a>");
+		$I(msgTxt, arr.join(' '));
+		$X(msgTxt).innerHTML = $X(msgTxt).innerHTML.replace(between, '<a href="/tickets/index.php?action=view-my-tickets" title="click to open tickets page" target="_blank"><b>' + between + '</b></a>'); //LANG
 	}
 	//if msg is WS
 	var wsMsg = new RegExp(lang.linkify[7]);
 	if (wsMsg.test(msgType)) { //if msg is WS
 		var wsIDnum = arr[arr.length - 1];
 		setValue('wsID', wsIDnum);
-		arr[arr.length - 1] = "<a href='/obay.php?action=tosell&type=10' title='click to sell this WS'><b>" + arr[arr.length - 1] + "</b></a>";
-		setArr(3 + (lang.version == "_nl" ? 4 : 0));
-		setArr(5 + (lang.version == "_nl" ? 4 : 0));
-		$I(msgTxt, arr.join(" "));
+		arr[arr.length - 1] = '<a href="/obay.php?action=tosell&type=10" title="click to sell this WS"><b>' + arr[arr.length - 1] + '</b></a>'; //LANG
+		setArr(3 + (lang.version == '_nl' ? 4 : 0));
+		setArr(5 + (lang.version == '_nl' ? 4 : 0));
+		$I(msgTxt, arr.join(' '));
 	}
 	//if msg was crush msg
 	var crushedMSG = new RegExp(lang.linkify[11]);
 	if (crushedMSG.test(msgType)) {
-		$X(msgTxt).innerHTML = "<a href='/BeO/webroot/index.php?module=Bloodbank&action=' title='click to buy missing blood'><b>" + $X(msgTxt).innerHTML + "</b></a>";
+		$X(msgTxt).innerHTML = '<a href="/BeO/webroot/index.php?module=Bloodbank&action=" title="click to buy missing blood"><b>' + $X(msgTxt).innerHTML + '</b></a>'; //LANG
 	}
 
 	var raidInv = new RegExp(lang.linkify[13]);
 	if (raidInv.test(msgType)) { //raid inv.
 		setArr(9);
-		$I(msgTxt, arr.join(" "));
+		$I(msgTxt, arr.join(' '));
 	}
 
 	var MarriedMsg = new RegExp(lang.linkify[14]);
 	if (MarriedMsg.test(msgType)) { //married
 		setArr(20);
 		setArr(22);
-		$I(msgTxt, arr.join(" "));
+		$I(msgTxt, arr.join(' '));
 	}
 
 	var GiftMsg = new RegExp(lang.linkify[15]);
 	if (GiftMsg.test(msgType)) { //gift
 		setArr(5);
-		$I(msgTxt, arr.join(" "));
+		$I(msgTxt, arr.join(' '));
 	}
 
 	var famInv = new RegExp(lang.linkify[12]); //fam inv.
 	if (famInv.test(msgType)) {
-		if (arr.length < 18 + (lang.version == "_nl" ? 1 : 0)) {
+		if (arr.length < 18 + (lang.version == '_nl' ? 1 : 0)) {
 			setArr(8);
-			$I(msgTxt, arr.join(" "));
+			$I(msgTxt, arr.join(' '));
 		} else {
 			setArr(9);
-			$I(msgTxt, arr.join(" "));
+			$I(msgTxt, arr.join(' '));
 		}
 	}
 
 	var mocInv = new RegExp(lang.linkify[2]);
 	if (mocInv.test(msgType)) { //moc inv.
 		setArr(0);
-		$I(msgTxt, arr.join(" "));
+		$I(msgTxt, arr.join(' '));
 	}
 
 	var targetNotFound = new RegExp(lang.linkify[3]);
 	if (targetNotFound.test(msgType)) { //target not found
 		setArr(5);
-		$I(msgTxt, arr.join(" "));
+		$I(msgTxt, arr.join(' '));
 	}
 
 	var raceInv = new RegExp(lang.linkify[4]);
 	if (raceInv.test(msgType)) { //race invite
 		setArr(8);
-		$I(msgTxt, arr.join(" "));
+		$I(msgTxt, arr.join(' '));
 	}
 
 	var targetFound = new RegExp(lang.linkify[5]);
 	if (targetFound.test(msgType)) { //target found
 		setArr(3);
-		$I(msgTxt, arr.join(" "));
+		$I(msgTxt, arr.join(' '));
 	}
 
 	var killMsg = new RegExp(lang.linkify[6]);
 	if (killMsg.test(msgType)) { //if msg is Kill success
 		setArr(2);
-		$I(msgTxt, arr.join(" "));
+		$I(msgTxt, arr.join(' '));
 	}
 
 	var condolences = new RegExp(lang.linkify[8]);
 	if (condolences.test(msgType)) { //condolences msg
 		setArr(2);
-		$I(msgTxt, arr.join(" "));
+		$I(msgTxt, arr.join(' '));
 	}
 }
 
@@ -2845,11 +2841,11 @@ if (urlsearch == '/capocp.php' + dls) {
 	logxp = '/html/body//center/table[2]/tbody//td[2]';
 	$x(logxp).forEach(function ($n) {
 		if ($n.textContent != '') {
-			var len = $n.innerHTML.trim().split(" ").length;
+			var len = $n.innerHTML.trim().split(' ').length;
 			if (len >= '4') {
-				var who = $n.innerHTML.trim().split(" ");
-				who[0] = "<a href=/user.php?nick=" + who[0] + "><b>" + who[0] + "</b></a>";
-				$n.innerHTML = who.join(" ");
+				var who = $n.innerHTML.trim().split(' ');
+				who[0] = '<a href="/user.php?nick=' + who[0] + '"><b>' + who[0] + '</b></a>';
+				$n.innerHTML = who.join(' ');
 			}
 		}
 	});
@@ -2860,15 +2856,15 @@ if (dlp == '/controlpanel.php') {
 	var logs = '//td[1]/table[@class="color2" and position()=1]//td[2]';
 	$x(logs).forEach(function ($n) {
 		if ($n.textContent != '') {
-			var len = $n.innerHTML.trim().split(" ").length - 1;
-			var who = $n.innerHTML.trim().split(" ");
+			var len = $n.innerHTML.trim().split(' ').length - 1;
+			var who = $n.innerHTML.trim().split(' ');
 			if (who[0].match(/[A-Z]/g)) {
-				who[0] = "<a href=/user.php?nick=" + who[0] + "><b>" + who[0] + "</b></a>";
+				who[0] = '<a href="/user.php?nick=" + who[0] + "><b>' + who[0] + '</b></a>';
 			}
 			if (who[len].match(/[A-Z]/g)) {
-				who[len] = "<a href=/user.php?nick=" + who[len].match(/\w+/g)[0] + "><b>" + who[len] + "</b></a>";
+				who[len] = '<a href="/user.php?nick=' + who[len].match(/\w+/g)[0] + '><b>' + who[len] + '</b></a>';
 			}
-			$n.innerHTML = who.join(" ");
+			$n.innerHTML = who.join(' ');
 		}
 	});
 }
@@ -2878,21 +2874,21 @@ if (dlp == '/kill.php') {
 	if (dls.length == 0 && db.innerHTML.search('action=remove') != -1) { //Link names at Detective table
 		var msgs = '//center/table[@class="thinline" and position()=2]//td[1]';
 		$x(msgs).forEach(function ($n) {
-			var len = $n.innerHTML.trim().split(" ").length;
+			var len = $n.innerHTML.trim().split(' ').length;
 			if (len >= '4') {
 				var arr = $n.innerHTML.split(' ');
 				if (arr[2] == lang.linkify[9]) {
-					arr[3] = "<a href=user.php?nick=" + arr[3].replace(/(<b>|<\/b>)/g, '') + ">" + arr[3] + "</a>"; //check if we found the bastard
+					arr[3] = '<a href="user.php?nick=' + arr[3].replace(/(<b>|<\/b>)/g, '') + '">' + arr[3] + '</a>'; //check if we found the bastard
 				} else {
-					arr[5] = "<a href=user.php?nick=" + arr[5].replace(/(<b>|<\/b>)/g, '') + ">" + arr[5] + "</a>";
+					arr[5] = '<a href="user.php?nick=' + arr[5].replace(/(<b>|<\/b>)/g, '') + '">' + arr[5] + '</a>';
 				}
-				$n.innerHTML = arr.join(" ");
+				$n.innerHTML = arr.join(' ');
 			}
 		});
 	}
-	if (db.innerHTML.indexOf("table") != -1 && dls == '') { //Kill password remover
+	if (db.innerHTML.indexOf('table') != -1 && dls == '') { //Kill password remover
 		if (prefs[14]) {
-			$Del("/html/body//center/table/tbody/tr[5]");
+			$Del('/html/body//center/table/tbody/tr[5]');
 		}
 		if (/search/.test(dls)) {
 			if ($X('//input[@name="name"]')) {
@@ -2910,8 +2906,8 @@ if (dlp == '/kill.php') {
 			for (i = 0; i <= 7; i++) {
 				boxes[i].value = getID('gAmount').value;
 				if (i == 7) {
-					var evt = document.createEvent("HTMLEvents");
-					evt.initEvent("change", true, true);
+					var evt = document.createEvent('HTMLEvents');
+					evt.initEvent('change', true, true);
 					boxes[i].dispatchEvent(evt);
 				}
 			}
@@ -2951,15 +2947,15 @@ if (dlp == '/familylog.php') {
 	var logs = '//table[@class="color2" and position()=1]//td[2]';
 	$x(logs).forEach(function ($n) {
 		if ($n.textContent != '') {
-			var len = $n.innerHTML.trim().split(" ").length - 1;
-			var who = $n.innerHTML.trim().split(" ");
+			var len = $n.innerHTML.trim().split(' ').length - 1;
+			var who = $n.innerHTML.trim().split(' ');
 			if (who[0].match(/[A-Z]/g)) {
-				who[0] = "<a href=/user.php?nick=" + who[0] + "><b>" + who[0] + "</b></a>";
+				who[0] = '<a href="/user.php?nick=' + who[0] + '"><b>' + who[0] + '</b></a>';
 			}
 			if (who[len].match(/[A-Z]/g)) {
-				who[len] = "<a href=/user.php?nick=" + who[len].match(/\D+/g)[0].replace('.', '') + "><b>" + who[len] + "</b></a>";
+				who[len] = '<a href="/user.php?nick=' + who[len].match(/\D+/g)[0].replace('.', '') + '"><b>' + who[len] + '</b></a>';
 			}
-			$n.innerHTML = who.join(" ");
+			$n.innerHTML = who.join(' ');
 		}
 	});
 }
@@ -2982,7 +2978,7 @@ if (dlp == '/scratch.php' && prefs[32]) {
 		}
 		if (db.innerHTML.indexOf(lang.scratcher[3]) != -1) { //money
 			var rex = new RegExp(lang.scratcher[4]);
-			var str = db.innerHTML.replace(/,/g, "");
+			var str = db.innerHTML.replace(/,/g, '');
 			var r = str.match(rex);
 			monin += parseInt(r[1]);
 			setValue('monin', monin);
@@ -3000,9 +2996,9 @@ if (dlp == '/scratch.php' && prefs[32]) {
 
 	var monout = (scratches * 5000);
 	if ((monin - monout) < 0) {
-		var profit = "-$"+commafy(monout - monin);
+		var profit = '-$'+commafy(monout - monin);
 	} else {
-		var profit = "$"+commafy(monin - monout);
+		var profit = '$'+commafy(monin - monout);
 	}
 	var ppk = Math.round(((monout - monin) / bullets) * 100000) / 100000;
 	if (isNaN(ppk) || bullets == 0) {
@@ -3012,20 +3008,20 @@ if (dlp == '/scratch.php' && prefs[32]) {
 	var div = cEL('div'); //build Scratcher Div
 	div.id = 'info';
 	div.setAttribute('class', 'NRInfo');
-	div.setAttribute('style', 'position:fixed; bottom:20px; right:20px; width:250px; color:#FFF !important; background-color:'+getValue('titleBg', '#3F505F')+';');
-	var divdump = '<center><b>'+lang.scratcher[6]+'</b></center><table width="100%"><tr><td bgcolor="gray"></td></tr></table><div id="statsscratcher">'+lang.scratcher[7]+' <font style="float: right; padding"><b>'+commafy(scratches)+'</b></font><br />'+lang.scratcher[8]+' <font style="float: right;"><b>$'+commafy(monout)+'</b></font><br />'+lang.scratcher[9]+' <font style="float: right;"><b>$'+commafy(monin)+'</b></font><br />'+lang.scratcher[10]+' <font style="float:right;"><b>'+profit+'</b></font><br />'+lang.scratcher[11]+' <font style="float:right;"><b>'+commafy(mils)+'</b></font><br />'+lang.scratcher[12]+' <font style="float:right;"><b>'+commafy(bullets)+'</b></font><br />'+lang.scratcher[13]+' <font style="float:right;"><b>$'+commafy(ppk)+'</b></font></div><br />&nbsp;<div id="buttonscratcher" style="position:absolute; padding:2px; bottom:3px; left:3px; border:2px solid grey; -moz-border-radius:7px;" onmouseover="this.style.border=\'2px solid #BBB\'; this.style.cursor=\'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';">';
+	div.setAttribute('style', 'position:fixed; bottom:20px; right:20px; width:250px; color:#FFF !important; background-color:'+getValue('titleBg', '#3F505F'));
+	var divdump = '<center><b>'+lang.scratcher[6]+'</b></center><table width="100%"><tr><td bgcolor="gray"></td></tr></table><div id="statsscratcher">'+lang.scratcher[7]+' <font style="float:right"><b>'+commafy(scratches)+'</b></font><br />'+lang.scratcher[8]+' <font style="float:right"><b>$'+commafy(monout)+'</b></font><br />'+lang.scratcher[9]+' <font style="float:right"><b>$'+commafy(monin)+'</b></font><br />'+lang.scratcher[10]+' <font style="float:right"><b>'+profit+'</b></font><br />'+lang.scratcher[11]+' <font style="float:right"><b>'+commafy(mils)+'</b></font><br />'+lang.scratcher[12]+' <font style="float:right"><b>'+commafy(bullets)+'</b></font><br />'+lang.scratcher[13]+' <font style="float:right"><b>$'+commafy(ppk)+'</b></font></div><br />&nbsp;<div id="buttonscratcher" style="position:absolute; padding:2px; bottom:3px; left:3px; border:2px solid grey; -moz-border-radius:7px" onmouseover="this.style.border=\'2px solid #BBB\'; this.style.cursor=\'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';">';
 
 	if (on == 1) {
-		divdump += '<img src="'+GM_getResourceURL("off")+'" style="vertical-align: -3px;" /> <b>'+lang.scratcher[14]+'</b>&nbsp;';
+		divdump += '<img src="'+GM_getResourceURL('off')+'" style="vertical-align:-3px" /> <b>'+lang.scratcher[14]+'</b>&nbsp;';
 	} else {
-		divdump += '<img src="'+GM_getResourceURL("on")+'" style="vertical-align: -3px;" /> <b>'+lang.scratcher[15]+'</b>&nbsp;';
+		divdump += '<img src="'+GM_getResourceURL('on')+'" style="vertical-align:-3px" /> <b>'+lang.scratcher[15]+'</b>&nbsp;';
 	}
-	divdump += '</div><div id="resetscratcher" align="right" style="position:absolute; padding:2px; bottom:3px; right:3px; border:2px solid grey; -moz-border-radius:7px;" onmouseover="this.style.border=\'2px solid #BBB\'; this.style.cursor=\'pointer\';" onmousedown="this.style.marginLeft=\'2px\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL("deleteIcon")+'" style="vertical-align:-3px;" /></div>';
+	divdump += '</div><div id="resetscratcher" align="right" style="position:absolute; padding:2px; bottom:3px; right:3px; border:2px solid grey; -moz-border-radius:7px" onmouseover="this.style.border=\'2px solid #BBB\'; this.style.cursor=\'pointer\';" onmousedown="this.style.marginLeft=\'2px\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px" /></div>';
 	div.innerHTML = divdump;
 	db.appendChild(div);
 
 	if (on == 1) { //Scratcher Active
-		if (db.innerHTML.indexOf('Sorry, but 10 per minute is enough.') != -1) {
+		if (db.innerHTML.indexOf('Sorry, but 10 per minute is enough.') != -1) { //LANG?
 			msec = rand(8000, 13400);
 			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
 		} else if (hOne == '504 Gateway Time-out' || hOne == '502 Bad Gateway' || hOne == '503 Service Unavailable' || hOne == '500 Internal Server Error') {
@@ -3036,11 +3032,11 @@ if (dlp == '/scratch.php' && prefs[32]) {
 			if (db.innerHTML.indexOf('color="red"') != -1 && getELNAME('codescratch')[0] != null) {
 				setValue('unopened', 1);
 				var t = setTimeout(function () { getTAG('input')[2].click(); }, msec);
-			} else if (getELNAME("goback")[0] != null && unopened == 1) {
+			} else if (getELNAME('goback')[0] != null && unopened == 1) {
 				var t = setTimeout(function () { getELNAME('goback')[0].click(); }, msec);
 			} else {
 				setValue('unopened', 0);
-				if (getELNAME("goback")[0] != null && unopened == 0) {
+				if (getELNAME('goback')[0] != null && unopened == 0) {
 					var t = setTimeout(function () { getELNAME('scratch')[0].click(); }, msec);
 				} else if (getELNAME('Check')[0] != null) {
 					var t = setTimeout(function () { getELNAME('Check')[0].click(); }, msec);
@@ -3052,8 +3048,8 @@ if (dlp == '/scratch.php' && prefs[32]) {
 	}
 
 	getID('resetscratcher').addEventListener('click', function() {
-		getID("resetscratcher").innerHTML = '&nbsp;<b style="line-height:16px;">'+lang.scratcher[17]+'<b>&nbsp;';
-		getID("statsscratcher").innerHTML = lang.scratcher[7]+' <font style="float:right;"><b>0</b></font><br />'+lang.scratcher[8]+' <font style="float:right;"><b>$0</b></font><br />'+lang.scratcher[9]+' <font style="float:right;"><b>$0</b></font><br />'+lang.scratcher[10]+' <font style="float:right;"><b>$0</b></font><br />'+lang.scratcher[11]+' <font style="float:right;"><b>0</b></font><br />'+lang.scratcher[12]+' <font style="float:right;"><b>0</b></font><br />'+lang.scratcher[13]+' <font style="float:right;"><b>$0</b></font>';
+		getID('resetscratcher').innerHTML = '&nbsp;<b style="line-height:16px">'+lang.scratcher[17]+'<b>&nbsp;';
+		getID('statsscratcher').innerHTML = lang.scratcher[7]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[8]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[9]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[10]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[11]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[12]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[13]+' <font style="float:right"><b>$0</b></font>';
 		setValue('monin', 0);
 		setValue('mils', 0);
 		setValue('bullets', 0);
@@ -3064,7 +3060,7 @@ if (dlp == '/scratch.php' && prefs[32]) {
 		if (getValue('on', 0) == 1) {
 			setValue('on', 0);
 			clearTimeout(t);
-			getID('buttonscratcher').innerHTML = '<img src="'+GM_getResourceURL("on")+'" style="vertical-align:-3px;" /> <b>'+lang.scratcher[15]+'</b>&nbsp;';
+			getID('buttonscratcher').innerHTML = '<img src="'+GM_getResourceURL('on')+'" style="vertical-align:-3px" /> <b>'+lang.scratcher[15]+'</b>&nbsp;';
 		} else {
 			setValue('on', 1);
 			if (db.innerHTML.indexOf('color="red"') != -1 && getELNAME('codescratch')[0] != null) {
@@ -3083,7 +3079,7 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 	var btmoney = getValue('btmoney', 0);
 	if (db.innerHTML.indexOf(lang.bullettracker[0]) != -1) {
 		var rex = new RegExp(lang.bullettracker[1]);
-		var str = db.innerHTML.replace(/,/g, "");
+		var str = db.innerHTML.replace(/,/g, '');
 		var r = str.match(rex);
 		btbullets += parseInt(r[1]);
 		btmoney += parseInt(r[2]);
@@ -3097,13 +3093,13 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 	}
 	var div = cEL('div');
 	div.id = 'btracker';
-	div.setAttribute("style", "position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px;");
-	div.innerHTML = '<center><b>'+lang.bullettracker[2]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="btstats">'+lang.bullettracker[3]+' <font style="float: right;"><b>'+commafy(btbullets)+'</b></font><br />'+lang.bullettracker[4]+' <font style="float: right;"><b>$'+commafy(btmoney)+'</b></font><br />'+lang.bullettracker[5]+' <font style="float: right;"><b>$'+commafy(btdolpbul)+'</b></font></div><br />&nbsp;<div id="resetbt" align="right" style="position: absolute; bottom: 2px; right: 2px; border: 2px solid grey; -moz-border-radius: 5px 5px 5px 5px;" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL("deleteIcon")+'" style="vertical-align: -3px;" /></div>';
+	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
+	div.innerHTML = '<center><b>'+lang.bullettracker[2]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="btstats">'+lang.bullettracker[3]+' <font style="float:right"><b>'+commafy(btbullets)+'</b></font><br />'+lang.bullettracker[4]+' <font style="float:right"><b>$'+commafy(btmoney)+'</b></font><br />'+lang.bullettracker[5]+' <font style="float:right"><b>$'+commafy(btdolpbul)+'</b></font></div><br />&nbsp;<div id="resetbt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px" /></div>';
 	db.appendChild(div);
 
 	getID('resetbt').addEventListener('click', function() {
-		getID("resetbt").innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
-		getID("btstats").innerHTML = lang.bullettracker[3]+' <font style="float: right;"><b>0</b></font><br />'+lang.bullettracker[4]+' <font style="float: right;"><b>$0</b></font><br />'+lang.bullettracker[5]+' <font style="float: right;"><b>$0</b></font>';
+		getID('resetbt').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
+		getID('btstats').innerHTML = lang.bullettracker[3]+' <font style="float:right"><b>0</b></font><br />'+lang.bullettracker[4]+' <font style="float:right"><b>$0</b></font><br />'+lang.bullettracker[5]+' <font style="float:right"><b>$0</b></font>';
 		setValue('btbullets', 0);
 		setValue('btmoney', 0);
 	}, true);
@@ -3168,12 +3164,12 @@ if (dls == '?module=Poker' || dls == '?module=Poker&action=actionChooser' || dls
 		else { ptprofit = 0; }
 		var div = cEL('div');
 		div.id = 'ptracker';
-		div.setAttribute("style", "position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px;");
-		div.innerHTML = '<center><b>'+lang.pokertracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="ptstats">'+lang.pokertracker[4]+'<font style="float: right;"><b>'+ptgplay+'</b></font><br />'+lang.pokertracker[5]+'<font style="float: right;"><b>'+ptgwon+'</b></font><br />'+lang.pokertracker[6]+'<font style="float: right;"><b>$'+commafy(ptspent)+'</b></font><br />'+lang.pokertracker[7]+'<font style="float: right;"><b>$'+commafy(ptmwon)+'</b></font><br />'+lang.pokertracker[8]+'<font style="float: right;"><b>'+ptprofit+'</b></font></div><br />&nbsp;<div id="resetpt" align="right" style="position: absolute; bottom: 2px; right: 2px; border: 2px solid grey; -moz-border-radius: 5px 5px 5px 5px;" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL("deleteIcon")+'" style="vertical-align: -3px;" /></div>';
+		div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
+		div.innerHTML = '<center><b>'+lang.pokertracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="ptstats">'+lang.pokertracker[4]+'<font style="float:right"><b>'+ptgplay+'</b></font><br />'+lang.pokertracker[5]+'<font style="float:right"><b>'+ptgwon+'</b></font><br />'+lang.pokertracker[6]+'<font style="float:right"><b>$'+commafy(ptspent)+'</b></font><br />'+lang.pokertracker[7]+'<font style="float:right"><b>$'+commafy(ptmwon)+'</b></font><br />'+lang.pokertracker[8]+'<font style="float:right"><b>'+ptprofit+'</b></font></div><br />&nbsp;<div id="resetpt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
 		db.appendChild(div);
 
 		getID('resetpt').addEventListener('click', function() {
-			getID("resetpt").innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
+			getID('resetpt').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
 			setValue('ptgplay', 0);
 			setValue('ptspent', 0);
 			setValue('ptgwon', 0);
@@ -3191,8 +3187,8 @@ if (dlp == '/vfo.php') { //vote for omerta
 		$n.setAttribute('name', 'forbullets');
 	});
 
-	$x('//td[@class="tableheader"]')[0].innerHTML = "<a href='#' class='orange' title='Vote for Extra Ticket in Omerta Lottery'>" + $x('//td[@class="tableheader"]')[0].textContent + "</a>";
-	$x('//td[@class="tableheader"]')[1].innerHTML = "<a href='#' class='orange' title='Vote for Some bullets and money'>" + $x('//td[@class="tableheader"]')[1].textContent + "</a>";
+	$x('//td[@class="tableheader"]')[0].innerHTML = '<a href="#" class="orange" title="Vote for Extra Ticket in Omerta Lottery">' + $x('//td[@class="tableheader"]')[0].textContent + '</a>'; //LANG
+	$x('//td[@class="tableheader"]')[1].innerHTML = '<a href="#" class="orange" title="Vote for Some bullets and money">' + $x('//td[@class="tableheader"]')[1].textContent + '</a>'; //LANG
 
 	$x('//td[@class="tableheader"]/a')[0].addEventListener('click', function () {
 		$x('//*[@name="forticket"]').forEach(function ($n) {
@@ -3260,7 +3256,7 @@ if (dlp == '/vfo.php') { //vote for omerta
 				min = 59 - now.getUTCMinutes();
 				sec = 59 - now.getUTCSeconds();
 				msg += lang.oneclick[1];
-				msg += hr + lang.oneclick[2] + min + lang.oneclick[3] + sec + lang.oneclick[4] + "\n";
+				msg += hr + lang.oneclick[2] + min + lang.oneclick[3] + sec + lang.oneclick[4] + '\n';
 				msg += lang.oneclick[9];
 				vote = confirm(msg);
 			}
@@ -3383,12 +3379,12 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		}
 
 		//--create BRC table
-		border = '1px solid #000000';
+		border = '1px solid #000';
 
 		table = cEL('table');
 		table.id = 'brc';
 		table.setAttribute('class', 'thinline');
-		table.width = "500";
+		table.width = '500';
 		tr = cEL('tr');
 		td = cEL('td');
 		td.style.backgroundColor = getValue('titleBg', '#F0F0F0');
@@ -3400,7 +3396,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		tr = cEL('tr');
 		td = cEL('td');
 		td.setAttribute('colspan', '5');
-		td.setAttribute('bgcolor', 'black');
+		td.setAttribute('bgcolor', '#000');
 		td.setAttribute('height', '1');
 		tr.appendChild(td);
 		table.appendChild(tr);
@@ -3430,9 +3426,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			if (prefs[21] && pp) { //add HL effects here too
 				tr.id = '2row' + i;
 				tr.style.backgroundColor = getValue('tableBg', '#F0F0F0');
-				mOver = 'this.style.backgroundColor = \'#888888\';';
-				mOver += 'document.getElementById(\'0row' + (i + 2) + '\').style.backgroundColor = \'#888888\';';
-				mOver += 'document.getElementById(\'1row' + (i + 2) + '\').style.backgroundColor = \'#888888\';';
+				mOver = 'this.style.backgroundColor = \'#888\';';
+				mOver += 'document.getElementById(\'0row' + (i + 2) + '\').style.backgroundColor = \'#888\';';
+				mOver += 'document.getElementById(\'1row' + (i + 2) + '\').style.backgroundColor = \'#888\';';
 				tr.setAttribute('onMouseover', mOver);
 
 				mOut = 'this.style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
@@ -3471,14 +3467,14 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 
 				//calc travelcost
 				travelPrices = [ //travelcosts from A to B
-					[    0,  600,10350,1575, 3600,1350, 1050,10800], //det
-					[  600,    0,11025,2025, 3000,1725, 1425,11400], //chi
-					[10350,11025,    0,9075,14025,9450, 9750, 1875], //pal
-					[ 1575, 2025, 9075,   0, 5025, 375,  675, 9375], //ny
-					[ 3600, 3000,14025,5025,    0,4650, 4350,14400], //lv
-					[ 1350, 1725, 9450, 375, 4650,   0,  300, 9750], //phi
-					[ 1050, 1425, 9750, 675, 4350, 300,    0,10050], //bal
-					[10800,11400, 1875,9375,14400,9750,10050,    0]  //cor
+					[    0,   600, 10350, 1575,  3600, 1350,  1050, 10800], //det
+					[  600,     0, 11025, 2025,  3000, 1725,  1425, 11400], //chi
+					[10350, 11025,     0, 9075, 14025, 9450,  9750,  1875], //pal
+					[ 1575,  2025,  9075,    0,  5025,  375,   675,  9375], //ny
+					[ 3600,  3000, 14025, 5025,     0, 4650,  4350, 14400], //lv
+					[ 1350,  1725,  9450,  375,  4650,    0,   300,  9750], //phi
+					[ 1050,  1425,  9750,  675,  4350,  300,     0, 10050], //bal
+					[10800, 11400,  1875, 9375, 14400, 9750, 10050,     0]  //cor
 				];  //det   chi   pal   ny   lv   phi   bal   cor
 				travelCost = travelPrices[i][(city - 4)];
 				if (plane == 0) { //no plane => half travelcost
@@ -3527,7 +3523,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 						}
 						link = cEL('a');
 						link.id = 'go' + i;
-						link.setAttribute('style', 'font-weight:inherit;text-align:center;cursor:pointer;');
+						link.setAttribute('style', 'font-weight:inherit; text-align:center; cursor:pointer');
 						link.innerHTML = 'Go!';
 						link.href = '#';
 						link.setAttribute('n', n1); //add what they should be AF'ing
@@ -3537,7 +3533,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 					} else { //we need to GET to smuggling too
 						aCell = cEL('td');
 						aCell.style.borderLeft = border;
-						aCell.innerHTML = '&nbsp;<a style="font-weight:inherit;text-align:center;" href="http://www.barafranca.' + lang.version.replace('_', '') + '/smuggling.php?n=' + (bestNarc - 1) + '&b=' + (bestBooze - 1) + '">Go!</a>';
+						aCell.innerHTML = '&nbsp;<a style="font-weight:inherit; text-align:center" href="http://www.barafranca.' + lang.version.replace('_', '') + '/smuggling.php?n=' + (bestNarc - 1) + '&b=' + (bestBooze - 1) + '">Go!</a>';
 						tr.appendChild(aCell); //add the row
 					}
 				}
@@ -3693,9 +3689,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			}
 			color = '#' + RGBtoHex(color[0], color[1], color[2]);
 
-			div.setAttribute('style', 'right:10px;top:10px;width:100px !important;text-align:right; background-color:' + color + '!important;');
+			div.setAttribute('style', 'right:10px; top:10px; width:100px !important; text-align:right; background-color:' + color + ' !important;');
 			if (getInfo[6] == -1) {
-				div.setAttribute('style', 'right:-90px;top:-80px;width:100px !important;text-align:right; background-color:' + color + '!important;');
+				div.setAttribute('style', 'right:-90px; top:-80px; width:100px !important; text-align:right; background-color:' + color + ' !important;');
 			}
 			title = cEL('span');
 			title.innerHTML = '<center><u>' + lang.BR[8] + '</u></center>';
@@ -3705,9 +3701,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			//add button for each option
 			wrap1 = cEL('span');
 			a1 = cEL('a');
-			a1.innerHTML = (H ? 'Best: (8)' : 'Best: ');
+			a1.innerHTML = (H ? 'Best: (8)' : 'Best: '); //LANG
 			a1.id = 'a1';
-			a1.title = 'Fill in the most profitable b/n (Hotkey: 8 )';
+			a1.title = 'Fill in the most profitable b/n (Hotkey: 8 )'; //LANG
 			if (H) {
 				a1.setAttribute('accesskey', '8');
 			}
@@ -3718,16 +3714,16 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			best = cEL('input');
 			best.id = 'brc0';
 			best.setAttribute('type', 'radio');
-			best.name = "brc";
+			best.name = 'brc';
 			wrap1.appendChild(best);
 			div.appendChild(wrap1);
 
 			wrap2 = cEL('span');
 			wrap2.innerHTML = '<br>';
 			a2 = cEL('a');
-			a2.innerHTML = (H ? 'CD: (9)' : 'CD: ');
+			a2.innerHTML = (H ? 'CD: (9)' : 'CD: '); //LANG?
 			a2.id = 'a2';
-			a2.title = 'Fill in the most expensive b/n (Hotkey: 9 )';
+			a2.title = 'Fill in the most expensive b/n (Hotkey: 9 )'; //LANG
 			if (H) {
 				a2.setAttribute('accesskey', '9');
 			}
@@ -3738,16 +3734,16 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			cd = cEL('input');
 			cd.id = 'brc1';
 			cd.setAttribute('type', 'radio');
-			cd.name = "brc";
+			cd.name = 'brc';
 			wrap2.appendChild(cd);
 			div.appendChild(wrap2);
 
 			wrap3 = cEL('span');
 			wrap3.innerHTML = '<br>';
 			a3 = cEL('a');
-			a3.innerHTML = (H ? 'RP: (0)' : 'RP: ');
+			a3.innerHTML = (H ? 'RP: (0)' : 'RP: '); //LANG
 			a3.id = 'a3';
-			a3.title = 'Fill in the cheapest b/n (Hotkey: 0 )';
+			a3.title = 'Fill in the cheapest b/n (Hotkey: 0 )'; //LANG
 			if (H) {
 				a3.setAttribute('accesskey', '0');
 			}
@@ -3758,16 +3754,16 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			rp = cEL('input');
 			rp.id = 'brc2';
 			rp.setAttribute('type', 'radio');
-			rp.name = "brc";
+			rp.name = 'brc';
 			wrap3.appendChild(rp);
 			div.appendChild(wrap3);
 
 			wrap4 = cEL('span');
 			wrap4.innerHTML = '<br>';
 			a4 = cEL('a');
-			a4.innerHTML = (H ? 'None: (-)' : 'None: ');
+			a4.innerHTML = (H ? 'None: (-)' : 'None: '); //LANG
 			a4.id = 'a4';
-			a4.title = 'Don\'t fill anything (Hotkey: - )';
+			a4.title = 'Don\'t fill anything (Hotkey: - )'; //LANG
 			if (H) {
 				a4.setAttribute('accesskey', '-');
 			}
@@ -3778,7 +3774,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			none = cEL('input');
 			none.id = 'brc3';
 			none.setAttribute('type', 'radio');
-			none.name = "brc";
+			none.name = 'brc';
 			wrap4.appendChild(none);
 			div.appendChild(wrap4);
 
@@ -3786,7 +3782,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			icon = cEL('img');
 			icon.id = 'brcIcon';
 			icon.src = getInfo[7];
-			icon.setAttribute('style', 'position:absolute; bottom:0px; left:0px;cursor:pointer;');
+			icon.setAttribute('style', 'position:absolute; bottom:0px; left:0px; cursor:pointer');
 
 			//add Div to page
 			div.appendChild(icon);
@@ -3901,7 +3897,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		info = cEL('div');
 		info.id = 'info';
 		info.style.display = 'none';
-		info.innerHTML = narc + '*' + booze + '*' + city + '*' + plane + '*' + fam + '*' + getValue('brcAF', 0) + '*' + getValue('brcDiv', 1) + '*' + GM_getResourceURL("brcGear");
+		info.innerHTML = narc + '*' + booze + '*' + city + '*' + plane + '*' + fam + '*' + getValue('brcAF', 0) + '*' + getValue('brcDiv', 1) + '*' + GM_getResourceURL('brcGear');
 		db.appendChild(info);
 
 		//get all prices
@@ -3922,7 +3918,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 
 			function parsePrices(resp, url) {
 				parser = new DOMParser();
-				dom = parser.parseFromString(resp, "application/xml");
+				dom = parser.parseFromString(resp, 'application/xml');
 
 				for (BN = [], i = 0; i <= 1; i++) { //B/N
 					for (BN[i] = [], j = 0; j <= 6; j++) { //type
@@ -3962,12 +3958,12 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 					if (j == 0) { //add mouseover effects
 						row = $X('//center[' + (1 + i) + ']/table//tr[' + (2 + k) + ']');
 						row.id = i + 'row' + k;
-						row.style.borderTop = '1px solid #000000';
+						row.style.borderTop = '1px solid #000';
 
-						mOver = 'this.style.backgroundColor = \'#888888\';';
-						mOver += 'document.getElementById(\'' + (i ? 0 : 1) + 'row' + k + '\').style.backgroundColor = \'#888888\';';
+						mOver = 'this.style.backgroundColor = \'#888\';';
+						mOver += 'document.getElementById(\'' + (i ? 0 : 1) + 'row' + k + '\').style.backgroundColor = \'#888\';';
 						if (!noBRC) {
-							mOver += 'document.getElementById(\'2row' + (k - 2) + '\').style.backgroundColor = \'#888888\';';
+							mOver += 'document.getElementById(\'2row' + (k - 2) + '\').style.backgroundColor = \'#888\';';
 						}
 						row.setAttribute('onMouseover', mOver);
 
@@ -3980,9 +3976,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 					}
 
 					item = $X('//center[' + (1 + i) + ']/table//tr[' + (2 + k) + ']/td[' + (2 + j) + ']');
-					item.style.borderLeft = '1px solid #000000';
+					item.style.borderLeft = '1px solid #000';
 					if (!(j % 2)) { //add colors to rows
-						$X('//center[' + (1 + i) + ']/table//tr[' + (2 + k) + ']/td[' + (2 + j) + ']').style.backgroundColor = '#888888';
+						$X('//center[' + (1 + i) + ']/table//tr[' + (2 + k) + ']/td[' + (2 + j) + ']').style.backgroundColor = '#888';
 					}
 					if (BN[i][j][k] == BN[i][j][0]) { //HL max
 						item.style.color = '#FF0000';
@@ -4006,7 +4002,7 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 	//get input fields
 	inputs = $x('//input');
 	bn_xp = '//form/table/tbody/tr[1]/td';
-	bn_text = $X(bn_xp).innerHTML.split("<br>");
+	bn_text = $X(bn_xp).innerHTML.split('<br>');
 
 	cash = parseInt(bn_text[3].replace(/[^0-9.]/g, ''), 10);
 	booze = parseInt(bn_text[4].match(/\d+/), 10); //max amount user can carry
@@ -4022,12 +4018,12 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 		if (i < 7) { //booze
 			var x = i + 4;
 			b_amount[i] = parseInt($I(xpb + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpb + x + ']/td', "<a " + (prefs[4] ? "accesskey='" + (i + 1) + "' " : "") + "title='Fill in this booze (Hotkey: " + (i + 1) + " )' onFocus='this.blur()' href='javascript:var tmp = document.getElementsByTagName(\"input\")[" + i + "].value;for(var i=0;i<=6;i++){document.getElementsByTagName(\"input\")[i].value =0;}document.getElementsByTagName(\"input\")[" + i + "].value=" + booze + "-tmp;document.getElementsByTagName(\"input\")[18].focus();'>" + (prefs[4] ? (i + 1) : '') + " " + $I(xpb + x + ']/td') + "</a>");
+			$I(xpb + x + ']/td', '<a ' + (prefs[4] ? 'accesskey="' + (i + 1) + '" ' : '') + 'title="Fill in this booze (Hotkey: ' + (i + 1) + ' )" onFocus="this.blur()" href="javascript:var tmp = document.getElementsByTagName(\'input\')[' + i + '].value;for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value =0;}document.getElementsByTagName(\'input\')[' + i + '].value=' + booze + '-tmp;document.getElementsByTagName(\'input\')[18].focus();">' + (prefs[4] ? (i + 1) : '') + ' ' + $I(xpb + x + ']/td') + '</a>'); //LANG
 		}
 		if (i > 8) { //narcs
 			var x = i - 5;
 			n_amount[(i - 9)] = parseInt($I(xpn + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpn + x + ']/td', "<a onFocus='this.blur()' title='Fill in this narc' href='javascript:var tmp = document.getElementsByTagName(\"input\")[" + i + "].value;for(var i=9;i<=15;i++){document.getElementsByTagName(\"input\")[i].value =0;}document.getElementsByTagName(\"input\")[" + i + "].value = " + narcs + "-tmp;document.getElementsByTagName(\"input\")[18].focus();'>" + $I(xpn + x + ']/td') + "</a>");
+			$I(xpn + x + ']/td', '<a onFocus="this.blur()" title="Fill in this narc" href="javascript:var tmp = document.getElementsByTagName(\'input\')[' + i + '].value;for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value =0;}document.getElementsByTagName(\'input\')[' + i + '].value = ' + narcs + '-tmp;document.getElementsByTagName(\'input\')[18].focus();">' + $I(xpn + x + ']/td') + '</a>'); //LANG
 		}
 	}
 
@@ -4041,18 +4037,18 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 	//create more efficient info text
 	notempty = (carry_n != 0) ? 1 : 0; //toggle for Narcs ([) hotkey
 	info_xp = '//form/table/tbody/tr/td';
-	part = $I(info_xp).split("<br>");
+	part = $I(info_xp).split('<br>');
 
 	str = '<table border="0"><tr>';
-	str += '<td>' + lang.smuggling[0] + '$ ' + commafy(cash) + " | </td>";
-	str += '<td>' + "Max " + lang.smuggling[1] + ": " + booze + " | </td>";
-	str += '<td>' + "Max " + lang.smuggling[2] + ": " + narcs + "</td>";
+	str += '<td>' + lang.smuggling[0] + '$ ' + commafy(cash) + ' | </td>';
+	str += '<td>' + 'Max ' + lang.smuggling[1] + ': ' + booze + ' | </td>';
+	str += '<td>' + 'Max ' + lang.smuggling[2] + ': ' + narcs + '</td>';
 	str += '</tr></table>';
 	str += '<a href="prices.php" target="main">Current Booze/Narcotics Prices</a>';
 	if (prefs[4]) { //add AF Hotkeys
-		str += "<hr><a accessKey='[' title='Fill in any narcs you carry, or fill in cocaine by default (Hotkey: [ )' onFocus='this.blur()' href='javascript:for(var i=9;i<=15;i++){document.getElementsByTagName(\"input\")[i].value=0;}for(var i=0;i<=6;i++){document.getElementsByTagName(\"input\")[i].value=0;}if(" + notempty + "){var n_amount = [" + n_amounts + "];for(var i=0;i<=6;i++){document.getElementsByTagName(\"input\")[(i+9)].value=n_amount[i];}}else{document.getElementsByTagName(\"input\")[12].value = " + narcs + ";}document.getElementsByTagName(\"input\")[18].focus();'>" + lang.smuggling[2] + " ([)</a>";
-		str += " - <a accessKey=']' title='Fill in any booze you carry (Hotkey: ] )' onFocus='this.blur()' href='javascript:for(var i=9;i<=15;i++){document.getElementsByTagName(\"input\")[i].value=0;}var b_amount = [" + b_amounts + "];for(var i=0;i<=6;i++){document.getElementsByTagName(\"input\")[i].value=b_amount[i];}document.getElementsByTagName(\"input\")[18].focus();'>" + lang.smuggling[1] + " (])</a>";
-		str += " - <a accessKey='=' title='Fill in any booze or narcs you carry, or fill in cocaine by default (Hotkey: = )' onFocus='this.blur()' href='javascript:for(var i=9;i<=15;i++){document.getElementsByTagName(\"input\")[i].value=0;}var b_amount = [" + b_amounts + "];for(var i=0;i<=6;i++){document.getElementsByTagName(\"input\")[i].value=b_amount[i];} if(" + notempty + "){var n_amount = [" + n_amounts + "];for(var i=0;i<=6;i++){document.getElementsByTagName(\"input\")[(i+9)].value=n_amount[i];}}else{document.getElementsByTagName(\"input\")[12].value = " + narcs + ";}document.getElementsByTagName(\"input\")[18].focus();'>" + lang.smuggling[5] + " (=)</a><br>";
+		str += '<hr><a accessKey="[" title="Fill in any narcs you carry, or fill in cocaine by default (Hotkey: [ )" onFocus="this.blur()" href="javascript:for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value=0;}for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value=0;}if(' + notempty + '){var n_amount = [' + n_amounts + '];for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[(i+9)].value=n_amount[i];}}else{document.getElementsByTagName(\'input\')[12].value = ' + narcs + ';}document.getElementsByTagName(\'input\')[18].focus();">' + lang.smuggling[2] + ' ([)</a>'; //LANG
+		str += ' - <a accessKey="]" title="Fill in any booze you carry (Hotkey: ] )" onFocus="this.blur()" href="javascript:for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value=0;}var b_amount = [' + b_amounts + '];for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value=b_amount[i];}document.getElementsByTagName(\'input\')[18].focus();">' + lang.smuggling[1] + ' (])</a>'; //LANG
+		str += ' - <a accessKey="=" title="Fill in any booze or narcs you carry, or fill in cocaine by default (Hotkey: = )" onFocus="this.blur()" href="javascript:for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value=0;}var b_amount = [' + b_amounts + '];for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value=b_amount[i];} if(' + notempty + '){var n_amount = [' + n_amounts + '];for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[(i+9)].value=n_amount[i];}}else{document.getElementsByTagName(\'input\')[12].value = ' + narcs + ';}document.getElementsByTagName(\'input\')[18].focus();">' + lang.smuggling[5] + ' (=)</a><br>'; //LANG
 	}
 	$X(bn_xp).innerHTML = str;
 	inputs[18].focus(); //focus captcha
@@ -4072,14 +4068,14 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]
 	$X('//td').setAttribute('height', '90%'); //new primary cell heigth
 	var logo = $Cut('//td[@width="280"]', 1); //replace the logo
 	logo.style.textAlign = 'center';
-	logo.innerHTML = logo.innerHTML + '<br><br><br><br><br><hr color="#666666" size="1"><br>';
+	logo.innerHTML = logo.innerHTML + '<br><br><br><br><br><hr color="#666" size="1"><br>';
 	var tr = cEL('tr');
 	tr.appendChild(logo);
 	$X('/html/body/table//table/tbody/tr').parentNode.insertBefore(tr, $X('/html/body/table//table/tbody/tr'));
 
 	var tr2 = cEL('tr'); //add spacing
 	var filler = logo.cloneNode(0);
-	filler.innerHTML = '<br><hr color="#666666" size="1"><br><br><br><br><br><br><br><br><br>';
+	filler.innerHTML = '<br><hr color="#666" size="1"><br><br><br><br><br><br><br><br><br>';
 	tr2.appendChild(filler);
 	$X('/html/body/table//table/tbody/tr').parentNode.insertBefore(tr2, $X('/html/body/table//table/tbody/tr').nextSibling.nextSibling);
 
@@ -4104,13 +4100,13 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]
 //---------------- NickReader ----------------
 if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php'){//if nickreader is on
 	var nickReaderIcon = GM_getResourceURL('nickreader');
-	function parseGrab(html,url){
+	function parseGrab(html, url){
 		var body = html.slice(html.indexOf('</head>')+7);//don't need <head>
 
-		if(body.indexOf("/BeO/webroot/index.php\?module=Donate.Methods") == -1){//check for clicklimit
+		if(body.indexOf('/BeO/webroot/index.php\?module=Donate.Methods') == -1){//check for clicklimit
 			var ident = url.split('=')[1];//make sure all requests are handled seperatly
 			var xDiv = cEL('div');//place html into page to get DOM
-			xDiv.setAttribute('id','XHRDiv'+ident);
+			xDiv.setAttribute('id', 'XHRDiv'+ident);
 			xDiv.style.display = 'none';
 			xDiv.innerHTML = body;
 			db.appendChild(xDiv);
@@ -4121,7 +4117,7 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 			keys.shift(); keys.shift();
 			for(i=keys.length-1;i>=0;i--){//filter non-left-side cells
 				if(keys[i].getAttribute('class') != 'subtableheader'){
-					keys.splice(i,1);
+					keys.splice(i, 1);
 				}
 			}
 			keys.pop();
@@ -4141,31 +4137,31 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 
 			//parse certain values to make them fit within the popup
 			for(i=keys.length-1;i>=0;i--){
-				keys[i] = keys[i].innerHTML.replace(/<[^<]+?>|\n|\t|:/ig,'');
-				vals[i] = vals[i].innerHTML.replace(/<br>/g,"\n").replace(/<[^<]+?>| \/ |\t|&.+/ig,'').replace(/^ /,'');
+				keys[i] = keys[i].innerHTML.replace(/<[^<]+?>|\n|\t|:/ig, '');
+				vals[i] = vals[i].innerHTML.replace(/<br>/g, '\n').replace(/<[^<]+?>| \/ |\t|&.+/ig, '').replace(/^ /, '');
 				//vals[i] = vals[i].innerHTML.replace(/<[^<]+?>| \/ |\n|\t|&.+/ig,'').replace(/^ /,'');
 				if(vals[i].indexOf(' online ')!=-1){
-					vals[i] = vals[i].slice(0,vals[i].indexOf(' online ')+7);//limit Status
+					vals[i] = vals[i].slice(0, vals[i].indexOf(' online ')+7);//limit Status
 				}
 				if(vals[i].indexOf('(')!=-1){
-					vals[i] = vals[i].slice(0,vals[i].indexOf('('));//limit Family
+					vals[i] = vals[i].slice(0, vals[i].indexOf('('));//limit Family
 				}
 			}
 
 			//setup the table
-			var table = "<table width='100%' border='0' id='NRtable'>";
+			var table = '<table width="100%" border="0" id="NRtable">';
 			for(i=0;i<keys.length;i++){
-				table += "<tr><td height='15'><b>"+keys[i]+"</b></td><td>" + vals[i] + '</td></tr>';
+				table += '<tr><td height="15"><b>'+keys[i]+'</b></td><td>' + vals[i] + '</td></tr>';
 			}
-			table += "</table>";
+			table += '</table>';
 
 			var icon = cEL('img');
-			icon.setAttribute('style','position: absolute; right: 7; top: 7;');
-			icon.src = GM_getResourceURL("nickreader");
+			icon.setAttribute('style', 'position:absolute; right:7px; top:7px;');
+			icon.src = GM_getResourceURL('nickreader');
 
 			//add to page and clean-up after us
 			getID(url).innerHTML = table;
-			getID(url).setAttribute('name','done');
+			getID(url).setAttribute('name', 'done');
 			getID(url).appendChild(icon);
 			$Del('//div[@id="XHRDiv'+ident+'"]');
 			getID('proc').innerHTML = 0;
@@ -4198,15 +4194,15 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 		if(go && on){//yes we may proceed to add the popup
 			var div = document.createElement('div');
 			div.id = url;//unique
-			div.setAttribute('class','NRInfo');
-			div.innerHTML = '<img src="'+GM_getResourceURL("loading")+'"/> '+lang.NR.misc[0];
+			div.setAttribute('class', 'NRInfo');
+			div.innerHTML = '<img src="'+GM_getResourceURL('loading')+'" /> '+lang.NR.misc[0];
 
 			//get actual color
-			var color = getActual($X('//div[@class="tableheader"]'),'background-color');
+			var color = getActual($X('//div[@class="tableheader"]'), 'background-color');
 			color = color.split(',');
 			for(i=0;i<=2;i++){ color[i] = color[i].replace(/[^0-9]/g,''); }
-			color = '#'+RGBtoHex(color[0],color[1],color[2]);
-			div.setAttribute('style','background-color: '+ color + '!important');
+			color = '#'+RGBtoHex(color[0], color[1],color[2]);
+			div.setAttribute('style', 'background-color:'+ color + ' !important');
 
 			//add follow the mouse
 			document.addEventListener('mousemove', function(mouse){
@@ -4229,12 +4225,12 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 			}, true);
 
 			//add popup to page
-			div.setAttribute('name','loading');
+			div.setAttribute('name', 'loading');
 			db.appendChild(div);
 
 			//check if there isn't a process running already, otherwise grab the HTML
 			if(getID('proc').innerHTML == 0){
-				grabHTML(url,parseGrab);//(url to grab, function to execute after)
+				grabHTML(url, parseGrab);//(url to grab, function to execute after)
 				getID('proc').innerHTML = 1;
 			} else {
 				getID(url).innerHTML += lang.NR.misc[4];
@@ -4249,21 +4245,21 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 			if(db.innerHTML.search('id="NRstatus"') == -1){
 				//hack to grab color from current theme
 				var dummy = cEL('div');
-				dummy.setAttribute('class','tableheader');
+				dummy.setAttribute('class', 'tableheader');
 				dummy.style.display = 'none';
 				db.appendChild(dummy);
 
 				//grab actual color from dummy
-				var color = getActual($X('//div[@class="tableheader"]'),'background-color');
+				var color = getActual($X('//div[@class="tableheader"]'), 'background-color');
 				color = color.split(',');
 				for(i=0;i<=2;i++){
-					color[i] = color[i].replace(/[^0-9]/g,'');
+					color[i] = color[i].replace(/[^0-9]/g, '');
 				}
-				color = '#'+RGBtoHex(color[0],color[1],color[2]);
+				color = '#'+RGBtoHex(color[0], color[1], color[2]);
 
 				var div = cEL('div');//setup NR status div
 				div.id = 'NRstatus';
-				div.setAttribute('style','background-color: ' + color + '!important;');
+				div.setAttribute('style', 'background-color: ' + color + '!important');
 				div.style.display = 'block';
 				div.style.right = -180;
 				div.style.top = 10;
@@ -4289,8 +4285,8 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 				db.appendChild(div);
 
 				//add eventListeners with slide!
-				db.setAttribute('onKeydown','function slideIn(){ var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-140;},100);setTimeout(function(){s.style.right=-100;},200);setTimeout(function(){s.style.right=-60;},300); setTimeout(function(){s.style.right=-30;},400);setTimeout(function(){s.style.right=10;},500);} if(event.keyCode==18){ if(document.getElementById("alt").innerHTML == 0){slideIn();} document.getElementById("alt").innerHTML = 1; } if(event.keyCode==17){ if(document.getElementById("ctrl").innerHTML == 0){ slideIn();document.getElementById("ctrl").innerHTML = 1;}else{var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-30;},100);setTimeout(function(){s.style.right=-60;},200);setTimeout(function(){s.style.right=-100;},300); setTimeout(function(){s.style.right=-140;},400);setTimeout(function(){s.style.right=-180;},500);document.getElementById("ctrl").innerHTML = 0;}}');
-				db.setAttribute('onKeyup','if(event.keyCode==18){ if(document.getElementById("alt").innerHTML == 1){var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-30;},100);setTimeout(function(){s.style.right=-60;},200);setTimeout(function(){s.style.right=-100;},300); setTimeout(function(){s.style.right=-140;},400);setTimeout(function(){s.style.right=-180;},500);} document.getElementById("alt").innerHTML = 0; document.getElementById("ctrl").innerHTML = 0; }');
+				db.setAttribute('onKeydown', 'function slideIn(){ var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-140;},100);setTimeout(function(){s.style.right=-100;},200);setTimeout(function(){s.style.right=-60;},300); setTimeout(function(){s.style.right=-30;},400);setTimeout(function(){s.style.right=10;},500);} if(event.keyCode==18){ if(document.getElementById("alt").innerHTML == 0){slideIn();} document.getElementById("alt").innerHTML = 1; } if(event.keyCode==17){ if(document.getElementById("ctrl").innerHTML == 0){ slideIn();document.getElementById("ctrl").innerHTML = 1;}else{var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-30;},100);setTimeout(function(){s.style.right=-60;},200);setTimeout(function(){s.style.right=-100;},300); setTimeout(function(){s.style.right=-140;},400);setTimeout(function(){s.style.right=-180;},500);document.getElementById("ctrl").innerHTML = 0;}}');
+				db.setAttribute('onKeyup', 'if(event.keyCode==18){ if(document.getElementById("alt").innerHTML == 1){var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-30;},100);setTimeout(function(){s.style.right=-60;},200);setTimeout(function(){s.style.right=-100;},300); setTimeout(function(){s.style.right=-140;},400);setTimeout(function(){s.style.right=-180;},500);} document.getElementById("alt").innerHTML = 0; document.getElementById("ctrl").innerHTML = 0; }');
 			}
 			nicks.forEach(function($n){//add mouse event checkers
 				if($n.href.search('cpuser')==-1){
@@ -4303,12 +4299,12 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 	}
 	//run only on pages without manual trigger
 	if(dls != '?module=Launchpad' && dls != '?module=Statistics'){
-		window.addEventListener('load',function(){ nickReader(); },true);
+		window.addEventListener('load', function(){ nickReader(); }, true);
 	}
 }
 if(prefs[16] && dls.indexOf('?module=Hitlist') != -1){//add nickreader to hitlist too
 	getID('smsdivcontainer').addEventListener('DOMNodeInserted', function(event){
-		if(event.target.nodeName=="TABLE"){
+		if(event.target.nodeName=='TABLE'){
 			nickReader();
 		}
 	}, false);
@@ -4323,14 +4319,14 @@ if (dlp != '/game.php' && dlp != '/banner.php' && dlp != '/pic.php' && dlp != '/
 if ((dlp == '/' || dlp == '/index.php' || dlp == '/game.php' || dlp == 'game-login.php' || dlp == 'game-register.php') && lh.indexOf('beyond') == -1) {
 	window.addEventListener('load', function () {
 		setTimeout(function () {
-			setIcon(GM_getResourceURL("favoriteIco"));
+			setIcon(GM_getResourceURL('favoriteIco'));
 		}, 500);
 		document.title = lang.title;
 	}, false);
 }
 
 //---------------- Beyond Logo Replacer ----------------
-var logoXpath = "//img[contains(@src, 'logo0.gif')] | //img[contains(@src, 'omertalo.gif')] | //img[contains(@src, 'deathmatch.gif')] | //img[contains(@src, 'omdmlogo.png')] | //img[contains(@src, './static/images/game/layout/logo.png')] | //img[contains(@src, 'omerta-game-logo.gif')]";
+var logoXpath = '//img[contains(@src, "logo0.gif")] | //img[contains(@src, "omertalo.gif")] | //img[contains(@src, "deathmatch.gif")] | //img[contains(@src, "omdmlogo.png")] | //img[contains(@src, "./static/images/game/layout/logo.png")] | //img[contains(@src, "omerta-game-logo.gif")]';
 $x(logoXpath).forEach(function ($n) {
 	$n.src = GM_getResourceURL(lang.version.replace('_', '') + 'Logo');
 	if (dlp != '/servers.php') {

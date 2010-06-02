@@ -6,7 +6,7 @@
 //
 //-------------------------------------------------------------------------------------
 
-// vers: 1.9.3.44
+// vers: 1.9.3.45
 
 /*
 $Rev$:  Revision of last commit
@@ -89,19 +89,19 @@ function GetParam(name) {
 }
 
 function setIcon(icon) {
-	var head = window.document.getElementsByTagName("head")[0];
-	var links = head.getElementsByTagName("link");
+	var head = window.document.getElementsByTagName('head')[0];
+	var links = head.getElementsByTagName('link');
 	for (I = 0; I < links.length; I++) {
-		if (links[I].type == "image/x-icon" && (links[I].rel == "shortcut icon" || links[I].rel == "icon") && links[I].href != icon) {
+		if (links[I].type == 'image/x-icon' && (links[I].rel == 'shortcut icon' || links[I].rel == 'icon') && links[I].href != icon) {
 			head.removeChild(links[I]);
 		}
 		else if (links[I].href == icon) {
 			return;
 		}
 	}
-	var newIcon = document.createElement("link");
-	newIcon.type = "image/x-icon";
-	newIcon.rel = "shortcut icon";
+	var newIcon = document.createElement('link');
+	newIcon.type = 'image/x-icon';
+	newIcon.rel = 'shortcut icon';
 	newIcon.href = icon;
 	return head.appendChild(newIcon);
 }
@@ -187,7 +187,7 @@ function findPos(obj) {
 
 function stripHTML(string) {
 	var matchTag = /<(?:.|\s)*?>/g;
-	return string.replace(matchTag, "");
+	return string.replace(matchTag, '');
 }
 
 function RGBtoHex(R, G, B) {
@@ -196,16 +196,16 @@ function RGBtoHex(R, G, B) {
 
 function toHex(N) {
 	if (N === null) {
-		return "00";
+		return '00';
 	}
 	N = parseInt(N);
 	if (N === 0 || isNaN(N)) {
-		return "00";
+		return '00';
 	}
 	N = Math.max(0, N);
 	N = Math.min(N, 255);
 	N = Math.round(N);
-	return "0123456789ABCDEF".charAt((N - N % 16) / 16) + "0123456789ABCDEF".charAt(N % 16);
+	return '0123456789ABCDEF'.charAt((N - N % 16) / 16) + '0123456789ABCDEF'.charAt(N % 16);
 }
 
 function getID(id) {
@@ -241,7 +241,7 @@ function setValue(name, value) {
 }
 
 function setArr(num) {
-	return arr[num] = "<a href=/user.php?nick=" + arr[num].match(/\w+/g)[0] + "><b>" + arr[num].match(/\w+/g)[0] + "</b></a>";
+	return arr[num] = '<a href="/user.php?nick=' + arr[num].match(/\w+/g)[0] + '"><b>' + arr[num].match(/\w+/g)[0] + '</b></a>';
 }
 
 function find(string, Pos) {
@@ -356,9 +356,15 @@ function toUp(word) {
 
 function grabHTML(url, func) {
 	var r = 0;
-	if (window.XMLHttpRequest) r = new XMLHttpRequest();
+	if (window.XMLHttpRequest) {
+		r = new XMLHttpRequest();
+	}
 	r.onreadystatechange = function () {
-		if (r.readyState == 4) if (r.status == 200) func(r.responseText, url);
+		if (r.readyState == 4) {
+			if (r.status == 200) {
+				func(r.responseText, url);
+			}
+		}
 	};
 	r.open('GET', url, true);
 	r.send(null);
