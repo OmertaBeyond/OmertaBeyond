@@ -213,7 +213,7 @@ var langs = {
 			error: 'Could not load page.'
 		},
 		BR: [
-			'Best Run Calculator",
+			'Best Run Calculator',
 			'City',
 			'Booze',
 			'Narc',
@@ -331,7 +331,7 @@ var langs = {
 			'Remove "Kill password not set" messages',//14 - CLEAN-UP
 			'Extra links on user profiles',//15 - MISC
 			'Enable Nickreader (hold \'Alt\' or switch on/off with \'Ctrl\')',//16 - MISC
-			'Extra prices popup in marquee",//17 - SMUGGLING/PRICES
+			'Extra prices popup in marquee',//17 - SMUGGLING/PRICES
 			'Remove blue profit calculations in CD-mode',//18 - SMUGGLING/PRICES
 			'Disable Avatars on forum and on friend\'s list on profile page',//19 - CLEAN-UP
 			'Clean login page',//20 - CLEAN-UP
@@ -637,7 +637,7 @@ var langs = {
 			'Ruim de Spot Overvallen pagina op'//34 - MISC
 		],
 		prefsTitle: [ //describe the options
-			'Je kan de 'Ga ervoor' knop niet gebruiken voor je 3 tekens hebt ingevuld',//0
+			'Je kan de "Ga ervoor" knop niet gebruiken voor je 3 tekens hebt ingevuld',//0
 			'Laat cokeprijzen van elke stad zien in de bovenbalk(met highlights voor high en low)',//1
 			'Naast het gewone laatste nieuws van de admins komen nieuwsposts van Edo er ook te staan',//2
 			'Schakelt jail highlighter in, vrienden en familie, selecteert automatisch naar prioriteit, en schakelt de hotkeys in',//3
@@ -715,7 +715,7 @@ var langs = {
 		],
 		newmenu: 'Nieuwe menu indeling gevonden! Selecteer opnieuw je voorkeuren.\nDit houd in de menu- EN de hotkey voorkeuren!',
 		customs: ' indeling geupdate! <br><br>Click <a href="javascript:location.href=\'menu.php\'">Wacht of klik hier</a>',
-		login: ['Registreren', 'http://www.edo-nieuws.nl", "Edo-nieuws"],
+		login: ['Registreren', 'http://www.edo-nieuws.nl', 'Edo-nieuws'],
 		status: ['none', 'Geen'],
 		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],
 		failedBullets: [
