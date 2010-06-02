@@ -226,7 +226,7 @@ var langs = {
 			'NOW'
 		],
 		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
-		booze: ['NO BOOZE', 'Wine', 'Beer", "Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
 		oneclick: [
 			'You haven\'t used the 1-click voter yet!\nDo you want to use it now?\n',
 			'You can\'t vote again yet!\nPlease wait another:\n',
