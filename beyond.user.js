@@ -118,7 +118,7 @@ function whereToRun(hostname) {
 var lang, whoami;
 if (whereToRun() == 'com') {
 	lang = langs.en;
-	whoami = GM_getValue('nick_com', '');;
+	whoami = GM_getValue('nick_com', '');
 } else if (whereToRun() == 'dm') {
 	lang = langs.dm;
 	whoami = GM_getValue('nick_dm', '');
@@ -2349,7 +2349,7 @@ if (prefs[26]) {
 
 //---------------- Raidpage ----------------
 if (dls == '?module=Spots' && prefs[34]) {
- 	if (db.innerHTML.indexOf('<div style="position:absolute; background:url(&quot;/static/images/cities/maps') != -1) {
+ 	if (db.innerHTML.indexOf('<div style="position: absolute; background: url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@onmouseover, "Spots.popup")]').length; // get total amount of spots
 
 		var div = cEL('div'); // the main div

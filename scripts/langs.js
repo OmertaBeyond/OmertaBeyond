@@ -385,7 +385,7 @@ var langs = {
 			'Enables you to open messages with hotkeys and when there use more hotkeys to delete or reply in an instant',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
 			'Keep track of how many bullets you have bought',//33
-			'Get a clear overview of the Spot raid page so you can pick your target with mroe easy'//34
+			'Get a clear overview of the Spot raid page so you can pick your target with more easy'//34
 		],
 		maxprefs: 35, // 1 + last pref #
 		preftitles: [
