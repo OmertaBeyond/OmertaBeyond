@@ -129,7 +129,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '45';
+var ScriptSubVersion = '46';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -971,7 +971,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Travel&action=TravelNow') { //Ge
 
 //---------------- My Account ----------------
 if(dls == '?module=Launchpad'){
-	var pad, x, famXP, x2, planeXP, handgunXP, tommygunXP, bguardsXP, jailBustXP, capo;
+	var pad, x, famXP, x2, planeXP, handgunXP, tommygunXP, bguardsXP, jailBustXP, busts, capo;
 	function runCode(tab){
 		if(tab=='/information.php'){
 			pad = '//div[@id="smsdivcontainer"]';
@@ -983,6 +983,11 @@ if(dls == '?module=Launchpad'){
 			tommygunXP = x2+'6]/td[2]';
 			bguardsXP = x2+'7]/td[2]';
 			jailBustXP = pad + '//center/table/tbody/tr/td[3]/table[1]/tbody/tr[';
+			busts = $X(pad+'//center/table/tbody/tr/td[3]/table[4]/tbody/tr[3]/td[2]').innerHTML;
+			setTimeout(function() {
+				setValue('bust', busts);
+			}, 0);
+
 			if(prefs[6]){//if remove Jailbusting Skill is on
 				$Del(jailBustXP + '5]');
 			}
@@ -1144,6 +1149,7 @@ if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
 	p.style.textAlign = 'center';
 	p.innerHTML = '<a style="color:#EEE !important; font-weight:bold;" href="http://89.149.221.178/~fingon/index.php' + dls + '" target="_blank">Click here to go to the actual news post</a>';
 	$X('//td[@class="overallpadding"]').appendChild(p);
+
 }
 
 if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'||lang.version=='_dm')){
@@ -1281,13 +1287,18 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	var prioritys = replaceLast(getValue('priority', ''), ',', '', 1).split(',');
 	var nobust = replaceLast(getValue('nobust', ''), ',', '', 1).split(',');
 	var maxHL = getValue('maxHL', 5);
+	var bos = getValue('bust', '0');
 	var FL_prior = getValue('FL_prior', 3);
 	var Fam_prior = getValue('Fam_prior', 9);
 	var lowlifes = 0;
+if (db.innerHTML.indexOf('You busted this person out of jail') != -1){
+	++bos;
+	setValue('bust', bos);
+}
 
 	var span = cEL('span');
 	var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-	span.innerHTML = '<br> &nbsp;In jail: ' + count + '<br><br> &nbsp;[#] = alt+shift hotkey';
+	span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;Bust outs: ' + bos;
 	$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 
 	//grab ingame HL colors
@@ -2348,8 +2359,8 @@ if (prefs[26]) {
 }
 
 //---------------- Raidpage ----------------
-if (dls == '?module=Spots' && prefs[34]) {
- 	if (db.innerHTML.indexOf('<div style="position: absolute; background: url(&quot;/static/images/cities/maps') != -1) {
+if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1)&& prefs[34]) {
+	if (db.innerHTML.indexOf('<div style="position: absolute; background: url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@onmouseover, "Spots.popup")]').length; // get total amount of spots
 
 		var div = cEL('div'); // the main div
@@ -2402,7 +2413,7 @@ if (dls == '?module=Spots' && prefs[34]) {
 				rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
 			}
 			//parsing everything
-			divdump += '<tr height="22px"><td style="padding-left:5px">'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?page=user&nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
+			divdump += '<tr height="22px"><td style="padding-left:5px">'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
 		}
 		divdump += '</table>';
 		div.innerHTML = divdump;
@@ -2416,6 +2427,7 @@ if (dls == '?module=Spots' && prefs[34]) {
 		c.appendChild(cEL('br'));
 		c.appendChild(div);
 		db.appendChild(c);
+
 
 		getID('raidpagebullets').addEventListener('keyup', function() {
 			for (y = 1; y <= am; y+=1) {
@@ -3048,6 +3060,7 @@ if (dlp == '/scratch.php' && prefs[32]) {
 	}
 
 	getID('resetscratcher').addEventListener('click', function() {
+
 		getID('resetscratcher').innerHTML = '&nbsp;<b style="line-height:16px">'+lang.scratcher[17]+'<b>&nbsp;';
 		getID('statsscratcher').innerHTML = lang.scratcher[7]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[8]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[9]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[10]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[11]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[12]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[13]+' <font style="float:right"><b>$0</b></font>';
 		setValue('monin', 0);
@@ -3753,6 +3766,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			wrap3.appendChild(a3);
 			rp = cEL('input');
 			rp.id = 'brc2';
+
 			rp.setAttribute('type', 'radio');
 			rp.name = 'brc';
 			wrap3.appendChild(rp);
