@@ -2409,7 +2409,11 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 				if (rpfam[1] != stripHTML(getValue('family', ''))) {
 					rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
 				}
-				else { tdskipnum += 1; }
+				else {
+					tdskipnum += 1;
+					time = '';
+					profit = $x('//td')[(((y * 14) + 5) - tdskipnum)].innerHTML; // reload protection cuz it's of
+				}
 			}
 			else {
 				rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
@@ -3038,13 +3042,13 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 		if (db.innerHTML.indexOf('Sorry, but 10 per minute is enough.') != -1) { //LANG? (atm msg is langindependent: always en);
 			msec = rand(8000, 13400);
 			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
-		} else if (db.innerHTML.indexOf('504 Gateway Time-out') == -1 || db.innerHTML.indexOf('502 Bad Gateway') == -1 || db.innerHTML.indexOf('503 Service Unavailable') == -1 || db.innerHTML.indexOf('500 Internal Server Error') == -1) {
+		} else if (db.innerHTML.indexOf('504 Gateway Time-out') != -1 || db.innerHTML.indexOf('502 Bad Gateway') != -1 || db.innerHTML.indexOf('503 Service Unavailable') != -1 || db.innerHTML.indexOf('500 Internal Server Error') != -1) {
 			msec = rand(800, 1600);
 			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
-		} else if (db.innerHTML.indexOf('<img src=/static/images/game/generic/criminal.jpg') == -1) {
+		} else if (db.innerHTML.indexOf('<img src=/static/images/game/generic/criminal.jpg') != -1) {
 			msec = rand(9800, 15200);
 			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
-		} else if (db.innerHTML.indexOf('<img src="/static/images/userbadges/donateplus.png">') == -1) {
+		} else if (db.innerHTML.indexOf('<img src="/static/images/userbadges/donateplus.png">') != -1) {
 			msec = rand(11300, 14800);
 			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
 		} else {
