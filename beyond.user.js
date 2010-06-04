@@ -129,7 +129,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '46';
+var ScriptSubVersion = '47';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -337,7 +337,7 @@ if (dlp == '/prefs.php') {
 			pri_list += ' + document.getElementById(\'priority' +i+ '\').value + \', \'';
 		}
 		for(i=-1;++i<nbint;){
-			nb_list += ' + document.getElementById(\'nobust' +i+ '").value.replace("&","%26").toUpperCase() + ", "';
+			nb_list += ' + document.getElementById(\'nobust' +i+ '\').value.replace("&","%26").toUpperCase() + \', \'';
 		}
 		savestring += fam_list + ' + "&colours="' + col_list + ' + "&priority="' + pri_list + ' + "&nobust="' + nb_list;
 		savestring += '">'+lang.jhl[6]+'</button>';
@@ -365,10 +365,10 @@ if (dlp == '/prefs.php') {
 
 		string += '<tr height="25" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2"><center><b>'+lang.jhl[8]+'</b></center><td class="td" colspan="2"><center><b>'+lang.jhl[9]+'</b></center></td><td class="td">&nbsp;</td></tr>';
 		string += '<tr height="25" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle"></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall"></td></tr>';
-		string += '<tr height="25" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="inputmiddle"></td><td width="10">&nbsp;&nbsp;<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL('colorpicker')+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall"></td></tr>';
+		string += '<tr height="25" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;"></td><td width="10"><img src="'+GM_getResourceURL('colorpicker')+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall"></td></tr>';
 		string += '<tr height="25" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall"></td></tr>';
 		string += '<tr height="25" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall"></td></tr>';
-
+//<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL('colorpicker')+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a>
 		string += '<tr class="tr" height="25" align="center"><td colspan="6" class="td"">'+savestring+'</td></tr>';
 		string += '<tr height="20"><td class="tdcredits" colspan="6" class="bigtd"><div id="credits">'+lang.jhl[16]+'</div></td></tr>';
 
@@ -2359,7 +2359,7 @@ if (prefs[26]) {
 }
 
 //---------------- Raidpage ----------------
-if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1)&& prefs[34]) {
+if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1) && prefs[34]) {
 	if (db.innerHTML.indexOf('<div style="position: absolute; background: url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@onmouseover, "Spots.popup")]').length; // get total amount of spots
 
@@ -2369,6 +2369,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 
 		var rex = new RegExp('\<b\>(.*)<\/b\>', 'g');
 		var r = db.innerHTML.match(rex); // getting types, do NOT use $x/getTAG since that fails
+		var tdskipnum = 0;
 		for (var y = 0; y < am; y+=1) {
 			var divnum = (y * 13) + 2; // 13 divs per spot, 2th div of the spot
 			if(db.innerHTML.search('id="_firebugConsole"')!=-1) { // Firebug Fix
@@ -2378,8 +2379,8 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			id = parseInt(id.replace('spot_', ''));
 			var type = r[((y * 4) + 1)].replace('<b>', '');
 			type = type.replace('</b>', '');
-			var owner = $x('//td')[((y * 14) + 1)].innerHTML; // 14 td's per spot
-			var time = $x('//td')[((y * 14) + 3)].innerHTML;
+			var owner = $x('//td')[(((y * 14) + 1) - tdskipnum)].innerHTML; // 14 td's per spot
+			var time = $x('//td')[(((y * 14) + 3) - tdskipnum)].innerHTML;
 			time = '';
 			if (time == lang.raidpage[0]) {
 				time = lang.raidpage[1];
@@ -2397,7 +2398,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			}
 
 			// making bars look good (white -> themetextcolor, adding % sign, some margin stuff)
-			var profit = $x('//td')[((y * 14) + 5)].innerHTML;
+			var profit = $x('//td')[(((y * 14) + 5) - tdskipnum)].innerHTML;
 			var protnum = getID('jsprogbar_div_protection_'+id).innerHTML; // the actual % of protection
 			var prot = $x('//table')[((y * 5) + 1)].innerHTML
 			prot = prot.replace('<div id="jsprogbar_div_protection_'+id+'" style="font-size: smaller; height: 15px; overflow: hidden; text-align: center; position: absolute; width: 100px; color: rgb(255, 255, 255);">'+protnum+'</div>', '<div id="jsprogbar_div_protection_'+id+'" style="text-align:center; position:absolute; width:100px;"><font color="#000">'+protnum+'%</font></div>');
@@ -2405,9 +2406,10 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var rex = new RegExp('\\(([\\w\\s]+)\\)');
 			var rpfam = owner.match(rex);
 			if (rpfam != null) {
-				if (rpfam[1] != getValue('family', '')) {
+				if (rpfam[1] != stripHTML(getValue('family', ''))) {
 					rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
 				}
+				else { tdskipnum += 1; }
 			}
 			else {
 				rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
@@ -2973,7 +2975,7 @@ if (dlp == '/familylog.php') {
 }
 
 //---------------------- Scratcher ---------------
-if (dlp == '/scratch.php' && prefs[32]) {
+if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && prefs[32]) {
 	var on = getValue('on', 0);
 	var unopened = getValue('unopened', 0)
 	var monin = getValue('monin', 0);
@@ -3033,11 +3035,17 @@ if (dlp == '/scratch.php' && prefs[32]) {
 	db.appendChild(div);
 
 	if (on == 1) { //Scratcher Active
-		if (db.innerHTML.indexOf('Sorry, but 10 per minute is enough.') != -1) { //LANG?
+		if (db.innerHTML.indexOf('Sorry, but 10 per minute is enough.') != -1) { //LANG? (atm msg is langindependent: always en);
 			msec = rand(8000, 13400);
 			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
-		} else if (hOne == '504 Gateway Time-out' || hOne == '502 Bad Gateway' || hOne == '503 Service Unavailable' || hOne == '500 Internal Server Error') {
+		} else if (db.innerHTML.indexOf('504 Gateway Time-out') == -1 || db.innerHTML.indexOf('502 Bad Gateway') == -1 || db.innerHTML.indexOf('503 Service Unavailable') == -1 || db.innerHTML.indexOf('500 Internal Server Error') == -1) {
 			msec = rand(800, 1600);
+			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
+		} else if (db.innerHTML.indexOf('<img src=/static/images/game/generic/criminal.jpg') == -1) {
+			msec = rand(9800, 15200);
+			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
+		} else if (db.innerHTML.indexOf('<img src="/static/images/userbadges/donateplus.png">') == -1) {
+			msec = rand(11300, 14800);
 			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
 		} else {
 			msec = rand(1800, 2400);
@@ -3119,22 +3127,22 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 }
 
 //---------------- PokerTracker ----------------
-if (dls == '?module=Poker' || dls == '?module=Poker&action=actionChooser' || dls == '?module=Poker&action=') {//pref needed
+if (dls.indexOf('?module=Poker') != -1) {// pref needed
+	var ptgplay = getValue('ptgplay', 0);
+	var ptspent = getValue('ptspent', 0);
+	var ptgwon = getValue('ptgwon', 0);
+	var ptmwon = getValue('ptmwon', 0);
+	var ptoldbet = getValue('ptoldbet', 0);
+	var ptself = getValue('nick', '');
+	var str = document.body.innerHTML.replace(/,/g, '');
 	if (db.innerHTML.indexOf('<img src="/static/images/game/casino/cards') != -1) {//game active
-		var ptgplay = getValue('ptgplay', 0);
-		var ptspent = getValue('ptspent', 0);
-		var ptgwon = getValue('ptgwon', 0);
-		var ptmwon = getValue('ptmwon', 0);
-		var ptoldbet = getValue('ptoldbet', 0);
-		var ptself = getValue('nick', '');
-		var str = db.innerHTML.replace(',', '');
 		if (db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[1]) != -1) {// game started
 			setValue('ptoldbet', 0);
 			ptoldbet = 0;
 			ptgplay += 1; //games played +1;
 			setValue('ptgplay', ptgplay);
-			var rex = new RegExp('<td><li><a href="/user.php\\?nick=', 'g');
-			var amplayers = (db.innerHTML.match(rex).length - 1) / 2; // get amount of players
+			var rex = new RegExp('<td><li><a href="\\/user\\.php\\?nick=', 'g');
+			var amplayers = db.innerHTML.match(rex).length; // get amount of players
 			var rex = new RegExp('<td>\\$(\\d+)<\\/td>');
 			var pot = str.match(rex);
 			ptspent += (parseInt(pot[1], 10) / amplayers);
@@ -3144,8 +3152,12 @@ if (dls == '?module=Poker' || dls == '?module=Poker&action=actionChooser' || dls
 			var rex = new RegExp('<a href="\\/user\\.php\\?nick=(\\w+)">', 'g');
 			var r = db.innerHTML.match(rex);
 			var tot = (r.length - 1) / 2; // total players
+			var myownnumfound = 0;
 			for (y = 0; y < tot; y += 1) {
-				if (r[y] == '<a href="/user.php?nick='+ptself+'">') { var myownnum = y; } // get # player you are listed from top
+				if (r[y] == '<a href="/user.php?nick='+ptself+'">' && myownnumfound == 0) {
+					var myownnum = y;
+					var myownnumfound = 1;
+				} // get # player you are listed from top
 			}
 			var rex = new RegExp(' \\(\\$(\\d+)\\)', 'g');
 			var r = str.match(rex);
@@ -3154,6 +3166,7 @@ if (dls == '?module=Poker' || dls == '?module=Poker&action=actionChooser' || dls
 			if (ptnewbet != ptoldbet) {
 				ptspent -= ptoldbet;
 				ptspent += ptnewbet;
+				setValue('ptspent', ptspent);
 				setValue('ptoldbet', ptnewbet); //set it for comparising next time
 			}
 		}
@@ -3169,26 +3182,27 @@ if (dls == '?module=Poker' || dls == '?module=Poker&action=actionChooser' || dls
 				setValue('ptmwon', ptmwon);
 			}
 		}
-		var ptprofit = ptmwon - ptspent;
-		if (ptspent > 0) {
-			if (ptprofit >= 0) ptprofit = '$'+commafy(ptprofit);
-			else ptprofit = '-$'+commafy(ptspent - ptmwon);
 		}
-		else { ptprofit = 0; }
-		var div = cEL('div');
-		div.id = 'ptracker';
-		div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
-		div.innerHTML = '<center><b>'+lang.pokertracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="ptstats">'+lang.pokertracker[4]+'<font style="float:right"><b>'+ptgplay+'</b></font><br />'+lang.pokertracker[5]+'<font style="float:right"><b>'+ptgwon+'</b></font><br />'+lang.pokertracker[6]+'<font style="float:right"><b>$'+commafy(ptspent)+'</b></font><br />'+lang.pokertracker[7]+'<font style="float:right"><b>$'+commafy(ptmwon)+'</b></font><br />'+lang.pokertracker[8]+'<font style="float:right"><b>'+ptprofit+'</b></font></div><br />&nbsp;<div id="resetpt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
-		db.appendChild(div);
-
-		getID('resetpt').addEventListener('click', function() {
-			getID('resetpt').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
-			setValue('ptgplay', 0);
-			setValue('ptspent', 0);
-			setValue('ptgwon', 0);
-			setValue('ptmwon', 0);
-		}, true);
+	var ptprofit = ptmwon - ptspent;
+	if (ptspent > 0) {
+		if (ptprofit >= 0) ptprofit = '$'+commafy(ptprofit);
+		else ptprofit = '-$'+commafy(ptspent - ptmwon);
 	}
+	else { ptprofit = '$0'; }
+	var div = cEL('div');
+	div.id = 'ptracker';
+	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
+	div.innerHTML = '<center><b>'+lang.pokertracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="ptstats">'+lang.pokertracker[4]+' <font style="float:right"><b>'+ptgplay+'</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>'+ptgwon+' ('+Math.round((ptgwon / ptgplay) * 100)+'%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$'+commafy(ptspent)+'</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$'+commafy(ptmwon)+'</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>'+ptprofit+'</b></font></div><br />&nbsp;<div id="resetpt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
+	db.appendChild(div);
+
+	getID('resetpt').addEventListener('click', function() {
+		getID('resetpt').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
+		getID('ptstats').innerHTML = lang.pokertracker[4]+' <font style="float:right"><b>0</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>0</b></font>';
+		setValue('ptgplay', 0);
+		setValue('ptspent', 0);
+		setValue('ptgwon', 0);
+		setValue('ptmwon', 0);
+	}, true);
 }
 
 //---------------- 1-Click Voter ----------------

@@ -7,7 +7,7 @@
 //
 // -------------------------------------------------------------------------------------
 
-// vers: 1.9.3.45
+// vers: 1.9.3.47
 
 /*
 $Rev$:  Revision of last commit
@@ -280,7 +280,7 @@ var langs = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob'
+			'Local Mob',
 		],
 		lastontime: [
 			'Alive',
@@ -297,7 +297,8 @@ var langs = {
 			'Money spent: ',
 			'Money won: ',
 			'Profit: ',
-			'You have checked the current bet.'
+			'You have checked the current bet.',
+			'You have started a new game.'
 		],
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
@@ -566,7 +567,7 @@ var langs = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob'
+			'Local Mob',
 		],
 		lastontime: [
 			'Alive',
@@ -583,7 +584,8 @@ var langs = {
 			'Money spent: ',
 			'Money won: ',
 			'Profit: ',
-			'You have checked the current bet.'
+			'You have checked the current bet.',
+			'You have started a new game.'
 		],
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
@@ -860,7 +862,7 @@ var langs = {
 			'Bestuurder',
 			'Gegevens',
 			'Verstuur',
-			'Lokale bende'
+			'Lokale bende',
 		],
 		lastontime: [
 			'Levend',
@@ -878,6 +880,7 @@ var langs = {
 			'Geld gewonnen:',
 			'Winst:',
 			'Je hebt de huidige inzet gecalled.',
+			'Je hebt een nieuw spel gestart.'
 		],
 		killpage: 'Alle steden',
 		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?']
