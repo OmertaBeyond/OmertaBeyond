@@ -129,7 +129,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '47';
+var ScriptSubVersion = '48';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -983,9 +983,9 @@ if(dls == '?module=Launchpad'){
 			tommygunXP = x2+'6]/td[2]';
 			bguardsXP = x2+'7]/td[2]';
 			jailBustXP = pad + '//center/table/tbody/tr/td[3]/table[1]/tbody/tr[';
-			busts = $X(pad+'//center/table/tbody/tr/td[3]/table[4]/tbody/tr[3]/td[2]').innerHTML;
+			bustTracker = $X(pad+'//center/table/tbody/tr/td[3]/table[4]/tbody/tr[3]/td[2]').innerHTML;
 			setTimeout(function() {
-				setValue('bust', busts);
+				setValue('bustouts', bustTracker);
 			}, 0);
 
 			if(prefs[6]){//if remove Jailbusting Skill is on
@@ -1287,18 +1287,18 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	var prioritys = replaceLast(getValue('priority', ''), ',', '', 1).split(',');
 	var nobust = replaceLast(getValue('nobust', ''), ',', '', 1).split(',');
 	var maxHL = getValue('maxHL', 5);
-	var bos = getValue('bust', '0');
+	var bustTrackerinfo = getValue('bustouts', '0');
 	var FL_prior = getValue('FL_prior', 3);
 	var Fam_prior = getValue('Fam_prior', 9);
 	var lowlifes = 0;
 if (db.innerHTML.indexOf('You busted this person out of jail') != -1){
-	++bos;
-	setValue('bust', bos);
+	++bustTrackerinfo;
+	setValue('bustouts', bustTrackerinfo);
 }
 
 	var span = cEL('span');
 	var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-	span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;Bust outs: ' + bos;
+	span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;Bust outs: ' + bustTrackerinfo;
 	$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 
 	//grab ingame HL colors
