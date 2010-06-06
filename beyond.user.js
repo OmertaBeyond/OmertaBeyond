@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			06-06-2010
+// @date			07-06-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
@@ -75,6 +75,11 @@ if (db.innerHTML.indexOf('clicklimit') != -1 && dlp != '/menu.php') {
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
+	else if (hOne == '500 - Internal Server Error') {
+	GM_log('Reload in 20 seconds');
+	setTimeout(function () {
+		window.location.reload();
+	}, 20000);
 } else if (db.innerHTML.indexOf('Downtime. We\'ll be back shortly. Hopefully. ') != -1) {
 	GM_log('Reload in 3 minutes');
 	setTimeout(function () {
@@ -128,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '50';
+var ScriptSubVersion = '51';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -3047,7 +3052,7 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 		if (db.innerHTML.indexOf('Sorry, but 10 per minute is enough.') != -1) { //LANG? (atm msg is langindependent: always en);
 			msec = rand(8000, 13400);
 			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
-		} else if (db.innerHTML.indexOf('504 Gateway Time-out') != -1 || db.innerHTML.indexOf('502 Bad Gateway') != -1 || db.innerHTML.indexOf('503 Service Unavailable') != -1 || db.innerHTML.indexOf('500 Internal Server Error') != -1) {
+		} else if (db.innerHTML.indexOf('504 Gateway Time-out') != -1 || db.innerHTML.indexOf('502 Bad Gateway') != -1 || db.innerHTML.indexOf('503 Service Unavailable') != -1 || db.innerHTML.indexOf('500 - Internal Server Error') != -1) {
 			msec = rand(800, 1600);
 			var t = setTimeout(function () { window.location.replace('http://'+location.hostname+'/scratch.php'); }, msec);
 		} else if (db.innerHTML.indexOf('<img src=/static/images/game/generic/criminal.jpg') != -1) {
@@ -3157,29 +3162,28 @@ if (dls.indexOf('?module=Poker') != -1) {// pref needed
 			ptspent += (parseInt(pot[1], 10) / amplayers);
 			setValue('ptspent', ptspent);
 		}
-		if ((db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[2]) != -1 || db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[3]) != -1 || db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[9]) != -1) && db.innerHTML.indexOf('name="leave"') == -1) { // user checked
-			var rex = new RegExp('<a href="\\/user\\.php\\?nick=(\\w+)">', 'g');
-			var r = db.innerHTML.match(rex);
-			var tot = (r.length - 1) / 2; // total players
-			var myownnumfound = 0;
-			for (y = 0; y < tot; y += 1) {
-				if (r[y] == '<a href="/user.php?nick='+ptself+'">' && myownnumfound == 0) {
-					var myownnum = y;
-					var myownnumfound = 1;
-				} // get # player you are listed from top
-			}
-			var rex = new RegExp(' \\(\\$(\\d+)\\)', 'g');
-			var r = str.match(rex);
-			var ptnewbet = r[myownnum].replace(' ($', ''); // get own placed bet on page
-			ptnewbet = parseInt(ptnewbet.replace(')', ''), 10);
-			if (ptnewbet != ptoldbet) {
-				ptspent -= ptoldbet;
-				ptspent += ptnewbet;
-				setValue('ptspent', ptspent);
-				setValue('ptoldbet', ptnewbet); //set it for comparising next time
-			}
+		var rex = new RegExp('<a href="\\/user\\.php\\?nick=(\\w+)">', 'g');
+		var r = db.innerHTML.match(rex);
+		var tot = (r.length - 1) / 2; // total players
+		var myownnumfound = 0;
+		for (y = 0; y < tot; y += 1) {
+			if (r[y] == '<a href="/user.php?nick='+ptself+'">' && myownnumfound == 0) {
+				var myownnum = y;
+				var myownnumfound = 1;
+			} // get # player you are listed from top
+		}
+		var rex = new RegExp(' \\(\\$(\\d+)\\)', 'g');
+		var r = str.match(rex);
+		var ptnewbet = r[myownnum].replace(' ($', ''); // get own placed bet on page
+		ptnewbet = parseInt(ptnewbet.replace(')', ''), 10);
+		if (ptnewbet != ptoldbet) {
+			ptspent -= ptoldbet;
+			ptspent += ptnewbet;
+			setValue('ptspent', ptspent);
+			setValue('ptoldbet', ptnewbet); //set it for comparising next time
 		}
 		if (db.innerHTML.indexOf('name="leave"') != -1) {// game's over
+			getELNAME('leave')[0].focus();
 			setValue('ptoldbet', 0);
 			var rex = new RegExp('<tr align="center"><td>(\\w+)</td><td>(.*)</td><td>\\$(\\d+)</td></tr>');
 			var r = str.match(rex);

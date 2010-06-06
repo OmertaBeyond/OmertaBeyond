@@ -6,7 +6,7 @@
 //
 //-------------------------------------------------------------------------------------
 
-// vers: 1.9.3.50
+// vers: 1.9.3.51
 
 /*
 $Rev$:  Revision of last commit
@@ -399,6 +399,7 @@ ls = dls;
 host = location.hostname.toLowerCase();
 urlsearch = location.pathname + location.search;
 arr = [];
+hOne = hOne();
 
 function hOne() {
 	if (document.getElementsByTagName('h1')[0]) {
