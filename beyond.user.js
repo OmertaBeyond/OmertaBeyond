@@ -984,6 +984,7 @@ if(dls == '?module=Launchpad'){
 			bguardsXP = x2+'7]/td[2]';
 			jailBustXP = pad + '//center/table/tbody/tr/td[3]/table[1]/tbody/tr[';
 			bustTracker = $X(pad+'//center/table/tbody/tr/td[3]/table[4]/tbody/tr[3]/td[2]').innerHTML;
+			bustTracker = parseInt(bustTracker.replace(/,/g, ''), 10);
 			setTimeout(function() {
 				setValue('bustouts', bustTracker);
 			}, 0);
@@ -1291,14 +1292,18 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	var FL_prior = getValue('FL_prior', 3);
 	var Fam_prior = getValue('Fam_prior', 9);
 	var lowlifes = 0;
-if (db.innerHTML.indexOf('You busted this person out of jail') != -1){
-	++bustTrackerinfo;
-	setValue('bustouts', bustTrackerinfo);
-}
+	if (db.innerHTML.search(lang.busttracker[0]) != -1){
+		++bustTrackerinfo;
+		setValue('bustouts', bustTrackerinfo);			
+	}
+	if (db.innerHTML.search(lang.busttracker[1]) != -1){
+		bustTrackerinfo+=2;
+		setValue('bustouts', bustTrackerinfo);			
+	}
 
 	var span = cEL('span');
 	var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-	span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;Bust outs: ' + bustTrackerinfo;
+	span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;Bust outs: ' + commafy(bustTrackerinfo);
 	$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 
 	//grab ingame HL colors

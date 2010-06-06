@@ -7,7 +7,7 @@
 //
 // -------------------------------------------------------------------------------------
 
-// vers: 1.9.3.47
+// vers: 1.9.3.49
 
 /*
 $Rev$:  Revision of last commit
@@ -302,7 +302,8 @@ var langs = {
 		],
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
-		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?']
+		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
+		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
 	},
 	dm: {
 		version: '_dm',
@@ -589,7 +590,8 @@ var langs = {
 		],
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
-		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?']
+		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
+		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
 	},
 	nl: {
 		version: '_nl',
@@ -883,6 +885,7 @@ var langs = {
 			'Je hebt een nieuw spel gestart.'
 		],
 		killpage: 'Alle steden',
-		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?']
+		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?'],
+		busttracker: ['Je hebt deze gangster uit de gevangenis gebroken.', 'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken']
 	}
 };
