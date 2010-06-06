@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			01-06-2010
+// @date			06-06-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
@@ -26,7 +26,6 @@
 // @exclude			http://ircwiki.barafranca.com/*
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
-// @resource	color		http://omertabeyond.googlecode.com/svn/trunk/scripts/color.js
 // @resource	css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
 // @resource	trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
 // @resource	colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
@@ -129,7 +128,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '48';
+var ScriptSubVersion = '50';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -239,27 +238,27 @@ if (dlp == '/prefs.php') {
 	var prefstr = lang.prefs;
 	var prefsTitle = lang.prefsTitle;
 
-	var string = '<tr height="25" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + ScriptVersion + '.' + ScriptSubVersion + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <a href="#" onClick="" name="updater" ><img src="'+GM_getResourceURL('updateIco')+'" border="0" title="'+lang.prefsPage[0]+'" /></a></td></tr>';
+	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + ScriptVersion + '.' + ScriptSubVersion + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <a href="#" onClick="" name="updater" ><img src="'+GM_getResourceURL('updateIco')+'" border="0" title="'+lang.prefsPage[0]+'" alt="'+lang.prefsPage[0]+'" /></a></td></tr>';
 
 	function addCat(title) { //pref category
 		toggleStr = 'var node = this; while(node.nextSibling.innerHTML.search(/<input/)!=-1){ var node = node.nextSibling; var show = ((node.style.display == \'none\') ? \'\' : \'none\'); node.style.display = show; };'; //js to toggle hiding prefs for category
-		string += '<tr height="25" id="cat" class="tr" onClick="javascript:' + toggleStr + '"><td colspan="4" class="td"><b>&nbsp; &rarr; <u>';
+		string += '<tr style="height: 25px;" id="cat" class="tr" onClick="javascript:' + toggleStr + '"><td colspan="4" class="td"><b>&nbsp; &rarr; <u>';
 		string += title;
 		string += '</u></b></td></tr>';
 	}
 
 	function addPrefItems(list) { //indices of prefs to list... order matters!
 		for (i = -1; ++i < list.length;) { //loop through given prefs for category
-			string += '<tr height="25" class="tr" style="display:none"><td width=25 class="td">'; //start pref row
-				string += '<input type="checkbox" id="check' + list[i] + '" name="check_list"></td>'; //checkbox
+			string += '<tr style="height: 25px; display:none;" class="tr"><td width=25 class="td">'; //start pref row
+			string += '<input type="checkbox" id="check' + list[i] + '" name="check_list" /></td>'; //checkbox
 			string += '<td class="td"' + (((i + 1) == list.length) ? ' colspan="3"' : '');
 			string += '><span title="' + prefsTitle[list[i]] + '" style="cursor:pointer" onclick="javascript:node = this.parentNode.previousSibling.childNodes[0];node.checked = (node.checked ? 0 : 1)">';
 			string += prefstr[list[i++]] + '</span></td>'; //pref name
 			if (i == list.length) {
 				string += '</tr>'; //end pref row
 			} else {
-				string += '<td width="25" class="td"><input type="checkbox" id="check' + list[i] + '" name="check_list"></td>'; //checkbox
-				string += '<td class="td" >';
+				string += '<td width="25" class="td"><input type="checkbox" id="check' + list[i] + '" name="check_list" /></td>'; //checkbox
+				string += '<td class="td">';
 				string += '<span title="' + prefsTitle[list[i]] + '" style="cursor:pointer" onclick="javascript:node = this.parentNode.previousSibling.childNodes[0];node.checked = (node.checked ? 0 : 1)">';
 				string += prefstr[list[i]] + '</span></td></tr>';
 			}
@@ -290,7 +289,7 @@ if (dlp == '/prefs.php') {
 	addCat(lang.preftitles[6]); //misc
 	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33]);
 
-	string += '<tr height="50"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="checkbutton" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
+	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="checkbutton" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
 	string += '&nbsp;<button type="button" name="#" class="button" onClick="';
 
 	var nick = getValue('nick','');
@@ -342,35 +341,35 @@ if (dlp == '/prefs.php') {
 		savestring += fam_list + ' + "&colours="' + col_list + ' + "&priority="' + pri_list + ' + "&nobust="' + nb_list;
 		savestring += '">'+lang.jhl[6]+'</button>';
 
-		var string = '<tr height="25"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
-		string += '<tr height="25" class="tr"><td class="td">&nbsp;</td><td width="210" class="td"><b>'+lang.jhl[1]+'</b></td><td width="75" class="td"><b>'+lang.jhl[2]+'</b></td><td width="76" class="td">&nbsp;</td><td width="50" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
+		var string = '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td width="210" class="td"><b>'+lang.jhl[1]+'</b></td><td width="75" class="td"><b>'+lang.jhl[2]+'</b></td><td width="76" class="td">&nbsp;</td><td width="50" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
 		for(i=-1;++i<jailint;){
 			if(family[i] == null) { family[i] = ''; }
 			if(colour[i] == null) { colour[i] = ''; }
 			if(priority[i] == null) { priority[i] = ''; }
 			if(!colour[i]) { colour[i] = 'CCC'; }
-			string += '<tr height="25" class="tr"><td>&nbsp;</td><td><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL('trash')+'"></img><input id="family' + i + '" value="' + family[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig"></td>';
+			string += '<tr height="25" class="tr"><td>&nbsp;</td><td><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL('trash')+'" alt="Delete" /><input id="family' + i + '" value="' + family[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 			string += '<td><input id="colour'+i+'" value="'+colour[i]+'" type="text" name="color'+(i+1)+'" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:75px;" /></td>';
-			string += '<td><img src="'+GM_getResourceURL('colorpicker')+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'colour'+i+'\').color.showPicker()" /></td>';
-			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall"></td><td>&nbsp;</td></tr>';
+			string += '<td><img src="'+GM_getResourceURL('colorpicker')+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
+			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall" /></td><td>&nbsp;</td></tr>';
 		}
-		string += '<tr class="tr" height="25" align="center"><td colspan=6 class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
+		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
 
-		string += '<tr height="25" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
 		for(i=-1;++i<nbint;){
 			if(nobust[i] == null){ nobust[i] = ''; }
-			string += '<tr height="25" class="tr"><td>&nbsp;</td><td colspan="5"><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL('trash')+'"></img><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig"></td>';
+			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td colspan="5"><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL('trash')+'" alt="Delete" /><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 		}
-		string += '<tr class="tr" height="25" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
+		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
 
-		string += '<tr height="25" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2"><center><b>'+lang.jhl[8]+'</b></center><td class="td" colspan="2"><center><b>'+lang.jhl[9]+'</b></center></td><td class="td">&nbsp;</td></tr>';
-		string += '<tr height="25" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle"></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall"></td></tr>';
-		string += '<tr height="25" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;"></td><td width="10"><img src="'+GM_getResourceURL('colorpicker')+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall"></td></tr>';
-		string += '<tr height="25" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall"></td></tr>';
-		string += '<tr height="25" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall"></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2"><center><b>'+lang.jhl[8]+'</b></center><td class="td" colspan="2"><center><b>'+lang.jhl[9]+'</b></center></td><td class="td">&nbsp;</td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall"></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td width="10"><img src="'+GM_getResourceURL('colorpicker')+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
 //<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL('colorpicker')+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a>
-		string += '<tr class="tr" height="25" align="center"><td colspan="6" class="td"">'+savestring+'</td></tr>';
-		string += '<tr height="20"><td class="tdcredits" colspan="6" class="bigtd"><div id="credits">'+lang.jhl[16]+'</div></td></tr>';
+		string += '<tr class="tr" height="25" align="center"><td colspan="6" class="td">'+savestring+'</td></tr>';
+		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div id="credits">'+lang.jhl[16]+'</div></td></tr>';
 
 		getID('tablejail').innerHTML = string;
 	}
@@ -1288,7 +1287,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	var prioritys = replaceLast(getValue('priority', ''), ',', '', 1).split(',');
 	var nobust = replaceLast(getValue('nobust', ''), ',', '', 1).split(',');
 	var maxHL = getValue('maxHL', 5);
-	var bustTrackerinfo = getValue('bustouts', '0');
+	var bustTrackerinfo = getValue('bustouts', 0);
 	var FL_prior = getValue('FL_prior', 3);
 	var Fam_prior = getValue('Fam_prior', 9);
 	var lowlifes = 0;
@@ -1300,6 +1299,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		bustTrackerinfo+=2;
 		setValue('bustouts', bustTrackerinfo);			
 	}
+
 
 	var span = cEL('span');
 	var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
@@ -3191,7 +3191,25 @@ if (dls.indexOf('?module=Poker') != -1) {// pref needed
 				setValue('ptmwon', ptmwon);
 			}
 		}
+	}
+	else { // game isn't active
+		if (db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[1]) != -1 || db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[10]) != -1) {// user joins game
+			setValue('ptoldbet', 0);
+			ptgplay += 1; //games played +1;
+			setValue('ptgplay', ptgplay);
+			
+			// adding the ante
+			a = $x('//tr').length - 21; // total tr's with gameinfo
+			for (y=5;y<=a;y+=1) {
+				if ($x('/html/body/center/table/tbody/tr['+y+']/td[8]')[0].innerHTML.indexOf('<a href="/user.php?nick='+ptself+'">') != -1) {
+					var ptMyOwNum = y;
+				}
+			}
+			var ptAnte = $x('/html/body/center/table/tbody/tr['+ptMyOwNum+']/td[3]')[0].innerHTML.replace(/,/g, '');
+			ptspent += parseInt(ptAnte.replace('$', ''), 10);
+			setValue('ptspent', ptspent);
 		}
+	}
 	var ptprofit = ptmwon - ptspent;
 	if (ptspent > 0) {
 		if (ptprofit >= 0) ptprofit = '$'+commafy(ptprofit);
