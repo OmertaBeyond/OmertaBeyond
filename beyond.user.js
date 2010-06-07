@@ -75,7 +75,7 @@ if (db.innerHTML.indexOf('clicklimit') != -1 && dlp != '/menu.php') {
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
-	else if (hOne == '500 - Internal Server Error') {
+}	else if (hOne == '500 - Internal Server Error') {
 	GM_log('Reload in 20 seconds');
 	setTimeout(function () {
 		window.location.reload();
