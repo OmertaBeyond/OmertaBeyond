@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '52';
+var ScriptSubVersion = '53';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -318,58 +318,58 @@ if (dlp == '/prefs.php') {
 	}
 
 	if(prefs[3]){//JHL stuff
-		var family = getValue('bust', '').split(',');
-		var colour = getValue('colours', '').split(',');
-		var priority = getValue('priority', '').split(',');
-		var nobust = getValue('nobust', '').split(',');
+		var family = getValue('bust', '').split(",");
+		var colour = getValue('colours', '').split(",");
+		var priority = getValue('priority', '').split(",");
+		var nobust = getValue('nobust', '').split(",");
 		var nbint = getValue('nbint', 3);
 		var jailint = getValue('jailint', 4);
 		var maxHL = getValue('maxHL', 5);
-		var hotkeys = getValue('rawkeyprefs', '');
-		var buyout = getValue('buyout', '/');
-		var FL_prior = getValue('FL_prior', 3);
-		var Fam_prior = getValue('Fam_prior', 9);
-		var defpri = getValue('defpri', 5);
-		var defcol = getValue('defcol', '33FF66');
+		var hotkeys = getValue('rawkeyprefs','');
+		var buyout = getValue('buyout','/');
+		var FL_prior = getValue('FL_prior',3);
+		var Fam_prior = getValue('Fam_prior',9);
+		var defpri = getValue('defpri',5);
+		var defcol = getValue('defcol','33FF66');
 
 		var savestring = '<button type="button" class="button" name="#" onClick="location.href = \''+PrefsLink+'&maxHL=\' + document.getElementById(\'maxHL\').value + \'&buyout=\' + document.getElementById(\'buyout\').value + \'&FL_prior=\' + document.getElementById(\'FL_prior\').value + \'&Fam_prior=\' + document.getElementById(\'Fam_prior\').value + \'&defpri=\' + document.getElementById(\'defpri\').value + \'&defcol=\' + document.getElementById(\'defcol\').value + \'&bust=\'';
 		fam_list = col_list = pri_list = nb_list = '';
 
 		for(i=-1;++i<jailint;){
-			fam_list += ' + document.getElementById(\'family' +i+ '\').value.toUpperCase() + \', \'';
-			col_list += ' + document.getElementById(\'colour' +i+ '\').value.replace("#", "") + \', \'';
-			pri_list += ' + document.getElementById(\'priority' +i+ '\').value + \', \'';
+			fam_list += " + document.getElementById('family" +i+ "').value.toUpperCase() + ','";
+			col_list += " + document.getElementById('colour" +i+ "').value.replace('#', '') + ','";
+			pri_list += " + document.getElementById('priority" +i+ "').value + ','";
 		}
 		for(i=-1;++i<nbint;){
-			nb_list += ' + document.getElementById(\'nobust' +i+ '\').value.replace("&","%26").toUpperCase() + \', \'';
+			nb_list += " + document.getElementById('nobust" +i+ "').value.replace('&','%26').toUpperCase() + ','";
 		}
-		savestring += fam_list + ' + "&colours="' + col_list + ' + "&priority="' + pri_list + ' + "&nobust="' + nb_list;
+		savestring += fam_list + " + '&colours='" + col_list + " + '&priority='" + pri_list + " + '&nobust='" + nb_list;
 		savestring += '">'+lang.jhl[6]+'</button>';
 
 		var string = '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td width="210" class="td"><b>'+lang.jhl[1]+'</b></td><td width="75" class="td"><b>'+lang.jhl[2]+'</b></td><td width="76" class="td">&nbsp;</td><td width="50" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
 		for(i=-1;++i<jailint;){
-			if(family[i] == null) { family[i] = ''; }
-			if(colour[i] == null) { colour[i] = ''; }
-			if(priority[i] == null) { priority[i] = ''; }
-			if(!colour[i]) { colour[i] = 'CCC'; }
-			string += '<tr height="25" class="tr"><td>&nbsp;</td><td><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL('trash')+'" alt="Delete" /><input id="family' + i + '" value="' + family[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
+			if(family[i] == null) { family[i] = ""; }
+			if(colour[i] == null) { colour[i] = ""; }
+			if(priority[i] == null) { priority[i] = ""; }
+			if(!colour[i]) { colour[i] = "CCCCCC"; }
+			string += '<tr height="25" class="tr"><td>&nbsp;</td><td><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="family' + i + '" value="' + family[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 			string += '<td><input id="colour'+i+'" value="'+colour[i]+'" type="text" name="color'+(i+1)+'" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:75px;" /></td>';
-			string += '<td><img src="'+GM_getResourceURL('colorpicker')+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
+			string += '<td><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
 			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall" /></td><td>&nbsp;</td></tr>';
 		}
 		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
 
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
 		for(i=-1;++i<nbint;){
-			if(nobust[i] == null){ nobust[i] = ''; }
-			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td colspan="5"><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL('trash')+'" alt="Delete" /><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
+			if(nobust[i] == null){ nobust[i] = ""; }
+			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td colspan="5"><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 		}
 		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
 
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2"><center><b>'+lang.jhl[8]+'</b></center><td class="td" colspan="2"><center><b>'+lang.jhl[9]+'</b></center></td><td class="td">&nbsp;</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall"></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td width="10"><img src="'+GM_getResourceURL('colorpicker')+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td width="10"><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
 //<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL('colorpicker')+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a>
@@ -383,7 +383,7 @@ if (dlp == '/prefs.php') {
 	$x('//table | //td[@class="toptd"] | //button | //input[@type="text"] | //div[@id="credits"]').forEach(function ($n) {
 		var $N = $n.nodeName;
 		var $s = $n.style;
-		if ($N == 'TABLE' && $n.parentNode.nodeName != 'TD' && $n.innerHTML.search('<td') != -1) {
+		if ($N == "TABLE" && $n.parentNode.nodeName != 'TD' && $n.innerHTML.search('<td') != -1) {
 			$s.MozBorderRadius = '10px';
 			//bottom cells
 			var last = $n.getElementsByTagName('td');
@@ -394,16 +394,16 @@ if (dlp == '/prefs.php') {
 			last.style.MozBorderRadiusBottomright = '7.5px';
 			last.style.MozBorderRadiusBottomleft = '7.5px';
 		}
-		if ($N == 'TD') {
+		if ($N == "TD") {
 			$s.MozBorderRadiusTopleft = '7.5px';
 			$s.MozBorderRadiusTopright = '7.5px';
 		}
-		if ($N == 'DIV' || $N == 'INPUT' || $N == 'BUTTON') {
+		if ($N == "DIV" || $N == "INPUT" || $N == "BUTTON") {
 			$s.MozBorderRadius = '5px';
-			if ($N == 'INPUT') {
+			if ($N == "INPUT") {
 				$s.paddingLeft = '3px';
 			}
-			if ($N == 'BUTTON') {
+			if ($N == "BUTTON") {
 				$n.setAttribute('onmouseover', 'this.style.cursor = "pointer";');
 			}
 		}
@@ -3978,6 +3978,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			function parsePrices(resp, url) {
 				parser = new DOMParser();
 				dom = parser.parseFromString(resp, 'application/xml');
+
 
 				for (BN = [], i = 0; i <= 1; i++) { //B/N
 					for (BN[i] = [], j = 0; j <= 6; j++) { //type
