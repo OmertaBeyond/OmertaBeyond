@@ -6,7 +6,7 @@
 //
 //-------------------------------------------------------------------------------------
 
-// vers: 1.9.3.51
+// vers: 1.9.3.52
 
 /*
 $Rev$:  Revision of last commit
@@ -127,6 +127,12 @@ function $x(xpath, root) {
 function $X(xpath, root) {
 	var got = $x(xpath, root);
 	return got instanceof Array ? got[0] : got;
+}
+
+function $XLast(xpath, root) {
+	var got = $x(xpath, root);
+	var len = got.length-1;
+	return got instanceof Array ? got[len] : got;
 }
 
 function $del(xpath) {

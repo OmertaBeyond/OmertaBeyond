@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			07-06-2010
+// @date			15-06-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '51';
+var ScriptSubVersion = '52';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1150,10 +1150,9 @@ if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
 	db.style.backgroundColor = getValue('bodyBg', '#B0B0B0');
 	db.style.color = getValue('fontClr', '#000');
 
-	var p = cEL('p');
-	p.style.textAlign = 'center';
-	p.innerHTML = '<a style="color:#EEE !important; font-weight:bold;" href="http://89.149.221.178/~fingon/index.php' + dls + '" target="_blank">Click here to go to the actual news post</a>';
-	$X('//td[@class="overallpadding"]').appendChild(p);
+	var goToFin = $XLast('//b');
+	goToFin.style.textAlign = 'center';
+	goToFin.innerHTML = '<a style="color:#EEE !important; font-weight:bold;" href="http://89.149.221.178/~fingon/index.php' + dls + '" target="_blank">Click here to go to the actual news post</a>';
 
 }
 
@@ -1298,11 +1297,11 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	var lowlifes = 0;
 	if (db.innerHTML.search(lang.busttracker[0]) != -1){
 		++bustTrackerinfo;
-		setValue('bustouts', bustTrackerinfo);			
+		setValue('bustouts', bustTrackerinfo);
 	}
 	if (db.innerHTML.search(lang.busttracker[1]) != -1){
 		bustTrackerinfo+=2;
-		setValue('bustouts', bustTrackerinfo);			
+		setValue('bustouts', bustTrackerinfo);
 	}
 
 
@@ -2387,7 +2386,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			}
 			var id = getTAG('div')[divnum].id; // = 'spot_*'
 			id = parseInt(id.replace('spot_', ''));
-			var type = r[((y * 4) + 1)].replace('<b>', '');
+			var type = r[(((y * 4) + 1) - tdskipnum)].replace('<b>', '');
 			type = type.replace('</b>', '');
 			var owner = $x('//td')[(((y * 14) + 1) - tdskipnum)].innerHTML; // 14 td's per spot
 			var time = $x('//td')[(((y * 14) + 3) - tdskipnum)].innerHTML;
@@ -2710,16 +2709,17 @@ if (dls.indexOf('action=showMsg') != -1) {
 	if ($X('//a[contains(@href,"/family.php?join=yes")]')) {
 		$X('//a[contains(@href,"/family.php?join=yes")]').removeAttribute('target');
 	}
-
-	if (prefs[31]) { //add hotkeys to showMsg
-		var linkz = $x('//table[@class="thinline"]/tbody/tr[7]/td/a').reverse();
-		if (linkz.length == 1) {
-			linkz[0].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
+	var linkz = $x('//table[@class="thinline"]/tbody/tr[7]/td/a').reverse();
+	if (linkz.length == 1) {
+		linkz[0].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
+		if (prefs[31]) { //add hotkeys to showMsg
 			linkz[0].setAttribute('accesskey', '[');
-		} else {
-			linkz[0].innerHTML = '<img src="' + GM_getResourceURL('reply') + '" onMouseover="style.cursor=\'pointer\'" title="Reply (])" width="16" height="16" border="0" /> ';
+		}
+	} else {
+		linkz[0].innerHTML = '<img src="' + GM_getResourceURL('reply') + '" onMouseover="style.cursor=\'pointer\'" title="Reply (])" width="16" height="16" border="0" /> ';
+		linkz[1].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
+		if (prefs[31]) { //add hotkeys to showMsg
 			linkz[0].setAttribute('accesskey', ']');
-			linkz[1].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
 			linkz[1].setAttribute('accesskey', '[');
 		}
 	}
@@ -3201,7 +3201,7 @@ if (dls.indexOf('?module=Poker') != -1) {// pref needed
 			setValue('ptoldbet', 0);
 			ptgplay += 1; //games played +1;
 			setValue('ptgplay', ptgplay);
-			
+
 			// adding the ante
 			a = $x('//tr').length - 21; // total tr's with gameinfo
 			for (y=5;y<=a;y+=1) {
