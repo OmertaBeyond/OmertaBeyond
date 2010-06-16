@@ -7,7 +7,7 @@
 //
 // -------------------------------------------------------------------------------------
 
-// vers: 1.9.3.54
+// vers: 1.9.3.55
 
 /*
 $Rev$:  Revision of last commit
@@ -46,7 +46,7 @@ var langs = {
 			'Extra links on user profiles',//15 - MISC
 			'Enable Nickreader (hold \'Alt\' or switch on/off with \'Ctrl\')',//16 - MISC
 			'Extra prices popup in marquee',//17 - SMUGGLING/PRICES
-			'Remove blue profit calculations in CD-mode',//18 - SMUGGLING/PRICES
+			'Remove blue profit calculations in CD-mode',//18 - CLEAN-UP
 			'Disable Avatars on forum and on friend\'s list on profile page',//19 - CLEAN-UP
 			'Clean login page',//20 - CLEAN-UP
 			'Add highlights @ prices page',//21 - SMUGGLING/PRICES
@@ -62,7 +62,7 @@ var langs = {
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs
 			'Enable BulletTracker',//33 - MISC
-			'Tidy Spot raid page'//34 - MISC
+			'Tidy Spot raid page'//34 - UI Extras
 		],
 		prefsTitle: [ //describe the options
 			'You cant press the "go for it" button before you filled in a 3 character code',//0
@@ -334,7 +334,7 @@ var langs = {
 			'Extra links on user profiles',//15 - MISC
 			'Enable Nickreader (hold \'Alt\' or switch on/off with \'Ctrl\')',//16 - MISC
 			'Extra prices popup in marquee',//17 - SMUGGLING/PRICES
-			'Remove blue profit calculations in CD-mode',//18 - SMUGGLING/PRICES
+			'Remove blue profit calculations in CD-mode',//18 - CLEAN-UP
 			'Disable Avatars on forum and on friend\'s list on profile page',//19 - CLEAN-UP
 			'Clean login page',//20 - CLEAN-UP
 			'Add highlights @ prices page',//21 - SMUGGLING/PRICES
@@ -350,7 +350,7 @@ var langs = {
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs
 			'Enable BulletTracker',//33 - MISC
-			'Tidy Spot raid page'//34 - MISC
+			'Tidy Spot raid page'//34 - UI Extras
 		],
 		prefsTitle: [ //describe the options
 			'Disable the "go for it" button until the image code entered is the correct length',//0
@@ -622,7 +622,7 @@ var langs = {
 			'Extra links op gebruikersprofielen',//15 - MISC
 			'Nicklezer popup tijdens vasthouden van \'Alt\' of aan/uit met \'Ctrl\'',//16 - MISC
 			'Voeg "extra prijzen popup" toe in de bovenbalk',//17 - SMOKKELEN/PRIJZEN
-			'Verwijder blauwe berekeningen in CD-modus',//18 - SMUGGLING/PRICES
+			'Verwijder blauwe berekeningen in CD-modus',//18 - CLEAN-UP
 			'Verwijder avatars op forum en in vriendenlijst op profielpagina',//19 - CLEAN-UP
 			'Opgeruimde login pagina',//20 - CLEAN-UP
 			'Voeg highlights toe op prijzen pagina',//21 - SMUGGLING/PRICES
@@ -638,7 +638,7 @@ var langs = {
 			'Sneltoetsen gebruiken bij de Postbus',//31 - MISC
 			'Auto-Krasser en Stats',//32 - OTHER AFs
 			'Voeg KogelVolger toe aan kogelfabriek pagina',//33 - MISC
-			'Ruim de Spot Overvallen pagina op'//34 - MISC
+			'Ruim de Spot Overvallen pagina op'//34 - UI Extras
 		],
 		prefsTitle: [ //describe the options
 			'Je kan de "Ga ervoor" knop niet gebruiken voor je 3 tekens hebt ingevuld',//0

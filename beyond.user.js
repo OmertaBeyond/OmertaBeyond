@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			16-06-2010
+// @date			17-06-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '54';
+var ScriptSubVersion = '55';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -277,7 +277,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([8, 10, 24, 0]);
 
 	addCat(lang.preftitles[1]); //Smuggling
-	addPrefItems([28, 4, 1, 17, 21, 18]);
+	addPrefItems([28, 4, 1, 17, 21]);
 
 	addCat(lang.preftitles[2]); //Jail
 	addPrefItems([3, 23]);
@@ -286,13 +286,13 @@ if (dlp == '/prefs.php') {
 	addPrefItems([25, 7, 26, 27, 29, 32]);
 
 	addCat(lang.preftitles[4]); //Clean up
-	addPrefItems([6, 22, 12, 14, 30, 19, 20, 34]);
+	addPrefItems([6, 22, 12, 14, 30, 19, 20, 18]);
 
 	addCat(lang.preftitles[5]); //Fingons / Edo
 	addPrefItems([2]);
 
 	addCat(lang.preftitles[6]); //misc
-	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33]);
+	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34]);
 
 	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="checkbutton" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
 	string += '&nbsp;<button type="button" name="#" class="button" onClick="';
@@ -1527,7 +1527,7 @@ if (prefs[11]) {
 
 //----------------- Crime Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
-	$XLast('//img').parentNode.removeChild($XLast('//img')); // remove damned picture
+	$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]')); // remove damned picture
 	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
 		$x('//input[@type="radio"]')[4].checked = true;
 	} else if (prefs[10]) {
@@ -1542,7 +1542,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 
 //---------------- Cars Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
-	$XLast('//img').parentNode.removeChild($XLast('//img')); // remove damned picture
+	$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]')); // remove damned picture
 	if (db.innerHTML.search(/table/i) > -1 && prefs[8]) { //if Car Nick AF is enabled
 		for (p = [], i = 0; i <= 3; i++) { //Get percentages
 			p.push($i('//form//td[3]', i).replace(/\D|/g, ''));
@@ -3355,7 +3355,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 	}
 
 	//--Assemble functions
-
 
 	function fillBRC(n, b, mode) { //actually filling the forms
 		values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
