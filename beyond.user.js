@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			15-06-2010
+// @date			16-06-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '53';
+var ScriptSubVersion = '54';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1527,6 +1527,7 @@ if (prefs[11]) {
 
 //----------------- Crime Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
+	$XLast('//img').parentNode.removeChild($XLast('//img')); // remove damned picture
 	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
 		$x('//input[@type="radio"]')[4].checked = true;
 	} else if (prefs[10]) {
@@ -1541,6 +1542,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 
 //---------------- Cars Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
+	$XLast('//img').parentNode.removeChild($XLast('//img')); // remove damned picture
 	if (db.innerHTML.search(/table/i) > -1 && prefs[8]) { //if Car Nick AF is enabled
 		for (p = [], i = 0; i <= 3; i++) { //Get percentages
 			p.push($i('//form//td[3]', i).replace(/\D|/g, ''));
