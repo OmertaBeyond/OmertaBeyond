@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			17-06-2010
+// @date			25-06-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
@@ -24,6 +24,7 @@
 // @include			http://89.149.221.178/~fingon/beyond.php*
 // @exclude			http://gamewiki.barafranca.com/*
 // @exclude			http://ircwiki.barafranca.com/*
+// @exclude			http://*/front-mafia-list.php*
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
 // @resource	css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
@@ -133,7 +134,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '55';
+var ScriptSubVersion = '56';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -3592,7 +3593,14 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 					} else { //we need to GET to smuggling too
 						aCell = cEL('td');
 						aCell.style.borderLeft = border;
-						aCell.innerHTML = '&nbsp;<a style="font-weight:inherit; text-align:center" href="http://www.barafranca.' + lang.version.replace('_', '') + '/smuggling.php?n=' + (bestNarc - 1) + '&b=' + (bestBooze - 1) + '">Go!</a>';
+						if (lang.version == "_com" ) {
+							plink = "http://www.omertabeyond.com";
+						} else if (lang.version == "_dm" ) {
+							plink = "http://dm.barafranca.com";
+						} else {
+							plink = "http://www.barafranca.nl";
+						}
+						aCell.innerHTML = '&nbsp;<a style="font-weight:inherit; text-align:center" href="'+ plink + '/smuggling.php?n=' + (bestNarc - 1) + '&b=' + (bestBooze - 1) + '">Go!</a>';
 						tr.appendChild(aCell); //add the row
 					}
 				}
