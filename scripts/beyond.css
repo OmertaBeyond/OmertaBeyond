@@ -8,7 +8,7 @@
 //
 // -------------------------------------------------------------------------------------
 
-// vers: 1.9.3.56
+// vers: 1.9.3.57
 
 /*
 $Rev$:  Revision of last commit
@@ -187,13 +187,17 @@ color:#00F !important
 
 /*	@Garage	*/
 .heistCar {
-background-color:silver
+background-color:#FFC1C1
 }
 
 .ocCar {
-background-color:#AAA
+background-color:#8BE9E9
 }
 
 .mocCar {
-background-color:#999
+background-color:#2E9999
+}
+
+.truckCar {
+background-color:#D9FB96
 }

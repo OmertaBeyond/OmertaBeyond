@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			25-06-2010
+// @date			04-07-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
@@ -26,6 +26,7 @@
 // @exclude			http://ircwiki.barafranca.com/*
 // @exclude			http://*/front-mafia-list.php*
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
+// @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
 // @resource	css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
 // @resource	trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
@@ -120,28 +121,31 @@ function whereToRun(hostname) {
 	}
 }
 
-var lang, whoami;
+var lang, sets, whoami;
 if (whereToRun() == 'com') {
 	lang = langs.en;
+	sets = settings.en;
 	whoami = GM_getValue('nick_com', '');
 } else if (whereToRun() == 'dm') {
 	lang = langs.dm;
+	sets = settings.dm;
 	whoami = GM_getValue('nick_dm', '');
 } else if (whereToRun() == 'nl') {
 	lang = langs.nl;
+	sets = sets = settings.nl;
 	whoami = GM_getValue('nick_nl', '');
 }
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '56';
+var ScriptSubVersion = '57';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
-var PrefsLink = ScriptLink + lang.prefslink;
-var PricesLink = ScriptLink + lang.priceslink;
-var ContactLink = ScriptLink + lang.contactlink;
-var PollLink = SiteLink + lang.polllink;
+var PrefsLink = ScriptLink + sets.prefslink;
+var PricesLink = ScriptLink + sets.priceslink;
+var ContactLink = ScriptLink + sets.contactlink;
+var PollLink = SiteLink + sets.polllink;
 var FingonUrl = 'http://89.149.221.178/~fingon';
 var EdoUrl = 'http://www.edo-nieuws.nl/news.php';
 var ff = navigator.userAgent.split('/')[3].split(' ')[0];
@@ -194,8 +198,8 @@ var qlinks = [
 	ContactLink,
 	ScriptLink + '/faq.php',
 	PricesLink,
-	lang.statslink,
-	lang.statslink2
+	sets.statslink,
+	sets.statslink2
 ];
 //beyond menu titles
 var qtitle = [
@@ -208,7 +212,7 @@ var qtitle = [
 	lang.menutitle[6]
 ];
 
-if(lang.version!='_com'){ //only .com support fingon famstats
+if(sets.version!='_com'){ //only .com support fingon famstats
 	descr.pop();
 	qlinks.pop();
 	qtitle.pop();
@@ -425,7 +429,7 @@ if(dlp == '/marquee.php'){
 	if(prefs[1]){
 		GM_xmlhttpRequest({
 			method: 'GET',
-			url: 'http://gm.omertabeyond.com/prices.xml.php?v='+lang.version.replace('_', ''),
+			url: 'http://gm.omertabeyond.com/prices.xml.php?v='+sets.version.replace('_', ''),
 			headers: {'User-agent': ScriptName + ' ' + ScriptVersion + '.'+ ScriptSubVersion, 'Accept': 'application/xml,text/xml'},
 			onload: function(resp){
 				var marquee = document.getElementsByTagName('div')[0];
@@ -1108,7 +1112,7 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 	path = '/table/tbody/tr[3]/td';
 	BFTextXp = x + '[2]/table/tbody/tr/td';
 	if (prefs[25]) {
-		var maxBul = (lang.version == '_dm' ? 3000 : 1000);
+		var maxBul = (sets.version == '_dm' ? 3000 : 1000);
 		window.addEventListener('load', function () {
 			$x('//input')[1].focus();
 		}, true);
@@ -1118,9 +1122,9 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 		$X('//fieldset//input[@type="text"][@name="amount_bull"]').value = bf;
 	}
 	arr = $I(BFTextXp).split(' ');
-	if (lang.version == '_com') {
+	if (sets.version == '_com') {
 		arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
-	} else if (lang.version == '_nl') {
+	} else if (sets.version == '_nl') {
 		arr[7] = '<u>' + arr[7] + '</u>';
 		arr[4] = '<u>' + setArr(4).replace('</b>', '') + '</u>';
 	} else {
@@ -1157,7 +1161,7 @@ if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
 
 }
 
-if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'||lang.version=='_dm')){
+if(prefs[2] && dlp == '/info.php'){
 	function addNews(){
 		//sort Omerta's news
 		var oNews = $x('//div[@id="news"]');
@@ -1173,11 +1177,11 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 		}
 
 		var news=[];
-		var url = (lang.version == '_com' || lang.version == '_dm') ? 'http://89.149.221.178/~fingon/beyond.php?a=' : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
+		var url = (sets.version == '_com' || sets.version == '_dm') ? 'http://89.149.221.178/~fingon/beyond.php?a=' : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
 		for(var o=0,f=0;(o+f)<=4;1){//loop dates
 			var nextmonth=0;
 			if((oDay[o]<fDay[f] && oMonth[o]<=fMonth[f]) || (oDay[o]>fDay[f] && oMonth[o]<fMonth[f]) || (oMonth[o]>fMonth[f] && fMonth!=1)){//check dates
-				if(lang.version == '_com' || lang.version == '_dm'){//fingon
+				if(sets.version == '_com' || sets.version == '_dm'){//fingon
 					news.push([url+fUrl[f],fArticles[f].replace(/ /,' <br>')]);
 				} else {//edo
 					news.push([url+fUrl[f],fDay[f]+'-'+(fMonth[f].toString().length==1?'0'+fMonth[f]:fMonth[f])+ ' <br>' + fArticles[f]]);
@@ -1195,7 +1199,7 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 			if(item.href.search('barafranca')==-1) {
 				item.parentNode.parentNode.setAttribute('style', 'background:url(\''+GM_getResourceURL('finfavi')+'\') no-repeat 90% 20%;');
 			}
-			if(news[i][1].search(lang.login[2])!=-1 && lang.version=='_nl'){
+			if(news[i][1].search(lang.login[2])!=-1 && sets.version=='_nl'){
 				item.setAttribute('target', 'main');
 			}
 			item.innerHTML = news[i][1];
@@ -1203,7 +1207,7 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 		}
 		//We have better news
 		var times = $X('//a[contains(@href,"news.html")] | //a[contains(@href,"mag.php")]');
-		times.href = lang.version=='_com'?FingonUrl+'?v=8':lang.version=='_dm'?FingonUrl+'?v=2':EdoUrl;
+		times.href = sets.version=='_com'?FingonUrl+'?v=8':sets.version=='_dm'?FingonUrl+'?v=2':EdoUrl;
 		times.style.fontSize = '11px';
 		times.innerHTML = lang.login[2];
 	}
@@ -1213,7 +1217,7 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 	var fDay=[];
 	var fMonth=[];
 
-	if(lang.version=='_dm'||lang.version=='_com'){//grab news from Fingon rss feed
+	if(sets.version=='_dm'||sets.version=='_com'){//grab news from Fingon rss feed
 		GM_xmlhttpRequest({
 			method: 'GET',
 			url: 'http://89.149.221.178/~fingon/rss.php',
@@ -1231,8 +1235,8 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 						fMonth.push(parseInt(/-\d?\d /.exec(fArticles[i])[0].replace('-', ''),10));
 
 						//booleans for versions
-						var fNewsC = lang.version == '_com' && /Com /.test(fArticles[i]);
-						var fNewsD = lang.version == '_dm' && /DM /.test(fArticles[i]);
+						var fNewsC = sets.version == '_com' && /Com /.test(fArticles[i]);
+						var fNewsD = sets.version == '_dm' && /DM /.test(fArticles[i]);
 
 						if(fNewsC || fNewsD){//check if it's for this version
 							fArticles[i] = fArticles[i].slice(fArticles[i].indexOf(') ')+2);
@@ -1261,7 +1265,7 @@ if(prefs[2] && dlp == '/info.php' && (lang.version=='_com'||lang.version=='_nl'|
 			}
 		});
 	}
-	if(lang.version=='_nl'){//get news from Edo mainpage
+	if(sets.version=='_nl'){//get news from Edo mainpage
 		GM_xmlhttpRequest({
 			method: 'GET',
 			url: 'http://www.edo-nieuws.nl/news.php',
@@ -1620,7 +1624,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		if (status.innerHTML == lang.lastontime[0]) { // show last online time on profile
 			GM_xmlhttpRequest({
 				method: 'GET',
-				url: 'http://rix.omertabeyond.com/laston.xml.php?v='+lang.version.replace('_','')+'&ing='+$X('//span[@id="username"]').innerHTML,
+				url: 'http://rix.omertabeyond.com/laston.xml.php?v='+sets.version.replace('_','')+'&ing='+$X('//span[@id="username"]').innerHTML,
 				headers: {'User-agent': ScriptName + ' ' + ScriptVersion + '.'+ ScriptSubVersion, 'Accept': 'application/xml,text/xml'},
 				onload: function (resp) {
 					var parser = new DOMParser();
@@ -1907,42 +1911,42 @@ if (dlp == '/bank.php') {
 
 //---------------- Garage Crusher ----------------
 if(dlp == '/garage.php'){
-	function checkcar(car){
-		types = [];
-		types[0] = ['h', 8, 9, 13, 15, 16, 17, 18, 19, 21, 22, 27, 32, 34, 35, 40, 43];
-		types[1] = ['oc', 23, 25, 26, 28, 29, 30, 31, 33, 39, 41, 42];
-		types[2] = ['moc', 45, 47, 48];
-		types[3] = ['tr', 23, 47, 54];
-		types.forEach(function(array){ array.forEach(function($n){if($n==car){ eval(array[0] + 'car=1;');} }); });
-	}
-	//crusher
-	var rows = $x('//tr').length;
+	var rows = $x('//tr').length; //get number of rows
 
-	if(prefs[24]){
-		for(i=2;i<rows-2;i++){
-			y = '/html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
-			car = $X(y).href.match(/\d+/g)[0];
-			hcar = occar = moccar = 0;
-			checkcar(car);
+	if(prefs[24]){ //crusher
+		//define car arrays
+		var titles = { h:'Heist', oc:'OC', moc:'MOC', tr:'Truck' };
+		var carValues = { h:'heist', oc:'oc', moc:'moc', tr:'truck' };
+		var types = [['h', 8, 9, 13, 15, 16, 17, 18, 19, 21, 22, 27, 32, 34, 35, 40, 43], ['oc', 23, 25, 26, 28, 29, 30, 31, 33, 39, 41, 42], ['moc', 45, 47, 48], ['tr', 23, 47, 54]];
 
-			z = '/html/body//form//center/table/tbody/tr['+(i+2)+']';//get the row
-			if(hcar==1){
-				$X(z).setAttribute('class', 'heistCar');
-				$X(z).setAttribute('onmouseout', 'this.className="heistCar";');
-			}
-			if(occar==1){
-				$X(z).setAttribute('class', 'ocCar');
-				$X(z).setAttribute('onmouseout', 'this.className="ocCar";');
-			}
-			if(moccar==1){
-				$X(z).setAttribute('class', 'mocCar');
-				$X(z).setAttribute('onmouseout', 'this.className="mocCar";');
-			}
+		var indexTd = cEL('td'); //add type collumn to header
+		indexTd.setAttribute('class', 'tableheader');
+		indexTd.innerHTML = lang.garage;
+		$X('/html/body//form/center/table/tbody/tr').insertBefore(indexTd, $X('/html/body//form/center/table/tbody/tr/td[2]'));
+
+		for(i=2;i<rows-2;i++){ //loop rows
+			var y = '/html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
+			var car = $X(y).href.match(/\d+/g)[0];
+			var carType = '';
+			var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
+
+			types.forEach(function($n){ //loop car through types
+				if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
+					carType = titles[$n[0]]; //set car type
+					carRow.setAttribute('title', titles[$n[0]]); //set popup title
+					carRow.setAttribute('class', carValues[$n[0]] + 'Car'); //set class
+					carRow.setAttribute('onmouseout', 'this.className="' + carValues[$n[0]] + 'Car";'); //add mouseout event
+				}
+			});
+			var typeTd = cEL('td'); //add type collumn to row
+			typeTd.innerHTML = carType;
+			carRow.insertBefore(typeTd, carRow.childNodes[3]);
 		}
 	}
+
 	//add amount of bullets
-	head = $X('//h2');
-	cars = head.textContent.match(/\d+/g)[2];
+	var head = $X('//h2');
+	var cars = head.textContent.match(/\d+/g)[2];
 	if(cars>0){
 		head.textContent = head.textContent + ' Potential Bullets: ' + cars*12; //LANG
 	}
@@ -1955,6 +1959,23 @@ if(dlp == '/garage.php'){
 	'<table><tr>'+string+'id="heist">Skip Heist cars</label></td>'+string+'id="oc">Skip OC cars</label></td>'+'</tr><tr>'+string+ //LANG
 	'id="truck">Skip Trucks</label></td>'+string+'id="moc">Skip MOC cars</label></td>'+'</tr><tr>'+string+'id="nodam">Skip 0% cars</label></td><td>&nbsp;</td>'+'</tr></table>'+ //LANG
 	' <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="Go" name="action" />');
+
+	var all = $X('//input[@type="button"]');//add select All in SH button
+	var allShButton = all.cloneNode(0);
+	allShButton.value = 'All in Safehouse';
+	allShButton.removeAttribute('onclick');
+	allShButton.addEventListener('click', function(){
+		$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
+			if($n.lastChild.previousSibling.textContent.replace(/[^A-Z]/ig,'')=='INSAFEHOUSE'){
+				$n.getElementsByTagName('input')[1].checked = true;
+			}
+		});
+	}, true);
+	all.parentNode.insertBefore(allShButton, all.nextSibling);
+
+	var text = cEL('TextNode');
+	text.innerHTML = ' | ';
+	all.parentNode.insertBefore(text, all.nextSibling);
 
 	if(ls.length > 1){//select cars
 		if(ls.indexOf('heist') != -1 || ls.indexOf('nodam') != -1 || ls.indexOf('max') != -1 || ls.indexOf('oc') != -1){
@@ -2783,8 +2804,8 @@ if (dls.indexOf('action=showMsg') != -1) {
 		var wsIDnum = arr[arr.length - 1];
 		setValue('wsID', wsIDnum);
 		arr[arr.length - 1] = '<a href="/obay.php?action=tosell&type=10" title="click to sell this WS"><b>' + arr[arr.length - 1] + '</b></a>'; //LANG
-		setArr(3 + (lang.version == '_nl' ? 4 : 0));
-		setArr(5 + (lang.version == '_nl' ? 4 : 0));
+		setArr(3 + (sets.version == '_nl' ? 4 : 0));
+		setArr(5 + (sets.version == '_nl' ? 4 : 0));
 		$I(msgTxt, arr.join(' '));
 	}
 	//if msg was crush msg
@@ -2814,7 +2835,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 	var famInv = new RegExp(lang.linkify[12]); //fam inv.
 	if (famInv.test(msgType)) {
-		if (arr.length < 18 + (lang.version == '_nl' ? 1 : 0)) {
+		if (arr.length < 18 + (sets.version == '_nl' ? 1 : 0)) {
 			setArr(8);
 			$I(msgTxt, arr.join(' '));
 		} else {
@@ -3593,9 +3614,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 					} else { //we need to GET to smuggling too
 						aCell = cEL('td');
 						aCell.style.borderLeft = border;
-						if (lang.version == "_com" ) {
+						if (sets.version == "_com" ) {
 							plink = "http://www.omertabeyond.com";
-						} else if (lang.version == "_dm" ) {
+						} else if (sets.version == "_dm" ) {
 							plink = "http://dm.barafranca.com";
 						} else {
 							plink = "http://www.barafranca.nl";
@@ -4151,7 +4172,7 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]
 	var footer = $X('//tr[@height="100"]'); //add footer
 	footer.setAttribute('height', '60');
 	footer.childNodes[1].style.paddingTop = '4px';
-	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2010 - Omerta Game Ltd. | &copy; 2007-2010 - Omerta Beyond<br><br><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (lang.version == '_dm' || lang.version == '_com' ? 'http://89.149.221.178/~fingon/?v=' + (lang.version == '_dm' ? '2' : '8') : EdoUrl) + '" target="_blank">' + lang.login[2] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
+	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2010 - Omerta Game Ltd. | &copy; 2007-2010 - Omerta Beyond<br><br><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? 'http://89.149.221.178/~fingon/?v=' + (sets.version == '_dm' ? '2' : '8') : EdoUrl) + '" target="_blank">' + lang.login[2] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
 
 	var input = [$X('//input[@name="email"]'), $X('//input[@name="pass"]'), $X('//input[@type="submit"]')]; //add focus effects and styling
 	input.forEach(function ($n) {
@@ -4397,7 +4418,7 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game.php' || dlp == 'game-log
 //---------------- Beyond Logo Replacer ----------------
 var logoXpath = '//img[contains(@src, "logo0.gif")] | //img[contains(@src, "omertalo.gif")] | //img[contains(@src, "deathmatch.gif")] | //img[contains(@src, "omdmlogo.png")] | //img[contains(@src, "./static/images/game/layout/logo.png")] | //img[contains(@src, "omerta-game-logo.gif")]';
 $x(logoXpath).forEach(function ($n) {
-	$n.src = GM_getResourceURL(lang.version.replace('_', '') + 'Logo');
+	$n.src = GM_getResourceURL(sets.version.replace('_', '') + 'Logo');
 	if (dlp != '/servers.php') {
 		$n.parentNode.innerHTML = '<a href="http://www.omertabeyond.com" target="_blank" onFocus="this.blur()">' + $n.parentNode.innerHTML + '</a>';
 	}

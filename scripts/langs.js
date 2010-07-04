@@ -5,9 +5,11 @@
 // Don't change anything unless you know what are you doing.
 // These arrays aren't just to add texts, but also to identify ingame strings or texts
 //
+// ---- Variables depending on selected ingame language
+//
 // -------------------------------------------------------------------------------------
 
-// vers: 1.9.3.56
+// vers: 1.9.3.57
 
 /*
 $Rev$:  Revision of last commit
@@ -18,13 +20,6 @@ $Date$:  Date of last commit
 // get language vars
 var langs = {
 	en: {
-		version: '_com',
-		prefslink: '/prefs.php?v=com',
-		priceslink: '/prices.php?v=com',
-		contactlink: '/contact.php?v=com',
-		polllink: '/html/poll/poll.php?v=com',
-		statslink: 'http://rix.omertabeyond.com/stats.php?v=com&d=n',
-		statslink2: 'http://89.149.221.178/~fingon/latestpicture.php',
 		prefsname: 'Preferences',
 		menuitem: ['OB Poll', 'Contact Form', 'Beyond FAQ', 'B/N Prices', 'Live famstats', 'Daily famstats'],
 		prefs: [
@@ -154,6 +149,7 @@ var langs = {
 			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
 			'You don\'t have enough cash to make this deal.'
 		],
+		garage: 'Type',
 		race: 'You\'re still tired from your last race',
 		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
 		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
@@ -306,13 +302,6 @@ var langs = {
 		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
 	},
 	dm: {
-		version: '_dm',
-		prefslink: '/prefs.php?v=dm',
-		priceslink: '/prices.php?v=dm',
-		contactlink: '/contact.php?v=dm',
-		polllink: '/html/poll/poll.php?v=dm',
-		statslink: 'http://rix.omertabeyond.com/stats.php?v=dm&d=n',
-		statslink2: '', // DO NOT REMOVE IT !
 		prefsname: 'Preferences',
 		menuitem: ['OB Poll', 'Contact Form', 'Beyond FAQ', 'B/N Prices', 'Live famstats', 'Daily famstats'],
 		prefs: [
@@ -442,6 +431,7 @@ var langs = {
 			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
 			'You don\'t have enough cash to make this deal.'
 		],
+		garage: 'Type',
 		race: 'You\'re still tired from your last race',
 		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
 		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
@@ -594,13 +584,6 @@ var langs = {
 		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
 	},
 	nl: {
-		version: '_nl',
-		prefslink: '/prefs.php?v=nl',
-		priceslink: '/prices.php?v=nl',
-		contactlink: '/contact.php?v=nl',
-		polllink: '/html/poll/poll.php?v=nl',
-		statslink: 'http://rix.omertabeyond.com/stats.php?v=nl&d=n',
-		statslink2: '', // DO NOT REMOVE IT !
 		prefsname: 'Voorkeuren',
 		menuitem: ['OB Poll', 'Contact formulier', 'Beyond FAQ', 'DnD prijzen', 'Live famstats', 'Dagelijkse famstats'],
 		prefs: [
@@ -730,6 +713,7 @@ var langs = {
 			'De code die je invoerde kwam niet overeen met die van de afbeelding. De code bevat alleen kleine letters en cijfers.',
 			'Je hebt niet genoeg geld voor deze deal.'
 		],
+		garage: 'Type',
 		race: 'Je bent nog moe van je vorige race',
 		profile: ['Burgerlijke staat:', 'SMS Status', 'Familie Uitbreker van', 'Dood', ' Geschiedenis'],
 		wealth: ['Sloeber', 'Arm', 'Modaal', 'Erg rijk', 'Te rijk om waar te zijn', 'Rijker dan God', 'Rijk'],
