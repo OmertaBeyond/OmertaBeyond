@@ -278,7 +278,7 @@ function insertAfter(newNode, node) {
 
 function toggle(name) {
 	var id = document.getElementById(name);
-	if (id.style.display == '') {
+	if (id.style.display === '') {
 		id.style.display = 'block';
 	} else if (id.style.display == 'block') {
 		id.style.display = '';
@@ -405,7 +405,6 @@ ls = dls;
 host = location.hostname.toLowerCase();
 urlsearch = location.pathname + location.search;
 arr = [];
-hOne = hOne();
 
 function hOne() {
 	if (document.getElementsByTagName('h1')[0]) {

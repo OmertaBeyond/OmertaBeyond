@@ -142,7 +142,7 @@ var settings = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -290,7 +290,7 @@ var settings = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -351,7 +351,7 @@ var settings = {
 			'Kampioen'
 		],
 		friends: 'Vrienden:',
-		stats: ['naar boven', ['Dode Fams', 'Geëerd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
+		stats: ['naar boven', ['Dode Fams', 'GeÃ«erd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
 		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Beide'],
 		obay: ['Pak met kogels','kogels'],
@@ -446,7 +446,7 @@ var settings = {
 			'Bestuurder',
 			'Gegevens',
 			'Verstuur',
-			'Lokale bende',
+			'Lokale bende'
 		],
 		lastontime: [
 			'Levend',

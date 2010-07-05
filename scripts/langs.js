@@ -109,7 +109,7 @@ var langs = {
 		prefsPage: [
 			'Check for update',
 			'Check all',
-			'Update',
+			'Update'
 		],
 		jhl: [
 			'Busting List and Options',
@@ -276,7 +276,7 @@ var langs = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -391,7 +391,7 @@ var langs = {
 		prefsPage: [
 			'Check for update',
 			'Check all',
-			'Update',
+			'Update'
 		],
 		jhl: [
 			'Busting List and Options',
@@ -558,7 +558,7 @@ var langs = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -673,7 +673,7 @@ var langs = {
 		prefsPage: [
 			'Controleer voor update',
 			'Vink alles aan',
-			'Update',
+			'Update'
 		],
 		jhl: [
 			'Uitbraak lijst en opties',
@@ -731,7 +731,7 @@ var langs = {
 			'Kampioen'
 		],
 		friends: 'Vrienden:',
-		stats: ['naar boven', ['Dode Fams', 'Geëerd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
+		stats: ['naar boven', ['Dode Fams', 'GeÃ«erd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
 		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Beide'],
 		obay: ['Pak met kogels','kogels'],
@@ -767,7 +767,7 @@ var langs = {
 		menutitle: [
 			'Voorkeur pagina waar je de meeste van onze opties kan veranderen',
 			'Plaats waar we onze gebruikers een paar vragen stellen',
-			'Hier kan je ons ideeën of gevonden bugs insturen',
+			'Hier kan je ons ideeÃ«n of gevonden bugs insturen',
 			'Lijst van meest gestelde vragen',
 			'De prijzen van Omerta met een snufje van ons :P',
 			'Live Familie statistieken gebasseerd op Rix\'s berekeningen',

@@ -354,30 +354,39 @@ if (dlp == '/prefs.php') {
 		var string = '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td width="210" class="td"><b>'+lang.jhl[1]+'</b></td><td width="75" class="td"><b>'+lang.jhl[2]+'</b></td><td width="76" class="td">&nbsp;</td><td width="50" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
 		for(i=-1;++i<jailint;){
-			if(family[i] == null) { family[i] = ""; }
-			if(colour[i] == null) { colour[i] = ""; }
-			if(priority[i] == null) { priority[i] = ""; }
-			if(!colour[i]) { colour[i] = "CCCCCC"; }
+			if(family[i] === null) {
+				family[i] = "";
+			}
+			if(colour[i] === null) {
+				colour[i] = "";
+			}
+			if(priority[i] === null) {
+				priority[i] = "";
+			}
+			if(!colour[i]) {
+				colour[i] = "CCCCCC";
+			}
 			string += '<tr height="25" class="tr"><td>&nbsp;</td><td><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="family' + i + '" value="' + family[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 			string += '<td><input id="colour'+i+'" value="'+colour[i]+'" type="text" name="color'+(i+1)+'" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:75px;" /></td>';
 			string += '<td><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
 			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall" /></td><td>&nbsp;</td></tr>';
 		}
-		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
+		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint,10)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint,10)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
 
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
 		for(i=-1;++i<nbint;){
-			if(nobust[i] == null){ nobust[i] = ""; }
+			if(nobust[i] == null){
+				nobust[i] = "";
+			}
 			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td colspan="5"><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 		}
-		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
+		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint,10)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint,10)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
 
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2"><center><b>'+lang.jhl[8]+'</b></center><td class="td" colspan="2"><center><b>'+lang.jhl[9]+'</b></center></td><td class="td">&nbsp;</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall"></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td width="10"><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
-//<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL('colorpicker')+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a>
 		string += '<tr class="tr" height="25" align="center"><td colspan="6" class="td">'+savestring+'</td></tr>';
 		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div id="credits">'+lang.jhl[16]+'</div></td></tr>';
 
@@ -875,7 +884,7 @@ function bnUpdate(current){
 	var rank = values[13].textContent;
 	var city = values[19].textContent;
 	var type = values[17].textContent;
-	var health = 100 - parseInt($X(xpath = '//td[@bgcolor="green"]').getAttribute('width'));
+	var health = 100 - parseInt($X(xpath = '//td[@bgcolor="green"]').getAttribute('width'),10);
 	var ride = tables[3].getElementsByTagName('td')[3].textContent;
 
 	setValue('bloodType',type);//save
@@ -1365,11 +1374,11 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 
 		for(i=0;i<=words.length-1;i++){//loop players and see if either nick or fam matches with prefs
 			ItemPriority = (prioritys[i]) ? prioritys[i] : 10;
-			if((fam == words[i].replace('%20', ' ').replace('%26', '&')||fama.toUpperCase() == words[i].replace('%20', ' ').replace('%26', '&')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the fam is higher
+			if((fam == words[i].replace('%20', ' ').replace('%26', '&')||fama.toUpperCase() == words[i].replace('%20', ' ').replace('%26', '&')) && parseInt($n.getAttribute('priority'),10) >= ItemPriority){//also see if the priority of the fam is higher
 				$n.setAttribute('bgcolor', bgColors[i]);
 				$n.setAttribute('priority', ItemPriority);
 			}
-			if((nick == words[i].replace('%20', ' ')||nicka.toUpperCase() == words[i].replace('%20', ' ')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the nick is higher
+			if((nick == words[i].replace('%20', ' ')||nicka.toUpperCase() == words[i].replace('%20', ' ')) && parseInt($n.getAttribute('priority'),10) >= ItemPriority){//also see if the priority of the nick is higher
 				$n.setAttribute('bgcolor', bgColors[i]);
 				$n.setAttribute('priority', ItemPriority);
 			}
@@ -1397,7 +1406,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 
 	prior = 10;//highest priority
 	for(i=inJail.length-1;i>=0;i--){//loop list
-		priority = parseInt(inJail[i].getAttribute('priority'));
+		priority = parseInt(inJail[i].getAttribute('priority'),10);
 		button = $x('//input[@type="radio"]')[i];
 		button.id = i;
 		playerRowTmp = button.parentNode.parentNode;
@@ -1506,7 +1515,7 @@ if (dlp == '/iminjail.php' && db.innerHTML.indexOf('<img') != -1) {
 		var sec = getID('counter__seconds_value').innerHTML;
 		setTimeout(function () {
 			window.location = 'jail.php';
-		}, (((min * 60) + parseInt(sec) + 2) * 1000));
+		}, (((min * 60) + parseInt(sec, 10) + 2) * 1000));
 	}
 }
 if (dlp == '/iminjail.php' && db.innerHTML.indexOf('<img') == -1 && prefs[23]) {
@@ -1712,7 +1721,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					links += '<td align="left" valign="top">';
 					links += '<a class="red" href="kill.php?search='+nick+'" onClick="">Hire Detectives</a> <br>';//dets link
 					links += '</td>';
-					if(parseInt(getPow('bninfo',4,-1))>2){//check for top3 position
+					if(parseInt(getPow('bninfo',4,-1),10)>2){//check for top3 position
 						links += '<td align="left" valign="top">';
 						links += '<a href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br>';//family link
 						links += '</td>';
@@ -1931,7 +1940,7 @@ if(dlp == '/garage.php'){
 			var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
 
 			types.forEach(function($n){ //loop car through types
-				if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
+				if($n.indexOf(parseInt(car),10)>0){ //check if car is in this type array
 					carType = titles[$n[0]]; //set car type
 					carRow.setAttribute('title', titles[$n[0]]); //set popup title
 					carRow.setAttribute('class', carValues[$n[0]] + 'Car'); //set class
@@ -1985,7 +1994,7 @@ if(dlp == '/garage.php'){
 				car = $X(y).href.match(/\d+/g)[0];
 				z = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[3]';//get percentage damage
 				perc = $I(z);
-				perc = parseInt(perc.slice(0, perc.indexOf('%')));
+				perc = parseInt(perc.slice(0, perc.indexOf('%')),10);
 
 				var hcar=0, occar=0, trcar=0, moccar=0;
 				checkcar(car);
@@ -2003,7 +2012,7 @@ if(dlp == '/garage.php'){
 					tr = tr.replace('<td>', '');
 					tr = tr.slice(0, tr.indexOf('<')-3);
 					tr = tr.replace(',', '');
-					tr = parseInt(tr);
+					tr = parseInt(tr,10);
 
 					if((tr < max && select==1)||(tr > max && select==0)){
 						$X('/html/body//form/center/table/tbody/tr['+(i+2)+']/td[6]/input[2]').checked = true;
@@ -2409,7 +2418,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 				divnum++;
 			}
 			var id = getTAG('div')[divnum].id; // = 'spot_*'
-			id = parseInt(id.replace('spot_', ''));
+			id = parseInt(id.replace('spot_', ''),10);
 			var type = r[(((y * 4) + 1) - tdskipnum)].replace('<b>', '');
 			type = type.replace('</b>', '');
 			var owner = $x('//td')[(((y * 14) + 1) - tdskipnum)].innerHTML; // 14 td's per spot
@@ -2543,7 +2552,7 @@ if (prefs[27] && (dls.indexOf('?module=Bloodbank&action=') != -1 || dls.indexOf(
 			$I('//font[@id="O"]', o ? '$ ' + m * prices[12].textContent.replace('$ ', '') : 'X');
 		}
 		if ($X('//input')) {
-			m = parseInt($X('//input').value);
+			m = parseInt($X('//input').value,10);
 			types = [getType('2]'), getType('3]'), getType('4]'), getType('5]')];
 			A = [types[0], types[3]];
 			B = [types[1], types[3]];
@@ -3025,16 +3034,16 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 		if (db.innerHTML.indexOf(lang.scratcher[1]) != -1) { //bullets
 			var rex = new RegExp(lang.scratcher[2]);
 			var r = db.innerHTML.match(rex);
-			bullets += parseInt(r[1]);
+			bullets += parseInt(r[1],10);
 			setValue('bullets', bullets);
 		}
 		if (db.innerHTML.indexOf(lang.scratcher[3]) != -1) { //money
 			var rex = new RegExp(lang.scratcher[4]);
 			var str = db.innerHTML.replace(/,/g, '');
 			var r = str.match(rex);
-			monin += parseInt(r[1]);
+			monin += parseInt(r[1],10);
 			setValue('monin', monin);
-			if (parseInt(r[1]) == 1000000) {
+			if (parseInt(r[1],10) == 1000000) {
 				mils += 1;
 				setValue('mils', mils);
 			}
@@ -3140,8 +3149,8 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 		var rex = new RegExp(lang.bullettracker[1]);
 		var str = db.innerHTML.replace(/,/g, '');
 		var r = str.match(rex);
-		btbullets += parseInt(r[1]);
-		btmoney += parseInt(r[2]);
+		btbullets += parseInt(r[1],10);
+		btmoney += parseInt(r[2],10);
 		setValue('btbullets', btbullets);
 		setValue('btmoney', btmoney);
 	}
@@ -3363,6 +3372,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 	var allProfits, bestBN, profitNarc, profitBooze, famProfit, travelPrices, travelCost, totalProfit;
 	var key, n1, b1, aCell, link, c, center, br1, br2, target, bestRun, inputs, bn_xp, bn_text, cash, xpb, xpn, n, b;
 	var nItem, highNarc, bItem, highBooze, lowNarc, lowBooze, sel, div, color, title, H, wrap1, wrap2, wrap3, wrap4, e, icon;
+
 	var a1, a2, a3, a4, best, cd, rp, none, s, info, BN, l, nLines, bLines, pArr, noBRC, row, item, j, k, parser, dom;
 
 	pp = dlp == '/prices.php';
@@ -3382,10 +3392,10 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		if (n > -1) { //do we even want narcs?
 			if (carry_n == 0) {
-				values[(7 + parseInt(n))] = narcs; //nothing in pocket, fill it all
+				values[(7 + parseInt(n,10))] = narcs; //nothing in pocket, fill it all
 			} else {
-				if (n_amount[parseInt(n)] == carry_n && carry_n < narcs) { //user already carrying some => AF the rest
-					values[(7 + parseInt(n))] = narcs - carry_n;
+				if (n_amount[parseInt(n,10)] == carry_n && carry_n < narcs) { //user already carrying some => AF the rest
+					values[(7 + parseInt(n,10))] = narcs - carry_n;
 					inputs[17].checked = 1; //buy
 				} else { //AF selling other crap
 					for (i = 0; i <= 6; i++) {
@@ -3397,7 +3407,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		}
 		if (b > -1) { //do we even want booze?
 			if (carry_b == 0) {
-				values[(parseInt(b))] = booze; //nothing in pocket, fill it all
+				values[(parseInt(b,10))] = booze; //nothing in pocket, fill it all
 			} else {
 				if (b_amount[b] == carry_b && carry_b < booze) { //user already carrying some => AF the rest
 					values[b] = booze - carry_b;
@@ -3684,9 +3694,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				bn_text = $X(bn_xp).firstChild.firstChild.firstChild.innerHTML;
 				bn_text = bn_text.split('|');
 
-				cash = parseInt(bn_text[0].replace(/[^0-9.]/g, ''));
-				booze = parseInt(bn_text[1].replace(/[^0-9.]/g, '')); //max amount user can carry
-				narcs = parseInt(bn_text[2].replace(/[^0-9.]/g, ''));
+				cash = parseInt(bn_text[0].replace(/[^0-9.]/g, ''),10);
+				booze = parseInt(bn_text[1].replace(/[^0-9.]/g, ''),10); //max amount user can carry
+				narcs = parseInt(bn_text[2].replace(/[^0-9.]/g, ''),10);
 
 				b_amount = [0, 0, 0, 0, 0, 0];
 				n_amount = [0, 0, 0, 0, 0, 0]; //what is user carrying
@@ -3694,10 +3704,10 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				xpn = '//form/table/tbody/tr[2]/td[2]/table/tbody/tr[';
 				for (i = 0; i <= 15; i++) { //define how much of this item is being carried
 					if (i < 7) {
-						b_amount[i] = parseInt($I(xpb + (i + 4) + ']/td[3]'));
+						b_amount[i] = parseInt($I(xpb + (i + 4) + ']/td[3]'),10);
 					}
 					if (i > 8) {
-						n_amount[(i - 9)] = parseInt($I(xpn + (i - 5) + ']/td[3]'));
+						n_amount[(i - 9)] = parseInt($I(xpn + (i - 5) + ']/td[3]'),10);
 					}
 				}
 				carry_n = n_amount.sum();
@@ -3710,12 +3720,12 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				}
 				if (sel == 1) { //CD Run
 					for (i = 0; i <= 6; i++) {
-						nItem = parseInt(BN[0][i][(city - 4 + 2)]);
+						nItem = parseInt(BN[0][i][(city - 4 + 2)],10);
 						highNarc = ((i == 0) ? nItem : ((highNarc > nItem) ? highNarc : nItem));
 						if (highNarc == nItem) {
 							n = i;
 						}
-						bItem = parseInt(BN[1][i][(city - 4 + 2)]);
+						bItem = parseInt(BN[1][i][(city - 4 + 2)],10);
 						highBooze = ((i == 0) ? bItem : ((highBooze > bItem) ? highBooze : bItem));
 						if (highBooze == bItem) {
 							b = i;
@@ -3726,12 +3736,12 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				}
 				if (sel == 2) { //RP Run
 					for (i = 0; i <= 6; i++) {
-						nItem = parseInt(BN[0][i][(city - 4 + 2)]);
+						nItem = parseInt(BN[0][i][(city - 4 + 2)],10);
 						lowNarc = ((i == 0) ? nItem : ((lowNarc < nItem) ? lowNarc : nItem));
 						if (lowNarc == nItem) {
 							n = i;
 						}
-						bItem = parseInt(BN[1][i][(city - 4 + 2)]);
+						bItem = parseInt(BN[1][i][(city - 4 + 2)],10);
 						lowBooze = ((i == 0) ? bItem : ((lowBooze < bItem) ? lowBooze : bItem));
 						if (lowBooze == bItem) {
 							b = i;
@@ -3994,7 +4004,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			for (BN = [], i = 0; i <= 1; i++) { //B/N
 				for (BN[i] = [], j = 0; j <= 6; j++) { //type
 					for (BN[i][j] = [], k = 0; k <= 7; k++) { //city
-						BN[i][j].push(parseInt($I('//center[' + (1 + i) + ']/table//tr[' + (4 + k) + ']/td[' + (2 + j) + ']').replace(/[^0-9]/g, '')));
+						BN[i][j].push(parseInt($I('//center[' + (1 + i) + ']/table//tr[' + (4 + k) + ']/td[' + (2 + j) + ']').replace(/[^0-9]/g, '')),10);
 					}
 					BN[i][j].unshift(BN[i][j].min()); //get min
 					BN[i][j].unshift(BN[i][j].max()); //get max
@@ -4013,7 +4023,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				for (BN = [], i = 0; i <= 1; i++) { //B/N
 					for (BN[i] = [], j = 0; j <= 6; j++) { //type
 						for (BN[i][j] = [], k = 0; k <= 7; k++) {
-							BN[i][j].push(parseInt(dom.getElementsByTagName((i == 0 ? (langs.en.narcs[(j + 1)]).replace('abacco', 'obacco') : langs.en.booze[(j + 1)]).toLowerCase())[k].textContent)); //city
+							BN[i][j].push(parseInt(dom.getElementsByTagName((i == 0 ? (langs.en.narcs[(j + 1)]).replace('abacco', 'obacco') : langs.en.booze[(j + 1)]).toLowerCase())[k].textContent),10); //city
 						}
 						BN[i][j].unshift(BN[i][j].min()); //get min
 						BN[i][j].unshift(BN[i][j].max()); //get max
@@ -4035,7 +4045,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			for (BN = [], i = 0; i <= 1; i++) { //B/N
 				for (BN[i] = [], j = 0; j <= 6; j++) { //type
 					for (BN[i][j] = [], k = 0; k <= 7; k++) { //city
-						BN[i][j].push(parseInt($I('//center[' + (1 + i) + ']/table//tr[' + (4 + k) + ']/td[' + (2 + j) + ']').replace(/[^0-9]/g, '')));
+						BN[i][j].push(parseInt($I('//center[' + (1 + i) + ']/table//tr[' + (4 + k) + ']/td[' + (2 + j) + ']').replace(/[^0-9]/g, '')),10);
 					}
 					BN[i][j].unshift(BN[i][j].min()); //get min
 					BN[i][j].unshift(BN[i][j].max()); //get max
