@@ -9,29 +9,29 @@
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
 // @description			Omerta Beyond 1.9.3 (Still the best 'legal' script! ;))
-// @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
-// @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
-// @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
 // @require			http://usocheckup.dune.net/11336.js?maxage=7
-// @resource	css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
-// @resource	trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
-// @resource	colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
-// @resource	comLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-com.png
-// @resource	dmLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-dm.png
-// @resource	nlLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-nl.png
-// @resource	buttonMenu	http://omertabeyond.googlecode.com/svn/trunk/images/menu.png
-// @resource	buttonKey	http://omertabeyond.googlecode.com/svn/trunk/images/key.png
-// @resource	buttonReset	http://omertabeyond.googlecode.com/svn/trunk/images/reset.png
-// @resource	favoriteIco	http://omertabeyond.googlecode.com/svn/trunk/images/favicon.png
-// @resource	updateIco	http://omertabeyond.googlecode.com/svn/trunk/images/updateicon.png
-// @resource	brcGear		http://omertabeyond.googlecode.com/svn/trunk/images/brcgear.png
-// @resource	deleteIcon	http://omertabeyond.googlecode.com/svn/trunk/images/deleteicon.png
-// @resource	reply		http://omertabeyond.googlecode.com/svn/trunk/images/reply.png
-// @resource	loading		http://omertabeyond.googlecode.com/svn/trunk/images/loading.png
-// @resource	nickreader	http://omertabeyond.googlecode.com/svn/trunk/images/magnifier.png
-// @resource	on		http://omertabeyond.googlecode.com/svn/trunk/images/on.png
-// @resource	off		http://omertabeyond.googlecode.com/svn/trunk/images/off.png
-// @resource	finfavi		http://omertabeyond.googlecode.com/svn/trunk/images/finfavi.ico
+// @require			http://omertabeyond.googlecode.com/svn/branches/ob_jslint/scripts/libs.js
+// @require			http://omertabeyond.googlecode.com/svn/branches/ob_jslint/scripts/settings.js
+// @require			http://omertabeyond.googlecode.com/svn/branches/ob_jslint/scripts/langs.js
+// @resource	css		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/scripts/beyond.css
+// @resource	trash		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/del.png
+// @resource	colorpicker	http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/colorpicker.gif
+// @resource	comLogo		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/logo-com.png
+// @resource	dmLogo		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/logo-dm.png
+// @resource	nlLogo		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/logo-nl.png
+// @resource	buttonMenu	http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/menu.png
+// @resource	buttonKey	http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/key.png
+// @resource	buttonReset	http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/reset.png
+// @resource	favoriteIco	http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/favicon.png
+// @resource	updateIco	http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/updateicon.png
+// @resource	brcGear		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/brcgear.png
+// @resource	deleteIcon	http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/deleteicon.png
+// @resource	reply		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/reply.png
+// @resource	loading		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/loading.png
+// @resource	nickreader	http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/magnifier.png
+// @resource	on		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/on.png
+// @resource	off		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/off.png
+// @resource	finfavi		http://omertabeyond.googlecode.com/svn/branches/ob_jslint/images/finfavi.ico
 // @include			http://gm.omertabeyond.com/*.php*
 // @include			http://www.omertabeyond.com/html/poll/poll.php*
 // @include			http://www.omerta3.com/*

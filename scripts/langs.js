@@ -1,15 +1,11 @@
-// -------------------------------------------------------------------------------------
-//
-// This file contains the language array we use for Project Omerta Beyond
-//
-// Don't change anything unless you know what are you doing.
-// These arrays aren't just to add texts, but also to identify ingame strings or texts
-//
-// ---- Variables depending on selected ingame language
-//
-// -------------------------------------------------------------------------------------
+/*
+	This file contains the language array we use for Project Omerta Beyond
 
-// vers: 1.9.3.57
+	Don't change anything unless you know what are you doing.
+	Variables depending on selected ingame language
+
+	Version: 1.9.3.57
+*/
 
 /*
 $Rev$:  Revision of last commit
@@ -17,7 +13,7 @@ $Author$:  Author of last commit
 $Date$:  Date of last commit
 */
 
-// get language vars
+// Get language variables.
 var langs = {
 	en: {
 		prefsname: 'Preferences',
@@ -170,7 +166,7 @@ var langs = {
 		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets','bullets'],
+		obay: ['Pack of bullets', 'bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
@@ -452,7 +448,7 @@ var langs = {
 		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets','bullets'],
+		obay: ['Pack of bullets', 'bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
@@ -734,7 +730,7 @@ var langs = {
 		stats: ['naar boven', ['Dode Fams', 'Geëerd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
 		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Beide'],
-		obay: ['Pak met kogels','kogels'],
+		obay: ['Pak met kogels', 'kogels'],
 		inbox: [
 			'Mededeling',
 			'(Admin bericht)',
@@ -848,7 +844,7 @@ var langs = {
 			'Bestuurder',
 			'Gegevens',
 			'Verstuur',
-			'Lokale bende',
+			'Lokale bende'
 		],
 		lastontime: [
 			'Levend',
