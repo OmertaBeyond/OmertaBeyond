@@ -1,23 +1,18 @@
-// -------------------------------------------------------------------------------------
-//
-// This file contains the language array we use for Project Omerta Beyond
-//
-// Don't change anything unless you know what are you doing.
-// These arrays aren't just to add texts, but to identify ingame strings or texts
-//
-// ---- Variables depending on version
-//
-// -------------------------------------------------------------------------------------
+/*
+	This file contains the language array we use for Project Omerta Beyond
 
-// vers: 1.9.3.58
+	Don't change anything unless you know what are you doing.
+	Variables depending on version
 
+	Version: 1.9.3.59
+*/
 /*
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
 $Date$:  Date of last commit
 */
 
-// get language vars
+// Get language vars.
 var settings = {
 	en: {
 		version: '_com',
@@ -58,7 +53,7 @@ var settings = {
 		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets','bullets'],
+		obay: ['Pack of bullets', 'bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
@@ -142,7 +137,7 @@ var settings = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -174,7 +169,8 @@ var settings = {
 		contactlink: '/contact.php?v=dm',
 		polllink: '/html/poll/poll.php?v=dm',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=dm&d=n',
-		statslink2: '', // DO NOT REMOVE IT !
+		// DO NOT REMOVE NEXT LINE !
+		statslink2: '',
 		status: ['none', 'None'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
@@ -206,7 +202,7 @@ var settings = {
 		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets','bullets'],
+		obay: ['Pack of bullets', 'bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
@@ -290,7 +286,7 @@ var settings = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -322,7 +318,8 @@ var settings = {
 		contactlink: '/contact.php?v=nl',
 		polllink: '/html/poll/poll.php?v=nl',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=nl&d=n',
-		statslink2: '', // DO NOT REMOVE IT !
+		// DO NOT REMOVE NEXT LINE !
+		statslink2: '',
 		status: ['none', 'Geen'],
 		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],
 		failedBullets: [
@@ -354,7 +351,7 @@ var settings = {
 		stats: ['naar boven', ['Dode Fams', 'Geëerd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
 		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Beide'],
-		obay: ['Pak met kogels','kogels'],
+		obay: ['Pak met kogels', 'kogels'],
 		inbox: [
 			'Mededeling',
 			'(Admin bericht)',
@@ -446,7 +443,7 @@ var settings = {
 			'Bestuurder',
 			'Gegevens',
 			'Verstuur',
-			'Lokale bende',
+			'Lokale bende'
 		],
 		lastontime: [
 			'Levend',
