@@ -1,8 +1,12 @@
-/*
-	This file contains helpers and useful functions for use with Project Omerta Beyond
+//-------------------------------------------------------------------------------------
+//
+//This file contains helpers and useful functions for use with Project Omerta Beyond
+//
+//Feel free to use them, but please let us know.
+//
+//-------------------------------------------------------------------------------------
 
-	Version: 1.9.3.59
-*/
+// vers: 1.9.3.58
 
 /*
 $Rev$:  Revision of last commit
@@ -10,17 +14,9 @@ $Author$:  Author of last commit
 $Date$:  Date of last commit
 */
 
-var dl, dlp, dls, dlh, lh, ls, db, i, arr, host, urlsearch;
+var dl, dlp, dls, dlh, lh, ls, db, i, arr, host, urlsearch, hOne;
 
-function getValue(name, standard) {
-	return GM_getValue(name + sets.version, standard);
-}
-
-function setValue(name, value) {
-	return GM_setValue(name + sets.version, value);
-}
-
-function decbin(dec, max) { // deprecated function - only used for prefs transition compatibility
+function decbin(dec, max) { //deprecated function - only used for prefs transition compatibility
 	var bin = [];
 	for (i = max; i >= 0; i--) {
 		if (dec >= Math.pow(2, i)) {
@@ -34,7 +30,7 @@ function decbin(dec, max) { // deprecated function - only used for prefs transit
 }
 
 function prefsArray(input, len) {
-	// compatibility checking
+	//compatibility checking
 	var fail = input.replace(/[01]/g, '');
 	if (fail) {
 		var in_2 = decbin(input, len);
@@ -44,7 +40,7 @@ function prefsArray(input, len) {
 		}
 		setValue('prefs', input);
 	}
-	var out = []; // create array for prefs
+	var out = []; //create array for prefs
 	for (i = 0; i < input.length; i++) {
 		out[i] = (input.charAt(i) == 1 ? 1 : 0);
 	}
@@ -80,7 +76,7 @@ function GetParam(name) {
 		return '';
 	}
 	start += name.length + 2;
-	var end = (location.search.indexOf("&", start) - 1);
+	var end = location.search.indexOf("&", start) - 1;
 	if (end < 0) {
 		end = location.search.length;
 	}
@@ -98,7 +94,8 @@ function setIcon(icon) {
 	for (I = 0; I < links.length; I++) {
 		if (links[I].type == 'image/x-icon' && (links[I].rel == 'shortcut icon' || links[I].rel == 'icon') && links[I].href != icon) {
 			head.removeChild(links[I]);
-		} else if (links[I].href == icon) {
+		}
+		else if (links[I].href == icon) {
 			return;
 		}
 	}
@@ -115,15 +112,15 @@ function $x(xpath, root) {
 	var got = doc.evaluate(xpath, root || doc, null, 0, null),
 		result = [];
 	switch (got.resultType) {
-		case got.STRING_TYPE:
-			return got.stringValue;
-		case got.NUMBER_TYPE:
-			return got.numberValue;
-		case got.BOOLEAN_TYPE:
-			return got.booleanValue;
-		default:
-			while (next = got.iterateNext()) result.push(next);
-			return result;
+	case got.STRING_TYPE:
+		return got.stringValue;
+	case got.NUMBER_TYPE:
+		return got.numberValue;
+	case got.BOOLEAN_TYPE:
+		return got.booleanValue;
+	default:
+		while (next = got.iterateNext()) result.push(next);
+		return result;
 	}
 }
 
@@ -134,7 +131,7 @@ function $X(xpath, root) {
 
 function $XLast(xpath, root) {
 	var got = $x(xpath, root);
-	var len = (got.length - 1);
+	var len = got.length-1;
 	return got instanceof Array ? got[len] : got;
 }
 
@@ -241,6 +238,14 @@ function cEL(name) {
 	return document.createElement(name);
 }
 
+function getValue(name, standard) {
+	return GM_getValue(name + sets.version, standard);
+}
+
+function setValue(name, value) {
+	return GM_setValue(name + sets.version, value);
+}
+
 function setArr(num) {
 	return arr[num] = '<a href="/user.php?nick=' + arr[num].match(/\w+/g)[0] + '"><b>' + arr[num].match(/\w+/g)[0] + '</b></a>';
 }
@@ -273,7 +278,7 @@ function insertAfter(newNode, node) {
 
 function toggle(name) {
 	var id = document.getElementById(name);
-	if (id.style.display === '') {
+	if (id.style.display == '') {
 		id.style.display = 'block';
 	} else if (id.style.display == 'block') {
 		id.style.display = '';
@@ -294,39 +299,37 @@ function clearSettings() {
 function getPow(name, i, def) {
 	var info = getValue(name, '' + def);
 	if (name == 'bninfo') {
-		var w = 2; // set width of buckets
+		var w = 2; //set width of buckets
 	}
 	if (name == 'prefs') {
 		var w = 1;
 	}
-	return (1 * info.substr((i * w), w)); // return int version of bucket
+	return 1 * info.substr(i * w, w); //return int version of bucket
 }
 
 function setPow(name, i, value) {
 	var info = getValue(name, "0");
 	if (name == 'bninfo') {
-		var w = 2; // set width of buckets
+		var w = 2; //set width of buckets
 	}
 	if (name == 'prefs') {
 		var w = 1;
 	}
-	i = (i * w); // set string index
-	value += ''; // toString
-	var valLen = value.length;
-	var infoLen = info.length;
-	while (valLen < w) {
-		value = '0' + value; // pad with zeros
+	i = i * w; //set string index
+	value += ''; //toString
+	while (value.length < w) {
+		value = '0' + value; //pad with zeros
 	}
-	if (i > 0 && (i + w) < infoLen) {
-		info = info.substring(0, i) + value + info.substring(i + w); // value goes in middle
+	if (i > 0 && (i + w) < info.length) {
+		info = info.substring(0, i) + value + info.substring(i + w); //value goes in middle
 	} else if (i === 0) {
-		info = value + info.substring(w); // value goes at beginning
-	} else if ((i + w) >= infoLen) {
-		info = info.substring(0, i) + value; // value goes at end
+		info = value + info.substring(w); //value goes at beginning
+	} else if ((i + w) >= info.length) {
+		info = info.substring(0, i) + value; //value goes at end
 	} else {
 		return;
 	}
-	setValue(name, info); // store string
+	setValue(name, info); //store string
 }
 
 function refreshIn(page) {
@@ -335,7 +338,7 @@ function refreshIn(page) {
 	var getSecLeft = getTimeLeft.match(/\d+/g)[1];
 	var minToSec = parseInt((getMinLeft * 60), 10);
 	var totalSecLeft = parseInt(minToSec, 10) + parseInt(getSecLeft, 10);
-	var totalTime = (totalSecLeft * 1000);
+	var totalTime = totalSecLeft * 1000;
 	var addExtraSec = parseInt((totalTime + 1000), 10);
 	setTimeout(function () {
 		document.location.href = page;
@@ -374,8 +377,7 @@ function grabHTML(url, func) {
 }
 
 Array.prototype.sum = function () {
-	var tlen = this.length;
-	for (i = 0, sum = 0; i < tlen; sum += this[i++]);
+	for (i = 0, sum = 0; i < this.length; sum += this[i++]);
 	return sum;
 };
 Array.prototype.max = function () {
@@ -403,6 +405,7 @@ ls = dls;
 host = location.hostname.toLowerCase();
 urlsearch = location.pathname + location.search;
 arr = [];
+hOne = hOne();
 
 function hOne() {
 	if (document.getElementsByTagName('h1')[0]) {
