@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			04-07-2010
+// @date			07-07-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
@@ -91,33 +91,33 @@ if (db.innerHTML.indexOf('clicklimit') != -1 && dlp != '/menu.php') {
 
 function whereToRun(hostname) {
 	switch (hostname || window.location.hostname) {
-	case 'www.barafranca.com':
-	case 'barafranca.com':
-	case 'www.omerta3.com':
-	case 'omerta3.com':
-	case 'www.barafranca.us':
-	case 'barafranca.us':
-	case '89.149.221.178':
-		return 'com';
-		break;
-	case 'deathmatch.barafranca.com':
-	case 'dm.barafranca.com':
-		return 'dm';
-		break;
-	case 'www.barafranca.nl':
-	case 'barafranca.nl':
-		return 'nl';
-		break;
-	case 'gm.omertabeyond.com':
-	case 'www.omertabeyond.com':
-		var version = window.location.search.split('=')[1];
-		if (version.indexOf('&') == -1) {
-			return version;
-		} else {
-			return version.split('&')[0];
-		}
-	default:
-		return undefined;
+		case 'www.barafranca.com':
+		case 'barafranca.com':
+		case 'www.omerta3.com':
+		case 'omerta3.com':
+		case 'www.barafranca.us':
+		case 'barafranca.us':
+		case '89.149.221.178':
+			return 'com';
+			break;
+		case 'deathmatch.barafranca.com':
+		case 'dm.barafranca.com':
+			return 'dm';
+			break;
+		case 'www.barafranca.nl':
+		case 'barafranca.nl':
+			return 'nl';
+			break;
+		case 'gm.omertabeyond.com':
+		case 'www.omertabeyond.com':
+			var version = window.location.search.split('=')[1];
+			if (version.indexOf('&') == -1) {
+				return version;
+			} else {
+				return version.split('&')[0];
+			}
+		default:
+			return undefined;
 	}
 }
 
@@ -138,7 +138,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '57';
+var ScriptSubVersion = '58';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -377,7 +377,7 @@ if (dlp == '/prefs.php') {
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td width="10"><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
-//<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL('colorpicker')+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a>
+		//<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL('colorpicker')+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a>
 		string += '<tr class="tr" height="25" align="center"><td colspan="6" class="td">'+savestring+'</td></tr>';
 		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div id="credits">'+lang.jhl[16]+'</div></td></tr>';
 

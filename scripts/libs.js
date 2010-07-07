@@ -6,7 +6,7 @@
 //
 //-------------------------------------------------------------------------------------
 
-// vers: 1.9.3.57
+// vers: 1.9.3.58
 
 /*
 $Rev$:  Revision of last commit
@@ -239,11 +239,11 @@ function cEL(name) {
 }
 
 function getValue(name, standard) {
-	return GM_getValue(name + lang.version, standard);
+	return GM_getValue(name + sets.version, standard);
 }
 
 function setValue(name, value) {
-	return GM_setValue(name + lang.version, value);
+	return GM_setValue(name + sets.version, value);
 }
 
 function setArr(num) {
