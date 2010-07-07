@@ -241,14 +241,6 @@ function cEL(name) {
 	return document.createElement(name);
 }
 
-function getValue(name, standard) {
-	return GM_getValue(name + sets.version, standard);
-}
-
-function setValue(name, value) {
-	return GM_setValue(name + sets.version, value);
-}
-
 function setArr(num) {
 	return arr[num] = '<a href="/user.php?nick=' + arr[num].match(/\w+/g)[0] + '"><b>' + arr[num].match(/\w+/g)[0] + '</b></a>';
 }
