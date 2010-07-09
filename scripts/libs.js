@@ -1,17 +1,13 @@
-//-------------------------------------------------------------------------------------
-//
-//This file contains helpers and useful functions for use with Project Omerta Beyond
-//
-//Feel free to use them, but please let us know.
-//
-//-------------------------------------------------------------------------------------
-
-// vers: 1.9.3.58
-
 /*
-$Rev$:  Revision of last commit
-$Author$:  Author of last commit
-$Date$:  Date of last commit
+	This file contains helpers and useful functions for use with Project Omerta Beyond
+
+	Feel free to use them, but please let us know.
+
+	Version: 1.9.3.59 !
+
+	$Rev$:  Revision of last commit
+	$Author$:  Author of last commit
+	$Date$:  Date of last commit
 */
 
 var dl, dlp, dls, dlh, lh, ls, db, i, arr, host, urlsearch, hOne;

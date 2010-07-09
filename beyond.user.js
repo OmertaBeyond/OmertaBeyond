@@ -1,33 +1,18 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			07-07-2010
+// @date			09-07-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
+// @author			Rix ( rix AT omertabeyond DOT com )
 // @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
-// @contributor			Rix ( rix AT omertabeyond DOT com )
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
 // @description			Omerta Beyond 1.9.3 (Still the best 'legal' script! ;))
-// @include			http://gm.omertabeyond.com/*.php*
-// @include			http://www.omertabeyond.com/html/poll/poll.php*
-// @include			http://www.omerta3.com/*
-// @include			http://omerta3.com/*
-// @include			http://www.barafranca.com/*
-// @include			http://barafranca.com/*
-// @include			http://www.barafranca.us/*
-// @include			http://barafranca.us/*
-// @include			http://dm.barafranca.com/*
-// @include			http://deathmatch.barafranca.com/*
-// @include			http://www.barafranca.nl/*
-// @include			http://barafranca.nl/*
-// @include			http://89.149.221.178/~fingon/beyond.php*
-// @exclude			http://gamewiki.barafranca.com/*
-// @exclude			http://ircwiki.barafranca.com/*
-// @exclude			http://*/front-mafia-list.php*
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
+// @require			http://usocheckup.dune.net/11336.js?maxage=7
 // @resource	css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
 // @resource	trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
 // @resource	colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
@@ -47,6 +32,22 @@
 // @resource	on		http://omertabeyond.googlecode.com/svn/trunk/images/on.png
 // @resource	off		http://omertabeyond.googlecode.com/svn/trunk/images/off.png
 // @resource	finfavi		http://omertabeyond.googlecode.com/svn/trunk/images/finfavi.ico
+// @include			http://gm.omertabeyond.com/*.php*
+// @include			http://www.omertabeyond.com/html/poll/poll.php*
+// @include			http://www.omerta3.com/*
+// @include			http://omerta3.com/*
+// @include			http://www.barafranca.com/*
+// @include			http://barafranca.com/*
+// @include			http://www.barafranca.us/*
+// @include			http://barafranca.us/*
+// @include			http://dm.barafranca.com/*
+// @include			http://deathmatch.barafranca.com/*
+// @include			http://www.barafranca.nl/*
+// @include			http://barafranca.nl/*
+// @include			http://89.149.221.178/~fingon/beyond.php*
+// @exclude			http://gamewiki.barafranca.com/*
+// @exclude			http://ircwiki.barafranca.com/*
+// @exclude			http://*/front-mafia-list.php*
 // @unwrap
 // ==/UserScript==
 
@@ -138,7 +139,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '58';
+var ScriptSubVersion = '59';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -2204,6 +2205,21 @@ if(urlsearch == '/controlpanel.php' + dls){
 	//invite from profile
 	$X('//input[@name="invite"]').value = GetParam('who');
 	$X('//input[@name="invite"]/parent::*/input[last()]').focus();
+	// Add promo calculation for CD/GF/FL.
+	var promo = $x('//table[@class="color2"][2]//td//table//tr');
+
+	var chiefP = promo[5].getElementsByTagName('td')[1].textContent.replace(/\D/g, '');
+	var brugP = promo[6].textContent.replace(/\D/g, '');
+	if(brugP != '0' && chiefP !='0'){
+		var percentage = ((brugP-chiefP)/chiefP);
+	} else {
+		var percentage = 0;
+	}
+	var cdP = (parseInt((brugP*percentage), 10)+parseInt(brugP, 10));
+	var gfP = (parseInt((cdP*percentage), 10)+parseInt(cdP, 10));
+
+	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
+
 }
 if(dlp == '/cpuser.php' && db.innerHTML.search('type="password"')==-1){
 

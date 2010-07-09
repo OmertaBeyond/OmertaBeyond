@@ -1,23 +1,17 @@
-// -------------------------------------------------------------------------------------
-//
-// This file contains the language array we use for Project Omerta Beyond
-//
-// Don't change anything unless you know what are you doing.
-// These arrays aren't just to add texts, but also to identify ingame strings or texts
-//
-// ---- Variables depending on selected ingame language
-//
-// -------------------------------------------------------------------------------------
-
-// vers: 1.9.3.58
-
 /*
-$Rev$:  Revision of last commit
-$Author$:  Author of last commit
-$Date$:  Date of last commit
+	This file contains the language array we use for Project Omerta Beyond
+
+	Don't change anything unless you know what are you doing.
+	Language arrays needed for multilingual OB
+
+	Version: 1.9.3.59 !
+
+	$Rev$:  Revision of last commit
+	$Author$:  Author of last commit
+	$Date$:  Date of last commit
 */
 
-// get language vars
+// Get language vars.
 var langs = {
 	en: {
 		prefsname: 'Preferences',
