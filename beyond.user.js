@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			09-07-2010
+// @date			11-07-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -59,32 +59,26 @@ $Date$:  Date of last commit
 
 //---------------- (Omerta==0)?refresh:go ----------------
 if (db.innerHTML.indexOf('clicklimit') != -1 && dlp != '/menu.php') {
-	GM_log('Reload in 60 seconds');
 	setTimeout(function () {
 		window.location.reload();
 	}, 60000);
 } else if (hOne == '504 Gateway Time-out') {
-	GM_log('Reload in 20 seconds');
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
 } else if (hOne == '502 Bad Gateway') {
-	GM_log('Reload in 20 seconds');
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
 } else if (hOne == '503 Service Unavailable') {
-	GM_log('Reload in 20 seconds');
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
 }	else if (hOne == '500 - Internal Server Error') {
-	GM_log('Reload in 20 seconds');
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
 } else if (db.innerHTML.indexOf('Downtime. We\'ll be back shortly. Hopefully. ') != -1) {
-	GM_log('Reload in 3 minutes');
 	setTimeout(function () {
 		window.location.reload();
 	}, 300000);
@@ -139,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '59';
+var ScriptSubVersion = '60';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1533,7 +1527,9 @@ if (prefs[11]) {
 
 //----------------- Crime Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
-	$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]')); // remove damned picture
+	// Remove damned picture.
+	$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]'));
+
 	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
 		$x('//input[@type="radio"]')[4].checked = true;
 	} else if (prefs[10]) {
@@ -1548,7 +1544,9 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 
 //---------------- Cars Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
-	$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]')); // remove damned picture
+	// Remove damned picture.
+	$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]'));
+
 	if (db.innerHTML.search(/table/i) > -1 && prefs[8]) { //if Car Nick AF is enabled
 		for (p = [], i = 0; i <= 3; i++) { //Get percentages
 			p.push($i('//form//td[3]', i).replace(/\D|/g, ''));

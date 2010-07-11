@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.9.3.59 !
+	Version: 1.9.3.60
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -274,7 +274,7 @@ function insertAfter(newNode, node) {
 
 function toggle(name) {
 	var id = document.getElementById(name);
-	if (id.style.display == '') {
+	if (id.style.display === '') {
 		id.style.display = 'block';
 	} else if (id.style.display == 'block') {
 		id.style.display = '';
@@ -296,19 +296,17 @@ function getPow(name, i, def) {
 	var info = getValue(name, '' + def);
 	if (name == 'bninfo') {
 		var w = 2; //set width of buckets
-	}
-	if (name == 'prefs') {
+	} else if (name == 'prefs') {
 		var w = 1;
 	}
-	return 1 * info.substr(i * w, w); //return int version of bucket
+	return (1 * info.substr((i * w), w)); //return int version of bucket
 }
 
 function setPow(name, i, value) {
 	var info = getValue(name, "0");
 	if (name == 'bninfo') {
 		var w = 2; //set width of buckets
-	}
-	if (name == 'prefs') {
+	} else if (name == 'prefs') {
 		var w = 1;
 	}
 	i = i * w; //set string index
@@ -401,7 +399,6 @@ ls = dls;
 host = location.hostname.toLowerCase();
 urlsearch = location.pathname + location.search;
 arr = [];
-hOne = hOne();
 
 function hOne() {
 	if (document.getElementsByTagName('h1')[0]) {

@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.59 !
+	Version: 1.9.3.60
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -103,7 +103,7 @@ var langs = {
 		prefsPage: [
 			'Check for update',
 			'Check all',
-			'Update',
+			'Update'
 		],
 		jhl: [
 			'Busting List and Options',
@@ -270,7 +270,7 @@ var langs = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -385,7 +385,7 @@ var langs = {
 		prefsPage: [
 			'Check for update',
 			'Check all',
-			'Update',
+			'Update'
 		],
 		jhl: [
 			'Busting List and Options',
@@ -552,7 +552,7 @@ var langs = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -667,7 +667,7 @@ var langs = {
 		prefsPage: [
 			'Controleer voor update',
 			'Vink alles aan',
-			'Update',
+			'Update'
 		],
 		jhl: [
 			'Uitbraak lijst en opties',
@@ -842,7 +842,7 @@ var langs = {
 			'Bestuurder',
 			'Gegevens',
 			'Verstuur',
-			'Lokale bende',
+			'Lokale bende'
 		],
 		lastontime: [
 			'Levend',

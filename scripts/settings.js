@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Variables depending on version
 
-	Version: 1.9.3.59 !
+	Version: 1.9.3.60
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -136,7 +136,7 @@ var settings = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -284,7 +284,7 @@ var settings = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob',
+			'Local Mob'
 		],
 		lastontime: [
 			'Alive',
@@ -440,7 +440,7 @@ var settings = {
 			'Bestuurder',
 			'Gegevens',
 			'Verstuur',
-			'Lokale bende',
+			'Lokale bende'
 		],
 		lastontime: [
 			'Levend',
