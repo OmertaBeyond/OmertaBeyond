@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			11-07-2010
+// @date			13-07-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '60';
+var ScriptSubVersion = '61';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1698,21 +1698,21 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					tdl.innerHTML = 'Actions:';
 					tdr.setAttribute('class', 'profilerow');
 
-					links = '<table cellspacing="0" cellpadding="0" border="0" width="100%"><tbody><tr>';
-					links += '<td align="left" valign="top">';
+					links = '<table cellspacing="0" cellpadding="0" border="0" width="100%"><tbody><tr align="center" valign="top">';
+					links += '<td width="20%">';
 					links += '<a class="red" href="BeO/webroot/index.php?module=Heist&action=&who='+nick+'">Heist</a><br>';//heist link
 					links += '</td>';
-					links += '<td align="left" valign="top">';
+					links += '<td width="20%">';
 					links += '<a class="red" href="BeO/webroot/index.php?module=Spots&action=&driver='+nick+'">Raid</a><br>';//raid link
 					links += '</td>';
-					links += '<td align="left" valign="top">';
+					links += '<td width="20%">';
 					links += '<a class="red" href="javascript:if(confirm(\'Are you sure you want to make '+nick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+nick+'\';">Set Mentor</a><br>';//mentor link
 					links += '</td>';
-					links += '<td align="left" valign="top">';
+					links += '<td width="20%">';
 					links += '<a class="red" href="kill.php?search='+nick+'" onClick="">Hire Detectives</a> <br>';//dets link
 					links += '</td>';
-					if(parseInt(getPow('bninfo',4,-1))>2){//check for top3 position
-						links += '<td align="left" valign="top">';
+					if(parseInt(getPow('bninfo',4,-1),10)>2){//check for top3 position
+						links += '<td width="20%">';
 						links += '<a href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br>';//family link
 						links += '</td>';
 					}
@@ -1924,7 +1924,7 @@ if(dlp == '/garage.php'){
 		$X('/html/body//form/center/table/tbody/tr').insertBefore(indexTd, $X('/html/body//form/center/table/tbody/tr/td[2]'));
 
 		for(i=2;i<rows-2;i++){ //loop rows
-			var y = '/html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
+			var y = '//html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
 			var car = $X(y).href.match(/\d+/g)[0];
 			var carType = '';
 			var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
@@ -2216,7 +2216,7 @@ if(urlsearch == '/controlpanel.php' + dls){
 	var cdP = (parseInt((brugP*percentage), 10)+parseInt(brugP, 10));
 	var gfP = (parseInt((cdP*percentage), 10)+parseInt(cdP, 10));
 
-	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
+	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><br /><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
 
 }
 if(dlp == '/cpuser.php' && db.innerHTML.search('type="password"')==-1){
@@ -2407,7 +2407,7 @@ if (prefs[26]) {
 
 //---------------- Raidpage ----------------
 if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1) && prefs[34]) {
-	if (db.innerHTML.indexOf('<div style="position: absolute; background: url(&quot;/static/images/cities/maps') != -1) {
+	if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@onmouseover, "Spots.popup")]').length; // get total amount of spots
 
 		var div = cEL('div'); // the main div
@@ -2455,14 +2455,12 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			if (rpfam != null) {
 				if (rpfam[1] != stripHTML(getValue('family', ''))) {
 					rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
-				}
-				else {
+				} else {
 					tdskipnum += 1;
 					time = '';
 					profit = $x('//td')[(((y * 14) + 5) - tdskipnum)].innerHTML; // reload protection cuz it's of
 				}
-			}
-			else {
+			} else {
 				rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
 			}
 			//parsing everything
@@ -2925,7 +2923,7 @@ if (dlp == '/controlpanel.php') {
 			var len = $n.innerHTML.trim().split(' ').length - 1;
 			var who = $n.innerHTML.trim().split(' ');
 			if (who[0].match(/[A-Z]/g)) {
-				who[0] = '<a href="/user.php?nick=" + who[0] + "><b>' + who[0] + '</b></a>';
+				who[0] = '<a href="/user.php?nick="' + who[0] + '"><b>' + who[0] + '</b></a>';
 			}
 			if (who[len].match(/[A-Z]/g)) {
 				who[len] = '<a href="/user.php?nick=' + who[len].match(/\w+/g)[0] + '><b>' + who[len] + '</b></a>';
