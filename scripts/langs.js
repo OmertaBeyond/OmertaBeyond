@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.62
+	Version: 1.9.3.63
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -275,7 +275,8 @@ var langs = {
 		lastontime: [
 			'Alive',
 			'Last on:',
-			'ago'
+			'ago',
+			'This user has not been seen online by our logger yet'
 		],
 		pokertracker: [
 			'PokerTracker',
@@ -557,7 +558,8 @@ var langs = {
 		lastontime: [
 			'Alive',
 			'Last on:',
-			'ago'
+			'ago',
+			'This user has not been seen online by our logger yet'
 		],
 		pokertracker: [
 			'PokerTracker',
@@ -847,7 +849,8 @@ var langs = {
 		lastontime: [
 			'Levend',
 			'Laatst on:',
-			'geleden'
+			'geleden',
+			'Deze speler is nog niet online gezien door onze logger'
 		],
 		pokertracker: [
 			'PokerVolger',

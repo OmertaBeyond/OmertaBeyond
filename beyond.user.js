@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '62';
+var ScriptSubVersion = '63';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1628,7 +1628,11 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 				onload: function (resp) {
 					var parser = new DOMParser();
 					var dom = parser.parseFromString(resp.responseText, 'application/xml');
-					status.innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
+					if (dom.getElementsByTagName('laston') == 0) { // 1970, thus not seen by logger
+						status.innerHTML = lang.lastontime[0]+' | '+lang.lastontime[3];
+					} else {
+						status.innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
+					}
 				}
 			});
 		}
@@ -2417,6 +2421,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		var rex = new RegExp('\<b\>(.*)<\/b\>', 'g');
 		var r = db.innerHTML.match(rex); // getting types, do NOT use $x/getTAG since that fails
 		var tdskipnum = 0;
+		var ownfam = getValue('family', '');
 		for (var y = 0; y < am; y+=1) {
 			var divnum = (y * 13) + 2; // 13 divs per spot, 2nd div of the spot
 			if(db.innerHTML.search('id="_firebugConsole"')!=-1) { // Firebug Fix
@@ -2452,16 +2457,18 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var rpform = '';
 			var rex = new RegExp('\\(([\\w\\s]+)\\)');
 			var rpfam = owner.match(rex);
-			if (rpfam != null) {
-				if (rpfam[1] != stripHTML(getValue('family', ''))) {
-					rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
+			if (ownfam == lang.status[1]) {
+				if (rpfam != null) { // owned by player
+					if (rpfam[1] != stripHTML(ownfam)) { // not own fam
+						rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
+					} else {
+						tdskipnum += 1;
+						time = '';
+						profit = $x('//td')[(((y * 14) + 5) - tdskipnum)].innerHTML; // reload protection cuz it's of
+					}
 				} else {
-					tdskipnum += 1;
-					time = '';
-					profit = $x('//td')[(((y * 14) + 5) - tdskipnum)].innerHTML; // reload protection cuz it's of
+					rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
 				}
-			} else {
-				rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
 			}
 			//parsing everything
 			divdump += '<tr height="22px"><td style="padding-left:5px">'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
@@ -2486,23 +2493,13 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			}
 		}, true);
 
-		if (getID('raidpagebullets').value != '') {
-			for (y = 1; y <= am; y+=1) {
-				if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
-			}
-		}
-
 		getID('raidpagedriver').addEventListener('keyup', function() {
+			var str = getID('raidpagedriver').value;
+			str = str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
 			for (y = 1; y <= am; y+=1) {
-				if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = getID('raidpagedriver').value; }
+				if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = str; }
 			}
 		}, true);
-
-		if (getID('raidpagedriver').value != '') {
-			for (y = 1; y <= am; y+=1) {
-				if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = getID('raidpagedriver').value; }
-			}
-		}
 	}
 }
 
