@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			13-07-2010
+// @date			14-07-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '61';
+var ScriptSubVersion = '62';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -286,7 +286,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([25, 7, 26, 27, 29, 32]);
 
 	addCat(lang.preftitles[4]); //Clean up
-	addPrefItems([6, 22, 12, 14, 30, 19, 20, 18]);
+	addPrefItems([6, 22, 12, 14, 19, 20, 18]);
 
 	addCat(lang.preftitles[5]); //Fingons / Edo
 	addPrefItems([2]);
@@ -2418,7 +2418,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		var r = db.innerHTML.match(rex); // getting types, do NOT use $x/getTAG since that fails
 		var tdskipnum = 0;
 		for (var y = 0; y < am; y+=1) {
-			var divnum = (y * 13) + 2; // 13 divs per spot, 2th div of the spot
+			var divnum = (y * 13) + 2; // 13 divs per spot, 2nd div of the spot
 			if(db.innerHTML.search('id="_firebugConsole"')!=-1) { // Firebug Fix
 				divnum++;
 			}
@@ -3686,7 +3686,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		//!-Added the table
 		//--BRC AutoForm
 		if (sp) { //AF on Smuggling page
-
 
 			function AF(sel) {
 				//assemble info for AF
