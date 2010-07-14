@@ -2457,7 +2457,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var rpform = '';
 			var rex = new RegExp('\\(([\\w\\s]+)\\)');
 			var rpfam = owner.match(rex);
-			if (ownfam == lang.status[1]) {
+			if (ownfam != lang.status[1]) {
 				if (rpfam != null) { // owned by player
 					if (rpfam[1] != stripHTML(ownfam)) { // not own fam
 						rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
