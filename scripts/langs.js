@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.63
+	Version: 1.9.3.64
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -122,7 +122,10 @@ var langs = {
 			'Buy out Hotkey when in jail',
 			'Friend List Priority',
 			'Family Priority',
-			'If someone in jail is higher than one of the settings he/she will be highlighted with the color of the lowest priority number</span><br />The default priority number for friends is: <b>3</b> and for family is: <b>9</b><br />The default priority and color are used when automatically adding users to list<br />The lowest and default priority for anyone in jail is <b>10</b>'
+			'If someone in jail is higher than one of the settings he/she will be highlighted with the color of the lowest priority number</span><br />The default priority number for friends is: <b>3</b> and for family is: <b>9</b><br />The default priority and color are used when automatically adding users to list<br />The lowest and default priority for anyone in jail is <b>10</b>',
+			'Go up',
+			'Go down',
+			'Random'
 		],
 		marquee: [
 			'Are you sure you want to travel to ',
@@ -405,7 +408,10 @@ var langs = {
 			'Buy out Hotkey when in jail',
 			'Friend List Priority',
 			'Family Priority',
-			'If someone in jail is higher than one of the settings he/she will be highlighted with the color of the lowest priority number</span><br />The default priority number for friends is: <b>3</b> and for family is: <b>9</b><br />The default priority and color are used when automatically adding users to list<br />The lowest and default priority for anyone in jail is <b>10</b>'
+			'If someone in jail is higher than one of the settings he/she will be highlighted with the color of the lowest priority number</span><br />The default priority number for friends is: <b>3</b> and for family is: <b>9</b><br />The default priority and color are used when automatically adding users to list<br />The lowest and default priority for anyone in jail is <b>10</b>',
+			'Go up',
+			'Go down',
+			'Random'
 		],
 		marquee: [
 			'Are you sure you want to travel to ',
@@ -688,7 +694,10 @@ var langs = {
 			'Uitkoop sneltoets in het gevang',
 			'Vrienden Lijst Prioriteit',
 			'Familie Prioriteit',
-			'Als iemand in het gevang in aanmerking komt voor voor 2 instellingen, krijgt hij/zij de kleur van het hoogste prioriteit<br>Het standaard nummer voor vrienden is: <b>3</b> en voor familie: <b>9</b><br>De standaard prioriteit en kleur worden gebruikt als je iemand toevoegt via een profiel link<br>De laagste prioriteit voor iemand is <b>10</b>'
+			'Als iemand in het gevang in aanmerking komt voor voor 2 instellingen, krijgt hij/zij de kleur van het hoogste prioriteit<br>Het standaard nummer voor vrienden is: <b>3</b> en voor familie: <b>9</b><br>De standaard prioriteit en kleur worden gebruikt als je iemand toevoegt via een profiel link<br>De laagste prioriteit voor iemand is <b>10</b>',
+			'Omhoog',
+			'Omlaag',
+			'Willekeurige'
 		],
 		marquee: [
 			'Weet je zeker dat je wil reizen naar ',

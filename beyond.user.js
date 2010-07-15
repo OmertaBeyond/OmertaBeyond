@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			14-07-2010
+// @date			15-07-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '63';
+var ScriptSubVersion = '64';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1285,7 +1285,7 @@ if(prefs[2] && dlp == '/info.php'){
 
 //---------------- Jail Highlighter and Jail autoform ----------------
 if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
-	//assemble prefs
+	//Assemble prefs
 	var words = replaceLast(getValue('bust', ''), ',', '', 1).split(',');
 	var bgColors = replaceLast(getValue('colours', ''), ',', '', 1).split(',');
 	var prioritys = replaceLast(getValue('priority', ''), ',', '', 1).split(',');
@@ -1295,6 +1295,29 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	var FL_prior = getValue('FL_prior', 3);
 	var Fam_prior = getValue('Fam_prior', 9);
 	var lowlifes = 0;
+
+	function updateShow(el) { //set the new selected inmate in the show-row
+		el.scrollIntoView(false);
+		var newShow = el.parentNode.parentNode.cloneNode(1); //clone it
+		var oldShow = getID('show');
+		var buyout = newShow.lastChild.previousSibling.firstChild;
+
+		oldShow.parentNode.replaceChild(newShow,oldShow); //replace old with new
+		newShow.setAttribute('id', 'show');
+		newShow.getElementsByTagName('input')[0].style.visibility = 'hidden'; //make show-row radio invisible, as it isn't needed there
+		buyout.setAttribute('accessKey', '0');
+		buyout.firstChild.innerHTML+=' [0]';
+		buyout.parentNode.setAttribute('style', 'width: 100px;'); //set a fixed width to prevent glitching of td widths
+
+		//Force actual radio to be selected, rather then the show-row radio clone
+		var shown = $X('//table[@class="thinline"]').getElementsByTagName('input')[0];
+		if(shown.checked == true) { //see if show-row radio is checked
+			$x('//input[@value="'+shown.value+'"]')[1].checked = true;
+		}
+		$X('//input').focus();
+	}
+
+	//Bust Tracker
 	if (db.innerHTML.search(lang.busttracker[0]) != -1){
 		++bustTrackerinfo;
 		setValue('bustouts', bustTrackerinfo);
@@ -1304,13 +1327,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		setValue('bustouts', bustTrackerinfo);
 	}
 
-
-	var span = cEL('span');
-	var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-	span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;Bust outs: ' + commafy(bustTrackerinfo);
-	$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
-
-	//grab ingame HL colors
+	//Grab ingame HL colors
 	var famRGB = $x('//td[@width="125px"]')[0].style.backgroundColor;
 	if(famRGB==''){
 		famHex = '';
@@ -1319,7 +1336,6 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		famRGB = famRGB.split(',');
 		famHex = '#'+RGBtoHex(famRGB[0], famRGB[1], famRGB[2]);
 	}
-
 	var friendRGB = $x('//td[@width="125px"]')[1].style.backgroundColor;
 	if(friendRGB==''){
 		friendHex = '';
@@ -1329,145 +1345,212 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		friendHex = '#'+RGBtoHex(friendRGB[0], friendRGB[1], friendRGB[2]);
 	}
 
-	HL_row = new Array(maxHL);
+	//Run JHL (if there are players in jail)
 	count = j = 0;
-	//add priority and bgcolor to html
-	var inJail = $x('//tr[@bgcolor]');
-	if(inJail.length == 0) {
-		return;
-	}
-	inJail.forEach(function($n){
-		nicka = $n.getElementsByTagName('td')[0].innerHTML;
-		if(nicka.indexOf('<a ')!=-1){
-			nicka = nicka.slice(nicka.indexOf('<a'), nicka.indexOf('/a>')+3);
-		}
-		nick = nicka.slice(nicka.indexOf('>')+1, nicka.indexOf('</')).toUpperCase();
-		nick = nick.slice(nick.lastIndexOf('>')+1);
-
-		fama = $n.getElementsByTagName('td')[1].innerHTML;
-		fam = fama.slice(fama.indexOf('>')+1, fama.indexOf('</')).toUpperCase();
-		fam = fam.slice(fam.lastIndexOf('>')+1);
-
-		$n.setAttribute('priority', 10);//set default priority, then check for friends and fam
-		if($n.getAttribute('bgcolor') != ''){
-			if($n.getAttribute('bgcolor').toLowerCase() == famHex.toLowerCase()){
-				$n.setAttribute('priority', Fam_prior);
+	var HL_row = new Array(maxHL);
+	var inJail = $x('//tr[@bgcolor]');//add priority and bgcolor to html
+	if(inJail.length > 0){
+		inJail.forEach(function($n){//loop inmates and check if they have a priority listed
+			//Step 1 - Grab player and family name
+			nicka = $n.getElementsByTagName('td')[0].innerHTML; //nicks (w/ <a>) or John Does (w/o <a>)
+			if(nicka.indexOf('<a ')!=-1){
+				nicka = nicka.slice(nicka.indexOf('<a'), nicka.indexOf('/a>')+3);
 			}
-			if($n.getAttribute('bgcolor').toLowerCase() == friendHex.toLowerCase()){
-				$n.setAttribute('priority', FL_prior);
+			nick = nicka.slice(nicka.indexOf('>')+1, nicka.indexOf('</')).toUpperCase();
+			nick = nick.slice(nick.lastIndexOf('>')+1);
+
+			fama = $n.getElementsByTagName('td')[1].innerHTML; //fams (w/ <a>) or famless (w/o <a>)
+			fam = fama.slice(fama.indexOf('>')+1, fama.indexOf('</')).toUpperCase();
+			fam = fam.slice(fam.lastIndexOf('>')+1);
+
+			//Step 2 - Set default priority to player
+			$n.setAttribute('priority', 10);
+
+			//Step 3 - Check player to be ingame related
+			if($n.getAttribute('bgcolor') != ''){ //use grabbed ingame HL colors to determine own family/friends
+				if($n.getAttribute('bgcolor').toLowerCase() == famHex.toLowerCase()){
+					$n.setAttribute('priority', Fam_prior); //Found fammember, add Family priority
+				}
+				if($n.getAttribute('bgcolor').toLowerCase() == friendHex.toLowerCase()){
+					$n.setAttribute('priority', FL_prior); //Found a friend, add FL priority
+				}
 			}
+
+			//Step 4 - Check player to be JHL listed
+			for(i=0;i<=words.length-1;i++){//loop through JHL list
+				ItemPriority = (prioritys[i]) ? prioritys[i] : 10; //check if there is a priority listed for this word, or use default
+				if((fam == words[i].replace('%20', ' ').replace('%26', '&')||fama.toUpperCase() == words[i].replace('%20', ' ').replace('%26', '&')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the fam is higher
+					$n.setAttribute('bgcolor', bgColors[i]);
+					$n.setAttribute('priority', ItemPriority);
+				}
+				if((nick == words[i].replace('%20', ' ')||nicka.toUpperCase() == words[i].replace('%20', ' ')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the nick is higher
+					$n.setAttribute('bgcolor', bgColors[i]);
+					$n.setAttribute('priority', ItemPriority);
+				}
+			}
+
+			//Step 5 - Check player to be lowlife
+			for(i=0;i<=nobust.length-1;i++){//loop through nobusts
+				if(nobust[i]!='' && (nick == nobust[i].replace('%20', ' ').replace('%26', '&') || nicka.toUpperCase() == nobust[i].replace('%20', ' ').replace('%26', '&') || fam == nobust[i].replace('%20', ' ').replace('%26', '&') || fama.toUpperCase() == nobust[i].replace('%20', ' ').replace('%26', '&'))){
+					$n.setAttribute('bgcolor', '');
+					$n.setAttribute('priority', 99);
+					$n.getElementsByTagName('input')[0].parentNode.removeChild($n.getElementsByTagName('input')[0]);
+					lowlifes++;
+				}
+			}
+
+			//Step 6 - Check player for final priority result and add it to friends list
+			if($n.getAttribute('bgcolor') != '' && count < maxHL){//priority? list full?
+				k = count+1;
+				HL_row[count] = $n.cloneNode(1);//clone node for "friends" display and add hotkey
+				span = cEL('span');
+				span.innerHTML = '<a accesskey="'+k+'" style="color:'+HL_row[count].childNodes[7].firstChild.getAttribute('color')+'!important;" href=' + '"javascript:document.getElementById(' + "'" + j + "'" + ').click();">['+k+']</a>';
+				HL_row[count].childNodes[7].insertBefore(span,HL_row[count].childNodes[7].firstChild.nextSibling);
+				HL_row[count].childNodes[9].firstChild.setAttribute('onChange', 'javascript:document.getElementById(' + '"' + j + '"' + ').click();this.checked=false;');
+				count++;
+			}
+			j++;
+		});
+
+		//Loop inmates to see who gets selected
+		prior = 10;//highest priority
+		for(i=inJail.length-1;i>=0;i--){
+			priority = parseInt(inJail[i].getAttribute('priority'));
+			button = $x('//input[@type="radio"]')[i];
+			button.id = i;
+			playerRowTmp = button.parentNode.parentNode;
+			if(priority <= prior){//see if player has higher priority then saved priority
+				prior = priority;//changes highest priority
+				playerRow = playerRowTmp;//get player node
+				button.checked = true;
+			}
+			button.addEventListener('change', function() { updateShow(this); }, true);
 		}
 
-		for(i=0;i<=words.length-1;i++){//loop players and see if either nick or fam matches with prefs
-			ItemPriority = (prioritys[i]) ? prioritys[i] : 10;
-			if((fam == words[i].replace('%20', ' ').replace('%26', '&')||fama.toUpperCase() == words[i].replace('%20', ' ').replace('%26', '&')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the fam is higher
-				$n.setAttribute('bgcolor', bgColors[i]);
-				$n.setAttribute('priority', ItemPriority);
+		//No priorities? Pick a random player
+		if(prior == 10 && inJail.length > lowlifes){
+			i = (Math.ceil(Math.random()*(inJail.length-lowlifes))-1);
+			if(inJail.length > 4 && (i+3) > inJail.length){
+				i = i-3;
 			}
-			if((nick == words[i].replace('%20', ' ')||nicka.toUpperCase() == words[i].replace('%20', ' ')) && parseInt($n.getAttribute('priority')) >= ItemPriority){//also see if the priority of the nick is higher
-				$n.setAttribute('bgcolor', bgColors[i]);
-				$n.setAttribute('priority', ItemPriority);
-			}
-		}
-		for(i=0;i<=nobust.length-1;i++){//check for nobusts
-			if(nobust[i]!='' && (nick == nobust[i].replace('%20', ' ').replace('%26', '&') || nicka.toUpperCase() == nobust[i].replace('%20', ' ').replace('%26', '&') || fam == nobust[i].replace('%20', ' ').replace('%26', '&') || fama.toUpperCase() == nobust[i].replace('%20', ' ').replace('%26', '&'))){
-				$n.setAttribute('bgcolor', '');
-				$n.setAttribute('priority', 99);
-				$n.getElementsByTagName('input')[0].parentNode.removeChild($n.getElementsByTagName('input')[0]);
-				lowlifes++;
-			}
-		}
-
-		if($n.getAttribute('bgcolor') != '' && count < maxHL){
-			k = count+1;
-			HL_row[count] = $n.cloneNode(1);//clone node for "friends" display and add hotkey
-			span = cEL('span');
-			span.innerHTML = '<a accesskey="'+k+'" style="color:'+HL_row[count].childNodes[7].firstChild.getAttribute('color')+'!important;" href=' + '"javascript:document.getElementById(' + "'" + j + "'" + ').click();">['+k+']</a>';
-			HL_row[count].childNodes[7].insertBefore(span,HL_row[count].childNodes[7].firstChild.nextSibling);
-			HL_row[count].childNodes[9].firstChild.setAttribute('onChange', 'javascript:document.getElementById(' + '"' + j + '"' + ').click();this.checked=false;');
-			count++;
-		}
-		j++;
-	});
-
-	prior = 10;//highest priority
-	for(i=inJail.length-1;i>=0;i--){//loop list
-		priority = parseInt(inJail[i].getAttribute('priority'));
-		button = $x('//input[@type="radio"]')[i];
-		button.id = i;
-		playerRowTmp = button.parentNode.parentNode;
-		if(priority <= prior){//see if player has higher priority then saved priority
-			prior = priority;//changes highest priority
-			playerRow = playerRowTmp;//get player node
+			button = $x('//input[@type="radio"]')[i];
+			playerRow = button.parentNode.parentNode;
 			button.checked = 1;
+			$X('//input').focus();
 		}
-		func = 'changed = document.getElementById('+i+');'+
-			'if(changed.checked){'+
-				'newsel=changed.parentNode.parentNode.cloneNode(1);'+
-				'oldsel=document.getElementById(\'show\');'+
-				'oldsel.parentNode.replaceChild(newsel,oldsel);'+
-				'newsel.setAttribute(\'id\', \'show\');'+
-				'buy=newsel.lastChild.previousSibling.firstChild;' + //node to add buy-out hotkey
-				'buy.setAttribute(\'accessKey\', \'0\');' +
-				'buy.firstChild.innerHTML+=\' [0]\';' +
-			'}';
-		button.setAttribute('onChange', func);//add changer for 'show selected player'
-	}
-	if(prior == 10 && inJail.length > lowlifes){//if no highlights set a random
-		i = (Math.ceil(Math.random()*(inJail.length-lowlifes))-1);
-		if(inJail.length > 4 && (i+3) > inJail.length){
-			i = i-3;
-		}
-		button = $x('//input[@type="radio"]')[i];
-		playerRow = button.parentNode.parentNode;
-		button.checked = 1;
-	}
-	$X('//input').focus();
 
-	//add selected player on top of table
-	tr = $X('/html/body//form/center/table/tbody/tr[2]').cloneNode(1);//black line
-	$X('//table[@class="thinline"]/tbody').insertBefore(tr, $X('//table[@class="thinline"]/tbody/tr'));
-	tr = playerRow.cloneNode(1);//clone of selected player row
-	tr.id = 'show';
-	buy = tr.lastChild.previousSibling.firstChild;//node to add buy-out hotkey
-	buy.setAttribute('accessKey', '0');
-	buy.firstChild.innerHTML += ' [0]';
-	$X('//center/table[@class="thinline"]/tbody').insertBefore(tr, $X('//center/table[@class="thinline"]/tbody/tr'));
+		//Add selected player on top of table
+		tr = $X('/html/body//form/center/table/tbody/tr[2]').cloneNode(1);//black line
+		$X('//table[@class="thinline"]/tbody').insertBefore(tr, $X('//table[@class="thinline"]/tbody/tr'));
+		tr = playerRow.cloneNode(1);//clone of selected player row
+		tr.id = 'show';
+		tr.getElementsByTagName('input')[0].style.visibility = 'hidden'; //make show-row radio invisible, as it isn't needed there
 
-	if(maxHL!=0&&prior!=10){//no need to add stuff with max=0 or no HL
-		//add footer
-		for(i=0,p=arr;i<=4;i++){//more space at bottom
-			p[i]=cEL('p');
-			(p[i]).innerHTML='&nbsp;';
-			$X('//form').parentNode.insertBefore(p[i], $X('//form').nextSibling);
-		}
-		//temp fix for external css since we cant run findPos from .css ;x
-		GM_addStyle('div#footerwrap{left:'+findPos($X('//table[@class="thinline"]'))[0]+'px;}');
+		buy = tr.lastChild.previousSibling.firstChild;//node to add buy-out hotkey
+		buy.setAttribute('accessKey', '0');
+		buy.firstChild.innerHTML += ' [0]';
+		$X('//center/table[@class="thinline"]/tbody').insertBefore(tr, $X('//center/table[@class="thinline"]/tbody/tr'));
 
-		wrap = cEL('div');
-		wrap.id = 'footerwrap';
-		footer = cEL('div');
-		footer.id = 'footer';
-		footer.align = 'center';
-		footer.style.position = 'fixed';
-		footer.style.border = '0px !important';
-		footer.setAttribute('class', 'otable');
+		//Force actual radio to be selected, rather then the show-row radio clone
+		var shown = $X('//table[@class="thinline"]').getElementsByTagName('input')[0];
+		$x('//input[@value="'+shown.value+'"]')[1].checked = true;
 
-		friends = '<table id="friends" class="thinline" cellspacing="0" cellpadding="2" width="599" rules="none"><tr bgcolor="#000" height="0">';
-		cols = $x('//td[@class="tableheader"]');
-		for(i=0;i<6;i++){
-			friends += '<td width="'+ cols[i].offsetWidth +'"></td>';
-		}
-		friends += '</tr></table>';
-		footer.innerHTML = friends;
-		wrap.appendChild(footer);
-
-		$X('//form').parentNode.insertBefore(wrap, $X('//form').nextSibling);//add in fixed "friends" table
-		for(i=0;i<HL_row.length;i++){
-			if(HL_row[i]){
-				getID('friends').appendChild(HL_row[i]);//add in "friends" rows
+		//Add Friends List
+		if(maxHL!=0&&prior!=10){//no need to add stuff with max=0 or no HL
+			//add footer
+			for(i=0,p=arr;i<=5;i++){//more space at bottom to fit everything w/o blocking stuff with the footer
+				p[i]=cEL('p');
+				(p[i]).innerHTML='&nbsp;';
+				$X('//form').parentNode.insertBefore(p[i], $X('//form').nextSibling);
 			}
+			//temp fix for external css since we cant run findPos from .css ;x
+			GM_addStyle('div#footerwrap{left:'+findPos($X('//table[@class="thinline"]'))[0]+'px;}');
+
+			//compiling DOM and stuff
+			wrap = cEL('div');
+			wrap.id = 'footerwrap';
+			wrap.setAttribute('style','height:156px');
+			footer = cEL('div');
+			footer.id = 'footer';
+			footer.align = 'center';
+			footer.setAttribute('style', 'position:fixed; border:0px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
+			footer.setAttribute('class', 'otable');
+
+			friends = '<table id="friends" class="thinline" cellspacing="2" cellpadding="2" width="600" style="border:1px solid #000 !important;" rules="none"><tr bgcolor="#000" height="3">';
+			cols = $x('//td[@class="tableheader"]');
+			for(i=0;i<6;i++){ //copy widths from above table
+				friends += '<td width="'+ cols[i].offsetWidth +'"></td>';
+			}
+			friends += '</tr></table>';
+			footer.innerHTML = friends;
+			wrap.appendChild(footer);
+
+			$X('//form').parentNode.insertBefore(wrap, $X('//form').nextSibling);//add in fixed "friends" table
+			for(i=0;i<HL_row.length;i++){
+				if(HL_row[i]){
+					getID('friends').firstChild.appendChild(HL_row[i]);//add in "friends" rows
+				}
+			}
+
+			//Add amount of ppl in jail since the above made div covers original one AND add busttracker + arrow key instructions
+			var span = cEL('span');
+			var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
+			span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;Bust outs: ' + commafy(bustTrackerinfo) + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
+			$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
+		} else {
+			var span = cEL('span'); //add busttracker + arrow key instructions
+			var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
+			span.innerHTML = '<br>&nbsp;Bust outs: ' + commafy(bustTrackerinfo) +'<br>&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
+			$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 		}
+
+		//Add arrow key controls
+		window.addEventListener('keypress', function(e){
+			var key = e.keyCode;
+			if(key==39 && inJail.length > 1){ //right, select random
+				function pickRandom() {
+					var random = Math.ceil(Math.random()*inJail.length);
+					button = $x('//input[@type="radio"]')[random];
+					if(button.checked == true) { //we have selected this button atm, get another
+						pickRandom();
+					} else { //got another :D
+						button.checked = true;
+						updateShow(button);
+					}
+				}
+				pickRandom();
+			}
+			if(key==38) { //up, select previous
+				e.preventDefault(); //no scrolling using arrows
+				var inmates = $X('//table[@class="thinline"]').getElementsByTagName('input');
+				var shown = inmates[0];
+				if(shown.checked == true) { //force real list item to be selected
+					$x('//input[@value="'+shown.value+'"]')[1].checked = true;
+				}
+				for(i=inmates.length-1;i>=1;i--) {
+					if(inmates[i].checked == true) { //grab current selected
+						var prev = (i==1?inmates.length-1:i-1);
+					}
+				}
+				inmates[prev].checked = true; //set new selected
+				updateShow(inmates[prev]);
+			}
+			if(key==40) { //down, select next
+				e.preventDefault(); //no scrolling using arrows
+				var inmates = $X('//table[@class="thinline"]').getElementsByTagName('input');
+				var shown = inmates[0];
+				if(shown.checked == true) { //force real list item to be selected
+					$x('//input[@value="'+shown.value+'"]')[1].checked = true;
+				}
+				for(i=inmates.length-1;i>=1;i--) {
+					if(inmates[i].checked == true) { //grab current selected
+						var next = (i==inmates.length-1?1:i+1);
+					}
+				}
+				inmates[next].checked = true; //set new selected
+				updateShow(inmates[next]);
+			}
+		}, true);
 	}
 }
 
