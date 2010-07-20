@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.64
+	Version: 1.9.3.65
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -47,7 +47,7 @@ var langs = {
 			'Auto-form Bloodbank',//27 - OTHER AFs
 			'Auto-form Smuggling',//28 - SMUGGLING/PRICES
 			'Auto-form Races',//29 - OTHER AFs
-			'',//30 - CLEAN-UP
+			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs
 			'Enable BulletTracker',//33 - MISC
@@ -84,7 +84,7 @@ var langs = {
 			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
 			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
 			'Sets focus on editbox and adds link to inbox after finished race',//29
-			'',//30
+			'Removes the line from users profile that shows you the last topics in which that user wrote',//30
 			'Enables you to open messages with hotkeys and when there use more hotkeys to delete or reply in an instant',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
 			'Keep track of how many bullets you have bought',//33
@@ -333,7 +333,7 @@ var langs = {
 			'Auto-form Bloodbank',//27 - OTHER AFs
 			'Auto-form Smuggling',//28 - SMUGGLING/PRICES
 			'Auto-form Races',//29 - OTHER AFs
-			'',//30 - CLEAN-UP
+			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs
 			'Enable BulletTracker',//33 - MISC
@@ -370,7 +370,7 @@ var langs = {
 			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
 			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
 			'Sets focus on editbox and adds link to inbox after finished race',//29
-			'',//30
+			'Removes the line from users profile that shows you the last topics in which that user wrote',//30
 			'Enables you to open messages with hotkeys and when there use more hotkeys to delete or reply in an instant',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
 			'Keep track of how many bullets you have bought',//33
@@ -619,7 +619,7 @@ var langs = {
 			'Automatisch invullen van bloed',//27 - OTHER AFs
 			'Automatisch invullen bij het smokkelen',//28 - SMUGGLING/PRICES
 			'Automatisch invullen bij autoracen',//29 - OTHER AFs
-			'',//30 - CLEAN-UP
+			'Verwijder "Recente forumposts" van gebruikersprofielen',//30 - CLEAN-UP
 			'Sneltoetsen gebruiken bij de Postbus',//31 - MISC
 			'Auto-Krasser en Stats',//32 - OTHER AFs
 			'Voeg KogelVolger toe aan kogelfabriek pagina',//33 - MISC
@@ -656,7 +656,7 @@ var langs = {
 			'Vult het aantal eenheden bloed zodat je op 100% uitkomt, geslecteerd op goedkoopste soort die je kunt kopen',//27
 			'Vult het maximale aantal drank/drugs/beide dat je kan dragen. De beste run calculator vult in en geeft je ook de mogelijkheid om op het drank/drugs type te klikken waar die het maximum invult',//28
 			'Focust op accepteren en voegt een link to naar inbox nadat je een race hebt gedaan',//29
-			'',//30
+			'Verwijdert de regel met de laatste forumposts van profielen',//30
 			'Geeft je de mogelijkheid om berichten te openen met sneltoetsen en aldaar te antwoorden of het bericht te verwijderen met een sneltoets',//31
 			'Geef het Krasser paneel met stats weer op de Kras&Win pagina',//32
 			'Hou bij hoeveel kogels je koopt bij de kogelfabriek',//33

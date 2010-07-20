@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			15-07-2010
+// @date			20-07-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -47,8 +47,7 @@
 // @include			http://89.149.221.178/~fingon/beyond.php*
 // @exclude			http://gamewiki.barafranca.com/*
 // @exclude			http://ircwiki.barafranca.com/*
-// @exclude			http://*/front-mafia-list.php*
-// @unwrap
+// @exclude			http://*barafranca.*/front-mafia-list.php*
 // ==/UserScript==
 
 /*
@@ -133,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '64';
+var ScriptSubVersion = '65';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -286,7 +285,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([25, 7, 26, 27, 29, 32]);
 
 	addCat(lang.preftitles[4]); //Clean up
-	addPrefItems([6, 22, 12, 14, 19, 20, 18]);
+	addPrefItems([6, 22, 12, 14, 30, 19, 20, 18]);
 
 	addCat(lang.preftitles[5]); //Fingons / Edo
 	addPrefItems([2]);
@@ -1700,10 +1699,10 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		tbody.lastChild.previousSibling.previousSibling.previousSibling.setAttribute('name', 'forumPosts');
 		tbody.lastChild.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.setAttribute('name', 'FL');
 
-		var status = $X('//span[@id="status"]');
-		var alive = (status.innerHTML.indexOf(lang.profile[3])==-1);//alive/dead
+		var status = $X('//span[@id="status"]').innerHTML;
+		var alive = (status.indexOf(lang.profile[3])==-1);//alive/dead
 
-		if (status.innerHTML == lang.lastontime[0]) { // show last online time on profile
+		if (status == lang.lastontime[0]) { // show last online time on profile
 			GM_xmlhttpRequest({
 				method: 'GET',
 				url: 'http://rix.omertabeyond.com/laston.xml.php?v='+sets.version.replace('_','')+'&ing='+$X('//span[@id="username"]').innerHTML,
@@ -1712,9 +1711,9 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					var parser = new DOMParser();
 					var dom = parser.parseFromString(resp.responseText, 'application/xml');
 					if (dom.getElementsByTagName('laston') == 0) { // 1970, thus not seen by logger
-						status.innerHTML = lang.lastontime[0]+' | '+lang.lastontime[3];
+						status = lang.lastontime[0]+' | '+lang.lastontime[3];
 					} else {
-						status.innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
+						status = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
 					}
 				}
 			});
@@ -1767,7 +1766,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		if(!alive){
 			if($X('//img').parentNode.nodeName != 'A'){
 				var akill = '<span style="color:red; font-weight:bold;"> (Akill) </span>';
-				status.innerHTML += akill;
+				status += akill;
 			}
 		}
 
@@ -3707,7 +3706,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 						aCell = cEL('td');
 						aCell.style.borderLeft = border;
 						if (sets.version == "_com" ) {
-							plink = "http://www.omertabeyond.com";
+							plink = "http://www.barafranca.com";
 						} else if (sets.version == "_dm" ) {
 							plink = "http://dm.barafranca.com";
 						} else {

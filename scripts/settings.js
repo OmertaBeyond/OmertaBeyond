@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Variables depending on version
 
-	Version: 1.9.3.64
+	Version: 1.9.3.65
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -49,7 +49,6 @@ var settings = {
 			'Champion'
 		],
 		friends: 'Friends:',
-		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
 		obay: ['Pack of bullets','bullets'],
@@ -144,7 +143,7 @@ var settings = {
 			'ago'
 		],
 		pokertracker: [
-			'PokerTracker',
+			'Poker Tracker',
 			'You have joined the game.',
 			'You have called the current bet.',
 			'You have raised the bet.',
@@ -197,7 +196,6 @@ var settings = {
 			'Champion'
 		],
 		friends: 'Friends:',
-		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
 		obay: ['Pack of bullets','bullets'],
@@ -292,7 +290,7 @@ var settings = {
 			'ago'
 		],
 		pokertracker: [
-			'PokerTracker',
+			'Poker Tracker',
 			'You have joined the game.',
 			'You have called the current bet.',
 			'You have raised the bet.',
@@ -345,7 +343,6 @@ var settings = {
 			'Kampioen'
 		],
 		friends: 'Vrienden:',
-		stats: ['naar boven', ['Dode Fams', 'Geëerd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
 		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Beide'],
 		obay: ['Pak met kogels','kogels'],
@@ -448,7 +445,7 @@ var settings = {
 			'geleden'
 		],
 		pokertracker: [
-			'PokerVolger',
+			'Poker Volger',
 			'Je doet nu mee aan het spel.',
 			'Je hebt de huidige inzet gecalled.',
 			'Je hebt de inzet verhoogd.',
