@@ -2492,13 +2492,13 @@ if (prefs[26]) {
 }
 
 //---------------- Raidpage ----------------
-if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1) && prefs[34]) {
+if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1)) {
 	if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@onmouseover, "Spots.popup")]').length; // get total amount of spots
 
 		var div = cEL('div'); // the main div
 		div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; font-family:Tahoma,Verdana');
-		divdump = '<table class="thinline" style="width:600px" cellpadding="0"><tr class="tableheader"><td>'+lang.raidpage[3]+'</td><td>'+lang.raidpage[4]+'</td><td>'+lang.raidpage[5]+'</td><td>'+lang.raidpage[6]+'</td><td>'+lang.raidpage[7]+'</td><td>'+lang.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="6"></td></tr>';
+		divdump = '<table class="thinline" style="width:600px" cellpadding="0"><tr class="tableheader"><td>'+langs.en.raidpage[3]+'</td><td>'+langs.en.raidpage[4]+'</td><td>'+langs.en.raidpage[5]+'</td><td>'+langs.en.raidpage[6]+'</td><td>'+langs.en.raidpage[7]+'</td><td>'+langs.en.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="6"></td></tr>';
 
 		var rex = new RegExp('\<b\>(.*)<\/b\>', 'g');
 		var r = db.innerHTML.match(rex); // getting types, do NOT use $x/getTAG since that fails
@@ -2516,8 +2516,8 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var owner = $x('//td')[(((y * 14) + 1) - tdskipnum)].innerHTML; // 14 td's per spot
 			var time = $x('//td')[(((y * 14) + 3) - tdskipnum)].innerHTML;
 			time = '';
-			if (time == lang.raidpage[0]) {
-				time = lang.raidpage[1];
+			if (time == langs.en.raidpage[0]) {
+				time = langs.en.raidpage[1];
 			} else {
 				if (getID('counter_nextraid_'+id+'_minutes_value') != null) { // make sure there are more then 60 sec left
 					var timem = getID('counter_nextraid_'+id+'_minutes_value').innerHTML;
@@ -2527,7 +2527,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 					var times = getID('counter_nextraid_'+id+'_seconds_value').innerHTML;
 					time += times+'s';
 				} else {
-					time = lang.raidpage[1];
+					time = langs.en.raidpage[1];
 				}
 			}
 
@@ -2553,7 +2553,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 				}
 			}
 			//parsing everything
-			divdump += '<tr height="22px"><td style="padding-left:5px">'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
+			divdump += '<tr height="22px"><td style="padding-left:5px">'+type+'</td><td>'+(owner!=langs.en.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
 		}
 		divdump += '</table>';
 		div.innerHTML = divdump;
@@ -2561,7 +2561,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 
 		var div2 = cEL('div2'); // Div with forms
 		div2.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
-		div2.innerHTML = '<table class="thinline" style="width:600px"><tr><td colspan="2" class="tableheader">'+lang.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+lang.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+lang.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
+		div2.innerHTML = '<table class="thinline" style="width:600px"><tr><td colspan="2" class="tableheader">'+langs.en.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+langs.en.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+langs.en.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
 		var c = cEL('center');
 		c.appendChild(div2);
 		c.appendChild(cEL('br'));
