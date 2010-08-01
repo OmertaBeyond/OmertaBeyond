@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.66
+	Version: 1.9.3.67
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -84,11 +84,11 @@ var langs = {
 			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
 			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
 			'Sets focus on editbox and adds link to inbox after finished race',//29
-			'Removes the line from users profile that shows you the last topics in which that user wrote',//30
-			'Enables you to open messages with hotkeys and when there use more hotkeys to delete or reply in an instant',//31
+			'Remove \"Recent Posts\" from user\'s profile.',//30
+			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
 			'Keep track of how many bullets you have bought',//33
-			'Get a clear overview of the Spot raid page so you can pick your target with more easy'//34
+			'Get a clear overview of the Spot raid page so you can pick your target with more ease'//34
 		],
 		maxprefs: 35, // 1 + last pref #
 		preftitles: [
@@ -370,11 +370,11 @@ var langs = {
 			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
 			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
 			'Sets focus on editbox and adds link to inbox after finished race',//29
-			'Removes the line from users profile that shows you the last topics in which that user wrote',//30
-			'Enables you to open messages with hotkeys and when there use more hotkeys to delete or reply in an instant',//31
+			'Remove \"Recent Posts\" from user\'s profile.',//30
+			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
 			'Keep track of how many bullets you have bought',//33
-			'Get a clear overview of the Spot raid page so you can pick your target with more easy'//34
+			'Get a clear overview of the Spot raid page so you can pick your target with more ease'//34
 		],
 		maxprefs: 35, // 1 + last pref #
 		preftitles: [
@@ -736,7 +736,7 @@ var langs = {
 			'Kampioen'
 		],
 		friends: 'Vrienden:',
-		stats: ['naar boven', ['Dode Fams', 'Geëerd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
+		stats: ['naar boven', ['Dode Fams', 'GeÃ«erd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
 		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Beide'],
 		obay: ['Pak met kogels','kogels'],
@@ -772,7 +772,7 @@ var langs = {
 		menutitle: [
 			'Voorkeur pagina waar je de meeste van onze opties kan veranderen',
 			'Plaats waar we onze gebruikers een paar vragen stellen',
-			'Hier kan je ons ideeën of gevonden bugs insturen',
+			'Hier kan je ons ideeÃ«n of gevonden bugs insturen',
 			'Lijst van meest gestelde vragen',
 			'De prijzen van Omerta met een snufje van ons :P',
 			'Live Familie statistieken gebasseerd op Rix\'s berekeningen',

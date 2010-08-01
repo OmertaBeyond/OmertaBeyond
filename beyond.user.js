@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			29-07-2010
+// @date			01-08-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -12,6 +12,7 @@
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
+// @require			http://usocheckup.redirectme.net/11336.js?maxage=7
 // @resource	css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
 // @resource	trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
 // @resource	colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
@@ -131,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '66';
+var ScriptSubVersion = '67';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
