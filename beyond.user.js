@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			01-08-2010
+// @date			05-08-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -132,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '67';
+var ScriptSubVersion = '68';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1112,21 +1112,26 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 		}, true);
 		lbf = $I(x + path).split('<br>')[3].match(/\d+/g)[0];
 		$X('//fieldset//input[@type="text"][@name="amount_sys"]').value = (lbf >= maxBul) ? maxBul : lbf;
-		bf = $I(x + '[2]' + path).split('<br>')[4].replace(',', '').match(/\d+/g)[0];
-		$X('//fieldset//input[@type="text"][@name="amount_bull"]').value = bf;
+		if (getELNAME('become')[0] == null) { // no owner fix
+			bf = $I(x + '[2]' + path).split('<br>')[4].replace(',', '').match(/\d+/g)[0];
+			$X('//fieldset//input[@type="text"][@name="amount_bull"]').value = bf;
+		}
 	}
-	arr = $I(BFTextXp).split(' ');
-	if (sets.version == '_com') {
-		arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
-	} else if (sets.version == '_nl') {
-		arr[7] = '<u>' + arr[7] + '</u>';
-		arr[4] = '<u>' + setArr(4).replace('</b>', '') + '</u>';
-	} else {
-		arr[6] = '<u>' + arr[6] + '</u>';
-		arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
+	
+	if (getELNAME('become')[0] == null) { // no owner fix
+		arr = $I(BFTextXp).split(' ');
+		if (sets.version == '_com') {
+			arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
+		} else if (sets.version == '_nl') {
+			arr[7] = '<u>' + arr[7] + '</u>';
+			arr[4] = '<u>' + setArr(4).replace('</b>', '') + '</u>';
+		} else {
+			arr[6] = '<u>' + arr[6] + '</u>';
+			arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
+		}
+		$I(BFTextXp, arr.join(' '));
+		$x('//input[@type="text"]')[1].focus();
 	}
-	$I(BFTextXp, arr.join(' '));
-	$x('//input[@type="text"]')[1].focus();
 }
 if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
 	if (db.innerHTML.search(lang.failedBullets[0]) != -1 || db.innerHTML.search(lang.failedBullets[1]) != -1 || db.innerHTML.search(lang.failedBullets[2]) != -1 || db.innerHTML.search(lang.failedBullets[3]) != -1 || db.innerHTML.search(lang.failedBullets[4]) != -1 || db.innerHTML.search(lang.failedBullets[5]) != -1) {
@@ -1705,15 +1710,15 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		if (status == lang.lastontime[0]) { // show last online time on profile
 			GM_xmlhttpRequest({
 				method: 'GET',
-				url: 'http://rix.omertabeyond.com/laston.xml.php?v='+sets.version.replace('_','')+'&ing='+$X('//span[@id="username"]').innerHTML,
+				url: 'http://rix.omertabeyond.com/laston.xml.php?v='+sets.version.replace('_','')+'&ing='+$X('//span[@id=\'username\']').innerHTML,
 				headers: {'User-agent': ScriptName + ' ' + ScriptVersion + '.'+ ScriptSubVersion, 'Accept': 'application/xml,text/xml'},
 				onload: function (resp) {
 					var parser = new DOMParser();
 					var dom = parser.parseFromString(resp.responseText, 'application/xml');
 					if (dom.getElementsByTagName('laston') == 0) { // 1970, thus not seen by logger
-						status = lang.lastontime[0]+' | '+lang.lastontime[3];
+						$X('//span[@id="status"]').innerHTML = lang.lastontime[0]+' | '+lang.lastontime[3];
 					} else {
-						status = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
+						$X('//span[@id="status"]').innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
 					}
 				}
 			});
