@@ -132,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '69';
+var ScriptSubVersion = '70';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -3142,6 +3142,11 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 	if (db.innerHTML.indexOf(lang.scratcher[5]) != -1) { //grab scratching event
 		scratches += 1;
 		setValue('scratches', scratches);
+		getELNAME('ver')[0].focus();
+	} else {
+		if (getELNAME('scratch')[0] != null) {//focus
+		getELNAME('scratch')[0].focus();
+		}
 	}
 
 	var monout = (scratches * 5000);
