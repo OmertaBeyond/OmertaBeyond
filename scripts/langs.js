@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.68
+	Version: 1.9.3.69
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -49,8 +49,8 @@ var langs = {
 			'Auto-form Races',//29 - OTHER AFs
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
-			'Enable Scratcher',//32 - OTHER AFs
-			'Enable BulletTracker',//33 - MISC
+			'Enable Scratcher',//32 - OTHER AFs, obsolete
+			'Enable Trackers (Bullet, Poker, Scratching)',//33 - MISC
 			'Tidy Spot raid page'//34 - UI Extras
 		],
 		prefsTitle: [ //describe the options
@@ -86,8 +86,8 @@ var langs = {
 			'Sets focus on editbox and adds link to inbox after finished race',//29
 			'Remove \"Recent Posts\" from user\'s profile.',//30
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
-			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
-			'Keep track of how many bullets you have bought',//33
+			'Show the Scratcher Panel with stats on the Scratch&Win page',//32, obsolete
+			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease'//34
 		],
 		maxprefs: 35, // 1 + last pref #
@@ -239,7 +239,7 @@ var langs = {
 			'<br>It has been added to your account!<br>',
 			'You have won \\$ (\\d+)',
 			'<b>Start scratching</b>',
-			'Scratcher',
+			'ScratchTracker',
 			'Scratched:',
 			'Money spent:',
 			'Money won:',
@@ -336,7 +336,7 @@ var langs = {
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs
-			'Enable BulletTracker',//33 - MISC
+			'Enable Trackers (Bullet, Poker, Scratching)',//33 - MISC
 			'Tidy Spot raid page'//34 - UI Extras
 		],
 		prefsTitle: [ //describe the options
@@ -373,7 +373,7 @@ var langs = {
 			'Remove \"Recent Posts\" from user\'s profile.',//30
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
-			'Keep track of how many bullets you have bought',//33
+			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease'//34
 		],
 		maxprefs: 35, // 1 + last pref #
@@ -525,7 +525,7 @@ var langs = {
 			'<br>It has been added to your account!<br>',
 			'You have won \\$ (\\d+)',
 			'<b>Start scratching</b>',
-			'Scratcher',
+			'ScratchTracker',
 			'Scratched:',
 			'Money spent:',
 			'Money won:',
@@ -622,7 +622,7 @@ var langs = {
 			'Verwijder "Recente forumposts" van gebruikersprofielen',//30 - CLEAN-UP
 			'Sneltoetsen gebruiken bij de Postbus',//31 - MISC
 			'Auto-Krasser en Stats',//32 - OTHER AFs
-			'Voeg KogelVolger toe aan kogelfabriek pagina',//33 - MISC
+			'Voeg Volgers toe (Kogels, Poker, Krassen)',//33 - MISC
 			'Ruim de Spot Overvallen pagina op'//34 - UI Extras
 		],
 		prefsTitle: [ //describe the options
@@ -659,7 +659,7 @@ var langs = {
 			'Verwijdert de regel met de laatste forumposts van profielen',//30
 			'Geeft je de mogelijkheid om berichten te openen met sneltoetsen en aldaar te antwoorden of het bericht te verwijderen met een sneltoets',//31
 			'Geef het Krasser paneel met stats weer op de Kras&Win pagina',//32
-			'Hou bij hoeveel kogels je koopt bij de kogelfabriek',//33
+			'Hou bij hoeveel kogels je koopt bij de kogelfabriek, hoeveel handen je hebt gespeeld met poker en hoeveel kaarten je hebt gekrast',//33
 			'Krijg een goed overzicht van de spots zodat je makkelijker je doel kunt kiezen'//34
 		],
 		maxprefs: 35,
@@ -819,7 +819,7 @@ var langs = {
 			'<br>Het is toegevoegd aan je account!<br>',
 			'Je hebt gewonnen \\$ (\\d+)',
 			'<b>Start met krassen!</b>',
-			'Krasser',
+			'KrasVolger',
 			'Gekrast:',
 			'Geld uitgegeven:',
 			'Geld gewonnen:',

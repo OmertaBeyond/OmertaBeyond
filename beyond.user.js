@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			05-08-2010
+// @date			17-08-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -132,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '68';
+var ScriptSubVersion = '69';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -282,7 +282,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([3, 23]);
 
 	addCat(lang.preftitles[3]); //AF's
-	addPrefItems([25, 7, 26, 27, 29, 32]);
+	addPrefItems([25, 7, 26, 27, 29]);
 
 	addCat(lang.preftitles[4]); //Clean up
 	addPrefItems([6, 22, 12, 14, 30, 19, 20, 18]);
@@ -1715,7 +1715,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 				onload: function (resp) {
 					var parser = new DOMParser();
 					var dom = parser.parseFromString(resp.responseText, 'application/xml');
-					if (dom.getElementsByTagName('laston') == 0) { // 1970, thus not seen by logger
+					if (dom.getElementsByTagName('laston')[0].textContent == 0) { // 1970, thus not seen by logger
 						$X('//span[@id="status"]').innerHTML = lang.lastontime[0]+' | '+lang.lastontime[3];
 					} else {
 						$X('//span[@id="status"]').innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
@@ -2246,6 +2246,7 @@ if(prefs[13] && dlp == '/family.php'){
 				color = 'green';
 			}
 		}
+
 		if(sOnline.search('#'+n+'#')!=-1){
 			$n.setAttribute('class',color);
 		}
@@ -2399,6 +2400,7 @@ if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 		var inputs = $x('//input[@name="amount"] | //input[@name="amounttpob"]');
 		inputs.forEach(function($n){
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+
 		});
 	}
 }
@@ -3109,7 +3111,7 @@ if (dlp == '/familylog.php') {
 }
 
 //---------------------- Scratcher ---------------
-if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && prefs[32]) {
+if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && prefs[33]) {
 	var on = getValue('on', 0);
 	var unopened = getValue('unopened', 0)
 	var monin = getValue('monin', 0);
@@ -3157,13 +3159,8 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 	div.id = 'info';
 	div.setAttribute('class', 'NRInfo');
 	div.setAttribute('style', 'position:fixed; bottom:20px; right:20px; width:250px; color:#FFF !important; background-color:'+getValue('titleBg', '#3F505F'));
-	var divdump = '<center><b>'+lang.scratcher[6]+'</b></center><table width="100%"><tr><td bgcolor="gray"></td></tr></table><div id="statsscratcher">'+lang.scratcher[7]+' <font style="float:right"><b>'+commafy(scratches)+'</b></font><br />'+lang.scratcher[8]+' <font style="float:right"><b>$'+commafy(monout)+'</b></font><br />'+lang.scratcher[9]+' <font style="float:right"><b>$'+commafy(monin)+'</b></font><br />'+lang.scratcher[10]+' <font style="float:right"><b>'+profit+'</b></font><br />'+lang.scratcher[11]+' <font style="float:right"><b>'+commafy(mils)+'</b></font><br />'+lang.scratcher[12]+' <font style="float:right"><b>'+commafy(bullets)+'</b></font><br />'+lang.scratcher[13]+' <font style="float:right"><b>$'+commafy(ppk)+'</b></font></div><br />&nbsp;<div id="buttonscratcher" style="position:absolute; padding:2px; bottom:3px; left:3px; border:2px solid grey; -moz-border-radius:7px" onmouseover="this.style.border=\'2px solid #BBB\'; this.style.cursor=\'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';">';
+	var divdump = '<center><b>'+lang.scratcher[6]+'</b></center><table width="100%"><tr><td bgcolor="gray"></td></tr></table><div id="statsscratcher">'+lang.scratcher[7]+' <font style="float:right"><b>'+commafy(scratches)+'</b></font><br />'+lang.scratcher[8]+' <font style="float:right"><b>$'+commafy(monout)+'</b></font><br />'+lang.scratcher[9]+' <font style="float:right"><b>$'+commafy(monin)+'</b></font><br />'+lang.scratcher[10]+' <font style="float:right"><b>'+profit+'</b></font><br />'+lang.scratcher[11]+' <font style="float:right"><b>'+commafy(mils)+'</b></font><br />'+lang.scratcher[12]+' <font style="float:right"><b>'+commafy(bullets)+'</b></font><br />'+lang.scratcher[13]+' <font style="float:right"><b>$'+commafy(ppk)+'</b></font></div><br />&nbsp;';
 
-	if (on == 1) {
-		divdump += '<img src="'+GM_getResourceURL('off')+'" style="vertical-align:-3px" /> <b>'+lang.scratcher[14]+'</b>&nbsp;';
-	} else {
-		divdump += '<img src="'+GM_getResourceURL('on')+'" style="vertical-align:-3px" /> <b>'+lang.scratcher[15]+'</b>&nbsp;';
-	}
 	divdump += '</div><div id="resetscratcher" align="right" style="position:absolute; padding:2px; bottom:3px; right:3px; border:2px solid grey; -moz-border-radius:7px" onmouseover="this.style.border=\'2px solid #BBB\'; this.style.cursor=\'pointer\';" onmousedown="this.style.marginLeft=\'2px\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px" /></div>';
 	div.innerHTML = divdump;
 	db.appendChild(div);
@@ -3202,7 +3199,6 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 	}
 
 	getID('resetscratcher').addEventListener('click', function() {
-
 		getID('resetscratcher').innerHTML = '&nbsp;<b style="line-height:16px">'+lang.scratcher[17]+'<b>&nbsp;';
 		getID('statsscratcher').innerHTML = lang.scratcher[7]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[8]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[9]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[10]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[11]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[12]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[13]+' <font style="float:right"><b>$0</b></font>';
 		setValue('monin', 0);
@@ -3211,21 +3207,6 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 		setValue('scratches', 0);
 	}, true);
 
-	getID('buttonscratcher').addEventListener('click', function() {
-		if (getValue('on', 0) == 1) {
-			setValue('on', 0);
-			clearTimeout(t);
-			getID('buttonscratcher').innerHTML = '<img src="'+GM_getResourceURL('on')+'" style="vertical-align:-3px" /> <b>'+lang.scratcher[15]+'</b>&nbsp;';
-		} else {
-			setValue('on', 1);
-			if (db.innerHTML.indexOf('color="red"') != -1 && getELNAME('codescratch')[0] != null) {
-				setValue('unopened', 1)
-				$x('//input')[2].click();
-			} else {
-				setValue('unopened', 0); getELNAME('scratch')[0].click();
-			}
-		}
-	}, true);
 }
 
 //---------------- BulletTracker ----------------
@@ -3261,7 +3242,7 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 }
 
 //---------------- PokerTracker ----------------
-if (dls.indexOf('?module=Poker') != -1) {// pref needed
+if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 	var ptgplay = getValue('ptgplay', 0);
 	var ptspent = getValue('ptspent', 0);
 	var ptgwon = getValue('ptgwon', 0);
