@@ -132,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '70';
+var ScriptSubVersion = '71';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -357,15 +357,21 @@ if (dlp == '/prefs.php') {
 			string += '<td><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
 			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall" /></td><td>&nbsp;</td></tr>';
 		}
-		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
-
+		if(jailint > "1") {
+			string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
+		} else {
+			string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> &nbsp;-&nbsp;'+savestring+'</td></tr>';
+		}
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
 		for(i=-1;++i<nbint;){
 			if(nobust[i] == null){ nobust[i] = ""; }
 			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td colspan="5"><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 		}
-		string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
-
+		if(nbint > "1") {
+			string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
+		} else {
+			string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> &nbsp;-&nbsp;'+savestring+'</td></tr>';
+		}
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2"><center><b>'+lang.jhl[8]+'</b></center><td class="td" colspan="2"><center><b>'+lang.jhl[9]+'</b></center></td><td class="td">&nbsp;</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall"></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td width="10"><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
@@ -1706,6 +1712,15 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 
 		var status = $X('//span[@id="status"]').innerHTML;
 		var alive = (status.indexOf(lang.profile[3])==-1);//alive/dead
+		
+		//DEAD or AKILLED ?
+		if(!alive){
+			if($X('//img').parentNode.nodeName != 'A'){
+				var akill = '<span style="color:red; font-weight:bold;"> (Akill) </span>';
+				status += akill;
+			}
+		}
+
 
 		if (status == lang.lastontime[0]) { // show last online time on profile
 			GM_xmlhttpRequest({
@@ -1722,6 +1737,8 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					}
 				}
 			});
+		} else {
+			$X('//span[@id="status"]').innerHTML = status
 		}
 
 		if(prefs[30]){
@@ -1767,14 +1784,6 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		var self = ($X('/html/body//center/table/tbody/tr[3]/td[2]/a').textContent.toUpperCase() == getValue('nick').toUpperCase());//self/other
 		var other = $X('/html/body//center/table/tbody/tr/td/i').textContent;
 
-		//DEAD or AKILLED ?
-		if(!alive){
-			if($X('//img').parentNode.nodeName != 'A'){
-				var akill = '<span style="color:red; font-weight:bold;"> (Akill) </span>';
-				status += akill;
-			}
-		}
-
 		if(alive){//Add interesting stuff here
 			if(!self){//additions useless for self
 				//Send HP's
@@ -1804,7 +1813,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					links += '</td>';
 					if(parseInt(getPow('bninfo',4,-1),10)>2){//check for top3 position
 						links += '<td width="20%">';
-						links += '<a href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br>';//family link
+						links += '<a class="red" href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br>';//family link
 						links += '</td>';
 					}
 					links += '</tr></tbody></table>';
@@ -2117,6 +2126,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 
 	function runCode(tab) {
 		if (tab.indexOf('action=global_stats') != -1) {
+
 			var a, b, x, y, ql, qLinks, keys;
 			a = '//center/table[';
 			b = ']/tbody/tr/td';
@@ -2455,6 +2465,7 @@ if (prefs[26]) {
 		if (/expexp/.test(db.innerHTML)) {
 			$X('//input').focus();
 		}
+		$x('//input')[8].focus();
 	}
 	//MOC AF
 	if ((/MegaOC/).test(dls)) {
@@ -2499,99 +2510,101 @@ if (prefs[26]) {
 }
 
 //---------------- Raidpage ----------------
-if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1)) {
-	if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
-		var am = $x('//div[contains(@onmouseover, "Spots.popup")]').length; // get total amount of spots
-
-		var div = cEL('div'); // the main div
-		div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; font-family:Tahoma,Verdana');
-		divdump = '<table class="thinline" style="width:600px" cellpadding="0"><tr class="tableheader"><td>'+langs.en.raidpage[3]+'</td><td>'+langs.en.raidpage[4]+'</td><td>'+langs.en.raidpage[5]+'</td><td>'+langs.en.raidpage[6]+'</td><td>'+langs.en.raidpage[7]+'</td><td>'+langs.en.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="6"></td></tr>';
-
-		var rex = new RegExp('\<b\>(.*)<\/b\>', 'g');
-		var r = db.innerHTML.match(rex); // getting types, do NOT use $x/getTAG since that fails
-		var tdskipnum = 0;
-		var ownfam = getValue('family', '');
-		for (var y = 0; y < am; y+=1) {
-			var divnum = (y * 13) + 2; // 13 divs per spot, 2nd div of the spot
-			if(db.innerHTML.search('id="_firebugConsole"')!=-1) { // Firebug Fix
-				divnum++;
-			}
-			var id = getTAG('div')[divnum].id; // = 'spot_*'
-			id = parseInt(id.replace('spot_', ''));
-			var type = r[(((y * 4) + 1) - tdskipnum)].replace('<b>', '');
-			type = type.replace('</b>', '');
-			var owner = $x('//td')[(((y * 14) + 1) - tdskipnum)].innerHTML; // 14 td's per spot
-			var time = $x('//td')[(((y * 14) + 3) - tdskipnum)].innerHTML;
-			time = '';
-			if (time == langs.en.raidpage[0]) {
-				time = langs.en.raidpage[1];
-			} else {
-				if (getID('counter_nextraid_'+id+'_minutes_value') != null) { // make sure there are more then 60 sec left
-					var timem = getID('counter_nextraid_'+id+'_minutes_value').innerHTML;
-					time = timem+'m ';
+if (prefs[34]) {
+	if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1)) {
+		
+		if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
+			var am = $x('//div[contains(@onmouseover, "Spots.popup")]').length; // get total amount of spots
+	
+			var div = cEL('div'); // the main div
+			div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; font-family:Tahoma,Verdana');
+			divdump = '<table class="thinline" style="width:600px" cellpadding="0"><tr class="tableheader"><td>'+langs.en.raidpage[3]+'</td><td>'+langs.en.raidpage[4]+'</td><td>'+langs.en.raidpage[5]+'</td><td>'+langs.en.raidpage[6]+'</td><td>'+langs.en.raidpage[7]+'</td><td>'+langs.en.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="6"></td></tr>';
+	
+			var rex = new RegExp('\<b\>(.*)<\/b\>', 'g');
+			var r = db.innerHTML.match(rex); // getting types, do NOT use $x/getTAG since that fails
+			var tdskipnum = 0;
+			var ownfam = getValue('family', '');
+			for (var y = 0; y < am; y+=1) {
+				var divnum = (y * 13) + 2; // 13 divs per spot, 2nd div of the spot
+				if(db.innerHTML.search('id="_firebugConsole"')!=-1) { // Firebug Fix
+					divnum++;
 				}
-				if (getID('counter_nextraid_'+id+'_seconds_value') != null) {
-					var times = getID('counter_nextraid_'+id+'_seconds_value').innerHTML;
-					time += times+'s';
-				} else {
+				var id = getTAG('div')[divnum].id; // = 'spot_*'
+				id = parseInt(id.replace('spot_', ''));
+				var type = r[(((y * 4) + 1) - tdskipnum)].replace('<b>', '');
+				type = type.replace('</b>', '');
+				var owner = $x('//td')[(((y * 14) + 1) - tdskipnum)].innerHTML; // 14 td's per spot
+				var time = $x('//td')[(((y * 14) + 3) - tdskipnum)].innerHTML;
+				time = '';
+				if (time == langs.en.raidpage[0]) {
 					time = langs.en.raidpage[1];
-				}
-			}
-
-			// making bars look good (white -> themetextcolor, adding % sign, some margin stuff)
-			var profit = $x('//td')[(((y * 14) + 5) - tdskipnum)].innerHTML;
-			var protnum = getID('jsprogbar_div_protection_'+id).innerHTML; // the actual % of protection
-			var prot = $x('//table')[((y * 5) + 1)].innerHTML
-			prot = prot.replace('<div id="jsprogbar_div_protection_'+id+'" style="font-size: smaller; height: 15px; overflow: hidden; text-align: center; position: absolute; width: 100px; color: rgb(255, 255, 255);">'+protnum+'</div>', '<div id="jsprogbar_div_protection_'+id+'" style="text-align:center; position:absolute; width:100px;"><font color="#000">'+protnum+'%</font></div>');
-			var rpform = '';
-			var rex = new RegExp('\\(([\\w\\s]+)\\)');
-			var rpfam = owner.match(rex);
-			if (ownfam != lang.status[1]) {
-				if (rpfam != null) { // owned by player
-					if (rpfam[1] != stripHTML(ownfam)) { // not own fam
-						rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
-					} else {
-						tdskipnum += 1;
-						time = '';
-						profit = $x('//td')[(((y * 14) + 5) - tdskipnum)].innerHTML; // reload protection cuz it's of
-					}
 				} else {
-					rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
+					if (getID('counter_nextraid_'+id+'_minutes_value') != null) { // make sure there are more then 60 sec left
+						var timem = getID('counter_nextraid_'+id+'_minutes_value').innerHTML;
+						time = timem+'m ';
+					}
+					if (getID('counter_nextraid_'+id+'_seconds_value') != null) {
+						var times = getID('counter_nextraid_'+id+'_seconds_value').innerHTML;
+						time += times+'s';
+					} else {
+						time = langs.en.raidpage[1];
+					}
 				}
+	
+				// making bars look good (white -> themetextcolor, adding % sign, some margin stuff)
+				var profit = $x('//td')[(((y * 14) + 5) - tdskipnum)].innerHTML;
+				var protnum = getID('jsprogbar_div_protection_'+id).innerHTML; // the actual % of protection
+				var prot = $x('//table')[((y * 5) + 1)].innerHTML
+				prot = prot.replace('<div id="jsprogbar_div_protection_'+id+'" style="font-size: smaller; height: 15px; overflow: hidden; text-align: center; position: absolute; width: 100px; color: rgb(255, 255, 255);">'+protnum+'</div>', '<div id="jsprogbar_div_protection_'+id+'" style="text-align:center; position:absolute; width:100px;"><font color="#000">'+protnum+'%</font></div>');
+				var rpform = '';
+				var rex = new RegExp('\\(([\\w\\s]+)\\)');
+				var rpfam = owner.match(rex);
+				if (ownfam != lang.status[1]) {
+					if (rpfam != null) { // owned by player
+						if (rpfam[1] != stripHTML(ownfam)) { // not own fam
+							rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
+						} else {
+							tdskipnum += 1;
+							time = '';
+							profit = $x('//td')[(((y * 14) + 5) - tdskipnum)].innerHTML; // reload protection cuz it's of
+						}
+					} else {
+						rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
+					}
+				}
+				//parsing everything
+				divdump += '<tr height="22px"><td style="padding-left:5px">'+type+'</td><td>'+(owner!=langs.en.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
 			}
-			//parsing everything
-			divdump += '<tr height="22px"><td style="padding-left:5px">'+type+'</td><td>'+(owner!=langs.en.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
+			divdump += '</table>';
+			div.innerHTML = divdump;
+			db.innerHTML = '';
+	
+			var div2 = cEL('div2'); // Div with forms
+			div2.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
+			div2.innerHTML = '<table class="thinline" style="width:600px"><tr><td colspan="2" class="tableheader">'+langs.en.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+langs.en.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+langs.en.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
+			var c = cEL('center');
+			c.appendChild(div2);
+			c.appendChild(cEL('br'));
+			c.appendChild(div);
+			db.appendChild(c);
+	
+	
+			getID('raidpagebullets').addEventListener('keyup', function() {
+				for (y = 1; y <= am; y+=1) {
+					if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
+				}
+			}, true);
+	
+			getID('raidpagedriver').addEventListener('keyup', function() {
+				var str = getID('raidpagedriver').value;
+				str = str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
+				for (y = 1; y <= am; y+=1) {
+					if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = str; }
+				}
+			}, true);
 		}
-		divdump += '</table>';
-		div.innerHTML = divdump;
-		db.innerHTML = '';
-
-		var div2 = cEL('div2'); // Div with forms
-		div2.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
-		div2.innerHTML = '<table class="thinline" style="width:600px"><tr><td colspan="2" class="tableheader">'+langs.en.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+langs.en.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+langs.en.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
-		var c = cEL('center');
-		c.appendChild(div2);
-		c.appendChild(cEL('br'));
-		c.appendChild(div);
-		db.appendChild(c);
-
-
-		getID('raidpagebullets').addEventListener('keyup', function() {
-			for (y = 1; y <= am; y+=1) {
-				if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
-			}
-		}, true);
-
-		getID('raidpagedriver').addEventListener('keyup', function() {
-			var str = getID('raidpagedriver').value;
-			str = str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
-			for (y = 1; y <= am; y+=1) {
-				if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = str; }
-			}
-		}, true);
 	}
 }
-
 //----------------Race AF ----------------
 if (prefs[29]) {
 	if (dlp == '/races.php') {

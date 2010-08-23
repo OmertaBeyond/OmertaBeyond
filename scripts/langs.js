@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.70
+	Version: 1.9.3.71
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -297,7 +297,7 @@ var langs = {
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
+		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail ']
 	},
 	dm: {
 		prefsname: 'Preferences',
@@ -583,7 +583,7 @@ var langs = {
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
+		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail ']
 	},
 	nl: {
 		prefsname: 'Voorkeuren',
