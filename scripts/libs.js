@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.9.3.70
+	Version: 1.9.3.72
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -348,6 +348,10 @@ function commafy(num) {
 
 function rand(min, max) {
 	return Math.floor(((max - min) + 1) * Math.random()) + min;
+}
+
+function rounding(x) {
+	return Math.round(x*10000)/100;
 }
 
 function toUp(word) {

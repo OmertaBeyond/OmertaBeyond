@@ -132,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '71';
+var ScriptSubVersion = '72';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -980,13 +980,17 @@ if (urlsearch == '/BeO/webroot/index.php?module=Travel&action=TravelNow') { //Ge
 
 //---------------- My Account ----------------
 if(dls == '?module=Launchpad'){
-	var pad, x, famXP, x2, planeXP, handgunXP, tommygunXP, bguardsXP, jailBustXP, busts, capo;
+	var carTracker, crimeTracker, crimemoney, pad, x, famXP, x2, x3, planeXP, handgunXP, tommygunXP, bguardsXP, jailBustXP, bustTracker, carnicks, cartxt, capo;
+	carTracker = getValue('cars', 0);
+	crimeTracker = getValue('crimes', 0);
+	crimemoney = getValue('crimemoney', 0);
 	function runCode(tab){
 		if(tab=='/information.php'){
 			pad = '//div[@id="smsdivcontainer"]';
 			x = pad + '//center/table/tbody/tr/td/table/tbody/tr[';
 			famXP = x + '4]/td[2]';
 			x2 = pad + '//center/table/tbody/tr/td[3]/table[2]/tbody/tr[';
+			x3 = pad + '//center/table/tbody/tr/td[3]/table[4]/tbody/tr[';
 			planeXP = x2+'3]/td[2]';
 			handgunXP = x2+'5]/td[2]';
 			tommygunXP = x2+'6]/td[2]';
@@ -994,6 +998,11 @@ if(dls == '?module=Launchpad'){
 			jailBustXP = pad + '//center/table/tbody/tr/td[3]/table[1]/tbody/tr[';
 			bustTracker = $X(pad+'//center/table/tbody/tr/td[3]/table[4]/tbody/tr[3]/td[2]').innerHTML;
 			bustTracker = parseInt(bustTracker.replace(/,/g, ''), 10);
+			carnicks = x3+'5]/td[2]';
+			cartxt = x3+'5]/td[1]';
+			crimes = x3+'4]/td[2]';
+			crimetxt = x3+'4]/td[1]';
+			
 			setTimeout(function() {
 				setValue('bustouts', bustTracker);
 			}, 0);
@@ -1027,6 +1036,25 @@ if(dls == '?module=Launchpad'){
 			if($X(famXP) && lang.status[1].match($X(famXP).textContent)){//Family status
 				$I(famXP, '<a href="/family_recruitment.php"><b>'+ $X(famXP).textContent +'</b></a>');
 			}
+			
+			var perc = rounding(parseInt(crimeTracker,10)/parseInt($X(crimes).innerHTML.replace(',', '').trim(),10));
+			$X(crimetxt).innerHTML = $X(crimetxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
+			$X(crimes).innerHTML = $X(crimes).innerHTML +'/'+commafy(crimeTracker)+'&nbsp;('+perc+'%)';
+			
+			var perc2 = rounding(parseInt(carTracker,10)/parseInt($X(carnicks).innerHTML.replace(',', '').trim(),10));
+			$X(cartxt).innerHTML = $X(cartxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
+			$X(carnicks).innerHTML = $X(carnicks).innerHTML +'/'+commafy(carTracker)+'&nbsp;('+perc2+'%)';
+
+			var crimetr = cEL('tr');
+			var crimetdl = cEL('td');
+			var crimetdr = crimetdl.cloneNode(1);
+			var average = Math.round(parseInt(crimemoney,10)/parseInt(crimeTracker,10));
+			
+			crimetdl.innerHTML = '<b>'+lang.status[3]+'</b>';
+			crimetdr.innerHTML = '$ '+commafy(crimemoney)+' ($'+commafy(average)+'/'+lang.status[4]+')';
+			crimetr.appendChild(crimetdl);
+			crimetr.appendChild(crimetdr);
+			$x('//table[@class="thinline"]')[4].appendChild(crimetr);
 
 			$x('//a[contains(@href,"shoptabs=9")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
 			$x('//a[contains(@href,"shoptabs=9")]')[0].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
@@ -1212,7 +1240,7 @@ if(prefs[2] && dlp == '/info.php'){
 		}
 		//We have better news
 		var times = $X('//a[contains(@href,"news.html")] | //a[contains(@href,"mag.php")]');
-		times.href = sets.version=='_com'?FingonUrl+'?v=8':sets.version=='_dm'?FingonUrl+'?v=2':EdoUrl;
+		times.href = sets.version=='_com'?FingonUrl+'?v=9':sets.version=='_dm'?FingonUrl+'?v=2':EdoUrl;
 		times.style.fontSize = '11px';
 		times.innerHTML = lang.login[2];
 	}
@@ -1634,6 +1662,20 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 		$X('//input[@type="submit"]').focus();
 	}
 }
+//--------------- crime succesfull ---------------
+if (urlsearch == '/BeO/webroot/index.php?module=Crimes&action=docrime') {
+	var crimeTracker = getValue('crimes', 0);
+	var crimemoney = getValue('crimemoney', 0);
+	if (db.innerHTML.indexOf(lang.crimetracker[0]) != -1) {
+		var rex1 = new RegExp(lang.crimetracker[1]);
+		var str1 = db.innerHTML.replace(/,/g, '');
+		var r1 = str1.match(rex1);
+		crimemoney += parseInt(r1[1]);
+		setValue('crimemoney', crimemoney);
+		++crimeTracker;
+		setValue('crimes', crimeTracker);
+	}
+}
 
 //---------------- Cars Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
@@ -1658,6 +1700,8 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 //--------------- we got the car ---------------
 if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 	var worth = db.innerHTML.match(/\[\$(.*)\]/);
+	var carTracker = getValue('cars', 0);
+	var carmoney = getValue('carmoney', 0);
 	if (worth != null) {
 		var worth2 = parseInt(worth[1].replace(',', '').trim(), 10);
 		if (worth2 >= 5000) {
@@ -1665,6 +1709,10 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 		} else {
 			$x('//input[@type="submit"]')[1].focus();
 		}
+		++carTracker;
+		setValue('cars', carTracker);
+		carmoney += parseInt(worth2);
+		setValue('carmoney', carmoney);
 	}
 }
 
@@ -2562,6 +2610,7 @@ if (prefs[34]) {
 				if (ownfam != lang.status[1]) {
 					if (rpfam != null) { // owned by player
 						if (rpfam[1] != stripHTML(ownfam)) { // not own fam
+
 							rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
 						} else {
 							tdskipnum += 1;
@@ -3155,11 +3204,21 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 	if (db.innerHTML.indexOf(lang.scratcher[5]) != -1) { //grab scratching event
 		scratches += 1;
 		setValue('scratches', scratches);
-		getELNAME('ver')[0].focus();
-	} else {
-		if (getELNAME('scratch')[0] != null) {//focus
-		getELNAME('scratch')[0].focus();
+		if (getELNAME('ver')[0] != null) {//focus on code
+			getELNAME('ver')[0].focus(); 
+		} else { //focus on check
+			getELNAME('Check')[0].focus(); 
 		}
+	} else {
+		if (getELNAME('codescratch')[0] != null) {//focus on unclaimed prices
+			getTAG('input')[2].focus();
+		} else { //focus on scratch
+			getELNAME('scratch')[0].focus();
+		}
+	}
+
+	if (db.innerHTML.indexOf(lang.scratcher[18]) != -1) { //grab 10 is enough event
+		db.innerHTML = db.innerHTML + '<br /><a href=http://'+dlh+'/scratch.php>'+lang.scratcher[19]+'</a>';
 	}
 
 	var monout = (scratches * 5000);

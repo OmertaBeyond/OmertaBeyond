@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.71
+	Version: 1.9.3.72
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -136,7 +136,7 @@ var langs = {
 		newmenu: 'Detected new menu content! Please update your preferences.\nThis includes the menu AND the hotkey preferences!',
 		customs: ' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
-		status: ['none', 'None'],
+		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -250,7 +250,9 @@ var langs = {
 			'Turn off',
 			'Turn on',
 			'Reset stats',
-			'Stats have been reset!'
+			'Stats have been reset!',
+			'Sorry, but 10 per minute is enough.',
+			'Go back to the main Scratch&Win page.'
 		],
 		bullettracker: [
 			'Success, you bought',
@@ -260,6 +262,7 @@ var langs = {
 			'Money spent:',
 			'Price per bullet:'
 		],
+		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -422,7 +425,7 @@ var langs = {
 		newmenu: 'Detected new menu content! Please update your preferences.\nThis includes the menu AND the hotkey preferences!',
 		customs: ' settings updated! Returning to normal menu..<br><br>Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
-		status: ['none', 'None'],
+		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -536,7 +539,9 @@ var langs = {
 			'Turn off',
 			'Turn on',
 			'Reset stats',
-			'Stats have been reset!'
+			'Stats have been reset!',
+			'Sorry, but 10 per minute is enough.',
+			'Go back to the main Scratch&Win page.'
 		],
 		bullettracker: [
 			'Success, you bought',
@@ -546,6 +551,7 @@ var langs = {
 			'Money spent:',
 			'Price per bullet:'
 		],
+		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -708,7 +714,7 @@ var langs = {
 		newmenu: 'Nieuwe menu indeling gevonden! Selecteer opnieuw je voorkeuren.\nDit houd in de menu- EN de hotkey voorkeuren!',
 		customs: ' indeling geupdate! <br><br>Click <a href="javascript:location.href=\'menu.php\'">Wacht of klik hier</a>',
 		login: ['Registreren', 'http://www.edo-nieuws.nl', 'Edo-nieuws'],
-		status: ['none', 'Geen'],
+		status: ['none', 'Geen', 'geslaagd', 'Geld van misdaden', 'misdaad'],
 		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -830,7 +836,9 @@ var langs = {
 			'Zet uit',
 			'Zet aan',
 			'Reset stats',
-			'Stats gereset!'
+			'Stats gereset!',
+			'Sorry, but 10 per minute is enough.',
+			'Ga terug naar de Kras&Win pagina.'
 		],
 		bullettracker: [
 			'Succes, je kocht',
@@ -840,6 +848,7 @@ var langs = {
 			'Geld uitgegeven:',
 			'Prijs per kogel:'
 		],
+		crimetracker: ['Success je hebt', 'Succes je hebt \\$ (\\d+) verdiend.'],
 		raidpage: [
 			'<b>nu</b>',
 			'Nu!',
