@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			17-08-2010
+// @date			26-08-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -132,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '72';
+var ScriptSubVersion = '73';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -272,8 +272,8 @@ if (dlp == '/prefs.php') {
 	//order here matters!
 	//place categories in order they need to appear
 
-	addCat(lang.preftitles[0]); //Crimes
-	addPrefItems([8, 10, 24, 0]);
+	addCat(lang.preftitles[0]); //Crimes/Cars
+	addPrefItems([8, 10, 24, 0, 35]);
 
 	addCat(lang.preftitles[1]); //Smuggling
 	addPrefItems([28, 4, 1, 17, 21]);
@@ -585,9 +585,9 @@ if(dlp == '/marquee.php'){
 //---------------- Menu and submenus ----------------
 if (dlp == '/menu.php') {
 	var i;
-//remove third party left overs from hotkeys
+	//remove third party left overs from hotkeys
 	db.innerHTML = db.innerHTML.replace(/\s\[\D\]/g,'');
-//--add additional submenus
+	//--add additional submenus
 	function appMenu(x) {
 		innerHTML += '</tbody></table></div></td></tr></tbody>';
 		subMenu.innerHTML = innerHTML;
@@ -671,7 +671,7 @@ if (dlp == '/menu.php') {
 	var buttonMenu = GM_getResourceURL('buttonMenu');
 	var buttonKey = GM_getResourceURL('buttonKey');
 	var buttonReset = GM_getResourceURL('buttonReset');
-	$X(QL_xp).innerHTML = $X(QL_xp).innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+buttonMenu+'"> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+buttonKey+'"> <img onMouseover="style.cursor=\'pointer\'" title="Reset menu" onClick="location.href=\'menu.php?reset\'" src="'+buttonReset+'"></span>'; //LANG
+	$X(QL_xp).innerHTML = $X(QL_xp).innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+buttonMenu+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+buttonKey+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Reset menu" onClick="if (confirm(\''+lang.cusmenu[0]+'\')) { location.href=\'menu.php?reset\'; }" src="'+buttonReset+'" style="vertical-align:-2px" /></span>'; //LANG
 
 	//check 'mode' and add corresponding stuff
 	if(!dls || dls.indexOf('reset') != -1 || dls.indexOf('buttons') != -1){//mode = normal or user reseted
@@ -984,6 +984,7 @@ if(dls == '?module=Launchpad'){
 	carTracker = getValue('cars', 0);
 	crimeTracker = getValue('crimes', 0);
 	crimemoney = getValue('crimemoney', 0);
+	carmoney = getValue('carmoney', 0);
 	function runCode(tab){
 		if(tab=='/information.php'){
 			pad = '//div[@id="smsdivcontainer"]';
@@ -1037,24 +1038,36 @@ if(dls == '?module=Launchpad'){
 				$I(famXP, '<a href="/family_recruitment.php"><b>'+ $X(famXP).textContent +'</b></a>');
 			}
 			
-			var perc = rounding(parseInt(crimeTracker,10)/parseInt($X(crimes).innerHTML.replace(',', '').trim(),10));
-			$X(crimetxt).innerHTML = $X(crimetxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
-			$X(crimes).innerHTML = $X(crimes).innerHTML +'/'+commafy(crimeTracker)+'&nbsp;('+perc+'%)';
+			if (prefs[35]) {
+				var perc = rounding(parseInt(crimeTracker,10)/parseInt($X(crimes).innerHTML.replace(',', '').trim(),10));
+				$X(crimetxt).innerHTML = $X(crimetxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
+				$X(crimes).innerHTML = $X(crimes).innerHTML +'/'+commafy(crimeTracker)+'&nbsp;('+perc+'%)';
 			
-			var perc2 = rounding(parseInt(carTracker,10)/parseInt($X(carnicks).innerHTML.replace(',', '').trim(),10));
-			$X(cartxt).innerHTML = $X(cartxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
-			$X(carnicks).innerHTML = $X(carnicks).innerHTML +'/'+commafy(carTracker)+'&nbsp;('+perc2+'%)';
+				var perc2 = rounding(parseInt(carTracker,10)/parseInt($X(carnicks).innerHTML.replace(',', '').trim(),10));
+				$X(cartxt).innerHTML = $X(cartxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
+				$X(carnicks).innerHTML = $X(carnicks).innerHTML +'/'+commafy(carTracker)+'&nbsp;('+perc2+'%)';
 
-			var crimetr = cEL('tr');
-			var crimetdl = cEL('td');
-			var crimetdr = crimetdl.cloneNode(1);
-			var average = Math.round(parseInt(crimemoney,10)/parseInt(crimeTracker,10));
+				var crimetr = cEL('tr');
+				var crimetdl = cEL('td');
+				var crimetdr = crimetdl.cloneNode(1);
+				var average = Math.round(parseInt(crimemoney,10)/parseInt(crimeTracker,10));
 			
-			crimetdl.innerHTML = '<b>'+lang.status[3]+'</b>';
-			crimetdr.innerHTML = '$ '+commafy(crimemoney)+' ($'+commafy(average)+'/'+lang.status[4]+')';
-			crimetr.appendChild(crimetdl);
-			crimetr.appendChild(crimetdr);
-			$x('//table[@class="thinline"]')[4].appendChild(crimetr);
+				crimetdl.innerHTML = '<b>'+lang.status[3]+'</b>';
+				crimetdr.innerHTML = '$ '+commafy(crimemoney)+' ($'+commafy(average)+'/'+lang.status[4]+')';
+				crimetr.appendChild(crimetdl);
+				crimetr.appendChild(crimetdr);
+				$x('//table[@class="thinline"]')[4].appendChild(crimetr);
+			
+				var crimetr = cEL('tr');
+				var crimetdl = cEL('td');
+				var crimetdr = crimetdl.cloneNode(1);
+				var average = Math.round(parseInt(carmoney,10)/parseInt(carTracker,10));
+				crimetdl.innerHTML = '<b>'+lang.status[5]+'</b>';
+				crimetdr.innerHTML = '$ '+commafy(carmoney)+' ($'+commafy(average)+'/'+lang.status[6]+')';
+				crimetr.appendChild(crimetdl);
+				crimetr.appendChild(crimetdr);
+				$x('//table[@class="thinline"]')[4].appendChild(crimetr);
+			}
 
 			$x('//a[contains(@href,"shoptabs=9")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
 			$x('//a[contains(@href,"shoptabs=9")]')[0].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
@@ -1466,9 +1479,11 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		}
 
 		//No priorities? Pick a random player
-		if(prior == 10 && inJail.length > lowlifes){
-			i = (Math.ceil(Math.random()*(inJail.length-lowlifes))-1);
-			if(inJail.length > 4 && (i+3) > inJail.length){
+		if (prior == 10 && inJail.length > lowlifes) {
+			//i = (Math.ceil(Math.random()*(inJail.length-lowlifes))-1); //old
+			i = rand(0, (inJail.length-lowlifes)); //new
+			//console.log(i + 'th out of '+inJail.length); // for testing randomfactor
+			if (inJail.length > 4 && (i+3) > inJail.length) {
 				i = i-3;
 			}
 			button = $x('//input[@type="radio"]')[i];
@@ -1649,7 +1664,9 @@ if (prefs[11]) {
 //----------------- Crime Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 	// Remove damned picture.
-	$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]'));
+	if ($XLast('//img[not(@id)]') != null) {
+		$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]'));
+	}
 
 	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
 		$x('//input[@type="radio"]')[4].checked = true;
@@ -1680,7 +1697,9 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes&action=docrime') {
 //---------------- Cars Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 	// Remove damned picture.
-	$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]'));
+	if ($XLast('//img[not(@id)]') != null) {
+		$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]'));
+	}
 
 	if (db.innerHTML.search(/table/i) > -1 && prefs[8]) { //if Car Nick AF is enabled
 		for (p = [], i = 0; i <= 3; i++) { //Get percentages
@@ -3172,7 +3191,7 @@ if (dlp == '/familylog.php') {
 	});
 }
 
-//---------------------- Scratcher ---------------
+//---------------------- ScratcherTheCode ---------- // ctrl F on 'scratcher' gave me too many results
 if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && prefs[33]) {
 	var on = getValue('on', 0);
 	var unopened = getValue('unopened', 0)
@@ -3212,13 +3231,14 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 	} else {
 		if (getELNAME('codescratch')[0] != null) {//focus on unclaimed prices
 			getTAG('input')[2].focus();
-		} else { //focus on scratch
+		} else if (getELNAME('scratch')[0] != null) { //focus on scratch
 			getELNAME('scratch')[0].focus();
 		}
 	}
 
 	if (db.innerHTML.indexOf(lang.scratcher[18]) != -1) { //grab 10 is enough event
 		db.innerHTML = db.innerHTML + '<br /><a href=http://'+dlh+'/scratch.php>'+lang.scratcher[19]+'</a>';
+		getTAG('a')[0].focus();
 	}
 
 	var monout = (scratches * 5000);

@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.72
+	Version: 1.9.3.73
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -51,7 +51,8 @@ var langs = {
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs, obsolete
 			'Enable Trackers (Bullet, Poker, Scratching)',//33 - MISC
-			'Tidy Spot raid page'//34 - UI Extras
+			'Tidy Spot raid page',//34 - UI Extras
+			'Show crimestats and carstats on status page'//35 - CRIMES/CARS
 		],
 		prefsTitle: [ //describe the options
 			'You cant press the "go for it" button before you filled in a 3 character code',//0
@@ -88,9 +89,10 @@ var langs = {
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32, obsolete
 			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
-			'Get a clear overview of the Spot raid page so you can pick your target with more ease'//34
+			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
+			'Show the amount of crimes which were successfull and the amount of cars stolen, plus the total profit from both'//35
 		],
-		maxprefs: 35, // 1 + last pref #
+		maxprefs: 36, // 1 + last pref #
 		preftitles: [
 			'Crimes/Car Nicks',//0
 			'Smuggling and Booze/Narc Prices',//1
@@ -134,9 +136,12 @@ var langs = {
 			'You are already staying in this city!'
 		],
 		newmenu: 'Detected new menu content! Please update your preferences.\nThis includes the menu AND the hotkey preferences!',
+		cusmenu: [
+			'Are you sure you want to reset your custom menu?'
+		],
 		customs: ' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
-		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime'],
+		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -340,7 +345,8 @@ var langs = {
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs
 			'Enable Trackers (Bullet, Poker, Scratching)',//33 - MISC
-			'Tidy Spot raid page'//34 - UI Extras
+			'Tidy Spot raid page',//34 - UI Extras
+			'Show crimestats and carstats on status page'//35 - CRIMES/CARS
 		],
 		prefsTitle: [ //describe the options
 			'Disable the "go for it" button until the image code entered is the correct length',//0
@@ -377,9 +383,10 @@ var langs = {
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
 			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
-			'Get a clear overview of the Spot raid page so you can pick your target with more ease'//34
+			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
+			'Show the amount of crimes which were successfull and the amount of cars stolen, plus the total profit from both'//45
 		],
-		maxprefs: 35, // 1 + last pref #
+		maxprefs: 36, // 1 + last pref #
 		preftitles: [
 			'Crimes/Car Nicks',//0
 			'Smuggling and Booze/Narc Prices',//1
@@ -423,9 +430,12 @@ var langs = {
 			'You are already staying in this city!'
 		],
 		newmenu: 'Detected new menu content! Please update your preferences.\nThis includes the menu AND the hotkey preferences!',
+		cusmenu: [
+			'Are you sure you want to reset your custom menu?'
+		],
 		customs: ' settings updated! Returning to normal menu..<br><br>Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
-		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime'],
+		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -629,7 +639,8 @@ var langs = {
 			'Sneltoetsen gebruiken bij de Postbus',//31 - MISC
 			'Auto-Krasser en Stats',//32 - OTHER AFs
 			'Voeg Volgers toe (Kogels, Poker, Krassen)',//33 - MISC
-			'Ruim de Spot Overvallen pagina op'//34 - UI Extras
+			'Ruim de Spot Overvallen pagina op',//34 - UI Extras
+			'Laat misdaad- en autojatstats zien op status pagina'//35 - CRIMES/CARS
 		],
 		prefsTitle: [ //describe the options
 			'Je kan de "Ga ervoor" knop niet gebruiken voor je 3 tekens hebt ingevuld',//0
@@ -666,9 +677,10 @@ var langs = {
 			'Geeft je de mogelijkheid om berichten te openen met sneltoetsen en aldaar te antwoorden of het bericht te verwijderen met een sneltoets',//31
 			'Geef het Krasser paneel met stats weer op de Kras&Win pagina',//32
 			'Hou bij hoeveel kogels je koopt bij de kogelfabriek, hoeveel handen je hebt gespeeld met poker en hoeveel kaarten je hebt gekrast',//33
-			'Krijg een goed overzicht van de spots zodat je makkelijker je doel kunt kiezen'//34
+			'Krijg een goed overzicht van de spots zodat je makkelijker je doel kunt kiezen',//34
+			'Laat het aantal misdaaden zien die succesvol waren en het total aantal auto\'s die je gestolen hebt, plus de totale winst van beide'
 		],
-		maxprefs: 35,
+		maxprefs: 36,
 		preftitles: [
 			'Misdaden/Auto stelen',//0
 			'Smokkelen en Drank/Drugs Prijzen',//1
@@ -712,9 +724,12 @@ var langs = {
 			'Je verblijft al in deze stad!'
 		],
 		newmenu: 'Nieuwe menu indeling gevonden! Selecteer opnieuw je voorkeuren.\nDit houd in de menu- EN de hotkey voorkeuren!',
+		cusmenu: [
+			'Weet je zeker dat je je menu wilt resetten?'
+		],
 		customs: ' indeling geupdate! <br><br>Click <a href="javascript:location.href=\'menu.php\'">Wacht of klik hier</a>',
 		login: ['Registreren', 'http://www.edo-nieuws.nl', 'Edo-nieuws'],
-		status: ['none', 'Geen', 'geslaagd', 'Geld van misdaden', 'misdaad'],
+		status: ['none', 'Geen', 'geslaagd', 'Geld van misdaden', 'misdaad', 'Waarde alle gestolen auto\'s', 'auto'],
 		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',

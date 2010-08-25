@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.9.3.72
+	Version: 1.9.3.73
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -351,7 +351,11 @@ function rand(min, max) {
 }
 
 function rounding(x) {
-	return Math.round(x*10000)/100;
+	return Math.round(x * 10000) / 100;
+}
+
+function round(num, dec) {
+	return Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
 }
 
 function toUp(word) {
