@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.73
+	Version: 1.9.3.74
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -55,7 +55,7 @@ var langs = {
 			'Show crimestats and carstats on status page'//35 - CRIMES/CARS
 		],
 		prefsTitle: [ //describe the options
-			'You cant press the "go for it" button before you filled in a 3 character code',//0
+			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
 			'Shows the cocaine prices for every city in the upper bar (with color highlight for low and high)',//1
 			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from fingon',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
@@ -137,9 +137,10 @@ var langs = {
 		],
 		newmenu: 'Detected new menu content! Please update your preferences.\nThis includes the menu AND the hotkey preferences!',
 		cusmenu: [
-			'Are you sure you want to reset your custom menu?'
+			'Are you sure you want to reset your custom menu?',
+			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
+			'You\'re already using that key!'
 		],
-		customs: ' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
 		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
@@ -431,7 +432,9 @@ var langs = {
 		],
 		newmenu: 'Detected new menu content! Please update your preferences.\nThis includes the menu AND the hotkey preferences!',
 		cusmenu: [
-			'Are you sure you want to reset your custom menu?'
+			'Are you sure you want to reset your custom menu?',
+			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
+			'You\'re already using that key!'
 		],
 		customs: ' settings updated! Returning to normal menu..<br><br>Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
@@ -725,9 +728,10 @@ var langs = {
 		],
 		newmenu: 'Nieuwe menu indeling gevonden! Selecteer opnieuw je voorkeuren.\nDit houd in de menu- EN de hotkey voorkeuren!',
 		cusmenu: [
-			'Weet je zeker dat je je menu wilt resetten?'
+			'Weet je zeker dat je je menu wilt resetten?',
+			' indeling geupdate! <br><br>Click <a href="javascript:location.href=\'menu.php\'">Wacht of klik hier</a>',
+			'Je hebt die hotkey al in gebruik!'
 		],
-		customs: ' indeling geupdate! <br><br>Click <a href="javascript:location.href=\'menu.php\'">Wacht of klik hier</a>',
 		login: ['Registreren', 'http://www.edo-nieuws.nl', 'Edo-nieuws'],
 		status: ['none', 'Geen', 'geslaagd', 'Geld van misdaden', 'misdaad', 'Waarde alle gestolen auto\'s', 'auto'],
 		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],

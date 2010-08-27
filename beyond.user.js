@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			26-08-2010
+// @date			27-08-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -132,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '73';
+var ScriptSubVersion = '74';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -583,7 +583,7 @@ if(dlp == '/marquee.php'){
 }
 
 //---------------- Menu and submenus ----------------
-if (dlp == '/menu.php') {
+/*if (dlp == '/menu.php') {
 	var i;
 	//remove third party left overs from hotkeys
 	db.innerHTML = db.innerHTML.replace(/\s\[\D\]/g,'');
@@ -602,7 +602,7 @@ if (dlp == '/menu.php') {
 	//add beyond menu
 	var subMenu = cEL('table');
 	var innerHTML = '<tbody><tr><th onclick="Menu.toggle(this);">Beyond</th></tr><tr><td><div class="subnav" style="overflow:hidden"><table cellspacing="0" cellpadding="0"><tbody>';
-	for(i=0;i<qlinks.length;i++){
+	for (i=0;i<qlinks.length;i++) {
 		innerHTML += '<tr><td><a target="main" onmousedown="return false;" href="'+ qlinks[i] +'" class="menuLink" title="'+qtitle[i]+'">'+descr[i]+'</a></td></tr>';
 	}
 	appMenu(2);
@@ -674,40 +674,41 @@ if (dlp == '/menu.php') {
 	$X(QL_xp).innerHTML = $X(QL_xp).innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+buttonMenu+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+buttonKey+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Reset menu" onClick="if (confirm(\''+lang.cusmenu[0]+'\')) { location.href=\'menu.php?reset\'; }" src="'+buttonReset+'" style="vertical-align:-2px" /></span>'; //LANG
 
 	//check 'mode' and add corresponding stuff
-	if(!dls || dls.indexOf('reset') != -1 || dls.indexOf('buttons') != -1){//mode = normal or user reseted
-		if(submenus != 0){
+	if (!dls || dls.indexOf('reset') != -1 || dls.indexOf('buttons') != -1) {//mode = normal or user reseted
+		if (submenus != 0) {
 			//check current menu matches with saved prefs
-			var uptodate=1;
-			var i=0;
-			if(menuprefs != '' && menuprefs != null && menuprefs != 'undefined'){
-				if(menuprefs.length!=subs){
-					uptodate=0;
+			var uptodate = 1;
+			var i = 0;
+			if (menuprefs != '' && menuprefs != null && menuprefs != 'undefined') {
+				if (menuprefs.length!=subs) {
+					uptodate = 0;
 				}
-				if(menuprefs.length!=keyprefs.length){
-					uptodate=0;
+				if (menuprefs.length!=keyprefs.length) {
+					uptodate = 0;
 				}
-				buttons.forEach(function($n){
-					if($n != menuprefs[i].length){
-						uptodate=0;
+				buttons.forEach(function($n) {
+					if ($n != menuprefs[i].length) {
+						uptodate = 0;
 					}
 					i++;
 				});
+			} else {
+				uptodate= 0 ;
 			}
-			else uptodate=0;
-			if(uptodate==0){
+			if (uptodate == 0) {
 				alert(lang.newmenu);setValue('submenus', '0');
 			} else {//clear to go
-				for(i=subs;i>=1;i--){
-					if(mprefs[i-1]==0){
+				
+					if (mprefs[i-1]==0) {
 						$Del('/html/body//div/table['+i+']');//remove entire submenu
 					} else {
-						for(j=buttons[i-1];j>=1;j--){//loop buttons and see what to do with them
+						for (i=subs;i>=1;i--) {for (j=buttons[i-1];j>=1;j--) {//loop buttons and see what to do with them
 							xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
 							kpref = keyprefs[i-1].slice(j-1,j);
 
-							if(menuprefs[i-1].slice(j-1, j) == 0){
+							if (menuprefs[i-1].slice(j-1, j) == 0) {
 								$Del(xp_tr);//delete it!
-							} else if(kpref != '*'){//look for a hotkey
+							} else if (kpref != '*') {//look for a hotkey
 								var but = $X(xp_tr + '/td/a');
 								but.accessKey = kpref;//add it too!
 								but.innerHTML = but.innerHTML + ' ('+ kpref.toUpperCase() +')';
@@ -720,13 +721,18 @@ if (dlp == '/menu.php') {
 		}
 	} else {//custom menu interface
 		//saving part
-		if(dls.indexOf('?newmenu=') != -1){ modeArr = ['Menu', 'newmenu', 'rawmenuprefs', 'buttonpref']; }
-		if(dls.indexOf('?newkeys=') != -1){ modeArr = ['Hotkey', 'newkeys', 'rawkeyprefs', 'keypref']; }
-		if(dls.indexOf('?newmenu=') != -1 || dls.indexOf('?newkeys=') != -1){//mode = user clicked save
+		if (dls.indexOf('?newmenu=') != -1) {
+			modeArr = ['Menu', 'newmenu', 'rawmenuprefs', 'buttonpref'];
+		}
+		if (dls.indexOf('?newkeys=') != -1) {
+			modeArr = ['Hotkey', 'newkeys', 'rawkeyprefs', 'keypref'];
+		}
+		if (dls.indexOf('?newmenu=') != -1 || dls.indexOf('?newkeys=') != -1) {//mode = user clicked save
 			//update Settings
 			newprefs = GetParam(modeArr[1]);
 			setValue(modeArr[2], newprefs);
-			for(i=0;i<=buttons.length-1;i++){
+			console.log(GetParam(modeArr[1]));
+			for (i=0;i<=buttons.length-1;i++) {
 				setValue(modeArr[3]+(i+1), newprefs.slice(0, buttons[i]));
 				newprefs = newprefs.slice(buttons[i]);
 			}
@@ -734,7 +740,7 @@ if (dlp == '/menu.php') {
 			$X('html/body').innerHTML = '<span class="red">' + modeArr[0] + lang.customs + '</span>' + $X('html/body').innerHTML;//succes msg
 			$X('html/body').style.backgroundColor='#3F505F';
 
-			setTimeout(function(){ location.href='menu.php'; }, 1500);//refresh to see our results
+			setTimeout(function() { location.href='menu.php'; }, 1500);//refresh to see our results
 		}
 
 		//add already used hotkey script
@@ -747,27 +753,27 @@ if (dlp == '/menu.php') {
 		//mode = user doing customizing
 		upmenu = 0;
 		upkeys = 0;
-		if(dls.indexOf('menu') != -1){ upmenu=1; }
-		if(dls.indexOf('keys') != -1){ upkeys=1; }
-		if(upmenu || upkeys){//we updating buttons or keys?
-			window.addEventListener('load', function(){
+		if (dls.indexOf('menu') != -1) { upmenu=1; }
+		if (dls.indexOf('keys') != -1) { upkeys=1; }
+		if (upmenu || upkeys) {//we updating buttons or keys?
+			window.addEventListener('load', function() {
 				raw = upmenu ? getValue('rawmenuprefs', '*') : getValue('rawkeyprefs', '0');
-				for(i=1,q=1;i<=subs;i++){
-					for(j=1;j<=buttons[i-1];j++,q++){
+				for (i=1,q=1;i<=subs;i++) {
+					for (j=1;j<=buttons[i-1];j++,q++) {
 						xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
 						xp_a = xp_tr + '/td/a';
 
 						href = $X(xp_a).href;
 						content = $X(xp_a).innerHTML;
 						prefx = raw.slice(q-1,q);
-						if(upmenu){
-							$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="checkbox" checked="0" id="ip'+q+'"></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
-							if(prefx == '0' && submenus != 0){
+						if (upmenu) {
+							$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="checkbox" checked="0" id="ip'+q+'" /></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
+							if (prefx == '0' && submenus != 0) {
 								getID('ip'+q).checked = false;
 							}
 						} else {
 							$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="text" onChange="checkKey(this.id)" style="text-align:center; -moz-border-radius:4px; padding-left:3px" maxlength="1" id="ip'+q+'"/></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
-							if(raw != '0' && prefx != '*' && submenus != 0){
+							if (raw != '0' && prefx != '*' && submenus != 0) {
 								getID('ip'+q).value = prefx;
 							}
 						}
@@ -776,8 +782,8 @@ if (dlp == '/menu.php') {
 			}, true);
 
 			//get # of inputs
-			for(i=1,q=1;i<=subs;i++){
-				for(j=1;j<=buttons[i-1];j++,q++){
+			for (i=1,q=1;i<=subs;i++) {
+				for (j=1;j<=buttons[i-1];j++,q++) {
 					inputs=q+1;
 				}
 			}
@@ -795,8 +801,223 @@ if (dlp == '/menu.php') {
 
 	//extra city checker
 	menuCity = $I('//th[@id="travel_cityname"]');
-	for(i=0;i<8;i++){
-		if(menuCity.search(langs.en.cities[i])!=-1){
+	for (i=0;i<8;i++) {
+		if (menuCity.search(langs.en.cities[i])!=-1) {
+			setPow('bninfo',2,i+4);
+		}
+	}
+}*/
+
+//---------------- Menu and submenus ----------------
+if (dlp == '/menu.php') {
+	//remove third party left overs from hotkeys
+	db.innerHTML = db.innerHTML.replace(/\s\[\D\]/g,'');
+	//--add additional submenus
+	function appMenu(x) {
+		innerHTML += '</tbody></table></div></td></tr></tbody>';
+		subMenu.innerHTML = innerHTML;
+		subMenu.setAttribute('cellspacing', '0');
+		subMenu.setAttribute('cellpadding', '0');
+
+		var table = $X('/html/body/div/table['+x+']');
+		table.parentNode.insertBefore(subMenu, table);
+	}
+	function checkKey(id) {
+		var buyout = getValue('buyout', '/');
+		var val;
+		a = ((getTAG('input').length-1) / 2);
+		for (i = 0;i <= a;i++) {
+			val = getID('ip'+i).value.toUpperCase();
+			if ((val == getID(id).value.toUpperCase() && 'ip'+(i+1) != id && getID(id).value.toUpperCase() != '') || val == buyout) {
+				alert(lang.cusmenu[2]);
+				getID(id).value = '';
+				i = 100;
+			}
+		}
+	}
+
+	//add beyond menu
+	var subMenu = cEL('table');
+	var innerHTML = '<tbody><tr><th onclick="Menu.toggle(this);">Beyond</th></tr><tr><td><div class="subnav" style="overflow:hidden"><table cellspacing="0" cellpadding="0"><tbody>';
+	for (i = 0; i < qlinks.length; i++) {
+		innerHTML += '<tr><td><a target="main" onmousedown="return false;" href="'+ qlinks[i] +'" class="menuLink" title="'+qtitle[i]+'">'+descr[i]+'</a></td></tr>';
+	}
+	appMenu(2);
+	
+	var totlinks = $x('//a').length;
+	
+	//what links to remove?
+	var remlinks = getValue('remlinks', '');
+	var rem = [];
+	remlinks = remlinks.split('*');
+	a = remlinks.length;
+	for (y = 0; y < a; y++) {
+		rem[remlinks[y]] = 1;
+	}
+	
+	//what hotkeys?
+	var hks = getValue('ourhotkeys', '');
+	var hotkeys = [];
+	var hotk = [];
+	hks = hks.split('*');
+	a = hks.length;
+	for (y = 0; y < a; y++) {
+		hotk = hks[y].split('|');
+		hotkeys[hotk[0]] = hotk[1];
+	}
+	
+	//get # of submenu's
+	var tables = $X('//div[not(@id="_firebugConsole")]').getElementsByTagName('table').length;
+	var subs = tables / 2;
+	if (db.innerHTML.search('./crewstats.php') != -1) { //check for crew submenu
+		subs--;
+	}
+	//get # of buttons in submenu's
+	var buttons = [];
+	for (i = 1, j = 0; i <= subs; i++, j++) {
+		var num = parseInt($X('/html/body//div/table[' + (i) + ']/tbody/tr' + (i == 1 ? '' : '[2]') + '/td/div/table/tbody').getElementsByTagName('tr').length, 10);
+		buttons[j] = num;
+		if (i == subs) { //BETA QL thingy
+			buttons[j]--;
+		}
+	}
+	
+	if (!dls) { //normal menu
+
+		var removed = 0;
+		for (i = subs; i >= 1; i--) {
+			removed = 0;
+			for (j = buttons[i-1]; j >= 1; j--) {
+				xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
+				xp_a = xp_tr + '/td/a';
+				href = $X(xp_tr + '/td/a').href;
+				a = href.split("/");
+				link = a[(a.length-1)];
+				if (link == '' || link == 'index.php') {
+					link = a[(a.length-2)];
+				}
+				if (rem[link]) {
+					$Del(xp_tr);//delete it!
+					removed++;
+				} else if (hotkeys[link]) {//look for a hotkey
+					var but = $X(xp_tr + '/td/a');
+					but.accessKey = hotkeys[link];//add it too!
+					but.innerHTML = but.innerHTML + ' ('+ hotkeys[link].toUpperCase() +')';
+					but.addEventListener('focus', function(){this.blur();}, false);
+				}
+			}
+			if (removed == buttons[i-1]) {
+				$Del('/html/body//div/table['+i+']');//remove entire submenu
+			}
+		}
+	
+	} else if (dls.indexOf('?menu') != -1) { //changing menu
+
+		for (i = 1, q = 1; i <= subs; i++) {
+			for (j = 1; j <= buttons[i-1]; j++, q++) {
+				xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
+				xp_a = xp_tr + '/td/a';
+				href = $X(xp_a).href;
+				//making up the link
+				a = href.split("/");
+				link = a[(a.length-1)];
+				if (link == '' || link == 'index.php') {
+					link = a[(a.length-2)];
+				}
+				//console.log(link);
+				content = $X(xp_a).innerHTML;
+				$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="checkbox" checked="checked" id="cb['+q+']" value="'+link+'" /></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
+				if (rem[link]) {
+					getID('cb['+q+']').checked = false;
+				}
+			}
+		}
+		
+		//add save button
+		$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
+		$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
+		
+		getID('save_button').addEventListener('click', function() {
+			var letsrem = '';
+			for (i = 1; i <= totlinks; i++) {
+				if (getID('cb['+i+']').checked == false) {
+					//assembling string for pages we want gone
+					letsrem += getID('cb['+i+']').value + '*';
+				}
+			}
+			letsrem = letsrem.substr(0, (letsrem.length - 1));
+			setValue('remlinks', letsrem);
+		
+			$X('html/body').innerHTML = '<span class="red">Menu'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML;//succes msg
+			$X('html/body').style.backgroundColor='#3F505F';
+			setTimeout(function() { location.href='menu.php'; }, 1500);//refresh to see our results
+		}, true);
+	
+	} else if (dls.indexOf('?keys') != -1) { //changing hotkeys
+	
+		for (i = 1, q = 1; i <= subs; i++) {
+			for (j = 1; j <= buttons[i-1]; j++, q++) {
+				xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
+				xp_a = xp_tr + '/td/a';
+				href = $X(xp_a).href;
+				//making up the link
+				a = href.split("/");
+				link = a[(a.length-1)];
+				if (link == '' || link == 'index.php') {
+					link = a[(a.length-2)];
+				}
+				content = $X(xp_a).innerHTML;
+				$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="hidden" id="cb['+q+']" value="'+link+'" /><input type="text" onChange="checkKey(this.id)" style="text-align:center; -moz-border-radius:4px; padding-left:3px" maxlength="1" id="ip'+q+'" /></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
+				if (hotkeys[link]) {
+					getID('ip'+q).value = hotkeys[link];
+				}
+			}
+		}
+		
+		//add save button
+		$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
+		$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
+		
+		getID('save_button').addEventListener('click', function() {
+			var shotkeys = '';
+			for (i = 1; i <= totlinks; i++) {
+				if (getID('ip'+i).value != '') {
+					shotkeys += getID('cb['+i+']').value+'|'+getID('ip'+i).value+'*';
+				}
+			}
+			shotkeys = shotkeys.substr(0, (shotkeys.length - 1));
+			setValue('ourhotkeys', shotkeys);
+		
+			$X('html/body').innerHTML = '<span class="red">Hotkey'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML;//succes msg
+			$X('html/body').style.backgroundColor='#3F505F';
+			setTimeout(function() { location.href='menu.php'; }, 1500);//refresh to see our results
+		}, true);
+		
+	}
+	
+	
+	if (!dls) {
+		//add action buttons (change menu, change hotkeys, reset menu)
+		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+GM_getResourceURL('buttonKey')+'" style="vertical-align:-2px" /> <img id="reset_button" onMouseover="style.cursor=\'pointer\'" title="Reset menu" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px" /></span>'; //LANG
+		getID('reset_button').addEventListener('click', function() {
+			if (confirm(lang.cusmenu[0])) { // are you sure?
+				setValue('remlinks', ''); //reset
+				setValue('ourhotkeys', '');
+			}
+			setTimeout(function() { location.href='menu.php'; }, 250);
+		}, true);
+	}
+	$X('//td[@class="container"]').setAttribute('colspan', '2');
+	//addept quick lookup colspan to match customs interface's
+	
+	//beautify for fully collapsed menu in dark theme
+	$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
+	$X('//div[@id="menubg"]').style.width = '99.5%';
+
+	//extra city checker
+	menuCity = $I('//th[@id="travel_cityname"]');
+	for (i=0;i<8;i++) {
+		if (menuCity.search(langs.en.cities[i])!=-1) {
 			setPow('bninfo',2,i+4);
 		}
 	}
