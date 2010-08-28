@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.74
+	Version: 1.9.3.75
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -142,7 +142,7 @@ var langs = {
 			'You\'re already using that key!'
 		],
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
-		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car'],
+		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -282,7 +282,21 @@ var langs = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob'
+			'Local Mob',
+			'Car Lot (Thunderbolt)',
+			'Car Lot (Avus)',
+			'Car Lot (Spyder)',
+			'Whiskey Stills',
+			'Farm (Marijuana)',
+			'Farm (Beer)',
+			'Docks (Heroin)',
+			'Docks (Cognac)',
+			'Factory',
+			'Scrapyard',
+			'Bar',
+			'Restaurant',
+			'Army Surplus Store',
+			'Lawyers Office',
 		],
 		lastontime: [
 			'Alive',
@@ -438,7 +452,7 @@ var langs = {
 		],
 		customs: ' settings updated! Returning to normal menu..<br><br>Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
-		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car'],
+		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -578,7 +592,21 @@ var langs = {
 			'Driver',
 			'Information',
 			'Invite',
-			'Local Mob'
+			'Local Mob',
+			'Car Lot (Thunderbolt)',
+			'Car Lot (Avus)',
+			'Car Lot (Spyder)',
+			'Whiskey Stills',
+			'Farm (Marijuana)',
+			'Farm (Beer)',
+			'Docks (Heroin)',
+			'Docks (Cognac)',
+			'Factory',
+			'Scrapyard',
+			'Bar',
+			'Restaurant',
+			'Army Surplus Store',
+			'Lawyers Office',
 		],
 		lastontime: [
 			'Alive',
@@ -733,7 +761,7 @@ var langs = {
 			'Je hebt die hotkey al in gebruik!'
 		],
 		login: ['Registreren', 'http://www.edo-nieuws.nl', 'Edo-nieuws'],
-		status: ['none', 'Geen', 'geslaagd', 'Geld van misdaden', 'misdaad', 'Waarde alle gestolen auto\'s', 'auto'],
+		status: ['none', 'Geen', 'geslaagd', 'Geld van misdaden', 'misdaad', 'Waarde alle gestolen auto\'s', 'auto', 'Rente', 'in', 'Nu!'],
 		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -881,7 +909,21 @@ var langs = {
 			'Bestuurder',
 			'Gegevens',
 			'Verstuur',
-			'Lokale bende'
+			'Lokale bende',
+			'Autodealer (Thunderbolt)',
+			'Autodealer (Avus)',
+			'Autodealer (Spyder)',
+			'Whiskey Stokerij',
+			'Boerderij (Marihuana)',
+			'Boerderij (Bier)',
+			'Havens (Heroine)',
+			'Havens (Cognac)',
+			'Fabriek',
+			'Oud ijzer handel',
+			'Bar',
+			'Restaurant',
+			'Villa',
+			'Vakbond Kantoor',
 		],
 		lastontime: [
 			'Levend',
