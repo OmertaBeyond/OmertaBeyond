@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			28-08-2010
+// @date			29-08-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -132,7 +132,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '75';
+var ScriptSubVersion = '76';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -144,6 +144,15 @@ var FingonUrl = 'http://89.149.221.178/~fingon';
 var EdoUrl = 'http://www.edo-nieuws.nl/news.php';
 var ff = navigator.userAgent.split('/')[3].split(' ')[0];
 var ob = ScriptVersion + '.' + ScriptSubVersion;
+
+//annoy the user --- FFv Checker ---
+if (dlp == '/game.php') { //just once on login
+	if (parseInt(ff.split('.')[1], 10) < parseInt(minFFVersion.split('.')[1], 10) || parseInt(ff.split('.')[0], 10) < parseInt(minFFVersion.split('.')[0], 10)) {
+		if (parseInt(ff.split('.')[0], 10) <= parseInt(minFFVersion.split('.')[0], 10)) {
+			alert('You don\'t use Firefox 3.6+. If you want Beyond to work properly, we recommend that you update.');
+		}
+	}
+}
 
 GM_registerMenuCommand('[' + ScriptName + '] v' + ob, function () {
     alert('You are using ' + ScriptName + '\nVersion:\t' + ScriptVersion + '\nRevision:\t' + ScriptSubVersion);
@@ -291,7 +300,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([2]);
 
 	addCat(lang.preftitles[6]); //misc
-	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34]);
+	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36]);
 
 	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="checkbutton" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
 	string += '&nbsp;<button type="button" name="#" class="button" onClick="';
@@ -581,232 +590,6 @@ if(dlp == '/marquee.php'){
 
 	}
 }
-
-//---------------- Menu and submenus ----------------
-/*if (dlp == '/menu.php') {
-	var i;
-	//remove third party left overs from hotkeys
-	db.innerHTML = db.innerHTML.replace(/\s\[\D\]/g,'');
-	//--add additional submenus
-	function appMenu(x) {
-		innerHTML += '</tbody></table></div></td></tr></tbody>';
-		subMenu.innerHTML = innerHTML;
-		subMenu.setAttribute('cellspacing', '0');
-		subMenu.setAttribute('cellpadding', '0');
-
-		var table = $X('/html/body/div/table[' + x + ']');
-		table.parentNode.insertBefore(subMenu, table);
-	}
-	var xp = '/html/body/table/tbody/tr/td/table[3]/tbody/tr[2]/td/div/table/tbody';
-
-	//add beyond menu
-	var subMenu = cEL('table');
-	var innerHTML = '<tbody><tr><th onclick="Menu.toggle(this);">Beyond</th></tr><tr><td><div class="subnav" style="overflow:hidden"><table cellspacing="0" cellpadding="0"><tbody>';
-	for (i=0;i<qlinks.length;i++) {
-		innerHTML += '<tr><td><a target="main" onmousedown="return false;" href="'+ qlinks[i] +'" class="menuLink" title="'+qtitle[i]+'">'+descr[i]+'</a></td></tr>';
-	}
-	appMenu(2);
-//!-end adding menus
-
-//--start assembling variables
-	if (dls.indexOf('reset') != -1) { //mode = oh noes!
-		setValue('submenus', '0');
-	}
-	var submenus = getValue('submenus', 0);
-
-	//get # of submenu's
-	var tables = $X('//div[not(@id="_firebugConsole")]').getElementsByTagName('table').length;
-	var subs = tables / 2;
-	if (db.innerHTML.search('./crewstats.php') != -1) { //check for crew submenu
-		subs--;
-	}
-
-	//get # of buttons in submenu's
-	var buttons = [];
-	for (i = 1, j = 0; i <= subs; i++, j++) {
-		var num = parseInt($X('/html/body//div/table[' + (i) + ']/tbody/tr' + (i == 1 ? '' : '[2]') + '/td/div/table/tbody').getElementsByTagName('tr').length, 10);
-		buttons[j] = num;
-		if (i == subs) { //BETA QL thingy
-			buttons[j]--;
-		}
-	}
-
-	if (submenus != 0 && subs == submenus) { //don't act if ( nothing is saved in GM || saved # of subs != current # of subs )
-		//get menuprefs from GM or set ghostprefs
-		var menuprefs = [];
-		if (getValue('buttonpref1', '') != '') {
-			for (i = 0; i <= subs - 1; i++) {
-				menuprefs[i] = getValue('buttonpref' + (i + 1));
-			}
-		} else if (getValue('keypref1', '') != '') {
-			for (i = 0; i <= subs - 1; i++) {
-				menuprefs[i] = getValue('keypref' + (i + 1)).replace(/[^a-z.]/ig, '1');
-			}
-		}
-
-		//get keyprefs from GM or set ghostprefs
-		var keyprefs = [];
-		if (getValue('keypref1', '') != '') {
-			for (i = 0; i <= subs - 1; i++) {
-				keyprefs[i] = getValue('keypref' + (i + 1));
-			}
-		} else if (getValue('buttonpref1', '') != '') {
-			for (i = 0; i <= subs - 1; i++) {
-				keyprefs[i] = getValue('buttonpref' + (i + 1)).replace(/[0-9.]/g, '*');
-			}
-		}
-
-		var mprefs = []; //see if submenu can be deleted totaly
-		var i = 0;
-		for (i = 0; i <= menuprefs.length - 1; i++) {
-			mprefs[i] = menuprefs[i].indexOf('1') == -1 ? 0 : 1;
-		}
-	}
-
-	var QL_xp = '//td[@class="container"]';
-//!-end assembling variables
-
-//--customs script
-	//add action buttons
-	var buttonMenu = GM_getResourceURL('buttonMenu');
-	var buttonKey = GM_getResourceURL('buttonKey');
-	var buttonReset = GM_getResourceURL('buttonReset');
-	$X(QL_xp).innerHTML = $X(QL_xp).innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+buttonMenu+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+buttonKey+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Reset menu" onClick="if (confirm(\''+lang.cusmenu[0]+'\')) { location.href=\'menu.php?reset\'; }" src="'+buttonReset+'" style="vertical-align:-2px" /></span>'; //LANG
-
-	//check 'mode' and add corresponding stuff
-	if (!dls || dls.indexOf('reset') != -1 || dls.indexOf('buttons') != -1) {//mode = normal or user reseted
-		if (submenus != 0) {
-			//check current menu matches with saved prefs
-			var uptodate = 1;
-			var i = 0;
-			if (menuprefs != '' && menuprefs != null && menuprefs != 'undefined') {
-				if (menuprefs.length!=subs) {
-					uptodate = 0;
-				}
-				if (menuprefs.length!=keyprefs.length) {
-					uptodate = 0;
-				}
-				buttons.forEach(function($n) {
-					if ($n != menuprefs[i].length) {
-						uptodate = 0;
-					}
-					i++;
-				});
-			} else {
-				uptodate= 0 ;
-			}
-			if (uptodate == 0) {
-				alert(lang.newmenu);setValue('submenus', '0');
-			} else {//clear to go
-				
-					if (mprefs[i-1]==0) {
-						$Del('/html/body//div/table['+i+']');//remove entire submenu
-					} else {
-						for (i=subs;i>=1;i--) {for (j=buttons[i-1];j>=1;j--) {//loop buttons and see what to do with them
-							xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
-							kpref = keyprefs[i-1].slice(j-1,j);
-
-							if (menuprefs[i-1].slice(j-1, j) == 0) {
-								$Del(xp_tr);//delete it!
-							} else if (kpref != '*') {//look for a hotkey
-								var but = $X(xp_tr + '/td/a');
-								but.accessKey = kpref;//add it too!
-								but.innerHTML = but.innerHTML + ' ('+ kpref.toUpperCase() +')';
-								but.addEventListener('focus', function(){this.blur();}, false);
-							}
-						}
-					}
-				}
-			}
-		}
-	} else {//custom menu interface
-		//saving part
-		if (dls.indexOf('?newmenu=') != -1) {
-			modeArr = ['Menu', 'newmenu', 'rawmenuprefs', 'buttonpref'];
-		}
-		if (dls.indexOf('?newkeys=') != -1) {
-			modeArr = ['Hotkey', 'newkeys', 'rawkeyprefs', 'keypref'];
-		}
-		if (dls.indexOf('?newmenu=') != -1 || dls.indexOf('?newkeys=') != -1) {//mode = user clicked save
-			//update Settings
-			newprefs = GetParam(modeArr[1]);
-			setValue(modeArr[2], newprefs);
-			console.log(GetParam(modeArr[1]));
-			for (i=0;i<=buttons.length-1;i++) {
-				setValue(modeArr[3]+(i+1), newprefs.slice(0, buttons[i]));
-				newprefs = newprefs.slice(buttons[i]);
-			}
-			setValue('submenus', i);
-			$X('html/body').innerHTML = '<span class="red">' + modeArr[0] + lang.customs + '</span>' + $X('html/body').innerHTML;//succes msg
-			$X('html/body').style.backgroundColor='#3F505F';
-
-			setTimeout(function() { location.href='menu.php'; }, 1500);//refresh to see our results
-		}
-
-		//add already used hotkey script
-		buyout = getValue('buyout', '/');//this is also a used hotkey
-		script = cEL('script');
-		script.setAttribute('type', 'text/javascript');
-		script.innerHTML = 'function checkKey(id){for(i=0;i<=document.getElementsByTagName(\'input\').length-1;i++){var val = document.getElementsByTagName(\'input\')[i].value.toUpperCase();if((val == document.getElementById(id).value.toUpperCase() && \'ip\'+(i+1) != id && document.getElementById(id).value.toUpperCase() != \'\') || val == \''+buyout+'\'){ alert("You\'re already using that key!"); document.getElementById(id).value = \'\'; i=100; }}}';
-		$X('//head').appendChild(script);
-
-		//mode = user doing customizing
-		upmenu = 0;
-		upkeys = 0;
-		if (dls.indexOf('menu') != -1) { upmenu=1; }
-		if (dls.indexOf('keys') != -1) { upkeys=1; }
-		if (upmenu || upkeys) {//we updating buttons or keys?
-			window.addEventListener('load', function() {
-				raw = upmenu ? getValue('rawmenuprefs', '*') : getValue('rawkeyprefs', '0');
-				for (i=1,q=1;i<=subs;i++) {
-					for (j=1;j<=buttons[i-1];j++,q++) {
-						xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
-						xp_a = xp_tr + '/td/a';
-
-						href = $X(xp_a).href;
-						content = $X(xp_a).innerHTML;
-						prefx = raw.slice(q-1,q);
-						if (upmenu) {
-							$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="checkbox" checked="0" id="ip'+q+'" /></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
-							if (prefx == '0' && submenus != 0) {
-								getID('ip'+q).checked = false;
-							}
-						} else {
-							$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="text" onChange="checkKey(this.id)" style="text-align:center; -moz-border-radius:4px; padding-left:3px" maxlength="1" id="ip'+q+'"/></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
-							if (raw != '0' && prefx != '*' && submenus != 0) {
-								getID('ip'+q).value = prefx;
-							}
-						}
-					}
-				}
-			}, true);
-
-			//get # of inputs
-			for (i=1,q=1;i<=subs;i++) {
-				for (j=1;j<=buttons[i-1];j++,q++) {
-					inputs=q+1;
-				}
-			}
-
-			//add right save button for the job
-			save = upmenu ? 'var query=\'\';for(i=1;i<='+(inputs-1)+';i++){query += document.getElementById(\'ip\'+i).checked;}location.search = \'?newmenu=\'+query.replace(/false/g,0).replace(/true/g,1);' : 'var query=\'\';for(i=1;i<='+(inputs-1)+';i++){query += document.getElementById(\'ip\'+i).value;if(document.getElementById(\'ip\'+i).value==\'\'){query +=\'*\'}}location.search = \'?newkeys=\'+query;';
-			$X(QL_xp).setAttribute('style', 'padding: 5px; padding-left: 30px !important');
-			$X(QL_xp).innerHTML = '<input type="button" onclick="' + save + '" value="Save!" id="save_button" />';
-		}
-		$X(QL_xp).setAttribute('colspan', '2');//addept quick lookup colspan to match customs interface's
-	}
-	//beautify for fully collapsed menu in dark theme
-	$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
-	$X('//div[@id="menubg"]').style.width = '99.5%';
-
-	//extra city checker
-	menuCity = $I('//th[@id="travel_cityname"]');
-	for (i=0;i<8;i++) {
-		if (menuCity.search(langs.en.cities[i])!=-1) {
-			setPow('bninfo',2,i+4);
-		}
-	}
-}*/
 
 //---------------- Menu and submenus ----------------
 if (dlp == '/menu.php') {
@@ -1349,7 +1132,7 @@ if (dls == '?module=Launchpad') {
 	}, false );
 
 	//Try and grab info on page load
-	var attempt = setInterval(function(){//using setInterval to enable use of setValue which fails in eventListener above
+	var attempt = setInterval(function() {//using setInterval to enable use of setValue which fails in eventListener above
 		if($X('//a[contains(@href, "/BeO/webroot/index.php?module=Bloodbank&action=")]')){//if page contains health bar
 			clearInterval(attempt);
 			bnUpdate(1);//call update function
@@ -1364,6 +1147,271 @@ if (dls == '?module=Launchpad') {
 	$Del('//table[@id="dummyT"]');
 	setValue('fontClr', getActualHex($X('//body'), 'color'));
 }
+
+//---------------- Bodyguards -----------------------------------
+if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1) && prefs[36]) {
+	function bgspage() {
+		var path = '//div[@class="otable widetable"][1]/center/table';
+		var a = $x(path).length; //amount of bg's you own
+		var bgsname = [];
+		var bgsid = [];
+		var bgslvl = [];
+		var bgsatt = [];
+		var bgsdef = [];
+		var bgsspec = [];
+		var bgscost = [];
+		var totatt = 0;
+		var totdef = 0;
+		var totcost = 0;
+		var totlvls = 0;
+		var attplvl, defplvl, statt, stdef, startc, deflvl, attlvl;
+		var trdump = '';
+		
+		//looping through all bg's and storing values
+		for (y = 1; y <= a; y++) {
+			var c = 0;
+			var bgname = $X(path+'['+y+']/tbody/tr/td/h2').textContent;
+			var bgarr = bgname.match(/(\w+) - ID (\d+)  - Level (\d+) /);
+			//console.log(bgarr[1]+bgarr[2]+bgarr[3]);
+			bgsname[y] = bgarr[1];
+			bgsid[y] = bgarr[2];
+			bgslvl[y] = parseInt(bgarr[3], 10);
+			bgsatt[y] = parseInt($X('//*[@id="jsprogbar_div_attack_'+bgarr[1]+'"]').textContent, 10);
+			bgsdef[y] = parseInt($X('//*[@id="jsprogbar_div_defense_'+bgarr[1]+'"]').textContent, 10);
+			if ($X('//*[@id="jsprogbar_div_special_'+bgarr[1]+'"]') != null) {
+				bgsspec[y] = parseInt($X('//*[@id="jsprogbar_div_special_'+bgarr[1]+'"]').textContent, 10);
+			} else { //special doesn't exist for this bg
+				bgsspec[y] = 0;
+			}
+			
+			//calcing total costs of the bg
+			//http://gamewiki.barafranca.com/index.php?title=Bodyguards_NL#De_bodyguards
+			if (bgsname[y] == 'Ike') {
+				attplvl = 4;
+				defplvl = 7;
+				statt = 10;
+				stdef = 25;
+				startc = 50000;
+			}
+			if (bgsname[y] == 'Joe') {
+				attplvl = 3;
+				defplvl = 6;
+				statt = 0;
+				stdef = 25;
+				startc = 50000;
+			}
+			if (bgsname[y] == 'Lee') {
+				attplvl = 1;
+				defplvl = 10;
+				statt = 0;
+				stdef = 50;
+				startc = 100000;
+			}
+			if (bgsname[y] == 'Lex') {
+				attplvl = 2;
+				defplvl = 5;
+				statt = 10;
+				stdef = 0;
+				startc = 1000000;
+			}
+			if (bgsname[y] == 'Ray') {
+				attplvl = 1;
+				defplvl = 5;
+				statt = 0;
+				stdef = 10;
+				startc = 10000;
+			}
+			if (bgsname[y] == 'Rob') {
+				attplvl = 2;
+				defplvl = 4;
+				statt = 0;
+				stdef = 20;
+				startc = 35000000;
+			}
+			if (bgsname[y] == 'Vic') {
+				attplvl = 8;
+				defplvl = 3;
+				statt = 20;
+				stdef = 0;
+				startc = 250000;
+			}
+			if (bgsname[y] == 'Mia') {
+				attplvl = 5;
+				defplvl = 3;
+				statt = 20;
+				stdef = 15;
+				startc = 35000000;
+			}
+			c += startc;
+			att = ((bgsatt[y] - statt) / attplvl);
+			def = ((bgsdef[y] - stdef) / defplvl);
+			
+			if (att > 0) {
+				c += 25000;
+				if (att > 1) {
+					c += 55000;
+					if (att > 2) {
+						c += 90000;
+						if (att > 3) {
+							c += 135000;
+							if (att > 4) {
+								c += 190000;
+								if (att > 5) {
+									c += 260000;
+									if (att > 6) {
+										c += 345000;
+										if (att > 7) {
+											c += 450000;
+											if (att > 8) {
+												c += 575000;
+												if (att > 9) {
+													c += 725000;
+												}						
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (def > 0) {
+				c += 25000;
+				if (def > 1) {
+					c += 55000;
+					if (def > 2) {
+						c += 90000;
+						if (def > 3) {
+							c += 135000;
+							if (def > 4) {
+								c += 190000;
+								if (def > 5) {
+									c += 260000;
+									if (def > 6) {
+										c += 345000;
+										if (def > 7) {
+											c += 450000;
+											if (def > 8) {
+												c += 575000;
+												if (def > 9) {
+													c += 725000;
+												}						
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (bgsspec[y]> 0) {
+				c += 25000;
+				if (bgsspec[y]> 1) {
+					c += 55000;
+					if (bgsspec[y]> 2) {
+						c += 90000;
+						if (bgsspec[y]> 3) {
+							c += 135000;
+							if (bgsspec[y]> 4) {
+								c += 190000;
+								if (bgsspec[y]> 5) {
+									c += 260000;
+									if (bgsspec[y]> 6) {
+										c += 345000;
+										if (bgsspec[y]> 7) {
+											c += 450000;
+											if (bgsspec[y]> 8) {
+												c += 575000;
+												if (bgsspec[y]> 9) {
+													c += 725000;
+												}						
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			bgscost[y] = c;
+			totatt += bgsatt[y];
+			totdef += bgsdef[y];
+			totcost += bgscost[y];
+			totlvls += bgslvl[y];
+			if (bgsspec[y] > 0) {
+				var showspec = bgsspec[y];
+			} else {
+				var showspec = '&nbsp;' //just leave it blank in that case
+			}
+			//<table cellpadding="0" cellspacing="0"><tr><td>
+			trdump += '<tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'">';
+			trdump += '<td style="text-align:center;">'+bgsname[y]+'</td>';
+			trdump += '<td style="text-align:center;">'+commafy(bgsid[y])+'</td>';
+			trdump += '<td style="text-align:center;">'+bgslvl[y]+'</td>';
+			trdump += '<td style="text-align:center;">'+bgsatt[y]+'</td>';
+			trdump += '<td style="text-align:center;">'+bgsdef[y]+'</td>';
+			trdump += '<td style="text-align:center;">'+showspec+'</td>';
+			trdump += '<td style="text-align:center;">$'+commafy(bgscost[y])+'</td>';
+			trdump += '</tr>';
+		}
+		trdump += '<tr><td colspan="7" height="1" bgcolor="black"></td></tr>';
+		trdump += '<tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'">';
+		trdump += '<td style="text-align:center;">'+lang.bgov[8]+':</td>';
+		trdump += '<td style="text-align:center;">&nbsp;</td>';
+		trdump += '<td style="text-align:center;">'+rounding(totlvls / 50)+'% '+lang.bgov[11]+'</td>';
+		trdump += '<td style="text-align:center;">'+lang.bgov[9]+': '+totatt+'</td>';
+		trdump += '<td style="text-align:center;">'+lang.bgov[10]+': '+totdef+'</td>';
+		trdump += '<td style="text-align:center;">&nbsp;</td>';
+		trdump += '<td style="text-align:center;">$'+commafy(totcost)+'</td>';
+		trdump += '</tr>';
+		
+		var div = cEL('div');
+		var c = cEL('center');
+		var br = cEL('br');
+		div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
+		/*		bgov: [
+			'Bodyguards overview', //0
+			'Name', 1
+			'ID', 2
+			'Level', 3 
+			'Attack', 4
+			'Defense', 5 
+			'Special', 6 
+			'Costs', 7
+			'Total', 8
+			'att', 9
+			'def', 10
+			'trained'*/ // 11
+		div.innerHTML = '<table class="thinline" style="width:620px"><tr><td class="tableheader">'+lang.bgov[1]+'</td><td class="tableheader">'+lang.bgov[2]+'</td><td class="tableheader">'+lang.bgov[3]+'</td><td class="tableheader">'+lang.bgov[4]+'</td><td class="tableheader">'+lang.bgov[5]+'</td><td class="tableheader">'+lang.bgov[6]+'</td><td class="tableheader">'+lang.bgov[7]+'</td></tr><tr><td colspan="7" height="1" bgcolor="black"></td></tr>'+trdump+'<table>';
+		c.appendChild(div);
+		c.appendChild(br);
+		if (dls.indexOf('?module=Shop') != -1) {
+			$X('//div[@id="smsdivcontainer"]').insertBefore(c, $X('//div[@class="otable widetable"]'));
+		}
+		if (dls.indexOf('?module=Bodyguards') != -1) {
+			db.insertBefore(c, $X('//div[@class="otable widetable"]'));
+		}
+		
+		
+	}
+
+	if (dls.indexOf('?module=Shop') != -1) { //via Shop
+		getID('smsdivcontainer').addEventListener('DOMNodeInserted', function (event) { //EventListener won't allow getValue()!
+			if (event.target.innerHTML.search('/static/images/game/bodyguards/lee') != -1) { //trigger
+				bgspage();
+			}
+		}, false);
+	}
+	if (dls.indexOf('?module=Bodyguards') != -1) { //via stand-alone
+		bgspage();
+	}
+}
+
+
 
 //---------------- External pages theme matching ----------------
 if (dlp == '/contact.php' || dlp == '/faq.php' || dlp == '/prices.php' || dlp == '/html/poll/poll.php') {
@@ -2057,13 +2105,21 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 			$X('//span[@id="status"]').innerHTML = status
 		}
 
-		if(prefs[30]){
-			$Del('//*[@name="forumPosts"]');
+		var forumposts = false;
+		if (prefs[30]) {
+			if ($X('//tr[@name="forumPosts"]/td[1]').textContent.indexOf('Recent') != -1) {
+				$Del('//tr[@name="forumPosts"]');
+				forumposts = true;
+			}
 		}
 
-		if(prefs[19]){
-			var avatarXP = '//*[@name="FL"]//img[contains(@src, "omertao.png")] | //*[@name="FL"]//img[contains(@src, "userimg")]';
-			$x(avatarXP).forEach(function($n){
+		if (prefs[19]) {
+			if (forumposts == true) {
+				var avatarXP = '//*[@name="FL"]//img[contains(@src, "omertao.png")] | //*[@name="FL"]//img[contains(@src, "userimg")]';
+			} else {
+				var avatarXP = '//*[@name="forumPosts"]//img[contains(@src, "omertao.png")] | //*[@name="forumPosts"]//img[contains(@src, "userimg")]';
+			}
+			$x(avatarXP).forEach(function($n) {
 					$n.setAttribute('id', 'flnames');
 					$X('//*[@id="flnames"]').parentNode.removeChild($X('//*[@id="flnames"]').parentNode.children[0]);
 				}
@@ -2077,9 +2133,9 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		y = db.innerHTML.search(lang.profile[1]);
 		z = db.innerHTML.search(lang.profile[2]);
 
-		if(x==-1){ tr--; }
-		if(y==-1){ tr--; }
-		if(z==-1){ tr--; }
+		if (x ==- 1) { tr--; }
+		if (y == -1) { tr--; }
+		if (z == -1) { tr--; }
 		xpath = '/html/body//center/table/tbody/tr['+tr+']/td[2]';
 		var wlth = $I(xpath);
 
@@ -2814,7 +2870,7 @@ if (prefs[26]) {
 		}
 		if (/drivers/.test(db.innerHTML)) { //as LE
 			window.addEventListener('load', function () {
-				$x('//input')[0].focus();
+				$x('//input[@type="submit"]')[0].focus();
 			}, true);
 		}
 	}
@@ -2839,7 +2895,7 @@ if (prefs[26]) {
 if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1) && prefs[34]) {
 	
 	if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
-		var am = $x('//div[contains(@onmouseover, "Spots.popup")]').length; // get total amount of spots
+		var am = $x('//div[contains(@id, "spot_")]').length / 3; // get total amount of spots
 		var city = $x('//b')[0].textContent;
 		
 		function whatspot(city, type) {
@@ -3099,37 +3155,24 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 
 		var div = cEL('div'); // the main div
 		div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; font-family:Tahoma,Verdana');
-		var divdump = '<table class="thinline" style="width:620px" cellpadding="0"><tr class="tableheader"><td>&nbsp;</td><td>'+lang.raidpage[3]+'</td><td>'+lang.raidpage[4]+'</td><td>'+lang.raidpage[5]+'</td><td>'+lang.raidpage[6]+'</td><td>'+lang.raidpage[7]+'</td><td>'+lang.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="7"></td></tr>';
+		var divdump = '<table class="thinline" style="width:630px" cellpadding="0"><tr class="tableheader"><td>&nbsp;</td><td>'+lang.raidpage[3]+'</td><td>'+lang.raidpage[4]+'</td><td>'+lang.raidpage[5]+'</td><td>'+lang.raidpage[6]+'</td><td>'+lang.raidpage[7]+'</td><td>'+lang.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="7"></td></tr>';
 
-		var rex = new RegExp('\<b\>(.*)<\/b\>', 'g');
-		var r = db.innerHTML.match(rex); // getting types, do NOT use $x/getTAG since that fails
-		var tdskipnum = 0;
 		var ownfam = getValue('family', '');
-		var divu = 0;
 		for (var y = 0; y < am; y+=1) {
-			var u = y;
-			if (y == 7) { // 7 doesn't exist
-				y = 8;
-				divu = 1; // although 7 is gone, it fucked is with one reamining div: <div onmouseover="Spots.popup(7);".....
-			}
-			var divnum = (u * 13) + 2 + divu; // 13 divs per spot, 2nd div of the spot
-			if (db.innerHTML.search('id="_firebugConsole"') !=- 1) { // Firebug Fix
-				divnum++;
-			}
-			var id = getTAG('div')[divnum].id; // = 'spot_*'
-			if (id == 'legend') { //thanks to that 7thspotbug, it goes one div too far
-				break;
-			}
+			var id = $x('//*[@id="map"]/div[contains(@id, "spot_")]')[y].id; // = 'spot_*'
 			id = parseInt(id.replace('spot_', ''));
-			var type = r[((((u * 4) + 1) - tdskipnum) + divu)].replace('<b>', '');
-			type = type.replace('</b>', '');
+			var type = $X('//*[@id="spot_default_'+id+'"]/b').textContent;
 			var cords = whatspot(city, type);
-			var owner = $x('//td')[(((u * 14) + 1) - tdskipnum)].innerHTML; // 14 td's per spot
-			var time = $x('//td')[(((u * 14) + 3) - tdskipnum)].innerHTML;
-			time = '';
-			if (time == langs.en.raidpage[0]) {
-				time = langs.en.raidpage[1];
+			var owner = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr/td[2]').textContent;
+			
+			var time = ''
+			if ($X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]') != null) {
+				time = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]').innerHTML;
+			}
+			if (time == lang.raidpage[0]) {
+				time = lang.raidpage[1];
 			} else {
+				time = '';
 				if (getID('counter_nextraid_'+id+'_minutes_value') != null) { // make sure there are more than 60 sec left
 					var timem = getID('counter_nextraid_'+id+'_minutes_value').innerHTML;
 					time = timem+'m ';
@@ -3138,14 +3181,14 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 					var times = getID('counter_nextraid_'+id+'_seconds_value').innerHTML;
 					time += times+'s';
 				} else {
-					time = langs.en.raidpage[1];
+					time = lang.raidpage[1];
 				}
 			}
 
 			// making bars look good (white -> themetextcolor, adding % sign, some margin stuff)
-			var profit = $x('//td')[(((u * 14) + 5) - tdskipnum)].innerHTML;
+			var profit = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[3]/td[2]').innerHTML;
 			var protnum = getID('jsprogbar_div_protection_'+id).innerHTML; // the actual % of protection
-			var prot = $x('//table')[((u * 5) + 1)].innerHTML
+			var prot = $X('//*[@id="jsprogbar_protection_'+id+'"]/table/tbody/tr/td').innerHTML;
 			prot = prot.replace('<div id="jsprogbar_div_protection_'+id+'" style="font-size: smaller; height: 15px; overflow: hidden; text-align: center; position: absolute; width: 100px; color: rgb(255, 255, 255);">'+protnum+'</div>', '<div id="jsprogbar_div_protection_'+id+'" style="text-align:center; position:absolute; width:100px;"><font color="#000">'+protnum+'%</font></div>');
 			var rpform = '';
 			var rex = new RegExp('\\(([\\w\\s]+)\\)');
@@ -3153,12 +3196,10 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			if (ownfam != lang.status[1]) {
 				if (rpfam != null) { // owned by player
 					if (rpfam[1] != stripHTML(ownfam)) { // not own fam
-
 						rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px;" type="submit" value="Go!" /></form>';
 					} else {
-						tdskipnum += 1;
 						time = '';
-						profit = $x('//td')[(((u * 14) + 5) - tdskipnum)].innerHTML; // reload profit cuz it's of
+						//profit = $x('//td')[(((u * 14) + 5) - tdskipnum)].innerHTML; // reload profit cuz it's of
 					}
 				} else {
 					rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px" type="submit" value="Go!" /></form>';
@@ -3173,19 +3214,25 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 
 		var div2 = cEL('div2'); // Div with forms
 		div2.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
-		div2.innerHTML = '<table class="thinline" style="width:620px"><tr><td colspan="2" class="tableheader">'+lang.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+lang.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+lang.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
+		div2.innerHTML = '<table class="thinline" style="width:630px"><tr><td colspan="2" class="tableheader">'+lang.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+lang.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+lang.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
 		var c = cEL('center');
 		c.appendChild(div2);
 		c.appendChild(cEL('br'));
 		c.appendChild(div);
 		db.appendChild(c);
 
+		//regrap all values (for AFing sake)
+		for (y = 0; y <= am; y+=1) {
+			if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
+		}
+		var str = getID('raidpagedriver').value;
+		str = str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
+		for (y = 0; y <= am; y+=1) {
+			if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = str; }
+		}
 
 		getID('raidpagebullets').addEventListener('keyup', function() {
-			for (y = 1; y <= am; y+=1) {
-				if (y == 7) {
-					y++;
-				}
+			for (y = 0; y <= am; y+=1) {
 				if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
 			}
 		}, true);
@@ -3193,10 +3240,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		getID('raidpagedriver').addEventListener('keyup', function() {
 			var str = getID('raidpagedriver').value;
 			str = str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
-			for (y = 1; y <= am; y+=1) {
-				if (y == 7) {
-					y++;
-				}
+			for (y = 0; y <= am; y+=1) {
 				if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = str; }
 			}
 		}, true);
@@ -3949,7 +3993,7 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 	else { ptprofit = '$0'; }
 	var div = cEL('div');
 	div.id = 'ptracker';
-	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
+	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:220px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
 	div.innerHTML = '<center><b>'+lang.pokertracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="ptstats">'+lang.pokertracker[4]+' <font style="float:right"><b>'+ptgplay+'</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>'+ptgwon+' ('+Math.round((ptgwon / ptgplay) * 100)+'%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$'+commafy(ptspent)+'</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$'+commafy(ptmwon)+'</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>'+ptprofit+'</b></font></div><br />&nbsp;<div id="resetpt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
 	db.appendChild(div);
 

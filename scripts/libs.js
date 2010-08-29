@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.9.3.75
+	Version: 1.9.3.76
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit

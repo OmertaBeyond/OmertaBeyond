@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.75
+	Version: 1.9.3.76
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -52,7 +52,8 @@ var langs = {
 			'Enable Scratcher',//32 - OTHER AFs, obsolete
 			'Enable Trackers (Bullet, Poker, Scratching)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
-			'Show crimestats and carstats on status page'//35 - CRIMES/CARS
+			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
+			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
 		],
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
@@ -90,9 +91,10 @@ var langs = {
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32, obsolete
 			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
-			'Show the amount of crimes which were successfull and the amount of cars stolen, plus the total profit from both'//35
+			'Show the amount of crimes which were successfull and the amount of cars stolen, plus the total profit from both',//35
+			'A nice overview of all your bodyguards and their trained levels, including totals'//36
 		],
-		maxprefs: 36, // 1 + last pref #
+		maxprefs: 37, // 1 + last pref #
 		preftitles: [
 			'Crimes/Car Nicks',//0
 			'Smuggling and Booze/Narc Prices',//1
@@ -317,6 +319,20 @@ var langs = {
 			'You have checked the current bet.',
 			'You have started a new game.'
 		],
+		bgov: [
+			'Bodyguards overview',
+			'Name',
+			'ID',
+			'Level',
+			'Attack',
+			'Defense',
+			'Special',
+			'Costs',
+			'Total',
+			'att',
+			'def',
+			'trained'
+		],
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
@@ -361,7 +377,8 @@ var langs = {
 			'Enable Scratcher',//32 - OTHER AFs
 			'Enable Trackers (Bullet, Poker, Scratching)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
-			'Show crimestats and carstats on status page'//35 - CRIMES/CARS
+			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
+			'Show Bodyguard Overview on BG\'s page'//36 UI EXTRAS
 		],
 		prefsTitle: [ //describe the options
 			'Disable the "go for it" button until the image code entered is the correct length',//0
@@ -399,9 +416,10 @@ var langs = {
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
 			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
-			'Show the amount of crimes which were successfull and the amount of cars stolen, plus the total profit from both'//45
+			'Show the amount of crimes which were successfull and the amount of cars stolen, plus the total profit from both',//35
+			'A nice overview of all your bodyguards and their trained levels, including totals'//36
 		],
-		maxprefs: 36, // 1 + last pref #
+		maxprefs: 37, // 1 + last pref #
 		preftitles: [
 			'Crimes/Car Nicks',//0
 			'Smuggling and Booze/Narc Prices',//1
@@ -627,6 +645,20 @@ var langs = {
 			'You have checked the current bet.',
 			'You have started a new game.'
 		],
+		bgov: [
+			'Bodyguards overview',
+			'Name',
+			'ID',
+			'Level',
+			'Attack',
+			'Defense',
+			'Special',
+			'Costs',
+			'Total',
+			'att',
+			'def',
+			'trained'
+		],
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
@@ -671,7 +703,8 @@ var langs = {
 			'Auto-Krasser en Stats',//32 - OTHER AFs
 			'Voeg Volgers toe (Kogels, Poker, Krassen)',//33 - MISC
 			'Ruim de Spot Overvallen pagina op',//34 - UI Extras
-			'Laat misdaad- en autojatstats zien op status pagina'//35 - CRIMES/CARS
+			'Laat misdaad- en autojatstats zien op status pagina',//35 - CRIMES/CARS
+			'Voeg Lijfwachten Overzicht toe op BG\'s pagina'//36 - UI EXTRAS
 		],
 		prefsTitle: [ //describe the options
 			'Je kan de "Ga ervoor" knop niet gebruiken voor je 3 tekens hebt ingevuld',//0
@@ -709,9 +742,10 @@ var langs = {
 			'Geef het Krasser paneel met stats weer op de Kras&Win pagina',//32
 			'Hou bij hoeveel kogels je koopt bij de kogelfabriek, hoeveel handen je hebt gespeeld met poker en hoeveel kaarten je hebt gekrast',//33
 			'Krijg een goed overzicht van de spots zodat je makkelijker je doel kunt kiezen',//34
-			'Laat het aantal misdaaden zien die succesvol waren en het total aantal auto\'s die je gestolen hebt, plus de totale winst van beide'
+			'Laat het aantal misdaaden zien die succesvol waren en het total aantal auto\'s die je gestolen hebt, plus de totale winst van beide',//35
+			'Een mooi overzicht van al je lijfwachten en hun getrainde levels, inclusief het totale aantal'//36
 		],
-		maxprefs: 36,
+		maxprefs: 37,
 		preftitles: [
 			'Misdaden/Auto stelen',//0
 			'Smokkelen en Drank/Drugs Prijzen',//1
@@ -943,6 +977,20 @@ var langs = {
 			'Winst:',
 			'Je hebt de huidige inzet gecalled.',
 			'Je hebt een nieuw spel gestart.'
+		],
+		bgov: [
+			'Lijfwachten overzicht',
+			'Naam',
+			'ID',
+			'Level',
+			'Aanval',
+			'Afweer',
+			'Speciaal',
+			'Kosten',
+			'Totaal',
+			'att',
+			'def',
+			'getraind'
 		],
 		killpage: 'Alle steden',
 		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?'],
