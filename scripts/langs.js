@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.76
+	Version: 1.9.3.77
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -336,7 +336,8 @@ var langs = {
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail ']
+		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail '],
+		accept: 'Accept | '
 	},
 	dm: {
 		prefsname: 'Preferences',
@@ -662,7 +663,8 @@ var langs = {
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail ']
+		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail '],
+		accept: 'Accept | '
 	},
 	nl: {
 		prefsname: 'Voorkeuren',
@@ -994,6 +996,7 @@ var langs = {
 		],
 		killpage: 'Alle steden',
 		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?'],
-		busttracker: ['Je hebt deze gangster uit de gevangenis gebroken.', 'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken']
+		busttracker: ['Je hebt deze gangster uit de gevangenis gebroken.', 'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken'],
+		accept: 'Accepteer | '
 	}
 };

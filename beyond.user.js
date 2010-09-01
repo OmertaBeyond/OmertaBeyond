@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			29-08-2010
+// @date			01-09-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
-// @contributor			MrWhite ( mrwhite AT omertabeyond DOT com )
+// @author			MrWhite ( mrwhite AT omertabeyond DOT com )
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
 // @description			Omerta Beyond 1.9.3 (Still the best 'legal' script! ;))
@@ -29,8 +29,6 @@
 // @resource	reply		http://omertabeyond.googlecode.com/svn/trunk/images/reply.png
 // @resource	loading		http://omertabeyond.googlecode.com/svn/trunk/images/loading.png
 // @resource	nickreader	http://omertabeyond.googlecode.com/svn/trunk/images/magnifier.png
-// @resource	on		http://omertabeyond.googlecode.com/svn/trunk/images/on.png
-// @resource	off		http://omertabeyond.googlecode.com/svn/trunk/images/off.png
 // @resource	finfavi		http://omertabeyond.googlecode.com/svn/trunk/images/finfavi.ico
 // @include			http://gm.omertabeyond.com/*.php*
 // @include			http://www.omertabeyond.com/html/poll/poll.php*
@@ -132,7 +130,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '76';
+var ScriptSubVersion = '77';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1373,19 +1371,6 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1) && pref
 		var c = cEL('center');
 		var br = cEL('br');
 		div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
-		/*		bgov: [
-			'Bodyguards overview', //0
-			'Name', 1
-			'ID', 2
-			'Level', 3 
-			'Attack', 4
-			'Defense', 5 
-			'Special', 6 
-			'Costs', 7
-			'Total', 8
-			'att', 9
-			'def', 10
-			'trained'*/ // 11
 		div.innerHTML = '<table class="thinline" style="width:620px"><tr><td class="tableheader">'+lang.bgov[1]+'</td><td class="tableheader">'+lang.bgov[2]+'</td><td class="tableheader">'+lang.bgov[3]+'</td><td class="tableheader">'+lang.bgov[4]+'</td><td class="tableheader">'+lang.bgov[5]+'</td><td class="tableheader">'+lang.bgov[6]+'</td><td class="tableheader">'+lang.bgov[7]+'</td></tr><tr><td colspan="7" height="1" bgcolor="black"></td></tr>'+trdump+'<table>';
 		c.appendChild(div);
 		c.appendChild(br);
@@ -2064,7 +2049,13 @@ if (dlp == '/mid.php') {
 			$Del('//div[@id="panel"]//table//tr[3]//td[6]');
 			$Del('//div[@id="panel"]//table//tr[3]//td[5]');
 		}
+	} else { // no DC+ so make some dummies to by-pass a lot of errors
+		var script = cEL('script');
+		script.setAttribute('type', 'text/javascript');
+		script.innerHTML = 'var timers = {crime: 0, car: 0, flight: 0, bullet: 0};';
+		db.appendChild(script);
 	}
+	
 }
 
 //---------------- User Profile ----------------
@@ -2559,15 +2550,15 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 }
 
 //---------------- Family page ----------------
-if(prefs[13] && dlp == '/family.php'){
+if (prefs[13] && dlp == '/family.php') {
 	//get tops
 	var anchor = $x('//table//tr[1]//table[@height="100%"][1]//a');
 	tops = [];
 	tops.push(anchor[0]);
-	if(anchor[1]){
+	if (anchor[1]) {
 		tops.push(anchor[1]);
 	}
-	if(anchor[2]){
+	if (anchor[2]) {
 		tops.push(anchor[2]);
 	}
 
@@ -2575,19 +2566,19 @@ if(prefs[13] && dlp == '/family.php'){
 	SorC = (nTop == 3) ? 2 : /Consi/.test($X('//table').textContent);//Sotto or Consi
 
 	don = tops[0].textContent;
-	sot = (nTop>1&&(nTop==3||SorC==0)) ? tops.pop().textContent : null;
-	con = (nTop>1&&(nTop==3||SorC==1)) ? tops.pop().textContent : null;
+	sot = (nTop > 1 && (nTop == 3 || SorC == 0)) ? tops.pop().textContent : null;
+	con = (nTop > 1 && (nTop == 3 || SorC == 1)) ? tops.pop().textContent : null;
 
 	//get capos
 	aCapos = [];
 	var lineup = $x('//tr[@valign="top"]//td[@class="subtableheader"]');
-	for(i=0;i<lineup.length;i++){
+	for (i = 0; i < lineup.length; i++) {
 		aCapos.push('#'+lineup[i].textContent+"#");
 	}
 	sCapos = aCapos.join();
 
 	//add capos list to top table
-	if(aCapos.length>1){//no need to add empty list
+	if (aCapos.length > 1) {//no need to add empty list
 		var target = $X('//table//table//tr['+(nTop+6)+']');
 		capoTr = target.cloneNode(1);//no need to make our own
 		capoTr.getElementsByTagName('td')[0].innerHTML = 'Capos:';
@@ -2604,7 +2595,7 @@ if(prefs[13] && dlp == '/family.php'){
 	//get objectowners
 	aOwners = [];
 	nObjects = $x('//table[@class="thinline"]')[2].getElementsByTagName('tr').length-4;
-	for(i=0;i<nObjects;i++){
+	for (i = 0; i < nObjects; i++) {
 		td = $X('/html/body//center/table/tbody/tr[2]/td/table/tbody/tr['+(i+5)+']/td[3]');
 		owner = td.textContent;
 		aOwners.push('#'+owner+'#');//additional ## to prevent subtring recognision
@@ -2623,26 +2614,27 @@ if(prefs[13] && dlp == '/family.php'){
 		n = $n.textContent;//nick
 		color = 'blue';//default online color
 		vip = tPos = '';
-		if(n==don){ $n.innerHTML = '<u>'+n+'</u><small><sup>[D]</sup></small>'; color = 'red'; tPos='[D]'; }
-		if(n==sot){ $n.innerHTML = '<u>'+n+'</u><small><sup>[S]</sup></small>'; color = 'red'; tPos='[S]'; }
-		if(n==con){ $n.innerHTML = '<u>'+n+'</u><small><sup>[C]</sup></small>'; color = 'red'; tPos='[C]'; }
+		if (n == don) { $n.innerHTML = '<u>'+n+'</u><small><sup>[D]</sup></small>'; color = 'red'; tPos='[D]'; }
+		if (n == sot) { $n.innerHTML = '<u>'+n+'</u><small><sup>[S]</sup></small>'; color = 'red'; tPos='[S]'; }
+		if (n == con) { $n.innerHTML = '<u>'+n+'</u><small><sup>[C]</sup></small>'; color = 'red'; tPos='[C]'; }
 
-		if(sCapos.search('#'+n+'#')!=-1){
+		if (sCapos.search('#'+n+'#') !=- 1) {
 			$n.innerHTML = '<u>'+n+'</u><small><sup>(c)'+tPos+'</sup></small>';
 			color = (tPos?'red':'orange');
 			vip = '(c)'+tPos;
 		}
-		if(sOwners.search('#'+n+'#')!=-1){
-			$n.innerHTML = (vip!=''?'<u>':'')+n+(vip!=''?'</u>':'')+'<small><sup>(O)'+vip+tPos+'</sup></small>';
-			if(vip==''){
+		vip += tPos;
+		if (sOwners.search('#'+n+'#') !=- 1) {
+			$n.innerHTML = (vip!=''?'<u>':'')+n+(vip!=''?'</u>':'')+'<small><sup>(O)'+vip+'</sup></small>';
+			if (vip == '') {
 				color = 'green';
 			}
 		}
 
-		if(sOnline.search('#'+n+'#')!=-1){
-			$n.setAttribute('class',color);
+		if (sOnline.search('#'+n+'#') !=- 1) {
+			$n.setAttribute('class', color);
 		}
-		if(n==me){
+		if (n == me) {
 			$n.innerHTML = '>'+$n.innerHTML+'<';
 		}
 	});
@@ -2651,7 +2643,7 @@ if(prefs[13] && dlp == '/family.php'){
 	memTable = $x('//table[@class="thinline"]')[6].getElementsByTagName('tr');
 	memTable[0].innerHTML = '<td class="tableheader" style="text-align:left !important">&nbsp;Members:</td><td class="tableheader" style="font-weight:normal !important; text-align:right !important;"><span><sup>(<u>capo/top3</u>) - (online > <span class="blue">member</span> | <span class="green">objectowner</span> | <span class="orange">capo</span> | <span class="red">top3</span>)</sup></span>&nbsp;</td>'; //LANG
 
-	for(i=0; ++i<memTable.length;){//cosmetical fix for colspan
+	for (i = 0; ++i < memTable.length;) {//cosmetical fix for colspan
 		memTable[i].getElementsByTagName('td')[0].setAttribute('colspan', '2');
 	}
 
@@ -2671,7 +2663,7 @@ if(prefs[13] && dlp == '/family.php'){
 
 	var chiefP = promo[2].getElementsByTagName('td')[7].textContent.replace(/\D/g, '');
 	var brugP = promo[3].textContent.replace(/\D/g, '');
-	if(brugP != '0' && chiefP !='0'){
+	if (brugP != '0' && chiefP !='0') {
 		var percentage = ((brugP-chiefP)/chiefP);
 	} else {
 		var percentage = 0;
@@ -2683,7 +2675,7 @@ if(prefs[13] && dlp == '/family.php'){
 }
 
 //---------------- Manage Users (top3 only) ----------------
-if(urlsearch == '/controlpanel.php' + dls){
+if (urlsearch == '/controlpanel.php' + dls) {
 	//invite from profile
 	$X('//input[@name="invite"]').value = GetParam('who');
 	$X('//input[@name="invite"]/parent::*/input[last()]').focus();
@@ -2692,7 +2684,7 @@ if(urlsearch == '/controlpanel.php' + dls){
 
 	var chiefP = promo[5].getElementsByTagName('td')[1].textContent.replace(/\D/g, '');
 	var brugP = promo[6].textContent.replace(/\D/g, '');
-	if(brugP != '0' && chiefP !='0'){
+	if (brugP != '0' && chiefP !='0') {
 		var percentage = ((brugP-chiefP)/chiefP);
 	} else {
 		var percentage = 0;
@@ -2703,7 +2695,7 @@ if(urlsearch == '/controlpanel.php' + dls){
 	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><br /><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
 
 }
-if(dlp == '/cpuser.php' && db.innerHTML.search('type="password"')==-1){
+if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 
 //--Add Capo Money list + calc
 	txt = $x('//td[@class="tableitem"]');//CapoMoney txt
@@ -2799,6 +2791,18 @@ if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 
 //---------------- Group Crimes AF ----------------
 if (prefs[26]) {
+
+	//Accept link AF
+	if (dls == '?module=GroupCrimes') {
+		var a = $x('//a').length;
+		for (y = 0; y < a; y++) {
+			if ($x('//a')[y].textContent == lang.accept) { // 'Accept | '
+				$x('//a')[y].focus();
+				y = 100;
+			}
+		}
+	}
+
 	//Heist AF
 	if ((/\bHeist\b/).test(dls)) {
 		if (/gun/.test(db.innerHTML) && /carid/.test(db.innerHTML) == false) {
