@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			01-09-2010
+// @date			02-09-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -130,7 +130,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '77';
+var ScriptSubVersion = '78';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -513,8 +513,7 @@ if(dlp == '/marquee.php'){
 					link.addEventListener('click', function () {
 						if (owncity == city) {
 							alert(lang.marquee[3]);
-						}
-						else if (confirm(lang.marquee[0] + city + '?')) {
+						} else if (confirm(lang.marquee[0] + city + '?')) {
 							top.frames[2].location = 'http://' + dlh + '/BeO/webroot/index.php?module=Travel&action=TravelNow&City=' + ((cityId == 'nul') ? 0 : cityId);
 						}
 					}, true);
@@ -2296,13 +2295,20 @@ if (dlp == '/bank.php') {
 	//add amt of interest next to %
 	var money = $x('//table')[2].getElementsByTagName('td')[2].textContent; //check for banked money
 	if (!money.split(' ')[1]) { //money in bank
-		var h, m, s, seconds;
+		var h, m, s, seconds, d;
 		var rx = $x('//table')[2].getElementsByTagName('td')[6].textContent; //get recieved amt
 		var tmp = 1 * rx.replace(/\D/g, '') - 1 * money.replace(/\D/g, ''); //calc interest
 		var intLine = $x('//table')[2].getElementsByTagName('td')[4];
 		intLine.innerHTML += ' &rarr ($'+commafy(tmp)+')';
 		setValue('interest', tmp);
+		
+		//interest reminder
 		seconds = 0
+		if ($X('//span[@id="counter__days_value"]') != null) { //just deposited some cash, so 1 day and 00:00:00 left
+			d = $X('//span[@id="counter__days_value"]').textContent;
+			d = parseInt(d, 10);
+			seconds = (seconds + (d * 86400));
+		}
 		if ($X('//span[@id="counter__hours_value"]') != null) {
 			h = $X('//span[@id="counter__hours_value"]').textContent;
 			h = parseInt(h, 10);
