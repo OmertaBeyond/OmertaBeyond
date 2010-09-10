@@ -130,7 +130,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '78';
+var ScriptSubVersion = '79';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1146,7 +1146,7 @@ if (dls == '?module=Launchpad') {
 }
 
 //---------------- Bodyguards -----------------------------------
-if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1) && prefs[36]) {
+if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.indexOf('&action=obay_details') == NULL ) && prefs[36]) {
 	function bgspage() {
 		var path = '//div[@class="otable widetable"][1]/center/table';
 		var a = $x(path).length; //amount of bg's you own
@@ -1650,7 +1650,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	}
 
 	//Bust Tracker
-	if (db.innerHTML.search(lang.busttracker[0]) != -1){
+	if (db.innerHTML.search(lang.busttracker[0]) || db.innerHTML.search(lang.busttracker[2]) != -1){
 		++bustTrackerinfo;
 		setValue('bustouts', bustTrackerinfo);
 	}
@@ -4017,6 +4017,167 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 	}, true);
 }
 
+//---------------- BJTracker ----------------
+if (dlp.indexOf('/gambling/blackjack.php') != -1 ) {
+	var bj = getValue('bj', 0);
+	var bjgames = getValue('bjgames', 0);
+	var bjgwon = getValue('bjgwon', 0);
+	var bjmwon = getValue('bjmwon', 0);
+	var bjspent = getValue('bjspent', 0);
+	var bjtie = getValue('bjtie', 0);
+	var bet = getValue('bjbet', 0);
+	var str = document.body.innerHTML.replace(/,/g, '');
+	if (db.innerHTML.indexOf(lang.bjtracker[10]) != -1) {
+		var betinput = $x('//input')[1];
+		console.log(betinput.value);
+		betinput.addEventListener('keyup', function() {
+			setValue('bjbet', parseInt(betinput.value, 10));
+		}, true);
+	}
+	if (db.innerHTML.indexOf('<img src="/static/images/game/casino/cards') != -1) {//game active
+		if (db.innerHTML.indexOf(lang.bjtracker[6]) != -1) {//insurance set
+			bjspent += bet*0.5;
+			setValue('bjspent', bjspent);
+		}
+		if (db.innerHTML.indexOf(lang.bjtracker[1]) != -1) {// game ended
+			bjgames += 1; //games played +1;
+			setValue('bjgames', bjgames);
+			if (db.innerHTML.indexOf(lang.bjtracker[14]) != -1) {// its a split
+				bjgames += 1; //games played +1;
+				setValue('bjgames', bjgames);
+				if (db.innerHTML.indexOf(lang.bjtracker[15]) != -1) {// player 2 won
+					bjgwon += 1; //games won +1;
+					setValue('bjgwon', bjgwon);
+					var rex = new RegExp(lang.bjtracker[18]);
+					var betcheck = str.match(rex); // get bet
+					if (betcheck[1] == bet) {
+						bjspent += bet;
+						setValue('bjspent', bjspent);
+						bjmwon += bet*2;
+						setValue('bjmwon', bjmwon);
+					} else {//doubledown
+						bjspent += parseInt(betcheck[1], 10);
+						setValue('bjspent', bjspent);
+						bjmwon += parseInt(betcheck[1], 10)*2;
+						setValue('bjmwon', bjmwon);
+					}
+				}
+				if (db.innerHTML.indexOf(lang.bjtracker[16]) != -1) {// player 2 lost
+					var rex = new RegExp(lang.bjtracker[19]);
+					var betcheck = str.match(rex); // get bet
+					if (betcheck[1] == bet) {
+						bjspent += bet;
+						setValue('bjspent', bjspent);
+					} else {//doubledown
+						bjspent += parseInt(betcheck[1], 10);
+						setValue('bjspent', bjspent);
+					}
+				}
+				if (db.innerHTML.indexOf(lang.bjtracker[17]) != -1) {// player 2 tie
+					bjtie += 1; //games tie +1;
+					setValue('bjtie', bjtie);
+					var rex = new RegExp(lang.bjtracker[20]);
+					var betcheck = str.match(rex); // get bet
+					if (betcheck[1] == bet) {
+						bjspent += bet;
+						setValue('bjspent', bjspent);
+						bjmwon += bet;
+						setValue('bjmwon', bjmwon);
+					} else {//doubledown
+						bjspent += parseInt(betcheck[1], 10);
+						setValue('bjspent', bjspent);
+						bjmwon += parseInt(betcheck[1], 10);
+						setValue('bjmwon', bjmwon);
+					}
+				}
+			}
+		}
+		if (db.innerHTML.indexOf(lang.bjtracker[2]) != -1) {// player 1 won
+			bjgwon += 1; //games won +1;
+			setValue('bjgwon', bjgwon);
+			var rex = new RegExp(lang.bjtracker[11]);
+			var betcheck = str.match(rex); // get bet
+			if (betcheck[1] == bet) {
+				bjspent += bet;
+				setValue('bjspent', bjspent);
+				bjmwon += bet*2;
+				setValue('bjmwon', bjmwon);
+			} else {//doubledown
+				bjspent += parseInt(betcheck[1], 10);
+				setValue('bjspent', bjspent);
+				bjmwon += parseInt(betcheck[1], 10)*2;
+				setValue('bjmwon', bjmwon);
+			}
+		}
+		if (db.innerHTML.indexOf(lang.bjtracker[3]) != -1) {// player 1 lost
+			var rex = new RegExp(lang.bjtracker[12]);
+			var betcheck = str.match(rex); // get bet
+			if (betcheck[1] == bet) {
+				bjspent += bet;
+				setValue('bjspent', bjspent);
+			} else {
+				bjspent += parseInt(betcheck[1], 10);
+				setValue('bjspent', bjspent);
+			}
+		}
+		if (db.innerHTML.indexOf(lang.bjtracker[4]) != -1) {// player 1 tie
+			bjtie += 1; //games tie +1;
+			setValue('bjtie', bjtie);
+			var rex = new RegExp(lang.bjtracker[13]);
+			var betcheck = str.match(rex); // get bet
+			if (betcheck[1] == bet) {
+				bjspent += bet;
+				setValue('bjspent', bjspent);
+				bjmwon += bet;
+				setValue('bjmwon', bjmwon);
+			} else {
+				bjspent += parseInt(betcheck[1], 10);
+				setValue('bjspent', bjspent);
+				bjmwon += parseInt(betcheck[1], 10);
+				setValue('bjmwon', bjmwon);
+			}
+		}
+		if (db.innerHTML.indexOf(lang.bjtracker[5]) != -1) {// player 1 bj
+			bj += 1; //bj +1;
+			setValue('bj', bj);
+			bjspent += bet;
+			setValue('bjspent', bjspent);
+			bjmwon += bet*2.5;
+			setValue('bjmwon', bjmwon);
+		}
+		if (db.innerHTML.indexOf(lang.bjtracker[7]) != -1) {// dealer bj with insurance
+			bjspent += bet;
+			setValue('bjspent', bjspent);
+			bjmwon += bet*1.5;
+			setValue('bjmwon', bjmwon);
+		}
+	}
+	var bjprofit = bjmwon - bjspent;
+	if (bjspent > 0) {
+		if (bjprofit >= 0) bjprofit = '$'+commafy(bjprofit);
+		else bjprofit = '-$'+commafy(bjspent - bjmwon);
+	}
+	else { bjprofit = '$0'; }
+	var div = cEL('div');
+	div.id = 'bjtracker';
+	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:220px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
+	div.innerHTML = '<center><b>'+lang.bjtracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="bjstats">'+lang.pokertracker[4]+' <font style="float:right"><b>'+bjgames+'</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>'+bjgwon+' ('+Math.round((bjgwon / bjgames) * 100)+'%)</b></font><br />'+lang.bjtracker[9]+' <font style="float:right"><b>'+bjtie+' ('+Math.round((bjtie / bjgames) * 100)+'%)</b></font><br />'+lang.bjtracker[8]+' <font style="float:right"><b>'+bj+' ('+Math.round((bj / bjgames) * 100)+'%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$'+commafy(bjspent)+'</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$'+commafy(bjmwon)+'</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>'+bjprofit+'</b></font></div><br />&nbsp;<div id="resetbj" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
+	db.appendChild(div);
+
+	getID('resetbj').addEventListener('click', function() {
+		getID('resetbj').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
+		getID('bjstats').innerHTML = lang.pokertracker[4]+' <font style="float:right"><b>0</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.bjtracker[9]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.bjtracker[8]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>0</b></font>';
+		setValue('bjgames', 0);
+		setValue('bjspent', 0);
+		setValue('bjgwon', 0);
+		setValue('bjmwon', 0);
+		setValue('bjtie', 0);
+		setValue('bj', 0);
+		setValue('bjbet', 0);
+	}, true);
+}
+
+
 //---------------- 1-Click Voter ----------------
 if (dlp == '/vfo.php') { //vote for omerta
 	$x('/html/body//table/tbody/tr[3]//a[contains(@href, "votelot.php")]').forEach(function ($n) {
@@ -4928,7 +5089,7 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]
 	var footer = $X('//tr[@height="100"]'); //add footer
 	footer.setAttribute('height', '60');
 	footer.childNodes[1].style.paddingTop = '4px';
-	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2010 - Omerta Game Ltd. | &copy; 2007-2010 - Omerta Beyond<br><br><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? 'http://89.149.221.178/~fingon/?v=' + (sets.version == '_dm' ? '2' : '8') : EdoUrl) + '" target="_blank">' + lang.login[2] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
+	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2010 - Omerta Game Ltd. | &copy; 2007-2010 - Omerta Beyond<br><br><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? 'http://89.149.221.178/~fingon/?v=' + (sets.version == '_dm' ? '2' : '9') : EdoUrl) + '" target="_blank">' + lang.login[2] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
 
 	var input = [$X('//input[@name="email"]'), $X('//input[@name="pass"]'), $X('//input[@type="submit"]')]; //add focus effects and styling
 	input.forEach(function ($n) {

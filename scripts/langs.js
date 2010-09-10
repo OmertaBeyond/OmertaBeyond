@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.78
+	Version: 1.9.3.79
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -319,6 +319,29 @@ var langs = {
 			'You have checked the current bet.',
 			'You have started a new game.'
 		],
+		bjtracker: [
+			'BJ Tracker',
+			'Play again',
+			'User 1: You won',
+			'User 1: You lost',
+			'User 1: You played even',
+			'User 1: Blackjack!!',//5
+			'Insurance Set',
+			'Dealer had a black jack',
+			'Blackjacks',
+			'Games tie: ',
+			'Bet:',//10
+			'User 1: You won you got your bet of \\$(\\d+) back',
+			'User 1: You lost your bet of \\$(\\d+) was taken by the casino',
+			'User 1: You played even so you got your bet of \\$(\\d+) back',
+			'You<b> 2 :</b>',
+			'User 2: You won',//15
+			'User 2: You lost',
+			'User 2: You played even',
+			'User 2: You won you got your bet of \\$(\\d+) back',
+			'User 2: You lost your bet of \\$(\\d+) was taken by the casino',
+			'User 2: You played even so you got your bet of \\$(\\d+) back'//20
+		],
 		bgov: [
 			'Bodyguards overview',
 			'Name',
@@ -336,7 +359,7 @@ var langs = {
 		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail '],
+		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail', 'You busted yourself out of jail'],
 		accept: 'Accept | '
 	},
 	dm: {
@@ -645,6 +668,29 @@ var langs = {
 			'Profit: ',
 			'You have checked the current bet.',
 			'You have started a new game.'
+		],
+		bjtracker: [
+			'BJ Tracker',
+			'Play again',
+			'User 1: You won',
+			'User 1: You lost',
+			'User 1: You played even',
+			'User 1: Blackjack!!',//5
+			'Insurance Set',
+			'Dealer had a black jack',
+			'Blackjacks',
+			'Games tie: ',
+			'Bet:',//10
+			'User 1: You won you got your bet of \\$(\\d+) back',
+			'User 1: You lost your bet of \\$(\\d+) was taken by the casino',
+			'User 1: You played even so you got your bet of \\$(\\d+) back',
+			'You<b> 2 :</b>',
+			'User 2: You won',//15
+			'User 2: You lost',
+			'User 2: You played even',
+			'User 2: You won you got your bet of \\$(\\d+) back',
+			'User 2: You lost your bet of \\$(\\d+) was taken by the casino',
+			'User 2: You played even so you got your bet of \\$(\\d+) back'//20
 		],
 		bgov: [
 			'Bodyguards overview',
@@ -979,6 +1025,29 @@ var langs = {
 			'Winst:',
 			'Je hebt de huidige inzet gecalled.',
 			'Je hebt een nieuw spel gestart.'
+		],
+		bjtracker: [
+			'BJ Volger',
+			'Speel nog een keer',
+			'User 1: Je hebt gewonnen',
+			'User 1: Je hebt verloren',
+			'User 1: Je speelde gelijk',
+			'User 1: Blackjack!!',//5
+			'Insurance Set',
+			'De deler had een black jack',
+			'Blackjacks',
+			'Gelijkspel: ',
+			'Gok:',//10
+			'User 1: Je hebt gewonnen, je hebt je inzet van \\$(\\d+) terug',
+			'User 1: Je hebt verloren, je inzet van \\$(\\d+) is nu voor het casino',
+			'User 1: Je speelde gelijk, je krijgt je inzet van \\$(\\d+) dus terug',
+			'Jij<b> 2 :</b>',
+			'User 2: Je hebt gewonnen',//15
+			'User 2: Je hebt verloren',
+			'User 2: Je speelde gelijk',
+			'User 2: Je hebt gewonnen, je hebt je inzet van \\$(\\d+) terug',
+			'User 2: Je hebt verloren, je inzet van \\$(\\d+) is nu voor het casino',
+			'User 2: Je speelde gelijk, je krijgt je inzet van \\$(\\d+) dus terug'//20
 		],
 		bgov: [
 			'Lijfwachten overzicht',
