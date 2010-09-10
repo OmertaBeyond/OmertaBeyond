@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			02-09-2010
+// @date			10-09-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -130,7 +130,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '79';
+var ScriptSubVersion = '80';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -1650,18 +1650,18 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	}
 
 	//Bust Tracker
-	if (db.innerHTML.search(lang.busttracker[0]) || db.innerHTML.search(lang.busttracker[2]) != -1){
+	if (db.innerHTML.indexOf(lang.busttracker[0]) != -1 || db.innerHTML.indexOf(lang.busttracker[2]) != -1) {
 		++bustTrackerinfo;
 		setValue('bustouts', bustTrackerinfo);
 	}
-	if (db.innerHTML.search(lang.busttracker[1]) != -1){
-		bustTrackerinfo+=2;
+	if (db.innerHTML.indexOf(lang.busttracker[1]) != -1) {
+		bustTrackerinfo += 2;
 		setValue('bustouts', bustTrackerinfo);
 	}
 
 	//Grab ingame HL colors
 	var famRGB = $x('//td[@width="125px"]')[0].style.backgroundColor;
-	if(famRGB==''){
+	if (famRGB == '') {
 		famHex = '';
 	} else {
 		famRGB = famRGB.replace(/[^0-9,]/g, '');
@@ -2802,7 +2802,8 @@ if (prefs[26]) {
 	if (dls == '?module=GroupCrimes') {
 		var a = $x('//a').length;
 		for (y = 0; y < a; y++) {
-			if ($x('//a')[y].textContent == lang.accept) { // 'Accept | '
+			//if ($x('//a')[y].textContent == lang.accept) { // 'Accept | '
+			if ($x('//a')[y].textContent.indexOf(lang.accept) != -1) { // 'Accept'
 				$x('//a')[y].focus();
 				y = 100;
 			}
@@ -4018,7 +4019,7 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 }
 
 //---------------- BJTracker ----------------
-if (dlp.indexOf('/gambling/blackjack.php') != -1 ) {
+if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 	var bj = getValue('bj', 0);
 	var bjgames = getValue('bjgames', 0);
 	var bjgwon = getValue('bjgwon', 0);

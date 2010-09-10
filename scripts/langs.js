@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.79
+	Version: 1.9.3.80
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -50,7 +50,7 @@ var langs = {
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs, obsolete
-			'Enable Trackers (Bullet, Poker, Scratching)',//33 - MISC
+			'Enable Trackers (Bullet, Poker, Scratching, BJ)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
@@ -360,7 +360,7 @@ var langs = {
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
 		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail', 'You busted yourself out of jail'],
-		accept: 'Accept | '
+		accept: 'Accept'
 	},
 	dm: {
 		prefsname: 'Preferences',
@@ -399,7 +399,7 @@ var langs = {
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs
-			'Enable Trackers (Bullet, Poker, Scratching)',//33 - MISC
+			'Enable Trackers (Bullet, Poker, Scratching, BJ)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page'//36 UI EXTRAS
@@ -710,7 +710,7 @@ var langs = {
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
 		busttracker: ['You busted this person out of jail', 'You busted this person & his/her cellmate out of jail '],
-		accept: 'Accept | '
+		accept: 'Accept'
 	},
 	nl: {
 		prefsname: 'Voorkeuren',
@@ -749,7 +749,7 @@ var langs = {
 			'Verwijder "Recente forumposts" van gebruikersprofielen',//30 - CLEAN-UP
 			'Sneltoetsen gebruiken bij de Postbus',//31 - MISC
 			'Auto-Krasser en Stats',//32 - OTHER AFs
-			'Voeg Volgers toe (Kogels, Poker, Krassen)',//33 - MISC
+			'Voeg Volgers toe (Kogels, Poker, Krassen, BJ)',//33 - MISC
 			'Ruim de Spot Overvallen pagina op',//34 - UI Extras
 			'Laat misdaad- en autojatstats zien op status pagina',//35 - CRIMES/CARS
 			'Voeg Lijfwachten Overzicht toe op BG\'s pagina'//36 - UI EXTRAS
@@ -1066,6 +1066,6 @@ var langs = {
 		killpage: 'Alle steden',
 		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?'],
 		busttracker: ['Je hebt deze gangster uit de gevangenis gebroken.', 'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken'],
-		accept: 'Accepteer | '
+		accept: 'Accepteer'
 	}
 };
