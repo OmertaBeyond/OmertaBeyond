@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			10-09-2010
+// @date			17-09-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -12,7 +12,7 @@
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
-// @require			http://usocheckup.redirectme.net/11336.js?maxage=7
+// @require			http://usocheckup.redirectme.net/11336.js?maxage=3
 // @resource	css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
 // @resource	trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
 // @resource	colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
@@ -130,7 +130,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '80';
+var ScriptSubVersion = '81';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -225,13 +225,6 @@ if (typeof txt == 'number') {
 	setValue('bninfo', '' + txt);
 	setValue('bncounter', 0);
 }
-
-/*
-Disabled till FS#180 is fixed
-if(!String.prototype.trim){
-	alert('You're using Firefox '+ff+'!\nIt is highly recommended that you upgrade to Firefox 3.6+\nSome features of OBeyond might not work properly if you don\'t upgrade');
-}
-*/
 
 //---------------- Preferences Panel ----------------
 if (dlp == '/prefs.php') {
@@ -384,7 +377,6 @@ if (dlp == '/prefs.php') {
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td width="10"><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
-		//<a href="#" onClick="cp2.select(document.colorpickform.defcol,\'pick2\');return false;" name="pick2" id="pick2"><img src="'+GM_getResourceURL('colorpicker')+'" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" border="0" style="padding:0px;margin:0px;"></a>
 		string += '<tr class="tr" height="25" align="center"><td colspan="6" class="td">'+savestring+'</td></tr>';
 		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div id="credits">'+lang.jhl[16]+'</div></td></tr>';
 
@@ -623,9 +615,9 @@ if (dlp == '/menu.php') {
 		innerHTML += '<tr><td><a target="main" onmousedown="return false;" href="'+ qlinks[i] +'" class="menuLink" title="'+qtitle[i]+'">'+descr[i]+'</a></td></tr>';
 	}
 	appMenu(2);
-	
+
 	var totlinks = $x('//a').length;
-	
+
 	//what links to remove?
 	var remlinks = getValue('remlinks', '');
 	var rem = [];
@@ -634,7 +626,7 @@ if (dlp == '/menu.php') {
 	for (y = 0; y < a; y++) {
 		rem[remlinks[y]] = 1;
 	}
-	
+
 	//what hotkeys?
 	var hks = getValue('ourhotkeys', '');
 	var hotkeys = [];
@@ -645,7 +637,7 @@ if (dlp == '/menu.php') {
 		hotk = hks[y].split('|');
 		hotkeys[hotk[0]] = hotk[1];
 	}
-	
+
 	//get # of submenu's
 	var tables = $X('//div[not(@id="_firebugConsole")]').getElementsByTagName('table').length;
 	var subs = tables / 2;
@@ -661,7 +653,7 @@ if (dlp == '/menu.php') {
 			buttons[j]--;
 		}
 	}
-	
+
 	if (!dls) { //normal menu
 
 		var removed = 0;
@@ -690,7 +682,7 @@ if (dlp == '/menu.php') {
 				$Del('/html/body//div/table['+i+']');//remove entire submenu
 			}
 		}
-	
+
 	} else if (dls.indexOf('?menu') != -1) { //changing menu
 
 		for (i = 1, q = 1; i <= subs; i++) {
@@ -712,11 +704,11 @@ if (dlp == '/menu.php') {
 				}
 			}
 		}
-		
+
 		//add save button
 		$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
 		$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
-		
+
 		getID('save_button').addEventListener('click', function() {
 			var letsrem = '';
 			for (i = 1; i <= totlinks; i++) {
@@ -727,14 +719,14 @@ if (dlp == '/menu.php') {
 			}
 			letsrem = letsrem.substr(0, (letsrem.length - 1));
 			setValue('remlinks', letsrem);
-		
+
 			$X('html/body').innerHTML = '<span class="red">Menu'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML;//succes msg
 			$X('html/body').style.backgroundColor='#3F505F';
 			setTimeout(function() { location.href='menu.php'; }, 1500);//refresh to see our results
 		}, true);
-	
+
 	} else if (dls.indexOf('?keys') != -1) { //changing hotkeys
-	
+
 		for (i = 1, q = 1; i <= subs; i++) {
 			for (j = 1; j <= buttons[i-1]; j++, q++) {
 				xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
@@ -753,11 +745,11 @@ if (dlp == '/menu.php') {
 				}
 			}
 		}
-		
+
 		//add save button
 		$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
 		$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
-		
+
 		getID('save_button').addEventListener('click', function() {
 			var shotkeys = '';
 			for (i = 1; i <= totlinks; i++) {
@@ -767,15 +759,15 @@ if (dlp == '/menu.php') {
 			}
 			shotkeys = shotkeys.substr(0, (shotkeys.length - 1));
 			setValue('ourhotkeys', shotkeys);
-		
+
 			$X('html/body').innerHTML = '<span class="red">Hotkey'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML;//succes msg
 			$X('html/body').style.backgroundColor='#3F505F';
 			setTimeout(function() { location.href='menu.php'; }, 1500);//refresh to see our results
 		}, true);
-		
+
 	}
-	
-	
+
+
 	if (!dls) {
 		//add action buttons (change menu, change hotkeys, reset menu)
 		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+GM_getResourceURL('buttonKey')+'" style="vertical-align:-2px" /> <img id="reset_button" onMouseover="style.cursor=\'pointer\'" title="Reset menu" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px" /></span>'; //LANG
@@ -789,7 +781,7 @@ if (dlp == '/menu.php') {
 	}
 	$X('//td[@class="container"]').setAttribute('colspan', '2');
 	//addept quick lookup colspan to match customs interface's
-	
+
 	//beautify for fully collapsed menu in dark theme
 	$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
 	$X('//div[@id="menubg"]').style.width = '99.5%';
@@ -1006,14 +998,14 @@ if (dls == '?module=Launchpad') {
 			cartxt = x3+'5]/td[1]';
 			crimes = x3+'4]/td[2]';
 			crimetxt = x3+'4]/td[1]';
-			
+
 			setTimeout(function() {
 				setValue('bustouts', bustTracker);
 			}, 0);
-			
+
 			$X('//table[@class="thinline"][3]/tbody/tr[4]/td[1]').innerHTML = '<b>'+ $X('//table[@class="thinline"][3]/tbody/tr[4]/td[1]').innerHTML +'</b>';
 			//cosmetic fix devs forgot
-			
+
 			if (prefs[6]) {//if remove Jailbusting Skill is on
 				$Del(jailBustXP + '5]');
 			}
@@ -1043,7 +1035,7 @@ if (dls == '?module=Launchpad') {
 			if ($X(famXP) && lang.status[1].match($X(famXP).textContent)) {//Family status
 				$I(famXP, '<a href="/family_recruitment.php"><b>'+ $X(famXP).textContent +'</b></a>');
 			}
-			
+
 			var inbank = parseInt($X('//table[@class="thinline"][3]/tbody/tr[4]/td[2]/a').innerHTML.replace(/,/g, '').replace(/\s/g, '').replace('$', ''), 10);
 			if (inbank > 0 && interest > 0) {
 				var tr = cEL('tr');
@@ -1059,40 +1051,44 @@ if (dls == '?module=Launchpad') {
 					var s = Math.floor(left % 60);
 					var when = lang.status[8]+' '+h+'h '+m+'m '+s+'s';
 				}
-			
+
 				tdl.innerHTML = '<b>'+lang.status[7]+'</b>';
 				tdr.innerHTML = '$ '+commafy(interest)+' ('+when+')';
 				tr.appendChild(tdl);
 				tr.appendChild(tdr);
 				$x('//table[@class="thinline"]')[4].appendChild(tr);
 			}
-			
+
 			if (prefs[35]) { // crime/car trackers
 				var perc = rounding(parseInt(crimeTracker,10)/parseInt($X(crimes).innerHTML.replace(',', '').trim(),10));
+				var perc2 = isNaN(perc) ? 0 : perc;
 				$X(crimetxt).innerHTML = $X(crimetxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
-				$X(crimes).innerHTML = $X(crimes).innerHTML +'/'+commafy(crimeTracker)+'&nbsp;('+perc+'%)';
-			
-				var perc2 = rounding(parseInt(carTracker,10)/parseInt($X(carnicks).innerHTML.replace(',', '').trim(),10));
+				$X(crimes).innerHTML = $X(crimes).innerHTML +'/'+commafy(crimeTracker)+'&nbsp;('+perc2+'%)';
+
+				var perc3 = rounding(parseInt(carTracker,10)/parseInt($X(carnicks).innerHTML.replace(',', '').trim(),10));
+				var perc4 = isNaN(perc3) ? 0 : perc3;
 				$X(cartxt).innerHTML = $X(cartxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
-				$X(carnicks).innerHTML = $X(carnicks).innerHTML +'/'+commafy(carTracker)+'&nbsp;('+perc2+'%)';
+				$X(carnicks).innerHTML = $X(carnicks).innerHTML +'/'+commafy(carTracker)+'&nbsp;('+perc4+'%)';
 
 				var crimetr = cEL('tr');
 				var crimetdl = cEL('td');
 				var crimetdr = crimetdl.cloneNode(1);
 				var average = Math.round(parseInt(crimemoney,10)/parseInt(crimeTracker,10));
-			
+				var average2 = isNaN(average) ? 0 : average;
+
 				crimetdl.innerHTML = '<b>'+lang.status[3]+'</b>';
-				crimetdr.innerHTML = '$ '+commafy(crimemoney)+' ($'+commafy(average)+'/'+lang.status[4]+')';
+				crimetdr.innerHTML = '$ '+commafy(crimemoney)+' ($'+commafy(average2)+'/'+lang.status[4]+')';
 				crimetr.appendChild(crimetdl);
 				crimetr.appendChild(crimetdr);
 				$x('//table[@class="thinline"]')[4].appendChild(crimetr);
-			
+
 				var crimetr = cEL('tr');
 				var crimetdl = cEL('td');
 				var crimetdr = crimetdl.cloneNode(1);
-				var average = Math.round(parseInt(carmoney,10)/parseInt(carTracker,10));
+				var average3 = Math.round(parseInt(carmoney,10)/parseInt(carTracker,10));
+				var average4 = isNaN(average3) ? 0 : average3;
 				crimetdl.innerHTML = '<b>'+lang.status[5]+'</b>';
-				crimetdr.innerHTML = '$ '+commafy(carmoney)+' ($'+commafy(average)+'/'+lang.status[6]+')';
+				crimetdr.innerHTML = '$ '+commafy(carmoney)+' ($'+commafy(average4)+'/'+lang.status[6]+')';
 				crimetr.appendChild(crimetdl);
 				crimetr.appendChild(crimetdr);
 				$x('//table[@class="thinline"]')[4].appendChild(crimetr);
@@ -1163,7 +1159,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 		var totlvls = 0;
 		var attplvl, defplvl, statt, stdef, startc, deflvl, attlvl;
 		var trdump = '';
-		
+
 		//looping through all bg's and storing values
 		for (y = 1; y <= a; y++) {
 			var c = 0;
@@ -1180,7 +1176,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 			} else { //special doesn't exist for this bg
 				bgsspec[y] = 0;
 			}
-			
+
 			//calcing total costs of the bg
 			//http://gamewiki.barafranca.com/index.php?title=Bodyguards_NL#De_bodyguards
 			if (bgsname[y] == 'Ike') {
@@ -1242,7 +1238,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 			c += startc;
 			att = ((bgsatt[y] - statt) / attplvl);
 			def = ((bgsdef[y] - stdef) / defplvl);
-			
+
 			if (att > 0) {
 				c += 25000;
 				if (att > 1) {
@@ -1263,7 +1259,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 												c += 575000;
 												if (att > 9) {
 													c += 725000;
-												}						
+												}
 											}
 										}
 									}
@@ -1293,7 +1289,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 												c += 575000;
 												if (def > 9) {
 													c += 725000;
-												}						
+												}
 											}
 										}
 									}
@@ -1323,7 +1319,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 												c += 575000;
 												if (bgsspec[y]> 9) {
 													c += 725000;
-												}						
+												}
 											}
 										}
 									}
@@ -1333,7 +1329,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 					}
 				}
 			}
-			
+
 			bgscost[y] = c;
 			totatt += bgsatt[y];
 			totdef += bgsdef[y];
@@ -1365,7 +1361,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 		trdump += '<td style="text-align:center;">&nbsp;</td>';
 		trdump += '<td style="text-align:center;">$'+commafy(totcost)+'</td>';
 		trdump += '</tr>';
-		
+
 		var div = cEL('div');
 		var c = cEL('center');
 		var br = cEL('br');
@@ -1379,8 +1375,8 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 		if (dls.indexOf('?module=Bodyguards') != -1) {
 			db.insertBefore(c, $X('//div[@class="otable widetable"]'));
 		}
-		
-		
+
+
 	}
 
 	if (dls.indexOf('?module=Shop') != -1) { //via Shop
@@ -1445,7 +1441,7 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 			$X('//fieldset//input[@type="text"][@name="amount_bull"]').value = bf;
 		}
 	}
-	
+
 	if (getELNAME('become')[0] == null) { // no owner fix
 		arr = $I(BFTextXp).split(' ');
 		if (sets.version == '_com') {
@@ -2054,7 +2050,7 @@ if (dlp == '/mid.php') {
 		script.innerHTML = 'var timers = {crime: 0, car: 0, flight: 0, bullet: 0};';
 		db.appendChild(script);
 	}
-	
+
 }
 
 //---------------- User Profile ----------------
@@ -2066,7 +2062,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 
 		var status = $X('//span[@id="status"]').innerHTML;
 		var alive = (status.indexOf(lang.profile[3])==-1);//alive/dead
-		
+
 		//DEAD or AKILLED ?
 		if(!alive){
 			if($X('//img').parentNode.nodeName != 'A'){
@@ -2301,7 +2297,7 @@ if (dlp == '/bank.php') {
 		var intLine = $x('//table')[2].getElementsByTagName('td')[4];
 		intLine.innerHTML += ' &rarr ($'+commafy(tmp)+')';
 		setValue('interest', tmp);
-		
+
 		//interest reminder
 		seconds = 0
 		if ($X('//span[@id="counter__days_value"]') != null) { //just deposited some cash, so 1 day and 00:00:00 left
@@ -2904,11 +2900,11 @@ if (prefs[26]) {
 
 //---------------- Raidpage ----------------
 if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1) && prefs[34]) {
-	
+
 	if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@id, "spot_")]').length / 3; // get total amount of spots
 		var city = $x('//b')[0].textContent;
-		
+
 		function whatspot(city, type) {
 			var cords;
 			if (city == 'Detroit') {
@@ -3175,7 +3171,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var type = $X('//*[@id="spot_default_'+id+'"]/b').textContent;
 			var cords = whatspot(city, type);
 			var owner = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr/td[2]').textContent;
-			
+
 			var time = ''
 			if ($X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]') != null) {
 				time = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]').innerHTML;
@@ -3808,9 +3804,9 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 		scratches += 1;
 		setValue('scratches', scratches);
 		if (getELNAME('ver')[0] != null) {//focus on code
-			getELNAME('ver')[0].focus(); 
+			getELNAME('ver')[0].focus();
 		} else { //focus on check
-			getELNAME('Check')[0].focus(); 
+			getELNAME('Check')[0].focus();
 		}
 	} else {
 		if (getELNAME('codescratch')[0] != null) {//focus on unclaimed prices
@@ -3922,7 +3918,7 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 	}, true);
 }
 
-//---------------- PokerTracker ----------------
+//---------------- Poker Tracker ----------------
 if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 	var ptgplay = getValue('ptgplay', 0);
 	var ptspent = getValue('ptspent', 0);
@@ -4005,7 +4001,9 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 	var div = cEL('div');
 	div.id = 'ptracker';
 	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:220px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
-	div.innerHTML = '<center><b>'+lang.pokertracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="ptstats">'+lang.pokertracker[4]+' <font style="float:right"><b>'+ptgplay+'</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>'+ptgwon+' ('+Math.round((ptgwon / ptgplay) * 100)+'%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$'+commafy(ptspent)+'</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$'+commafy(ptmwon)+'</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>'+ptprofit+'</b></font></div><br />&nbsp;<div id="resetpt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
+	var ptgWonP = Math.round((ptgwon / ptgplay) * 100);
+	var ptgWonPerc = isNaN(ptgWonP) ? 0 : ptgWonP;
+	div.innerHTML = '<center><b>'+lang.pokertracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="ptstats">'+lang.pokertracker[4]+' <font style="float:right"><b>'+ptgplay+'</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>'+ptgwon+' ('+ptgWonPerc+'%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$'+commafy(ptspent)+'</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$'+commafy(ptmwon)+'</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>'+ptprofit+'</b></font></div><br />&nbsp;<div id="resetpt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
 	db.appendChild(div);
 
 	getID('resetpt').addEventListener('click', function() {
@@ -4162,7 +4160,13 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 	var div = cEL('div');
 	div.id = 'bjtracker';
 	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:220px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
-	div.innerHTML = '<center><b>'+lang.bjtracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="bjstats">'+lang.pokertracker[4]+' <font style="float:right"><b>'+bjgames+'</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>'+bjgwon+' ('+Math.round((bjgwon / bjgames) * 100)+'%)</b></font><br />'+lang.bjtracker[9]+' <font style="float:right"><b>'+bjtie+' ('+Math.round((bjtie / bjgames) * 100)+'%)</b></font><br />'+lang.bjtracker[8]+' <font style="float:right"><b>'+bj+' ('+Math.round((bj / bjgames) * 100)+'%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$'+commafy(bjspent)+'</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$'+commafy(bjmwon)+'</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>'+bjprofit+'</b></font></div><br />&nbsp;<div id="resetbj" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
+	var gamesWon = Math.round((bjgwon / bjgames) * 100);
+	var gamesWon2 = isNaN(gamesWon) ? 0 : gamesWon;
+	var gamesTie = Math.round((bjtie / bjgames) * 100);
+	var gamesTie2 = isNaN(gamesTie) ? 0 : gamesTie;
+	var totalBJack = Math.round((bj / bjgames) * 100);
+	var totalBJacks = isNaN(totalBJack) ? 0 : totalBJack;
+	div.innerHTML = '<center><b>'+lang.bjtracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="bjstats">'+lang.pokertracker[4]+' <font style="float:right"><b>'+bjgames+'</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>'+bjgwon+' ('+gamesWon2+'%)</b></font><br />'+lang.bjtracker[9]+' <font style="float:right"><b>'+bjtie+' ('+gamesTie2+'%)</b></font><br />'+lang.bjtracker[8]+' <font style="float:right"><b>'+bj+' ('+totalBJacks+'%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$'+commafy(bjspent)+'</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$'+commafy(bjmwon)+'</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>'+bjprofit+'</b></font></div><br />&nbsp;<div id="resetbj" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
 	db.appendChild(div);
 
 	getID('resetbj').addEventListener('click', function() {
