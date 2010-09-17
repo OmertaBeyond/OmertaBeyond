@@ -130,7 +130,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '81';
+var ScriptSubVersion = '82';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -3688,11 +3688,21 @@ if (dlp == '/kill.php') {
 			var len = $n.innerHTML.trim().split(' ').length;
 			if (len >= '4') {
 				var arr = $n.innerHTML.split(' ');
-				if (arr[2] == lang.linkify[9]) {
-					arr[3] = '<a href="user.php?nick=' + arr[3].replace(/(<b>|<\/b>)/g, '') + '">' + arr[3] + '</a>'; //check if we found the bastard
+
+				if (sets.version == '_nl') {
+					if (arr[2] == lang.linkify[9]) {
+						arr[3] = '<a href="user.php?nick=' + arr[3].replace(/(<b>|<\/b>)/g, '') + '">' + arr[3] + '</a>'; //check if we found the bastard
+					} else {
+						arr[6] = '<a href="user.php?nick=' + arr[6].replace(/(<b>|<\/b>)/g, '') + '">' + arr[6] + '</a>';
+					}
 				} else {
-					arr[5] = '<a href="user.php?nick=' + arr[5].replace(/(<b>|<\/b>)/g, '') + '">' + arr[5] + '</a>';
+					if (arr[2] == lang.linkify[9]) {
+						arr[3] = '<a href="user.php?nick=' + arr[3].replace(/(<b>|<\/b>)/g, '') + '">' + arr[3] + '</a>'; //check if we found the bastard
+					} else {
+						arr[5] = '<a href="user.php?nick=' + arr[5].replace(/(<b>|<\/b>)/g, '') + '">' + arr[5] + '</a>';
+					}
 				}
+
 				$n.innerHTML = arr.join(' ');
 			}
 		});
