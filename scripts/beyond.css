@@ -4,7 +4,7 @@
 	Changing these values are at your own risk. If you make bug changes or bugfixes,
 	please inform us too so we can make any changes if we think are necesary.
 
-	Version: 1.9.3.82
+	Version: 1.9.3.83
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -178,21 +178,4 @@ color:orange !important
 
 .blue {
 color:#00F !important
-}
-
-/*	@Garage	*/
-.heistCar {
-background-color:#FFC1C1
-}
-
-.ocCar {
-background-color:#8BE9E9
-}
-
-.mocCar {
-background-color:#2E9999
-}
-
-.truckCar {
-background-color:#D9FB96
 }

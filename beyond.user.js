@@ -12,7 +12,6 @@
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
-// @require			http://usocheckup.redirectme.net/11336.js?maxage=3
 // @resource	css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
 // @resource	trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
 // @resource	colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
@@ -130,7 +129,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '82';
+var ScriptSubVersion = '83';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -147,7 +146,7 @@ var ob = ScriptVersion + '.' + ScriptSubVersion;
 if (dlp == '/game.php') { //just once on login
 	if (parseInt(ff.split('.')[1], 10) < parseInt(minFFVersion.split('.')[1], 10) || parseInt(ff.split('.')[0], 10) < parseInt(minFFVersion.split('.')[0], 10)) {
 		if (parseInt(ff.split('.')[0], 10) <= parseInt(minFFVersion.split('.')[0], 10)) {
-			alert('You don\'t use Firefox 3.6+. If you want Beyond to work properly, we recommend that you update.');
+			alert('You don\'t use FireFox '+minFFVersion+'+. If you want Beyond to work properly, we recommend that you update.');
 		}
 	}
 }
@@ -182,42 +181,6 @@ var querys = [
 	'defpri',
 	'defcol'
 ];
-//beyond menu descriptions
-var descr = [
-	lang.prefsname,
-	lang.menuitem[0],
-	lang.menuitem[1],
-	lang.menuitem[2],
-	lang.menuitem[3],
-	lang.menuitem[4],
-	lang.menuitem[5]
-];
-//beyond menu links
-var qlinks = [
-	PrefsLink +'&ob='+ob,
-	PollLink,
-	ContactLink,
-	ScriptLink + '/faq.php',
-	PricesLink,
-	sets.statslink,
-	sets.statslink2
-];
-//beyond menu titles
-var qtitle = [
-	lang.menutitle[0],
-	lang.menutitle[1],
-	lang.menutitle[2],
-	lang.menutitle[3],
-	lang.menutitle[4],
-	lang.menutitle[5],
-	lang.menutitle[6]
-];
-
-if(sets.version!='_com'){ //only .com support fingon famstats
-	descr.pop();
-	qlinks.pop();
-	qtitle.pop();
-}
 
 //---------------- int->str bninfo compatibility ----------------
 txt = getValue('bninfo', '');
@@ -582,8 +545,19 @@ if(dlp == '/marquee.php'){
 
 //---------------- Menu and submenus ----------------
 if (dlp == '/menu.php') {
-	//remove third party left overs from hotkeys
-	db.innerHTML = db.innerHTML.replace(/\s\[\D\]/g,'');
+	//beyond menu descriptions
+	var descr = [lang.prefsname].concat(lang.menuitem);
+	//beyond menu links
+	var qlinks = [PrefsLink +'&ob='+ob, PollLink, ContactLink, ScriptLink + '/faq.php', PricesLink, sets.statslink, sets.statslink2];
+	//beyond menu titles
+	var qtitle = lang.menutitle;
+
+	if(sets.version!='_com'){ //only .com support fingon famstats
+		descr.pop();
+		qlinks.pop();
+		qtitle.pop();
+	}
+
 	//--add additional submenus
 	function appMenu(x) {
 		innerHTML += '</tbody></table></div></td></tr></tbody>';
@@ -655,7 +629,6 @@ if (dlp == '/menu.php') {
 	}
 
 	if (!dls) { //normal menu
-
 		var removed = 0;
 		for (i = subs; i >= 1; i--) {
 			removed = 0;
@@ -682,9 +655,7 @@ if (dlp == '/menu.php') {
 				$Del('/html/body//div/table['+i+']');//remove entire submenu
 			}
 		}
-
 	} else if (dls.indexOf('?menu') != -1) { //changing menu
-
 		for (i = 1, q = 1; i <= subs; i++) {
 			for (j = 1; j <= buttons[i-1]; j++, q++) {
 				xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
@@ -696,7 +667,6 @@ if (dlp == '/menu.php') {
 				if (link == '' || link == 'index.php') {
 					link = a[(a.length-2)];
 				}
-				//console.log(link);
 				content = $X(xp_a).innerHTML;
 				$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="checkbox" checked="checked" id="cb['+q+']" value="'+link+'" /></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
 				if (rem[link]) {
@@ -724,9 +694,7 @@ if (dlp == '/menu.php') {
 			$X('html/body').style.backgroundColor='#3F505F';
 			setTimeout(function() { location.href='menu.php'; }, 1500);//refresh to see our results
 		}, true);
-
 	} else if (dls.indexOf('?keys') != -1) { //changing hotkeys
-
 		for (i = 1, q = 1; i <= subs; i++) {
 			for (j = 1; j <= buttons[i-1]; j++, q++) {
 				xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
@@ -766,8 +734,6 @@ if (dlp == '/menu.php') {
 		}, true);
 
 	}
-
-
 	if (!dls) {
 		//add action buttons (change menu, change hotkeys, reset menu)
 		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+GM_getResourceURL('buttonKey')+'" style="vertical-align:-2px" /> <img id="reset_button" onMouseover="style.cursor=\'pointer\'" title="Reset menu" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px" /></span>'; //LANG
@@ -793,6 +759,36 @@ if (dlp == '/menu.php') {
 			setPow('bninfo',2,i+4);
 		}
 	}
+
+	//Preserve state of menu captions
+	$x('//th').forEach(function($n){
+		var caps = getValue('menuCaption', '');
+		if(caps.search($n.innerHTML)!=-1){
+			if($n.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
+				var caption = $n.parentNode.nextSibling.firstChild.firstChild;
+			} else {
+				var caption = $n.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
+			}
+			caption.style.display = 'none';
+		}
+		$n.addEventListener('click', function(e){
+			if(e.target.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
+				var caption = e.target.parentNode.nextSibling.firstChild.firstChild;
+			} else {
+				var caption = e.target.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
+			}
+			setTimeout(function(){ //add delay to allow full motion
+				var name = e.target.innerHTML;
+				var names = getValue('menuCaption', '');
+				if(names.search(name)==-1){
+					names += name; //save as collapsed
+				} else { //
+					names = names.replace(name,''); //remove from collapsed list
+				}
+				setValue('menuCaption', names);
+			}, 1000);
+		}, true);
+	});
 }
 
 //---------------- Contact page 'tweaks' ----------------
@@ -1053,7 +1049,7 @@ if (dls == '?module=Launchpad') {
 				}
 
 				tdl.innerHTML = '<b>'+lang.status[7]+'</b>';
-				tdr.innerHTML = '$ '+commafy(interest)+' ('+when+')';
+				tdr.innerHTML = '<a href="/bank.php">$ '+commafy(interest)+' ('+when+')</a>';
 				tr.appendChild(tdl);
 				tr.appendChild(tdr);
 				$x('//table[@class="thinline"]')[4].appendChild(tr);
@@ -1067,6 +1063,7 @@ if (dls == '?module=Launchpad') {
 
 				var perc3 = rounding(parseInt(carTracker,10)/parseInt($X(carnicks).innerHTML.replace(',', '').trim(),10));
 				var perc4 = isNaN(perc3) ? 0 : perc3;
+				if (isNaN(perc2)) perc2 = 0;
 				$X(cartxt).innerHTML = $X(cartxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
 				$X(carnicks).innerHTML = $X(carnicks).innerHTML +'/'+commafy(carTracker)+'&nbsp;('+perc4+'%)';
 
@@ -1087,6 +1084,7 @@ if (dls == '?module=Launchpad') {
 				var crimetdr = crimetdl.cloneNode(1);
 				var average3 = Math.round(parseInt(carmoney,10)/parseInt(carTracker,10));
 				var average4 = isNaN(average3) ? 0 : average3;
+				if (isNaN(average)) average = 0;
 				crimetdl.innerHTML = '<b>'+lang.status[5]+'</b>';
 				crimetdr.innerHTML = '$ '+commafy(carmoney)+' ($'+commafy(average4)+'/'+lang.status[6]+')';
 				crimetr.appendChild(crimetdl);
@@ -1165,7 +1163,6 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 			var c = 0;
 			var bgname = $X(path+'['+y+']/tbody/tr/td/h2').textContent;
 			var bgarr = bgname.match(/(\w+) - ID (\d+)  - Level (\d+) /);
-			//console.log(bgarr[1]+bgarr[2]+bgarr[3]);
 			bgsname[y] = bgarr[1];
 			bgsid[y] = bgarr[2];
 			bgslvl[y] = parseInt(bgarr[3], 10);
@@ -1646,14 +1643,17 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	}
 
 	//Bust Tracker
-	if (db.innerHTML.indexOf(lang.busttracker[0]) != -1 || db.innerHTML.indexOf(lang.busttracker[2]) != -1) {
-		++bustTrackerinfo;
-		setValue('bustouts', bustTrackerinfo);
+	if (db.innerHTML.substr(0, (lang.busttracker[0].length - 0)) == lang.busttracker[0]) {
+		bustTrackerinfo = (bustTrackerinfo + 1);
+	} else {
+		if (db.innerHTML.substr(0, (lang.busttracker[1].length - 0)) == lang.busttracker[1]) {
+			bustTrackerinfo = (bustTrackerinfo + 2);
+		}
 	}
-	if (db.innerHTML.indexOf(lang.busttracker[1]) != -1) {
-		bustTrackerinfo += 2;
-		setValue('bustouts', bustTrackerinfo);
-	}
+	var span = cEL('span');
+	var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
+	span.innerHTML = '<br>&nbsp;Bust outs: ' + commafy(bustTrackerinfo);
+	$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 
 	//Grab ingame HL colors
 	var famRGB = $x('//td[@width="125px"]')[0].style.backgroundColor;
@@ -1759,7 +1759,6 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		if (prior == 10 && inJail.length > lowlifes) {
 			//i = (Math.ceil(Math.random()*(inJail.length-lowlifes))-1); //old
 			i = rand(0, (inJail.length-lowlifes)); //new
-			//console.log(i + 'th out of '+inJail.length); // for testing randomfactor
 			if (inJail.length > 4 && (i+3) > inJail.length) {
 				i = i-3;
 			}
@@ -1777,13 +1776,15 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		tr.getElementsByTagName('input')[0].style.visibility = 'hidden'; //make show-row radio invisible, as it isn't needed there
 
 		buy = tr.lastChild.previousSibling.firstChild;//node to add buy-out hotkey
-		buy.setAttribute('accessKey', '0');
-		buy.firstChild.innerHTML += ' [0]';
-		$X('//center/table[@class="thinline"]/tbody').insertBefore(tr, $X('//center/table[@class="thinline"]/tbody/tr'));
+		if(buy) { //check if there is someone to bail out
+			buy.setAttribute('accessKey', '0');
+			buy.firstChild.innerHTML += ' [0]';
+			$X('//center/table[@class="thinline"]/tbody').insertBefore(tr, $X('//center/table[@class="thinline"]/tbody/tr'));
 
-		//Force actual radio to be selected, rather then the show-row radio clone
-		var shown = $X('//table[@class="thinline"]').getElementsByTagName('input')[0];
-		$x('//input[@value="'+shown.value+'"]')[1].checked = true;
+			//Force actual radio to be selected, rather then the show-row radio clone
+			var shown = $X('//table[@class="thinline"]').getElementsByTagName('input')[0];
+			$x('//input[@value="'+shown.value+'"]')[1].checked = true;
+		}
 
 		//Add Friends List
 		if(maxHL!=0&&prior!=10){//no need to add stuff with max=0 or no HL
@@ -1799,11 +1800,11 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 			//compiling DOM and stuff
 			wrap = cEL('div');
 			wrap.id = 'footerwrap';
-			wrap.setAttribute('style','height:156px');
+			wrap.setAttribute('style','height:156px; width:600px;');
 			footer = cEL('div');
 			footer.id = 'footer';
 			footer.align = 'center';
-			footer.setAttribute('style', 'position:fixed; border:0px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
+			footer.setAttribute('style', 'position:fixed; bottom:0px; width:600px; border:0px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
 			footer.setAttribute('class', 'otable');
 
 			friends = '<table id="friends" class="thinline" cellspacing="2" cellpadding="2" width="600" style="border:1px solid #000 !important;" rules="none"><tr bgcolor="#000" height="3">';
@@ -1825,12 +1826,12 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 			//Add amount of ppl in jail since the above made div covers original one AND add busttracker + arrow key instructions
 			var span = cEL('span');
 			var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-			span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;Bust outs: ' + commafy(bustTrackerinfo) + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
+			span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
 			$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 		} else {
 			var span = cEL('span'); //add busttracker + arrow key instructions
 			var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-			span.innerHTML = '<br>&nbsp;Bust outs: ' + commafy(bustTrackerinfo) +'<br>&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
+			span.innerHTML = '<br>&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
 			$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 		}
 
@@ -1885,8 +1886,11 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 }
 
 //---------------- In jail page ----------------
-if (dlp == '/iminjail.php' && db.innerHTML.indexOf('<img') != -1) {
-
+if (dlp == '/iminjail.php' && db.innerHTML.indexOf(lang.busttracker[2]) != 1) {
+	var busttracker = getValue('bustouts', 0);
+	setValue('bustouts', (busttracker + 1));
+}
+if (dlp == '/iminjail.php' && db.innerHTML.indexOf('/static/images/game/generic/criminal.jpg') != -1) {
 	if ($X('//img[@id="imgcode"]')) { // ADD autofocus if captcha is missing
 		$X('//input[@name="ver"]').focus();
 	} else {
@@ -2299,27 +2303,29 @@ if (dlp == '/bank.php') {
 		setValue('interest', tmp);
 
 		//interest reminder
-		seconds = 0
+		seconds = 0;
 		if ($X('//span[@id="counter__days_value"]') != null) { //just deposited some cash, so 1 day and 00:00:00 left
 			d = $X('//span[@id="counter__days_value"]').textContent;
 			d = parseInt(d, 10);
 			seconds = (seconds + (d * 86400));
+		} else {
+			if ($X('//span[@id="counter__hours_value"]') != null) {
+				h = $X('//span[@id="counter__hours_value"]').textContent;
+				h = parseInt(h, 10);
+				seconds = (seconds + (h * 3600));
+			}
+			if ($X('//span[@id="counter__minutes_value"]') != null) {
+				m = $X('//span[@id="counter__minutes_value"]').textContent;
+				m = parseInt(m, 10);
+				seconds = (seconds + (m * 60));
+			}
+			if ($X('//span[@id="counter__seconds_value"]') != null) {
+				s = $X('//span[@id="counter__seconds_value"]').textContent;
+				s = parseInt(s, 10);
+				seconds = (seconds + (s));
+			}
 		}
-		if ($X('//span[@id="counter__hours_value"]') != null) {
-			h = $X('//span[@id="counter__hours_value"]').textContent;
-			h = parseInt(h, 10);
-			seconds = (seconds + (h * 3600));
-		}
-		if ($X('//span[@id="counter__minutes_value"]') != null) {
-			m = $X('//span[@id="counter__minutes_value"]').textContent;
-			m = parseInt(m, 10);
-			seconds = (seconds + (m * 60));
-		}
-		if ($X('//span[@id="counter__seconds_value"]') != null) {
-			s = $X('//span[@id="counter__seconds_value"]').textContent;
-			s = parseInt(s, 10);
-			seconds = (seconds + (s));
-		}
+
 		//when do we get interest?
 		var timestamp = Math.round(parseInt(new Date().getTime(), 10) / 1000);
 		timestamp = parseInt(timestamp, 10);
@@ -2385,12 +2391,22 @@ if (dlp == '/bank.php') {
 
 //---------------- Garage Crusher ----------------
 if(dlp == '/garage.php'){
+	function checkcar(car){
+		types = [];
+		types[0] = ['h', 8, 9, 13, 15, 16, 17, 18, 19, 21, 22, 27, 32, 34, 35, 40, 43];
+		types[1] = ['oc', 23, 25, 26, 28, 29, 30, 31, 33, 39, 41, 42];
+		types[2] = ['moc', 45, 47, 48];
+		types[3] = ['tr', 23, 47, 54];
+		types.forEach(function(array){ array.forEach(function($n){if($n==car){ eval(array[0] + 'car=1;');} }); });
+	}
 	var rows = $x('//tr').length; //get number of rows
 
 	if(prefs[24]){ //crusher
 		//define car arrays
 		var titles = { h:'Heist', oc:'OC', moc:'MOC', tr:'Truck' };
 		var carValues = { h:'heist', oc:'oc', moc:'moc', tr:'truck' };
+		var base = getValue('titleBg', '#3F505F');
+		var carColors = { h:getTintedColor(base, 125), oc:getTintedColor(base, 75), moc:getTintedColor(base, 25), tr:getTintedColor(base, 150)};
 		var types = [['h', 8, 9, 13, 15, 16, 17, 18, 19, 21, 22, 27, 32, 34, 35, 40, 43], ['oc', 23, 25, 26, 28, 29, 30, 31, 33, 39, 41, 42], ['moc', 45, 47, 48], ['tr', 23, 47, 54]];
 
 		var indexTd = cEL('td'); //add type collumn to header
@@ -2408,8 +2424,10 @@ if(dlp == '/garage.php'){
 				if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
 					carType = titles[$n[0]]; //set car type
 					carRow.setAttribute('title', titles[$n[0]]); //set popup title
-					carRow.setAttribute('class', carValues[$n[0]] + 'Car'); //set class
-					carRow.setAttribute('onmouseout', 'this.className="' + carValues[$n[0]] + 'Car";'); //add mouseout event
+			//		carRow.setAttribute('class', carValues[$n[0]] + 'Car'); //set class
+					carRow.style.backgroundColor = carColors[$n[0]];
+					carRow.setAttribute('onmouseover', 'this.style.backgroundColor="#D0D0D0";'); //add mouseover event
+					carRow.setAttribute('onmouseout', 'this.style.backgroundColor="' + carColors[$n[0]] + '";'); //add mouseout event
 				}
 			});
 			var typeTd = cEL('td'); //add type collumn to row
@@ -2427,20 +2445,37 @@ if(dlp == '/garage.php'){
 
 	var xpath = '/html/body//form//center/table/tbody/tr[' + rows + ']/td';//add menu
 	var string = '<td><label><input type="checkbox" checked="1" ';
-	$I(xpath, $I(xpath) +
-	' <br><br><hr><br>' +
-	' Select if worth is <select size="1" id="X"><option value="1">under</option><option value="0">above</option></select>: $ <input type="text" value="6000" maxlength="5" size="8" id="max"/>' + //LANG
-	'<table><tr>'+string+'id="heist">Skip Heist cars</label></td>'+string+'id="oc">Skip OC cars</label></td>'+'</tr><tr>'+string+ //LANG
-	'id="truck">Skip Trucks</label></td>'+string+'id="moc">Skip MOC cars</label></td>'+'</tr><tr>'+string+'id="nodam">Skip 0% cars</label></td><td>&nbsp;</td>'+'</tr></table>'+ //LANG
-	' <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="Go" name="action" />');
 
-	var all = $X('//input[@type="button"]');//add select All in SH button
+	var sTable = cEL('table');
+	sTable.id = 'selectTable';
+	sTable.setAttribute('style', 'border:0px; width:100%;');
+	sTr = cEL('tr');
+	sTr.id = 'selectRow';
+
+	spacer = cEL('td');
+	spacer.innerHTML = '<br><hr><br>';
+	spacer.setAttribute('style', 'width:5%; vertical-align:top;');
+	sTr.appendChild(spacer);
+
+	sTd = cEL('td');
+	sTd.id = 'selectTd';
+	sTd.innerHTML = ' <br><hr>' +
+	' <b>Select based on Value</b> <br><br><select size="1" id="X" style="width:100px;"><option value="1">Under</option><option value="0">Above</option></select> &nbsp;$<input type="text" value="6000" maxlength="5" size="8" style="width:110px;" id="max"/>' + //LANG
+	' &nbsp; <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&ob_oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&ob_moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&ob_heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="Go" name="action" />' +
+	'<table style="padding-top:10px; position:relative; right:7px;"><tr>'+string+'id="heist">Skip Heist cars</label></td>'+string+'id="oc">Skip OC cars</label></td>'+'</tr><tr>'+string+ //LANG
+	'id="truck">Skip Trucks</label></td>'+string+'id="moc">Skip MOC cars</label></td>'+'</tr><tr>'+string+'id="nodam">Skip 0% cars</label></td><td>&nbsp;</td>'+'</tr></table>'; //LANG
+	sTr.appendChild(sTd);
+	sTable.appendChild(sTr);
+	$X(xpath).appendChild(sTable);
+
+	//add select All in SH button
+	var all = $X('//input[@type="button"]');
 	var allShButton = all.cloneNode(0);
 	allShButton.value = 'All in Safehouse';
 	allShButton.removeAttribute('onclick');
 	allShButton.addEventListener('click', function(){
 		$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
-			if($n.lastChild.previousSibling.textContent.replace(/[^A-Z]/ig,'')=='INSAFEHOUSE'){
+			if($n.lastChild.previousSibling.textContent.replace(/[^A-Z]/ig,'').search('INSAFEHOUSE')!=-1){
 				$n.getElementsByTagName('input')[1].checked = true;
 			}
 		});
@@ -2451,13 +2486,103 @@ if(dlp == '/garage.php'){
 	text.innerHTML = ' | ';
 	all.parentNode.insertBefore(text, all.nextSibling);
 
-	if(ls.length > 1){//select cars
+	//add select all group Button
+	var names_td = $x('//a[contains(@href,"carinfo.php")]');
+	var names = [];
+	names_td.forEach(function($n){ //grab carnames on the current page
+		var carName = $n.innerHTML;
+		if(names.indexOf(carName)==-1){
+			names.push(carName);
+		}
+	});
+	var selectN = cEL('select');
+	selectN.id = 'selectN';
+	selectN.addEventListener('change', function(e){
+		$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
+			if(!getID('keep').checked) {
+				$n.getElementsByTagName('input')[1].checked = false;
+			}
+			if($n.getElementsByTagName('a')[0].innerHTML == e.target.value){
+				$n.getElementsByTagName('input')[1].checked = true;
+			}
+		});
+	}, true);
+	var init = cEL('option');
+	init.innerHTML = 'Choose a Name';
+	selectN.appendChild(init);
+	names.forEach(function($n){
+		var option = cEL('option');
+		option.innerHTML = $n;
+		option.setAttribute('value', $n);
+		selectN.appendChild(option);
+	});
+
+	var cities_td = $x('//tr[@class="thinline"]//td[6]');
+	var cities = [];
+	cities_td.forEach(function($n){ //grab cities on the current page
+		var carCity = $n.innerHTML;
+		if(cities.indexOf(carCity)==-1){
+			cities.push(carCity);
+		}
+	});
+	var selectC = cEL('select');
+	selectC.id = 'selectC';
+	selectC.addEventListener('change', function(e){
+		$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
+			if(!getID('keep').checked) {
+				$n.getElementsByTagName('input')[1].checked = false;
+			}
+			if($n.getElementsByTagName('td')[5].innerHTML == e.target.value){
+				$n.getElementsByTagName('input')[1].checked = true;
+			}
+		});
+	}, true);
+	var init = cEL('option');
+	init.innerHTML = 'Choose a City';
+	selectC.appendChild(init);
+	cities.forEach(function($n){
+		var option = cEL('option');
+		option.innerHTML = $n;
+		option.setAttribute('value', $n);
+		selectC.appendChild(option);
+	});
+	var citySpan = cEL('span');
+	citySpan.style.width = '80px';
+	citySpan.innerHTML = 'City: &nbsp;&nbsp;&nbsp;';
+
+	var keep = cEL('input');
+	keep.setAttribute('type', 'checkbox');
+	keep.id = 'keep';
+	var keepSpan = cEL('span');
+	keepSpan.innerHTML = 'Keep selected when selecting a new group';
+
+	var gTd = cEL('td'); //group select
+	gTd.innerHTML = '<br><hr><b>Select group from current page</b><br><br>Name: ';
+	gTd.appendChild(selectN);
+	gTd.appendChild(cEL('br'));
+	gTd.appendChild(cEL('br'));
+	gTd.appendChild(citySpan);
+	gTd.appendChild(selectC);
+	gTd.appendChild(cEL('br'));
+	gTd.appendChild(cEL('br'));
+	gTd.appendChild(keep);
+	gTd.appendChild(keepSpan);
+	gTd.style.verticalAlign = 'top';
+	$X('//tr[@id="selectRow"]').appendChild(gTd);
+
+	spacer = cEL('td');
+	spacer.innerHTML = '<br><hr><br>';
+	spacer.setAttribute('style', 'width:5%; vertical-align:top;');
+	$X('//tr[@id="selectRow"]').appendChild(spacer);
+
+	//select cars
+	if(ls.length > 1){
 		if(ls.indexOf('heist') != -1 || ls.indexOf('nodam') != -1 || ls.indexOf('max') != -1 || ls.indexOf('oc') != -1){
-			var max=GetPost('max'), truck=GetPost('truck'), oc=GetPost('oc'), moc=GetPost('moc'), heist=GetPost('heist'), nodam=GetPost('nodam'), select=GetPost('select'), a=0, y, car, z, perc, types;
+			var max=GetPost('max'), truck=GetPost('truck'), oc=GetPost('ob_oc'), moc=GetPost('ob_moc'), heist=GetPost('ob_heist'), nodam=GetPost('nodam'), select=GetPost('select'), a=0, y, car, z, perc, types;
 			for(i=2;i<rows-2;i++){
-				y = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
+				y = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[3]/a';//get car
 				car = $X(y).href.match(/\d+/g)[0];
-				z = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[3]';//get percentage damage
+				z = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[4]';//get percentage damage
 				perc = $I(z);
 				perc = parseInt(perc.slice(0, perc.indexOf('%')));
 
@@ -2480,7 +2605,7 @@ if(dlp == '/garage.php'){
 					tr = parseInt(tr);
 
 					if((tr < max && select==1)||(tr > max && select==0)){
-						$X('/html/body//form/center/table/tbody/tr['+(i+2)+']/td[6]/input[2]').checked = true;
+						$X('/html/body//form/center/table/tbody/tr['+(i+2)+']/td[7]/input[2]').checked = true;
 					}
 				}
 			}
@@ -2553,6 +2678,52 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 
 //---------------- Family page ----------------
 if (prefs[13] && dlp == '/family.php') {
+	//Add to busting list
+	addtojhl = cEL('span'); //not an anchor, will mess up grabbing tops etc..
+	addtojhl.innerHTML = 'Add to Busting List';
+	addtojhl.id = 'addlink';
+	addtojhl.setAttribute('class','red');
+	addtojhl.addEventListener('mouseover', function() { this.style.cursor = 'pointer'; }, true);
+	addtojhl.addEventListener('mouseout', function() { this.style.cursor = 'default'; }, true);
+	addtojhl.addEventListener('click', function(){
+		length = getValue('jailint', 0);
+		names = getValue('bust', '');
+		cols = getValue('colours');
+		pris = getValue('priority');
+		who = $X('//td[@class="profilerow"]').textContent;
+		who = who.substr(0,who.indexOf(' ')).replace(/[^a-zA-Z]/g,'');
+		nick = who.toUpperCase();
+		if (length == 0) { //check for missing jailint
+			setValue('jailint', 6);
+			length = 6;
+		}
+		if (!names) { //check for missing data
+			names = ',,,,,,';
+			cols = ',,,,,,';
+			pris = ',,,,,,';
+		}
+		names = names.split(','); //load stored data
+		cols = cols.split(',');
+		pris = pris.split(',');
+		i = -1;
+		while (names[++i] && names[i] != nick); //find first open spot
+		if (names[i] != nick) {
+			if (i == length) { //extend jailint if neccesary
+				setValue('jailint', ++length);
+			}
+			names[i] = nick; //insert new data into arrays
+			cols[i] = getValue('defcol', '33FF66');
+			pris[i] = getValue('defpri', 5);
+			setValue('bust', names.join(',')); //join and save values
+			setValue('colours', cols.join(','));
+			setValue('priority', pris.join(','));
+			alert(who + ' added to jail highlighter using default color and priority'); //LANG
+		} else {
+			alert('Oops! ' + who + ' is already in your busting list!'); //LANG
+		}
+	}, true);
+	$X('//td[@class="profilerow"]').appendChild(addtojhl);
+
 	//get tops
 	var anchor = $x('//table//tr[1]//table[@height="100%"][1]//a');
 	tops = [];
@@ -2575,12 +2746,12 @@ if (prefs[13] && dlp == '/family.php') {
 	aCapos = [];
 	var lineup = $x('//tr[@valign="top"]//td[@class="subtableheader"]');
 	for (i = 0; i < lineup.length; i++) {
-		aCapos.push('#'+lineup[i].textContent+"#");
+		aCapos.push('#'+lineup[i].textContent+'#');
 	}
 	sCapos = aCapos.join();
 
 	//add capos list to top table
-	if (aCapos.length > 1) {//no need to add empty list
+	if (aCapos.length > 0) {//no need to add empty list
 		var target = $X('//table//table//tr['+(nTop+6)+']');
 		capoTr = target.cloneNode(1);//no need to make our own
 		capoTr.getElementsByTagName('td')[0].innerHTML = 'Capos:';
@@ -3611,7 +3782,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 	var targetNotFound = new RegExp(lang.linkify[3]);
 	if (targetNotFound.test(msgType)) { //target not found
-		setArr(5);
+		setArr((sets.version=='_com')?5:4);
 		$I(msgTxt, arr.join(' '));
 	}
 
@@ -3688,21 +3859,12 @@ if (dlp == '/kill.php') {
 			var len = $n.innerHTML.trim().split(' ').length;
 			if (len >= '4') {
 				var arr = $n.innerHTML.split(' ');
-
-				if (sets.version == '_nl') {
-					if (arr[2] == lang.linkify[9]) {
-						arr[3] = '<a href="user.php?nick=' + arr[3].replace(/(<b>|<\/b>)/g, '') + '">' + arr[3] + '</a>'; //check if we found the bastard
-					} else {
-						arr[6] = '<a href="user.php?nick=' + arr[6].replace(/(<b>|<\/b>)/g, '') + '">' + arr[6] + '</a>';
-					}
+				if (arr[2] == lang.linkify[9]) {
+					arr[3] = '<a href="user.php?nick=' + arr[3].replace(/(<b>|<\/b>)/g, '') + '">' + arr[3] + '</a>'; //check if we found the bastard
 				} else {
-					if (arr[2] == lang.linkify[9]) {
-						arr[3] = '<a href="user.php?nick=' + arr[3].replace(/(<b>|<\/b>)/g, '') + '">' + arr[3] + '</a>'; //check if we found the bastard
-					} else {
-						arr[5] = '<a href="user.php?nick=' + arr[5].replace(/(<b>|<\/b>)/g, '') + '">' + arr[5] + '</a>';
-					}
+					var index = ((sets.version=='_com')?5:6); //version dependency
+					arr[index] = '<a href="user.php?nick=' + arr[index].replace(/(<b>|<\/b>)/g, '') + '">' + arr[index] + '</a>';
 				}
-
 				$n.innerHTML = arr.join(' ');
 			}
 		});
@@ -4038,7 +4200,6 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 	var str = document.body.innerHTML.replace(/,/g, '');
 	if (db.innerHTML.indexOf(lang.bjtracker[10]) != -1) {
 		var betinput = $x('//input')[1];
-		console.log(betinput.value);
 		betinput.addEventListener('keyup', function() {
 			setValue('bjbet', parseInt(betinput.value, 10));
 		}, true);
@@ -5040,12 +5201,12 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 		if (i < 7) { //booze
 			var x = i + 4;
 			b_amount[i] = parseInt($I(xpb + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpb + x + ']/td', '<a ' + (prefs[4] ? 'accesskey="' + (i + 1) + '" ' : '') + 'title="Fill in this booze (Hotkey: ' + (i + 1) + ' )" onFocus="this.blur()" href="javascript:var tmp = document.getElementsByTagName(\'input\')[' + i + '].value;for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value =0;}document.getElementsByTagName(\'input\')[' + i + '].value=' + booze + '-tmp;document.getElementsByTagName(\'input\')[18].focus();">' + (prefs[4] ? (i + 1) : '') + ' ' + $I(xpb + x + ']/td') + '</a>'); //LANG
+			$I(xpb + x + ']/td', '<a ' + (prefs[4] ? 'accesskey="' + (i + 1) + '" ' : '') + 'title="Fill in this booze (Hotkey: ' + (i + 1) + ' )" onFocus="this.blur()" href="javascript:var tmp = document.getElementsByTagName(\'input\')[' + i + '].value;for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value =0;}document.getElementsByTagName(\'input\')[' + i + '].value=(('+b_amount[i]+'>'+booze+')?'+b_amount[i]+':' + booze + '-tmp);document.getElementsByTagName(\'input\')[18].focus();">' + (prefs[4] ? (i + 1) : '') + ' ' + $I(xpb + x + ']/td') + '</a>'); //LANG
 		}
 		if (i > 8) { //narcs
 			var x = i - 5;
 			n_amount[(i - 9)] = parseInt($I(xpn + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpn + x + ']/td', '<a onFocus="this.blur()" title="Fill in this narc" href="javascript:var tmp = document.getElementsByTagName(\'input\')[' + i + '].value;for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value =0;}document.getElementsByTagName(\'input\')[' + i + '].value = ' + narcs + '-tmp;document.getElementsByTagName(\'input\')[18].focus();">' + $I(xpn + x + ']/td') + '</a>'); //LANG
+			$I(xpn + x + ']/td', '<a onFocus="this.blur()" title="Fill in this narc" href="javascript:var tmp = document.getElementsByTagName(\'input\')[' + i + '].value;for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value =0;}document.getElementsByTagName(\'input\')[' + i + '].value = (('+n_amount[(i - 9)]+'>'+narcs+')?'+n_amount[(i-9)]+':' + narcs + '-tmp);document.getElementsByTagName(\'input\')[18].focus();">' + $I(xpn + x + ']/td') + '</a>'); //LANG
 		}
 	}
 
@@ -5236,10 +5397,10 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 				var plusX = 20;
 				var plusY = 20;
 
-				if(X + divW + 20 > document.documentElement.scrollWidth){
+				if(X + divW + 20 > document.documentElement.scrollWidth){ //if box falls of the right
 					plusX = -20 - divW;
 				}
-				if(Y + divH + 20 > document.documentElement.scrollHeight){
+				if(Y + divH + 20 > window.innerHeight){ //if box falls of the bottom
 					plusY = -20 - divH;
 				}
 				div.style.left = X + plusX;
@@ -5325,7 +5486,8 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 	}
 }
 if(prefs[16] && dls.indexOf('?module=Hitlist') != -1){//add nickreader to hitlist too
-	getID('smsdivcontainer').addEventListener('DOMNodeInserted', function(event){
+	var body = getID('smsdivcontainer')?getID('smsdivcontainer'):db; //check for smsdiv, otherwise go back to body (hitlist details fix)
+	body.addEventListener('DOMNodeInserted', function(event){
 		if(event.target.nodeName=='TABLE'){
 			nickReader();
 		}
