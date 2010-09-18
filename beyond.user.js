@@ -129,7 +129,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '84';
+var ScriptSubVersion = '85';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';

@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.84
+	Version: 1.9.3.85
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -65,7 +65,7 @@ var langs = {
 			'Removes the jailbusting skill bar from your account page',//6
 			'If you don\'t get the bullets on first try, it auto-refreshes the bullet page',//7
 			'Auto-selects the best option for crimes and nick a car',//8
-			'This option will allow you to open all the sites you can vote on (on "vote for Omerta") with just 1 click',//9
+			'You\'re one click away from free bullets and money',//9
 			'If you click on crimes/nick a car, but you still have waiting time on it, page will be refreshed after the waiting time is over',//10
 			'Returns to the page you were on after entering the wrong code',//11
 			'Removes the capo profit text from your account page',//12
@@ -80,18 +80,18 @@ var langs = {
 			'Adds coloring with green (low) and red (high) on the prices page',//21
 			'Removes the race form progress bar from your account page',//22
 			'Returns to jail page after your jail time is over',//23
-			'Highlights the cars in your garage in different shades of grey, depending on the use for that car (heist/oc/moc)',//24
+			'Highlights the cars in your garage in different colors, depending on the use for that car (heist/oc/moc)',//24
 			'Auto-fills in the maximum amount of bullets you can buy, according to the number of bullets in the bullet factory and the amount of money in your pocket',//25
 			'Auto fills in the bullets, gun etc you need to do a heist, oc or moc',//26
 			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
 			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
 			'Sets focus on editbox and adds link to inbox after finished race',//29
-			'Remove \"Recent Posts\" from user\'s profile.',//30
+			'Remove \'Recent Posts\' from user\'s profile.',//30
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32, obsolete
 			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
-			'Show the amount of crimes which were successfull and the amount of cars stolen, plus the total profit from both',//35
+			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals'//36
 		],
 		maxprefs: 37, // 1 + last pref #
@@ -414,7 +414,7 @@ var langs = {
 			'Removes the jailbusting skill bar from your account page',//6
 			'If you don\'t get the bullets on first try, it auto-refreshes the bullet page',//7
 			'Auto-selects the best option for crimes and nick a car',//8
-			'This option will allow you to open all the sites you can vote on (on "vote for Omerta") with just 1 click',//9
+			'You\'re one click away from free bullets and money',//9
 			'If you click on crimes/nick a car, but you still have waiting time on it, page will be refreshed after the waiting time is over',//10
 			'Returns to the page you were on after entering the wrong code',//11
 			'Removes the capo profit text from your account page',//12
@@ -429,18 +429,18 @@ var langs = {
 			'Adds coloring with green (low) and red (high) on the prices page',//21
 			'Removes the race form progress bar from your account page',//22
 			'Returns to jail page after your jail time is over',//23
-			'Highlights the cars in your garage in different shades of grey, depending on the use for that car (heist/oc/moc)',//24
+			'Highlights the cars in your garage in different colors, depending on the use for that car (heist/oc/moc)',//24
 			'Auto-fills in the maximum amount of bullets you can buy, according to the number of bullets in the bullet factory and the amount of money in your pocket',//25
 			'Auto fills in the bullets, gun etc you need to do a heist, oc or moc',//26
 			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
 			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
 			'Sets focus on editbox and adds link to inbox after finished race',//29
-			'Remove \"Recent Posts\" from user\'s profile.',//30
+			'Remove \'Recent Posts\' from user\'s profile.',//30
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
 			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
-			'Show the amount of crimes which were successfull and the amount of cars stolen, plus the total profit from both',//35
+			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals'//36
 		],
 		maxprefs: 37, // 1 + last pref #
