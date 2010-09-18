@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			17-09-2010
+// @date			18-09-2010
 // @author			vBm ( vbm AT omertabeyond DOT com )
 // @author			Dopedog ( dopedog AT omertabeyond DOT com )
 // @author			Rix ( rix AT omertabeyond DOT com )
@@ -129,7 +129,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '83';
+var ScriptSubVersion = '84';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -810,7 +810,7 @@ if (dlp == '/contact.php' || dlp == '/html/poll/poll.php') {
 //---------------- 3-letter code protection and charcode filter ----------------
 if (dlp == '/jail.php' || dlp == '/iminjail.php' || (dlp == '/kill.php' && dls != '?action=hire') || dlp == '/smuggling.php' || dlp == '/bullets2.php' || (dlp == '/BeO/webroot/index.php' && (dls == '?module=Crimes' || dls == '?module=Cars'))) {
 	function CP(node) {
-		var submit = $X('//fieldset//input[@type="submit"]');
+		var submit = $X('//input[@type="submit"]');
 		if (prefs[0]) {
 			submit.style.textDecoration = 'line-through';
 			submit.setAttribute('disabled', 1);
@@ -1063,7 +1063,6 @@ if (dls == '?module=Launchpad') {
 
 				var perc3 = rounding(parseInt(carTracker,10)/parseInt($X(carnicks).innerHTML.replace(',', '').trim(),10));
 				var perc4 = isNaN(perc3) ? 0 : perc3;
-				if (isNaN(perc2)) perc2 = 0;
 				$X(cartxt).innerHTML = $X(cartxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
 				$X(carnicks).innerHTML = $X(carnicks).innerHTML +'/'+commafy(carTracker)+'&nbsp;('+perc4+'%)';
 
@@ -1644,15 +1643,15 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 
 	//Bust Tracker
 	if (db.innerHTML.substr(0, (lang.busttracker[0].length - 0)) == lang.busttracker[0]) {
-		bustTrackerinfo = (bustTrackerinfo + 1);
+		setValue('bustouts', (bustTrackerinfo + 1));
 	} else {
 		if (db.innerHTML.substr(0, (lang.busttracker[1].length - 0)) == lang.busttracker[1]) {
-			bustTrackerinfo = (bustTrackerinfo + 2);
+			setValue('bustouts', (bustTrackerinfo + 2));
 		}
 	}
 	var span = cEL('span');
 	var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-	span.innerHTML = '<br>&nbsp;Bust outs: ' + commafy(bustTrackerinfo);
+	span.innerHTML = '<br>&nbsp;Bust outs: ' + commafy(getValue('bustouts', 0));
 	$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 
 	//Grab ingame HL colors
@@ -1886,7 +1885,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 }
 
 //---------------- In jail page ----------------
-if (dlp == '/iminjail.php' && db.innerHTML.indexOf(lang.busttracker[2]) != 1) {
+if (dlp == '/iminjail.php' && db.innerHTML.indexOf(lang.busttracker[2]) != -1) {
 	var busttracker = getValue('bustouts', 0);
 	setValue('bustouts', (busttracker + 1));
 }
