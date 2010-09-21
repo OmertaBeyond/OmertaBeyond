@@ -2,13 +2,15 @@
 // @name			Omerta Beyond
 // @version			1.9.3
 // @date			18-09-2010
-// @author			vBm ( vbm AT omertabeyond DOT com )
-// @author			Dopedog ( dopedog AT omertabeyond DOT com )
-// @author			Rix ( rix AT omertabeyond DOT com )
-// @author			MrWhite ( mrwhite AT omertabeyond DOT com )
+// @author			vBm <vbm@omertabeyond.com>
+// @author			Dopedog <dopedog@omertabeyond.com>
+// @author			Rix <rix@omertabeyond.com>
+// @author			MrWhite <mrwhite@omertabeyond.com>
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
+// @homepageURL		http://www.omertabeyond.com/
 // @description			Omerta Beyond 1.9.3 (Still the best 'legal' script! ;))
+// @icon			http://www.omertabeyond.com/html/images/favicon.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
@@ -129,7 +131,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '85';
+var ScriptSubVersion = '86';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
