@@ -8,7 +8,7 @@
 // @author			MrWhite <mrwhite@omertabeyond.com>
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
-// @homepageURL		http://www.omertabeyond.com/
+// @homepageURL			http://www.omertabeyond.com/
 // @description			Omerta Beyond 1.9.3 (Still the best 'legal' script! ;))
 // @icon			http://www.omertabeyond.com/html/images/favicon.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
