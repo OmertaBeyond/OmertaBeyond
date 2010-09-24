@@ -8,7 +8,7 @@
 // @author			MrWhite <mrwhite@omertabeyond.com>
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
-// @homepageURL			http://www.omertabeyond.com/
+// @homepageURL		http://www.omertabeyond.com/
 // @description			Omerta Beyond 1.9.3 (Still the best 'legal' script! ;))
 // @icon			http://www.omertabeyond.com/html/images/favicon.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
@@ -131,7 +131,7 @@ if (whereToRun() == 'com') {
 
 var ScriptName = 'Omerta Beyond';
 var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '86';
+var ScriptSubVersion = '87';
 var minFFVersion = '3.6';
 var SiteLink = 'http://www.omertabeyond.com';
 var ScriptLink = 'http://gm.omertabeyond.com';
@@ -2176,7 +2176,11 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					links += '</td>';
 					if(parseInt(getPow('bninfo',4,-1),10)>2){//check for top3 position
 						links += '<td width="20%">';
-						links += '<a class="red" href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br>';//family link
+						if (whereToRun() == 'dm') {
+							links += '<a class="red" href="/BeO/webroot/index.php?module=Family&who='+nick+'">Invite to Family</a> <br>';//family link
+						} else {
+							links += '<a class="red" href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br>';//family link
+						}
 						links += '</td>';
 					}
 					links += '</tr></tbody></table>';
@@ -2849,7 +2853,7 @@ if (prefs[13] && dlp == '/family.php') {
 }
 
 //---------------- Manage Users (top3 only) ----------------
-if (urlsearch == '/controlpanel.php' + dls) {
+if (dls.indexOf('module=Family')!=-1 || urlsearch == '/controlpanel.php' + dls) {
 	//invite from profile
 	$X('//input[@name="invite"]').value = GetParam('who');
 	$X('//input[@name="invite"]/parent::*/input[last()]').focus();
@@ -2866,7 +2870,7 @@ if (urlsearch == '/controlpanel.php' + dls) {
 	var cdP = (parseInt((brugP*percentage), 10)+parseInt(brugP, 10));
 	var gfP = (parseInt((cdP*percentage), 10)+parseInt(cdP, 10));
 
-	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><br /><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
+	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td></tr><tr><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
 
 }
 if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
@@ -3835,7 +3839,7 @@ if (urlsearch == '/capocp.php' + dls) {
 }
 
 //------------- link names at CP log --------
-if (dlp == '/controlpanel.php') {
+if (dls.indexOf('module=Family')!=-1 || dlp == '/controlpanel.php') {
 	var logs = '//td[1]/table[@class="color2" and position()=1]//td[2]';
 	$x(logs).forEach(function ($n) {
 		if ($n.textContent != '') {
