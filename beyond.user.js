@@ -131,7 +131,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.9.3';
-const SCRIPT_SUBVERSION = 88;
+const SCRIPT_SUBVERSION = 89;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -2936,8 +2936,8 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 					CM = CM.replace(/[a-zA-Z]| |\s/g, '');
 					list += CM.replace('$', '$ ') + '</td><td>';
 					CM = CM.replace(/[^0-9]/g,'');
-					list += (5000000 - CM)>0 ? '$ ' + commafy((5000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//CD
-					list += (7500000 - CM)>0 ? '$ ' + commafy((7500000 - CM)) + '<td></tr>' : '<b>X</b></td><tr>';//GF
+					list += (10000000 - CM)>0 ? '$ ' + commafy((10000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//CD
+					list += (15000000 - CM)>0 ? '$ ' + commafy((15000000 - CM)) + '<td></tr>' : '<b>X</b></td><tr>';//GF
 					$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
 				}
 				list += '</table>';
