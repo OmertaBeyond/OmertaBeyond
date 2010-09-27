@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.88
+	Version: 1.9.3.90
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -270,7 +270,8 @@ var langs = {
 			'BulletTracker',
 			'Bullets bought:',
 			'Money spent:',
-			'Price per bullet:'
+			'Price per bullet:',
+			'You need to wait another'
 		],
 		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
 		raidpage: [
@@ -622,7 +623,8 @@ var langs = {
 			'BulletTracker',
 			'Bullets bought:',
 			'Money spent:',
-			'Price per bullet:'
+			'Price per bullet:',
+			'You need to wait another'
 		],
 		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
 		raidpage: [
@@ -981,7 +983,8 @@ var langs = {
 			'KogelVolger',
 			'Gekochtte kogels:',
 			'Geld uitgegeven:',
-			'Prijs per kogel:'
+			'Prijs per kogel:',
+			'Je moet nog'
 		],
 		crimetracker: ['Success je hebt', 'Succes je hebt \\$ (\\d+) verdiend.'],
 		raidpage: [

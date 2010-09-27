@@ -131,7 +131,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.9.3';
-const SCRIPT_SUBVERSION = 89;
+const SCRIPT_SUBVERSION = 90;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1448,7 +1448,7 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 	x = '/html/body//center';
 	path = '/table/tbody/tr[3]/td';
 	BFTextXp = x + '[2]/table/tbody/tr/td';
-	if (prefs[25]) {
+	if (prefs[25] && db.innerHTML.indexOf(lang.bullettracker[6]) == -1) {
 		var maxBul = (sets.version == '_dm' ? 3000 : 1000);
 		window.addEventListener('load', function () {
 			$x('//input')[1].focus();
@@ -1461,7 +1461,7 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 		}
 	}
 
-	if (getELNAME('become')[0] == null) { // no owner fix
+	if (getELNAME('become')[0] == null && getELNAME('produce')[0] == null) { // no owner fix
 		arr = $I(BFTextXp).split(' ');
 		if (sets.version == '_com') {
 			arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
@@ -2197,7 +2197,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					links += '</td>';
 					if(parseInt(getPow('bninfo',4,-1),10)>2){//check for top3 position
 						links += '<td width="20%">';
-						if (whereToRun() == 'dm') {
+						if (sets.version == '_dm') {
 							links += '<a class="red" href="/BeO/webroot/index.php?module=Family&who='+nick+'">Invite to Family</a> <br>';//family link
 						} else {
 							links += '<a class="red" href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br>';//family link
@@ -2936,8 +2936,9 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 					CM = CM.replace(/[a-zA-Z]| |\s/g, '');
 					list += CM.replace('$', '$ ') + '</td><td>';
 					CM = CM.replace(/[^0-9]/g,'');
-					list += (10000000 - CM)>0 ? '$ ' + commafy((10000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//CD
-					list += (15000000 - CM)>0 ? '$ ' + commafy((15000000 - CM)) + '<td></tr>' : '<b>X</b></td><tr>';//GF
+					var cmCoeficient = (sets.version == '_dm') ? 2 : 1;
+					list += ((5000000 * cmCoeficient) - CM)>0 ? '$ ' + commafy(((5000000 * cmCoeficient) - CM)) + '</td><td>' : '<b>X</b></td><td>';//CD
+					list += ((7500000 * cmCoeficient) - CM)>0 ? '$ ' + commafy(((7500000 * cmCoeficient) - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
 					$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
 				}
 				list += '</table>';
@@ -2972,7 +2973,7 @@ if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'get'+func2+'*0.85'+func3+'">';
 	tbl += '</td><td align="right" width="25%">User gets:</td><td align="center" id="get" width="25%">$0</td></tr>'; //LANG
 	tbl +='<tr><td align="right" width="25%">You want:</td>'; //LANG
-	tbl +='<td align="center" width="25%">';
+	tbl +='<td align="center" width="25l%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'give'+func2+'/0.85'+func3+'">';
 	tbl += '</td><td align="right" width="25%">User sends:</td><td align="center" id="give" width="25%">$0</td></tr>'; //LANG
 	tbl +='<br>';
@@ -4085,7 +4086,7 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 }
 
 //---------------- BulletTracker ----------------
-if (dlp == '/bullets2.php' && prefs[33]) {
+if (dlp == '/bullets2.php' && prefs[33] && db.innerHTML.search(/table/i) != -1) {
 	var btbullets = getValue('btbullets', 0);
 	var btmoney = getValue('btmoney', 0);
 	if (db.innerHTML.indexOf(lang.bullettracker[0]) != -1) {
@@ -4378,7 +4379,6 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 		setValue('bjbet', 0);
 	}, true);
 }
-
 
 //---------------- 1-Click Voter ----------------
 if (dlp == '/vfo.php') { //vote for omerta
