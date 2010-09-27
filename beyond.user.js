@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			18-09-2010
+// @date			27-09-2010
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
 // @author			Rix <rix@omertabeyond.com>
 // @author			MrWhite <mrwhite@omertabeyond.com>
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
-// @homepageURL		http://www.omertabeyond.com/
+// @homepageURL			http://www.omertabeyond.com/
 // @description			Omerta Beyond 1.9.3 (Still the best 'legal' script! ;))
 // @icon			http://www.omertabeyond.com/html/images/favicon.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
@@ -129,35 +129,31 @@ if (whereToRun() == 'com') {
 	whoami = GM_getValue('nick_nl', '');
 }
 
-var ScriptName = 'Omerta Beyond';
-var ScriptVersion = '1.9.3';
-var ScriptSubVersion = '87';
+const SCRIPT_NAME = 'Omerta Beyond';
+const SCRIPT_VERSION = '1.9.3';
+const SCRIPT_SUBVERSION = 88;
 var minFFVersion = '3.6';
-var SiteLink = 'http://www.omertabeyond.com';
-var ScriptLink = 'http://gm.omertabeyond.com';
-var PrefsLink = ScriptLink + sets.prefslink;
-var PricesLink = ScriptLink + sets.priceslink;
-var ContactLink = ScriptLink + sets.contactlink;
-var PollLink = SiteLink + sets.polllink;
+const SITE_LINK = 'http://www.omertabeyond.com';
+const SCRIPT_LINK = 'http://gm.omertabeyond.com';
+const UPDATE_URL = SCRIPT_LINK+"/version.xml";
+var PrefsLink = SCRIPT_LINK + sets.prefslink;
+var PricesLink = SCRIPT_LINK + sets.priceslink;
+var ContactLink = SCRIPT_LINK + sets.contactlink;
+var PollLink = SITE_LINK + sets.polllink;
 var FingonUrl = 'http://89.149.221.178/~fingon';
 var EdoUrl = 'http://www.edo-nieuws.nl/news.php';
 var ff = navigator.userAgent.split('/')[3].split(' ')[0];
-var ob = ScriptVersion + '.' + ScriptSubVersion;
+const OB = SCRIPT_VERSION + '.' + SCRIPT_SUBVERSION;
 
-//annoy the user --- FFv Checker ---
-if (dlp == '/game.php') { //just once on login
-	if (parseInt(ff.split('.')[1], 10) < parseInt(minFFVersion.split('.')[1], 10) || parseInt(ff.split('.')[0], 10) < parseInt(minFFVersion.split('.')[0], 10)) {
-		if (parseInt(ff.split('.')[0], 10) <= parseInt(minFFVersion.split('.')[0], 10)) {
-			alert('You don\'t use FireFox '+minFFVersion+'+. If you want Beyond to work properly, we recommend that you update.');
-		}
-	}
-}
-
-GM_registerMenuCommand('[' + ScriptName + '] v' + ob, function () {
-    alert('You are using ' + ScriptName + '\nVersion:\t' + ScriptVersion + '\nRevision:\t' + ScriptSubVersion);
+GM_registerMenuCommand('[' + SCRIPT_NAME + '] v' + OB, function () {
+    alert('You are using ' + SCRIPT_NAME + '\nVersion:\t' + SCRIPT_NAME + '\nRevision:\t' + SCRIPT_SUBVERSION);
 });
 
-GM_registerMenuCommand('[' + ScriptName + '] Reset values to default.', function () {
+GM_registerMenuCommand('[' + SCRIPT_NAME + '] Check for updates.', function () {
+    OBUpdate(true);
+});
+
+GM_registerMenuCommand('[' + SCRIPT_NAME + '] Reset values to default.', function () {
     clearSettings();
     window.location.href = window.location;
 });
@@ -168,7 +164,7 @@ var prefs = prefsArray(getValue('prefs', '0'), maxbit); //compatibility with old
 //load any GET querys
 var querys = [
 	'nick',
-	'ob',
+	'OB',
 	'bust',
 	'nobust',
 	'colours',
@@ -207,7 +203,7 @@ if (dlp == '/prefs.php') {
 	var prefstr = lang.prefs;
 	var prefsTitle = lang.prefsTitle;
 
-	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + ScriptVersion + '.' + ScriptSubVersion + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <a href="#" onClick="" name="updater" ><img src="'+GM_getResourceURL('updateIco')+'" border="0" title="'+lang.prefsPage[0]+'" alt="'+lang.prefsPage[0]+'" /></a></td></tr>';
+	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + SCRIPT_VERSION + '.' + SCRIPT_SUBVERSION + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <a href="#" name="updater" ><img src="'+GM_getResourceURL('updateIco')+'" border="0" title="'+lang.prefsPage[0]+'" alt="'+lang.prefsPage[0]+'" /></a></td></tr>';
 
 	function addCat(title) { //pref category
 		toggleStr = 'var node = this; while(node.nextSibling.innerHTML.search(/<input/)!=-1){ var node = node.nextSibling; var show = ((node.style.display == \'none\') ? \'\' : \'none\'); node.style.display = show; };'; //js to toggle hiding prefs for category
@@ -256,7 +252,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([2]);
 
 	addCat(lang.preftitles[6]); //misc
-	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36]);
+	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36, 37]);
 
 	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="checkbutton" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
 	string += '&nbsp;<button type="button" name="#" class="button" onClick="';
@@ -266,7 +262,7 @@ if (dlp == '/prefs.php') {
 	grabPrefs  = 'javascript:var prefslist=\'\';';
 	grabPrefs += 'for(i=0;i<'+maxbit+';i++){ if(document.getElementById(\'check\'+i)){';
 	grabPrefs += 'prefslist += (document.getElementById(\'check\'+i).checked ? 1 : 0);}';
-	grabPrefs += 'else prefslist += \'0\'}; window.location = \'' + PrefsLink + '&nick='+nick+'&ob='+ob+'&prefs=\'+prefslist;';
+	grabPrefs += 'else prefslist += \'0\'}; window.location = \'' + PrefsLink + '&nick='+nick+'&ob='+OB+'&prefs=\'+prefslist;';
 
 	string += grabPrefs;//grab all current checked values and send to url
 	string += '">'+lang.prefsPage[2]+' '+lang.prefsname+'</button></td></tr>';
@@ -380,6 +376,31 @@ if (dlp == '/prefs.php') {
 	$x('//input[@class="inputbig"]').forEach(function ($n) {
 		$n.style.verticalAlign = '6px';
 	});
+
+	// Check for update
+	var updater = $X('//a[@name="updater"]');
+	updater.addEventListener('click', function(){ OBUpdate(true); }, true);
+}
+
+//------------------- some needed stuff -------------
+if (dlp == '/game.php') { //just once on login
+	//annoy the user --- FFv Checker ---
+	if (parseInt(ff.split('.')[1], 10) < parseInt(minFFVersion.split('.')[1], 10) || parseInt(ff.split('.')[0], 10) < parseInt(minFFVersion.split('.')[0], 10)) {
+		if (parseInt(ff.split('.')[0], 10) <= parseInt(minFFVersion.split('.')[0], 10)) {
+			alert('You don\'t use FireFox '+minFFVersion+'+. If you want Omerta Beyond to work properly, we recommend that you update.');
+		}
+	}
+
+	// Check for update
+	if (prefs[37]) {
+		var time = new Date().getTime();
+		var lastOBUCheck = getValue("lastOBUCheck","0");
+		var checkInterval = 3600 * 72 * 1000;
+		if (time - lastOBUCheck > checkInterval) {
+			setValue("lastOBUCheck", time.toString());
+			OBUpdate(false);
+		}
+	}
 }
 
 //---------------- Remove Third-party Hotkeys ----------------
@@ -394,7 +415,7 @@ if(dlp == '/marquee.php'){
 		GM_xmlhttpRequest({
 			method: 'GET',
 			url: 'http://gm.omertabeyond.com/prices.xml.php?v='+sets.version.replace('_', ''),
-			headers: {'User-agent': ScriptName + ' ' + ScriptVersion + '.'+ ScriptSubVersion, 'Accept': 'application/xml,text/xml'},
+			headers: {'User-agent': SCRIPT_NAME + ' ' + SCRIPT_VERSION + '.'+ SCRIPT_SUBVERSION, 'Accept': 'application/xml,text/xml'},
 			onload: function(resp){
 				var marquee = document.getElementsByTagName('div')[0];
 				marquee.innerHTML = '';
@@ -550,7 +571,7 @@ if (dlp == '/menu.php') {
 	//beyond menu descriptions
 	var descr = [lang.prefsname].concat(lang.menuitem);
 	//beyond menu links
-	var qlinks = [PrefsLink +'&ob='+ob, PollLink, ContactLink, ScriptLink + '/faq.php', PricesLink, sets.statslink, sets.statslink2];
+	var qlinks = [PrefsLink +'&ob='+OB, PollLink, ContactLink, SCRIPT_LINK + '/faq.php', PricesLink, sets.statslink, sets.statslink2];
 	//beyond menu titles
 	var qtitle = lang.menutitle;
 
@@ -2081,7 +2102,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 			GM_xmlhttpRequest({
 				method: 'GET',
 				url: 'http://rix.omertabeyond.com/laston.xml.php?v='+sets.version.replace('_','')+'&ing='+$X('//span[@id=\'username\']').innerHTML,
-				headers: {'User-agent': ScriptName + ' ' + ScriptVersion + '.'+ ScriptSubVersion, 'Accept': 'application/xml,text/xml'},
+				headers: {'User-agent': SCRIPT_NAME + ' ' + SCRIPT_VERSION + '.'+ SCRIPT_SUBVERSION, 'Accept': 'application/xml,text/xml'},
 				onload: function (resp) {
 					var parser = new DOMParser();
 					var dom = parser.parseFromString(resp.responseText, 'application/xml');
@@ -4486,7 +4507,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				if (n_amount[parseInt(n)] == carry_n && carry_n < narcs) { //user already carrying some => AF the rest
 					values[(7 + parseInt(n))] = narcs - carry_n;
 					inputs[17].checked = 1; //buy
-				} else { //AF selling other crap
+				} else if ( n_amount[parseInt(n)] != narcs) { //AF selling other crap
 					for (i = 0; i <= 6; i++) {
 						values[(i + 7)] = n_amount[i];
 					}
@@ -4498,7 +4519,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			if (carry_b == 0) {
 				values[(parseInt(b))] = booze; //nothing in pocket, fill it all
 			} else {
-				if (b_amount[b] == carry_b && carry_b < booze) { //user already carrying some => AF the rest
+				if (b_amount[b] == carry_b && carry_b <= booze) { //user already carrying some (or all, filling in 0 as rest) => AF the rest
 					values[b] = booze - carry_b;
 					inputs[8].checked = 1; //buy
 				} else { //AF selling other crap
@@ -4853,6 +4874,10 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 					n = key[(GetParam('n'))];
 					b = key[(GetParam('b'))];
 				}
+
+				//still nothing defines, don't fill nothing!
+				if(!n) { var n = 0; }
+				if(!b) { var b = 0; }
 
 				//we know our n and b => fill it in!
 				fillBRC(n, b, sel);

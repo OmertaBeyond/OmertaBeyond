@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.86
+	Version: 1.9.3.88
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -54,6 +54,7 @@ var langs = {
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
+			'Automaticaly check for updates'//37 - MISC
 		],
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
@@ -92,9 +93,10 @@ var langs = {
 			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
-			'A nice overview of all your bodyguards and their trained levels, including totals'//36
+			'A nice overview of all your bodyguards and their trained levels, including totals',//36
+			'Automaticaly check for updates'//37
 		],
-		maxprefs: 37, // 1 + last pref #
+		maxprefs: 38, // 1 + last pref #
 		preftitles: [
 			'Crimes/Car Nicks',//0
 			'Smuggling and Booze/Narc Prices',//1
@@ -402,7 +404,8 @@ var langs = {
 			'Enable Trackers (Bullet, Poker, Scratching, BJ)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
-			'Show Bodyguard Overview on BG\'s page'//36 UI EXTRAS
+			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
+			'Automaticaly check for updates'//37 - MISC
 		],
 		prefsTitle: [ //describe the options
 			'Disable the "go for it" button until the image code entered is the correct length',//0
@@ -441,9 +444,10 @@ var langs = {
 			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
-			'A nice overview of all your bodyguards and their trained levels, including totals'//36
+			'A nice overview of all your bodyguards and their trained levels, including totals',//36
+			'Automaticaly check for updates'//37 - MISC
 		],
-		maxprefs: 37, // 1 + last pref #
+		maxprefs: 38, // 1 + last pref #
 		preftitles: [
 			'Crimes/Car Nicks',//0
 			'Smuggling and Booze/Narc Prices',//1
@@ -752,7 +756,8 @@ var langs = {
 			'Voeg Volgers toe (Kogels, Poker, Krassen, BJ)',//33 - MISC
 			'Ruim de Spot Overvallen pagina op',//34 - UI Extras
 			'Laat misdaad- en autojatstats zien op status pagina',//35 - CRIMES/CARS
-			'Voeg Lijfwachten Overzicht toe op BG\'s pagina'//36 - UI EXTRAS
+			'Voeg Lijfwachten Overzicht toe op BG\'s pagina',//36 - UI EXTRAS
+			'Automaticaly check for updates'//37 - MISC
 		],
 		prefsTitle: [ //describe the options
 			'Je kan de "Ga ervoor" knop niet gebruiken voor je 3 tekens hebt ingevuld',//0
@@ -791,9 +796,10 @@ var langs = {
 			'Hou bij hoeveel kogels je koopt bij de kogelfabriek, hoeveel handen je hebt gespeeld met poker en hoeveel kaarten je hebt gekrast',//33
 			'Krijg een goed overzicht van de spots zodat je makkelijker je doel kunt kiezen',//34
 			'Laat het aantal misdaaden zien die succesvol waren en het total aantal auto\'s die je gestolen hebt, plus de totale winst van beide',//35
-			'Een mooi overzicht van al je lijfwachten en hun getrainde levels, inclusief het totale aantal'//36
+			'Een mooi overzicht van al je lijfwachten en hun getrainde levels, inclusief het totale aantal',//36
+			'Automaticaly check for updates'//37 - MISC
 		],
-		maxprefs: 37,
+		maxprefs: 38,
 		preftitles: [
 			'Misdaden/Auto stelen',//0
 			'Smokkelen en Drank/Drugs Prijzen',//1

@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.9.3.86
+	Version: 1.9.3.88
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -393,6 +393,36 @@ function getTintedColor(color, v) {
     return '#' + r + g + b;
 }
 
+function hOne() {
+	if (document.getElementsByTagName('h1')[0]) {
+		return document.getElementsByTagName('h1')[0].innerHTML;
+	}
+}
+
+function OBUpdate(cb) {
+	GM_xmlhttpRequest({
+		method: "GET",
+		url: UPDATE_URL +"?uid="+new Date().getTime(),
+		onload: function(response) {
+			var ob_parser = new DOMParser();
+			var ob_dom = ob_parser.parseFromString(response.responseText, "text/xml");
+			var ob_version = ob_dom.getElementsByTagName("version")[0].textContent;
+			var ob_revision = parseInt(ob_dom.getElementsByTagName("revision")[0].textContent);
+			var ob_url = ob_dom.getElementsByTagName("url")[0].textContent;
+
+			if (SCRIPT_SUBVERSION < ob_revision) {
+			  if (confirm("There's an update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+SCRIPT_VERSION+"."+SCRIPT_SUBVERSION+"\nAvailable:\t"+SCRIPT_VERSION+"."+ob_revision+"")) {
+			  	GM_openInTab(ob_url);
+			  }
+			} else if (SCRIPT_SUBVERSION > ob_revision) {
+				alert("Seems like you have newer version than our public release.\nLooks like you're our lovely beta tester.\n\nInstalled:\t\t"+SCRIPT_VERSION+"."+SCRIPT_SUBVERSION+"\nAvailable:\t"+SCRIPT_VERSION+"."+ob_revision+"");
+			} else if (cb) {
+				alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+SCRIPT_VERSION+"."+SCRIPT_SUBVERSION+"\nAvailable:\t"+SCRIPT_VERSION+"."+ob_revision+"");
+			}
+		}
+	});
+}
+
 Array.prototype.sum = function () {
 	for (i = 0, sum = 0; i < this.length; sum += this[i++]);
 	return sum;
@@ -422,9 +452,3 @@ ls = dls;
 host = location.hostname.toLowerCase();
 urlsearch = location.pathname + location.search;
 arr = [];
-
-function hOne() {
-	if (document.getElementsByTagName('h1')[0]) {
-		return document.getElementsByTagName('h1')[0].innerHTML;
-	}
-}

@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Variables depending on version
 
-	Version: 1.9.3.86
+	Version: 1.9.3.88
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
