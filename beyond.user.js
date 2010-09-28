@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			27-09-2010
+// @date			28-09-2010
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
 // @author			Rix <rix@omertabeyond.com>
@@ -131,7 +131,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.9.3';
-const SCRIPT_SUBVERSION = 90;
+const SCRIPT_SUBVERSION = 91;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';

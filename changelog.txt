@@ -1,7 +1,140 @@
 Omerta Beyond Changelog
 
-Version 1.9.3.		11/05/2010
+Version 1.9.3.XX 		XX/XX/2010
 
+	* Removed obsolete code (~1.9kB)
+	* Minor code tweaks and optimizations
+	* Several cosmetic fixes
+	* Several .dm tweaks to cope with new family system
+	* (FS#6) Implemented Bodyguards Overview
+	* (FS#60) Added - preserved state of menu caption upon refresh
+	* (FS#98) Implemented script updater
+	* (FS#109) Fixed - nickreader goes out of visible area
+	* (FS#158) (FS#405) (FS#411) Rewrote custom menu and it ways, making the "new menu content detected" msg obsolete.
+	* (FS#180) Made new FFvChecker which works nicely and just comes up once when logging in.
+	* (FS#291) fixed more/less on jhl prefs
+	* (FS#298) (FS#379) Implemented loop to add focus on "Accept" link
+	* (FS#301) Implemented - Jail HL @ Family
+	* (FS#323) Fixed - B/N linkifiers
+	* (FS#353) Implemented - garage
+	* (FS#358) Implemented spot numbers on tiny raidpage
+	* (FS#394) fixed busttracker on cellmate
+	* (FS#403) fixed Akill text on profile not working
+	* (FS#407) Better randomfactor for jail
+	* (FS#413) Fixed FL removal
+	* (FS#414) Added focus on start oc button as LE
+	* (FS#415) ...among a lot other closed ones. Redid whole raidpage and some formhandling. Hopefully it works good now.
+	* (FS#417) fixed focus for sratchtracker
+	* (FS#418) Implemented interest/time left for bank account on status
+	* (FS#421) Fixed missing underlining if top3 had object on fampagehl
+	* (FS#422) BGOV shown on obay
+	* (FS#423) Bustout yourself added to busttracker and fixed bust cellmate
+	* (FS#425) fixed link for FNA on lean login
+	* (FS#428) Fixed oc accept link
+	* (FS#429) Added pref for BJT
+	* (FS#430) Fixed - Busttrackerfail
+	* (FS#435) Fixed - wrong focus on dets (on all) and linkifying only at .nl
+	* (FS#436) Fixed NaN problem at trackers (if it's not fixed yet please reopen ticket)
+	* (FS#438) Fixed typing errors on the preferences page
+	* (FS#439) Fixed typos on OB FAQ
+	* (FS#436) Fixed - NaN problem in trackers 
+	* (FS#441) Fixed - Nickreader at hitlist
+	* (FS#445) Fixed - Busttracker not saving 
+	* (FS#446) Fixed - Bustoutyourselftracker fails 
+	* (FS#447) Fixed - Name focus on dets
+	* (FS#460) Fixed Bullettracker failing when owning BF
+	* (FS#462) Fixed all fails cuz of new link to family control panel (linkify log, invite from profile, cd gf/fl promo)
+	* Added new theme based colors using new getTintedColors() @ Garage
+	* Fixed "Select some cars first" msg @ Garage
+	* Fixed not showing capo list (we still assumed don was 1 capo)
+	* Implemented BJ tracker (finally!)
+	* Fixed interest reminder bug which forced you to refresh bank so that timer would work if just deposited some cash
+	* Made dummy timers from dc+bar so that a lot of errors from Error Console won't show up again
+	* Fixed missing focus on MOC go button as LE
+	* Fixed an error causing raidpage to break. This only happened in large cities with 7+ spots.
+	* Fixed cut-off mouseover msg for "disable go-for-it" pref
+	* Fixed missing "go back to s&w page" and added focus
+	* Fixed $XLast('//img[not(@id)]') is undefined error from Error Console
+	* Added popup confirm msg for resetting custom menu
+	* Added total-stolen-car-worth from MrWhite's car tracker
+	* Added pref for crime and car tracker
+	* Implemented car & and money trackers
+	* Added focus on unclaimed s&w tickets
+	* Changed version for fingon's link
+
+Version 1.9.3.70 BETA 4		18/08/2010
+
+	* More cosmetic changes regarding English :D (Thanks Chamas)
+	* Files are fully UTF-8 now
+	* (FS#406) Fixed missing BulletTracker if there is no owner for famBF
+	* Fixed laston didn't show up on profiles
+	* Merged pref for BulletT, PokerT and henceknown ScratchT into one pref
+	* Removed the automated scratching part from scratcher (nicely asked by DrunkenGamer)
+	* Implemented focus at s&w pages
+
+Version 1.9.3.66 BETA 3		29/07/2010
+
+	* Fixed remaining typos :$
+	* Removed extra junk from the files (trimmed down almost 2kB)
+	* Various cosmetic fixes (better positioning, again made all work fine at 1024x768)
+	* Various tweaks regarding usage of xpaths etc.
+	* Improved general handling of OB
+	* General tweaking of Garage code
+	* (FS#353)(FS#366) Improved JHL code a lot! (should be faster as well)
+	* (FS#304) Added select next to Jail page (use left, right and down arrow keys)
+	* (FS#393)(FS#372) fixed wrong link for AF at B/N from OB menu
+	* (FS#356) Implemented disabled "go" button for raid page if famless
+	* (FS#390) Improved raid page code and fixed tiny bug
+	* (FS#386) Fixed wrongly saved prefs (.com got prefs of .nl and vice versa)
+	* (FS#392)(FS#383) Added CD/GF promo calc to top3 CP, as well fixed linkifying
+	* (FS#355)(FS#365) Removed redundant stuff from user profile page regarding online status
+
+Version 1.9.3.55 BETA 2		21/06/2010
+
+	* Added m/k to family bank
+	* Added "sell" focus on cars whos value is greather then $5k
+	* Implemented Scratcher as part of AutoFormers with some stats
+	* Added a way better color picker for jail coloring at our prefs page
+	* Improved English sentences used on our pages (Thanks Danny)
+	* Added Bullet Tracker
+	* Implemented good looking raid page ;)
+	* Added live stats for .com
+	* Added "last seen" on profiles again
+	* Implemented Poker Tracker
+	* Tiny reorder of preferences
+	* Implemented default option to remove annoying pictures on crimes and nick-a-car pages
+	* Some minor code tweaking
+	* Removed a lot of obsolete code (Trimmed down size for ~10kB)
+
+Version 1.9.3.31 BETA 1		16/05/2010
+
+	* Usage of 0.8.6 Greasemonkey API !!
+	* Restyled preferences page
+	* Code refactoring (tweaked and fixed most of wrongly passed arguments)
+	* Fixed wrong quicklinks on statistics page
+	* Implemented redirection upon bank transfer
+	* Cosmetic tweaks on inbox (changed order of quick icons to cope better with admin msgs)
+	* Implemented hotkeys to inbox
+	* Fixed problems regarding BRC (Best Run Calculator)
+	* Implemented ABL (Anti Bust List)
+	* Implemented Nuke Settings (Nested at User Scripts Commands)
+	* Fixed problems caused by missing captchas
+	* Increased bullets checkers for AF
+	* Fixed linkifiers for WS on .nl and for Family Invite on both versions
+	* Fixed moving back to old page upon visiting profile and forum (problem caused by bullets checker)
+	* .dm support
+	* each supported version has family stats in beyond menu now(.nl(rix)/.com(fingon)/.dm(rix))
+	* price per bullet is default option now
+	* fused "disable avatars on forum" and "remove avatars from FL" into just one option
+	* fixed "black links" in menus
+	* clicklimit upon first login (hyperactive BRC parser)
+	* decreased overall size (1kB for png files, 3.58kB for langs and 1.2kB for our .css)
+	* various cosmetic fixes to achieve full 1024x768 support
+	* Added "Clean login page" again
+	* Fixed several problems with NickReader
+	* Fixed "look it's me" yet again (problem was due omerta's tabs)
+	* Fixed several problems regarding News sections
+	* Corrected some wrongly spelled words
 
 Version 1.9.2.43	30/12/2009
 

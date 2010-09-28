@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.9.3.88
+	Version: 1.9.3.91
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -414,7 +414,7 @@ function OBUpdate(cb) {
 			  if (confirm("There's an update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+SCRIPT_VERSION+"."+SCRIPT_SUBVERSION+"\nAvailable:\t"+SCRIPT_VERSION+"."+ob_revision+"")) {
 			  	GM_openInTab(ob_url);
 			  }
-			} else if (SCRIPT_SUBVERSION > ob_revision) {
+			} else if (SCRIPT_SUBVERSION > ob_revision && cb) {
 				alert("Seems like you have newer version than our public release.\nLooks like you're our lovely beta tester.\n\nInstalled:\t\t"+SCRIPT_VERSION+"."+SCRIPT_SUBVERSION+"\nAvailable:\t"+SCRIPT_VERSION+"."+ob_revision+"");
 			} else if (cb) {
 				alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+SCRIPT_VERSION+"."+SCRIPT_SUBVERSION+"\nAvailable:\t"+SCRIPT_VERSION+"."+ob_revision+"");
