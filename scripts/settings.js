@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Variables depending on version
 
-	Version: 1.9.3.91
+	Version: 1.9.3.92
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -20,7 +20,7 @@ var settings = {
 		contactlink: '/contact.php?v=com',
 		polllink: '/html/poll/poll.php?v=com',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=com&d=n',
-		statslink2: 'http://89.149.221.178/~fingon/latestpicture.php',
+		statslink2: 'http://89.149.221.178/~fingon/latestpicture.php?version=9',
 		status: ['none', 'None'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
