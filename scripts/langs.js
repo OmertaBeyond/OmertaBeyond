@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.9.3.92
+	Version: 1.9.3.93
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -176,7 +176,7 @@ var langs = {
 		friends: 'Friends:',
 		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
-		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
+		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Sell All'],
 		obay: ['Pack of bullets','bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
@@ -529,7 +529,7 @@ var langs = {
 		friends: 'Friends:',
 		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
-		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
+		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Sell All'],
 		obay: ['Pack of bullets','bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
@@ -881,7 +881,7 @@ var langs = {
 		friends: 'Vrienden:',
 		stats: ['naar boven', ['Dode Fams', 'Geëerd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
-		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Beide'],
+		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Verkoop Alles'],
 		obay: ['Pak met kogels','kogels'],
 		inbox: [
 			'Mededeling',

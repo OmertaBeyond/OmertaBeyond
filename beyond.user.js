@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.9.3
-// @date			03-10-2010
+// @date			05-10-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.9.3';
-const SCRIPT_SUBVERSION = 92;
+const SCRIPT_SUBVERSION = 93;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -1452,7 +1452,7 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 	x = '/html/body//center';
 	path = '/table/tbody/tr[3]/td';
 	BFTextXp = x + '[2]/table/tbody/tr/td';
-	if (prefs[25] && db.innerHTML.indexOf(lang.bullettracker[6]) == -1) {
+	if (prefs[25] && db.innerHTML.indexOf(lang.bullettracker[6]) == -1 && getELNAME('produce')[0] == null) {
 		var maxBul = (sets.version == '_dm' ? 3000 : 1000);
 		window.addEventListener('load', function () {
 			$x('//input')[1].focus();
@@ -2429,218 +2429,222 @@ if(dlp == '/garage.php'){
 		types[3] = ['tr', 23, 47, 54];
 		types.forEach(function(array){ array.forEach(function($n){if($n==car){ eval(array[0] + 'car=1;');} }); });
 	}
-	var rows = $x('//tr').length; //get number of rows
 
-	if(prefs[24]){ //crusher
-		//define car arrays
-		var titles = { h:'Heist', oc:'OC', moc:'MOC', tr:'Truck' };
-		var carValues = { h:'heist', oc:'oc', moc:'moc', tr:'truck' };
-		var base = getValue('titleBg', '#3F505F');
-		var carColors = { h:getTintedColor(base, 125), oc:getTintedColor(base, 75), moc:getTintedColor(base, 25), tr:getTintedColor(base, 150)};
-		var types = [['h', 8, 9, 13, 15, 16, 17, 18, 19, 21, 22, 27, 32, 34, 35, 40, 43], ['oc', 23, 25, 26, 28, 29, 30, 31, 33, 39, 41, 42], ['moc', 45, 47, 48], ['tr', 23, 47, 54]];
+	function garageCrusher() {
+		var rows = $x('//tr').length; //get number of rows
 
-		var indexTd = cEL('td'); //add type collumn to header
-		indexTd.setAttribute('class', 'tableheader');
-		indexTd.innerHTML = lang.garage;
-		$X('/html/body//form/center/table/tbody/tr').insertBefore(indexTd, $X('/html/body//form/center/table/tbody/tr/td[2]'));
+		if(prefs[24]){ //crusher
+			//define car arrays
+			var titles = { h:'Heist', oc:'OC', moc:'MOC', tr:'Truck' };
+			var carValues = { h:'heist', oc:'oc', moc:'moc', tr:'truck' };
+			var base = getValue('titleBg', '#3F505F');
+			var carColors = { h:getTintedColor(base, 125), oc:getTintedColor(base, 75), moc:getTintedColor(base, 25), tr:getTintedColor(base, 150)};
+			var types = [['h', 8, 9, 13, 15, 16, 17, 18, 19, 21, 22, 27, 32, 34, 35, 40, 43], ['oc', 23, 25, 26, 28, 29, 30, 31, 33, 39, 41, 42], ['moc', 45, 47, 48], ['tr', 23, 47, 54]];
 
-		for(i=2;i<rows-2;i++){ //loop rows
-			var y = '//html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
-			var car = $X(y).href.match(/\d+/g)[0];
-			var carType = '';
-			var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
+			var indexTd = cEL('td'); //add type collumn to header
+			indexTd.setAttribute('class', 'tableheader');
+			indexTd.innerHTML = lang.garage;
+			$X('/html/body//form/center/table/tbody/tr').insertBefore(indexTd, $X('/html/body//form/center/table/tbody/tr/td[2]'));
 
-			types.forEach(function($n){ //loop car through types
-				if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
-					carType = titles[$n[0]]; //set car type
-					carRow.setAttribute('title', titles[$n[0]]); //set popup title
-			//		carRow.setAttribute('class', carValues[$n[0]] + 'Car'); //set class
-					carRow.style.backgroundColor = carColors[$n[0]];
-					carRow.setAttribute('onmouseover', 'this.style.backgroundColor="#D0D0D0";'); //add mouseover event
-					carRow.setAttribute('onmouseout', 'this.style.backgroundColor="' + carColors[$n[0]] + '";'); //add mouseout event
+			for(i=2;i<rows-2;i++){ //loop rows
+				var y = '//html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
+				var car = $X(y).href.match(/\d+/g)[0];
+				var carType = '';
+				var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
+
+				types.forEach(function($n){ //loop car through types
+					if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
+						carType = titles[$n[0]]; //set car type
+						carRow.setAttribute('title', titles[$n[0]]); //set popup title
+				//		carRow.setAttribute('class', carValues[$n[0]] + 'Car'); //set class
+						carRow.style.backgroundColor = carColors[$n[0]];
+						carRow.setAttribute('onmouseover', 'this.style.backgroundColor="#D0D0D0";'); //add mouseover event
+						carRow.setAttribute('onmouseout', 'this.style.backgroundColor="' + carColors[$n[0]] + '";'); //add mouseout event
+					}
+				});
+				var typeTd = cEL('td'); //add type collumn to row
+				typeTd.innerHTML = carType;
+				carRow.insertBefore(typeTd, carRow.childNodes[3]);
+			}
+		}
+
+		//add amount of bullets
+		var head = $X('//h2');
+		var cars = head.textContent.match(/\d+/g)[2];
+		if(cars>0){
+			head.textContent = head.textContent + ' Potential Bullets: ' + cars*12; //LANG
+		}
+
+		var xpath = '/html/body//form//center/table/tbody/tr[' + rows + ']/td';//add menu
+		var string = '<td><label><input type="checkbox" checked="1" ';
+
+		var sTable = cEL('table');
+		sTable.id = 'selectTable';
+		sTable.setAttribute('style', 'border:0px; width:100%;');
+		sTr = cEL('tr');
+		sTr.id = 'selectRow';
+
+		spacer = cEL('td');
+		spacer.innerHTML = '<br><hr><br>';
+		spacer.setAttribute('style', 'width:5%; vertical-align:top;');
+		sTr.appendChild(spacer);
+
+		sTd = cEL('td');
+		sTd.id = 'selectTd';
+		sTd.innerHTML = ' <br><hr>' +
+		' <b>Select based on Value</b> <br><br><select size="1" id="X" style="width:100px;"><option value="1">Under</option><option value="0">Above</option></select> &nbsp;$<input type="text" value="6000" maxlength="5" size="8" style="width:110px;" id="max"/>' + //LANG
+		' &nbsp; <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&ob_oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&ob_moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&ob_heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="Go" name="action" />' +
+		'<table style="padding-top:10px; position:relative; right:7px;"><tr>'+string+'id="heist">Skip Heist cars</label></td>'+string+'id="oc">Skip OC cars</label></td>'+'</tr><tr>'+string+ //LANG
+		'id="truck">Skip Trucks</label></td>'+string+'id="moc">Skip MOC cars</label></td>'+'</tr><tr>'+string+'id="nodam">Skip 0% cars</label></td><td>&nbsp;</td>'+'</tr></table>'; //LANG
+		sTr.appendChild(sTd);
+		sTable.appendChild(sTr);
+		$X(xpath).appendChild(sTable);
+
+		//add select All in SH button
+		var all = $X('//input[@type="button"]');
+		var allShButton = all.cloneNode(0);
+		allShButton.value = 'All in Safehouse';
+		allShButton.removeAttribute('onclick');
+		allShButton.addEventListener('click', function(){
+			$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
+				if($n.lastChild.previousSibling.textContent.replace(/[^A-Z]/ig,'').search('INSAFEHOUSE')!=-1){
+					$n.getElementsByTagName('input')[1].checked = true;
 				}
 			});
-			var typeTd = cEL('td'); //add type collumn to row
-			typeTd.innerHTML = carType;
-			carRow.insertBefore(typeTd, carRow.childNodes[3]);
-		}
-	}
+		}, true);
+		all.parentNode.insertBefore(allShButton, all.nextSibling);
 
-	//add amount of bullets
-	var head = $X('//h2');
-	var cars = head.textContent.match(/\d+/g)[2];
-	if(cars>0){
-		head.textContent = head.textContent + ' Potential Bullets: ' + cars*12; //LANG
-	}
+		var text = cEL('TextNode');
+		text.innerHTML = ' | ';
+		all.parentNode.insertBefore(text, all.nextSibling);
 
-	var xpath = '/html/body//form//center/table/tbody/tr[' + rows + ']/td';//add menu
-	var string = '<td><label><input type="checkbox" checked="1" ';
-
-	var sTable = cEL('table');
-	sTable.id = 'selectTable';
-	sTable.setAttribute('style', 'border:0px; width:100%;');
-	sTr = cEL('tr');
-	sTr.id = 'selectRow';
-
-	spacer = cEL('td');
-	spacer.innerHTML = '<br><hr><br>';
-	spacer.setAttribute('style', 'width:5%; vertical-align:top;');
-	sTr.appendChild(spacer);
-
-	sTd = cEL('td');
-	sTd.id = 'selectTd';
-	sTd.innerHTML = ' <br><hr>' +
-	' <b>Select based on Value</b> <br><br><select size="1" id="X" style="width:100px;"><option value="1">Under</option><option value="0">Above</option></select> &nbsp;$<input type="text" value="6000" maxlength="5" size="8" style="width:110px;" id="max"/>' + //LANG
-	' &nbsp; <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&ob_oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&ob_moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&ob_heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="Go" name="action" />' +
-	'<table style="padding-top:10px; position:relative; right:7px;"><tr>'+string+'id="heist">Skip Heist cars</label></td>'+string+'id="oc">Skip OC cars</label></td>'+'</tr><tr>'+string+ //LANG
-	'id="truck">Skip Trucks</label></td>'+string+'id="moc">Skip MOC cars</label></td>'+'</tr><tr>'+string+'id="nodam">Skip 0% cars</label></td><td>&nbsp;</td>'+'</tr></table>'; //LANG
-	sTr.appendChild(sTd);
-	sTable.appendChild(sTr);
-	$X(xpath).appendChild(sTable);
-
-	//add select All in SH button
-	var all = $X('//input[@type="button"]');
-	var allShButton = all.cloneNode(0);
-	allShButton.value = 'All in Safehouse';
-	allShButton.removeAttribute('onclick');
-	allShButton.addEventListener('click', function(){
-		$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
-			if($n.lastChild.previousSibling.textContent.replace(/[^A-Z]/ig,'').search('INSAFEHOUSE')!=-1){
-				$n.getElementsByTagName('input')[1].checked = true;
+		//add select all group Button
+		var names_td = $x('//a[contains(@href,"carinfo.php")]');
+		var names = [];
+		names_td.forEach(function($n){ //grab carnames on the current page
+			var carName = $n.innerHTML;
+			if(names.indexOf(carName)==-1){
+				names.push(carName);
 			}
 		});
-	}, true);
-	all.parentNode.insertBefore(allShButton, all.nextSibling);
-
-	var text = cEL('TextNode');
-	text.innerHTML = ' | ';
-	all.parentNode.insertBefore(text, all.nextSibling);
-
-	//add select all group Button
-	var names_td = $x('//a[contains(@href,"carinfo.php")]');
-	var names = [];
-	names_td.forEach(function($n){ //grab carnames on the current page
-		var carName = $n.innerHTML;
-		if(names.indexOf(carName)==-1){
-			names.push(carName);
-		}
-	});
-	var selectN = cEL('select');
-	selectN.id = 'selectN';
-	selectN.addEventListener('change', function(e){
-		$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
-			if(!getID('keep').checked) {
-				$n.getElementsByTagName('input')[1].checked = false;
-			}
-			if($n.getElementsByTagName('a')[0].innerHTML == e.target.value){
-				$n.getElementsByTagName('input')[1].checked = true;
-			}
-		});
-	}, true);
-	var init = cEL('option');
-	init.innerHTML = 'Choose a Name';
-	selectN.appendChild(init);
-	names.forEach(function($n){
-		var option = cEL('option');
-		option.innerHTML = $n;
-		option.setAttribute('value', $n);
-		selectN.appendChild(option);
-	});
-
-	var cities_td = $x('//tr[@class="thinline"]//td[6]');
-	var cities = [];
-	cities_td.forEach(function($n){ //grab cities on the current page
-		var carCity = $n.innerHTML;
-		if(cities.indexOf(carCity)==-1){
-			cities.push(carCity);
-		}
-	});
-	var selectC = cEL('select');
-	selectC.id = 'selectC';
-	selectC.addEventListener('change', function(e){
-		$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
-			if(!getID('keep').checked) {
-				$n.getElementsByTagName('input')[1].checked = false;
-			}
-			if($n.getElementsByTagName('td')[5].innerHTML == e.target.value){
-				$n.getElementsByTagName('input')[1].checked = true;
-			}
-		});
-	}, true);
-	var init = cEL('option');
-	init.innerHTML = 'Choose a City';
-	selectC.appendChild(init);
-	cities.forEach(function($n){
-		var option = cEL('option');
-		option.innerHTML = $n;
-		option.setAttribute('value', $n);
-		selectC.appendChild(option);
-	});
-	var citySpan = cEL('span');
-	citySpan.style.width = '80px';
-	citySpan.innerHTML = 'City: &nbsp;&nbsp;&nbsp;';
-
-	var keep = cEL('input');
-	keep.setAttribute('type', 'checkbox');
-	keep.id = 'keep';
-	var keepSpan = cEL('span');
-	keepSpan.innerHTML = 'Keep selected when selecting a new group';
-
-	var gTd = cEL('td'); //group select
-	gTd.innerHTML = '<br><hr><b>Select group from current page</b><br><br>Name: ';
-	gTd.appendChild(selectN);
-	gTd.appendChild(cEL('br'));
-	gTd.appendChild(cEL('br'));
-	gTd.appendChild(citySpan);
-	gTd.appendChild(selectC);
-	gTd.appendChild(cEL('br'));
-	gTd.appendChild(cEL('br'));
-	gTd.appendChild(keep);
-	gTd.appendChild(keepSpan);
-	gTd.style.verticalAlign = 'top';
-	$X('//tr[@id="selectRow"]').appendChild(gTd);
-
-	spacer = cEL('td');
-	spacer.innerHTML = '<br><hr><br>';
-	spacer.setAttribute('style', 'width:5%; vertical-align:top;');
-	$X('//tr[@id="selectRow"]').appendChild(spacer);
-
-	//select cars
-	if(ls.length > 1){
-		if(ls.indexOf('heist') != -1 || ls.indexOf('nodam') != -1 || ls.indexOf('max') != -1 || ls.indexOf('oc') != -1){
-			var max=GetPost('max'), truck=GetPost('truck'), oc=GetPost('ob_oc'), moc=GetPost('ob_moc'), heist=GetPost('ob_heist'), nodam=GetPost('nodam'), select=GetPost('select'), a=0, y, car, z, perc, types;
-			for(i=2;i<rows-2;i++){
-				y = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[3]/a';//get car
-				car = $X(y).href.match(/\d+/g)[0];
-				z = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[4]';//get percentage damage
-				perc = $I(z);
-				perc = parseInt(perc.slice(0, perc.indexOf('%')));
-
-				var hcar=0, occar=0, trcar=0, moccar=0;
-				checkcar(car);
-
-				var stop=0;//check if car needs to be skipped
-				if((heist==1 && hcar==1)||(oc==1 && occar==1)||(truck==1 && trcar==1)||(moc==1 && moccar==1)||(nodam==1 && perc==0)){
-					stop=1;
+		var selectN = cEL('select');
+		selectN.id = 'selectN';
+		selectN.addEventListener('change', function(e){
+			$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
+				if(!getID('keep').checked) {
+					$n.getElementsByTagName('input')[1].checked = false;
 				}
+				if($n.getElementsByTagName('a')[0].innerHTML == e.target.value){
+					$n.getElementsByTagName('input')[1].checked = true;
+				}
+			});
+		}, true);
+		var init = cEL('option');
+		init.innerHTML = 'Choose a Name';
+		selectN.appendChild(init);
+		names.forEach(function($n){
+			var option = cEL('option');
+			option.innerHTML = $n;
+			option.setAttribute('value', $n);
+			selectN.appendChild(option);
+		});
 
-				if(stop == 0){
-					tr = $i('//tr', (i+1));//get worth
-					tr = (tr.indexOf(')') == -1) ? tr.slice(tr.indexOf('%')) : tr.slice(tr.indexOf(')'));
-					tr = tr.replace('<td>', '');
-					tr = tr.slice(tr.indexOf('$')+6);
-					tr = tr.replace('<td>', '');
-					tr = tr.slice(0, tr.indexOf('<')-3);
-					tr = tr.replace(',', '');
-					tr = parseInt(tr);
+		var cities_td = $x('//tr[@class="thinline"]//td[6]');
+		var cities = [];
+		cities_td.forEach(function($n){ //grab cities on the current page
+			var carCity = $n.innerHTML;
+			if(cities.indexOf(carCity)==-1){
+				cities.push(carCity);
+			}
+		});
+		var selectC = cEL('select');
+		selectC.id = 'selectC';
+		selectC.addEventListener('change', function(e){
+			$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
+				if(!getID('keep').checked) {
+					$n.getElementsByTagName('input')[1].checked = false;
+				}
+				if($n.getElementsByTagName('td')[5].innerHTML == e.target.value){
+					$n.getElementsByTagName('input')[1].checked = true;
+				}
+			});
+		}, true);
+		var init = cEL('option');
+		init.innerHTML = 'Choose a City';
+		selectC.appendChild(init);
+		cities.forEach(function($n){
+			var option = cEL('option');
+			option.innerHTML = $n;
+			option.setAttribute('value', $n);
+			selectC.appendChild(option);
+		});
+		var citySpan = cEL('span');
+		citySpan.style.width = '80px';
+		citySpan.innerHTML = 'City: &nbsp;&nbsp;&nbsp;';
 
-					if((tr < max && select==1)||(tr > max && select==0)){
-						$X('/html/body//form/center/table/tbody/tr['+(i+2)+']/td[7]/input[2]').checked = true;
+		var keep = cEL('input');
+		keep.setAttribute('type', 'checkbox');
+		keep.id = 'keep';
+		var keepSpan = cEL('span');
+		keepSpan.innerHTML = 'Keep selected when selecting a new group';
+
+		var gTd = cEL('td'); //group select
+		gTd.innerHTML = '<br><hr><b>Select group from current page</b><br><br>Name: ';
+		gTd.appendChild(selectN);
+		gTd.appendChild(cEL('br'));
+		gTd.appendChild(cEL('br'));
+		gTd.appendChild(citySpan);
+		gTd.appendChild(selectC);
+		gTd.appendChild(cEL('br'));
+		gTd.appendChild(cEL('br'));
+		gTd.appendChild(keep);
+		gTd.appendChild(keepSpan);
+		gTd.style.verticalAlign = 'top';
+		$X('//tr[@id="selectRow"]').appendChild(gTd);
+
+		spacer = cEL('td');
+		spacer.innerHTML = '<br><hr><br>';
+		spacer.setAttribute('style', 'width:5%; vertical-align:top;');
+		$X('//tr[@id="selectRow"]').appendChild(spacer);
+
+		//select cars
+		if(ls.length > 1){
+			if(ls.indexOf('heist') != -1 || ls.indexOf('nodam') != -1 || ls.indexOf('max') != -1 || ls.indexOf('oc') != -1){
+				var max=GetPost('max'), truck=GetPost('truck'), oc=GetPost('ob_oc'), moc=GetPost('ob_moc'), heist=GetPost('ob_heist'), nodam=GetPost('nodam'), select=GetPost('select'), a=0, y, car, z, perc, types;
+				for(i=2;i<rows-2;i++){
+					y = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[3]/a';//get car
+					car = $X(y).href.match(/\d+/g)[0];
+					z = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[4]';//get percentage damage
+					perc = $I(z);
+					perc = parseInt(perc.slice(0, perc.indexOf('%')));
+
+					var hcar=0, occar=0, trcar=0, moccar=0;
+					checkcar(car);
+
+					var stop=0;//check if car needs to be skipped
+					if((heist==1 && hcar==1)||(oc==1 && occar==1)||(truck==1 && trcar==1)||(moc==1 && moccar==1)||(nodam==1 && perc==0)){
+						stop=1;
+					}
+
+					if(stop == 0){
+						tr = $i('//tr', (i+1));//get worth
+						tr = (tr.indexOf(')') == -1) ? tr.slice(tr.indexOf('%')) : tr.slice(tr.indexOf(')'));
+						tr = tr.replace('<td>', '');
+						tr = tr.slice(tr.indexOf('$')+6);
+						tr = tr.replace('<td>', '');
+						tr = tr.slice(0, tr.indexOf('<')-3);
+						tr = tr.replace(',', '');
+						tr = parseInt(tr);
+
+						if((tr < max && select==1)||(tr > max && select==0)){
+							$X('/html/body//form/center/table/tbody/tr['+(i+2)+']/td[7]/input[2]').checked = true;
+						}
 					}
 				}
 			}
 		}
 	}
+	setTimeout(function(){ garageCrusher(); }, 150); //minimal delay in attempt to fix breaking up of html with slow connections
 }
 
 //---------------- Statistics ----------------
@@ -4503,47 +4507,87 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 	//--Assemble functions
 
 	function fillBRC(n, b, mode) { //actually filling the forms
+
+		//set defaults
 		values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-		if (n > -1) { //do we even want narcs?
-			if (carry_n == 0) {
-				values[(7 + parseInt(n))] = narcs; //nothing in pocket, fill it all
-			} else {
-				if (n_amount[parseInt(n)] == carry_n && carry_n < narcs) { //user already carrying some => AF the rest
-					values[(7 + parseInt(n))] = narcs - carry_n;
-					inputs[17].checked = 1; //buy
-				} else if ( n_amount[parseInt(n)] != narcs) { //AF selling other crap
-					for (i = 0; i <= 6; i++) {
-						values[(i + 7)] = n_amount[i];
+
+		// booze    - narcs    == maximum user can buy
+		// carry_b  - carry_n  == total user is carrying
+		// b_amount - n_amount == amount per item user is carrying
+		// b        - n        == item we want
+
+		if (n > -1) { //do we want narcs?
+			if (carry_n == 0) { //nothing in pocket, fill it all
+				values[7+n] = narcs;
+				inputs[17].checked = 1; //buy
+			} else { //something in pocket
+				if (n_amount[n] < narcs) { //not full of wanted
+					if (n_amount[n] != carry_n) { //there is unwanted stuff
+						for (i=0; i<=6; i++) {
+							if (i != n || mode == 1) { //only sell what we don't want
+								values[i+7] = n_amount[i];
+							}
+						}
+						inputs[16].checked = 1; //sell
+					} else { //only carrying wanted narcs
+						values[7+n] = narcs - carry_n; //if any, fill missing amount
+						inputs[17].checked = 1; //buy
 					}
-					inputs[16].checked = 1; //sell
+				} else { //full of wanted
+					if (mode == 1) { //CD mode, sell all
+						values[7+n] = n_amount[n];
+						inputs[16].checked = 1; //sell
+					}
 				}
 			}
+		} else if(mode != 3) { //sell the leftovers
+			for (i=0; i<=6; i++) {
+				values[i+7] = n_amount[i];
+			}
+			inputs[16].checked = 1; //sell
 		}
-		if (b > -1) { //do we even want booze?
+
+		if (b > -1) { //do we want booze?
 			if (carry_b == 0) {
-				values[(parseInt(b))] = booze; //nothing in pocket, fill it all
+				values[b] = booze; //nothing in pocket, fill it all
+				inputs[8].checked = 1; //buy
 			} else {
-				if (b_amount[b] == carry_b && carry_b <= booze) { //user already carrying some (or all, filling in 0 as rest) => AF the rest
-					values[b] = booze - carry_b;
-					inputs[8].checked = 1; //buy
-				} else { //AF selling other crap
-					if (inputs[16].checked || mode == 1 || mode == 2) {
-						//buying narcs? ==> don't AF selling booze (user proolly just bought that) (exception for CD/RP mode)
-						for (i = 0; i <= 6; i++) {
-							values[i] = b_amount[i];
+				if (b_amount[b] < booze) { //not full of wanted
+					if (b_amount[b] != carry_b) { //there is unwanted stuff
+						for (i=0; i<=6; i++) {
+							if (i != b || mode == 1) { //only sell what we don't want or in CD mode
+								values[i] = b_amount[i];
+							}
 						}
+						inputs[7].checked = 1; //sell
+					} else { //only carrying wanted narcs
+						values[b] = booze - carry_b; //if any, fill missing amount
+						inputs[8].checked = 1; //buy
+					}
+				} else { //full of wanted
+					if (mode == 1) { //CD mode, sell all
+						values[b] = b_amount[b];
 						inputs[7].checked = 1; //sell
 					}
 				}
 			}
-		}
-		boxes = $x('//input[@type="text"]');
-		for (i = 0; i <= 13; i++) {
-			if (b == -1 && i < 7) {
-				values[i] = 0;
+		} else if(mode != 3) { //sell the leftovers
+			for (i=0; i<=6; i++) {
+				values[i] = b_amount[i];
 			}
-			if (n == -1 && i > 6) {
-				values[i] = 0;
+			inputs[7].checked = 1; //sell
+		}
+
+		//fill in the boxes with the calculated values
+		boxes = $x('//input[@type="text"]');
+		for (i=0; i<=13; i++) {
+			if (mode < 2) { //double check no
+				if (b == -1 && i < 7) {
+					values[i] = 0;
+				}
+				if (n == -1 && i > 6) {
+					values[i] = 0;
+				}
 			}
 			boxes[i].value = values[i];
 		}
@@ -4799,7 +4843,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		//--BRC AutoForm
 		if (sp) { //AF on Smuggling page
 
-			function AF(sel) {
+			function AF(sel,Xn,Xb) {
 				//assemble info for AF
 				inputs = $x('//input');
 				bn_xp = '//form/table/tbody/tr[1]/td';
@@ -4860,6 +4904,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 							b = i;
 						}
 					}
+
 					n = key[n];
 					b = key[b];
 
@@ -4879,7 +4924,11 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 					b = key[(GetParam('b'))];
 				}
 
-				//still nothing defines, don't fill nothing!
+				//overrule with hotkeys [ ] =
+				if(Xn) { var n = -1; }
+				if(Xb) { var b = -1; }
+
+				//still nothing defined, don't fill nothing!
 				if(!n) { var n = 0; }
 				if(!b) { var b = 0; }
 
@@ -4922,9 +4971,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			if (H) {
 				a1.setAttribute('accesskey', '8');
 			}
-			a1.addEventListener('click', function () {
-				AF(0);
-			}, true);
 			wrap1.appendChild(a1);
 			best = cEL('input');
 			best.id = 'brc0';
@@ -4942,9 +4988,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			if (H) {
 				a2.setAttribute('accesskey', '9');
 			}
-			a2.addEventListener('click', function () {
-				AF(1);
-			}, true);
 			wrap2.appendChild(a2);
 			cd = cEL('input');
 			cd.id = 'brc1';
@@ -4962,9 +5005,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			if (H) {
 				a3.setAttribute('accesskey', '0');
 			}
-			a3.addEventListener('click', function () {
-				AF(2);
-			}, true);
 			wrap3.appendChild(a3);
 			rp = cEL('input');
 			rp.id = 'brc2';
@@ -4983,9 +5023,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			if (H) {
 				a4.setAttribute('accesskey', '-');
 			}
-			a4.addEventListener('click', function () {
-				AF(3);
-			}, true);
 			wrap4.appendChild(a4);
 			none = cEL('input');
 			none.id = 'brc3';
@@ -5089,6 +5126,25 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				$X('//a[@id="a2"]').href = 'javascript:document.getElementById("brc1").click();';
 				$X('//a[@id="a3"]').href = 'javascript:document.getElementById("brc2").click();';
 				$X('//a[@id="a4"]').href = 'javascript:document.getElementById("brc3").click();';
+
+
+
+				var getInfo = $I('//div[@id="info"]');
+				getInfo = getInfo.split('*');
+				var mode = getInfo[5];
+
+				bn_xp = '//form/table/tbody/tr[1]/td';
+				str = $I(bn_xp);
+
+				str += '<hr><a accessKey="[" id="do_n" title="AutoFill just narcs according to selected BRC mode (Hotkey: [ )" onFocus="this.blur()" href="#">' + lang.smuggling[2] + ' ([)</a>'; //LANG
+				str += ' - <a accessKey="]" id="do_b" title="AutoFill just booze according to selected BRC mode (Hotkey: ] )" onFocus="this.blur()" href="#">' + lang.smuggling[1] + ' (])</a>'; //LANG
+				str += ' - <a accessKey="=" id="do_sell" title="Sell all you have (Hotkey: = )" onFocus="this.blur()" href="#">' + lang.smuggling[5] + ' (=)</a><br>'; //LANG
+
+				$I(bn_xp, str);
+
+				getID('do_n').addEventListener('click', function(){ AF(getInfo[5],0,1); }, true);
+				getID('do_b').addEventListener('click', function(){ AF(getInfo[5],1,0); }, true);
+				getID('do_sell').addEventListener('click', function(){ AF(2,1,1); }, true);
 			}
 			$X('//input[@id="brc' + getInfo[5] + '"]').setAttribute('checked', '1'); //check the selected option at the Div too
 		}
@@ -5135,7 +5191,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			function parsePrices(resp, url) {
 				parser = new DOMParser();
 				dom = parser.parseFromString(resp, 'application/xml');
-
 
 				for (BN = [], i = 0; i <= 1; i++) { //B/N
 					for (BN[i] = [], j = 0; j <= 6; j++) { //type
@@ -5235,24 +5290,89 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 		if (i < 7) { //booze
 			var x = i + 4;
 			b_amount[i] = parseInt($I(xpb + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpb + x + ']/td', '<a ' + (prefs[4] ? 'accesskey="' + (i + 1) + '" ' : '') + 'title="Fill in this booze (Hotkey: ' + (i + 1) + ' )" onFocus="this.blur()" href="javascript:var tmp = document.getElementsByTagName(\'input\')[' + i + '].value;for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value =0;}document.getElementsByTagName(\'input\')[' + i + '].value=(('+b_amount[i]+'>'+booze+')?'+b_amount[i]+':' + booze + '-tmp);document.getElementsByTagName(\'input\')[18].focus();">' + (prefs[4] ? (i + 1) : '') + ' ' + $I(xpb + x + ']/td') + '</a>'); //LANG
+			$I(xpb + x + ']/td', '<a id="bh'+i+'" index="'+i+'" ' + (prefs[4] ? 'accesskey="' + (i + 1) + '" ' : '') + 'title="Fill in this booze (Hotkey: ' + (i + 1) + ' )" onFocus="this.blur()" href="javascript:{}">' + (prefs[4] ? (i + 1) : '') + ' ' + $I(xpb + x + ']/td') + '</a>'); //LANG
+
+			getID('bh'+i).addEventListener('click', function(e){
+				function z() { getTAG('input')[i].value = 0; } //zero
+				var i = parseInt(e.target.getAttribute('index'));
+				var inpt = getTAG('input'); //inputs
+
+				for(var j=0;j<=6;j++) {//reset form
+					if (j!=i) {
+						inpt[j].value = 0;
+					}
+				}
+
+				var missing = booze - b_amount[i];
+				var value = inpt[i].value;
+				if (b_amount[i] == 0) {
+					if (value == 0) {
+						inpt[i].value = booze;
+						inpt[8].checked = 1; //sell
+					} else { z(); }
+				} else if (b_amount[i] == booze) {
+					if (value == 0) {
+						inpt[i].value = booze;
+						inpt[7].checked = 1; //buy
+					} else { z(); }
+				} else if (b_amount[i] != booze) {
+					if (value == 0) {
+						inpt[i].value = missing;
+						inpt[8].checked = 1; //buy
+					} else if (value == missing) {
+						inpt[i].value = b_amount[i];
+						inpt[7].checked = 1; //sell
+					} else { z(); }
+				}
+			}, true);
 		}
 		if (i > 8) { //narcs
 			var x = i - 5;
 			n_amount[(i - 9)] = parseInt($I(xpn + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpn + x + ']/td', '<a onFocus="this.blur()" title="Fill in this narc" href="javascript:var tmp = document.getElementsByTagName(\'input\')[' + i + '].value;for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value =0;}document.getElementsByTagName(\'input\')[' + i + '].value = (('+n_amount[(i - 9)]+'>'+narcs+')?'+n_amount[(i-9)]+':' + narcs + '-tmp);document.getElementsByTagName(\'input\')[18].focus();">' + $I(xpn + x + ']/td') + '</a>'); //LANG
+			$I(xpn + x + ']/td', '<a onFocus="this.blur()" id="nh'+i+'" index="'+i+'" title="Fill in this narc" href="javascript:{}">' + $I(xpn + x + ']/td') + '</a>'); //LANG
+
+			getID('nh'+i).addEventListener('click', function(e){
+				function z() { getTAG('input')[i].value = 0; } //fill zero
+				var i = parseInt(e.target.getAttribute('index'));
+				var inpt = getTAG('input'); //inputs
+
+				for(var j=0;j<=6;j++) {//reset form
+					if (j!=i-9) {
+						inpt[j+9].value = 0;
+					}
+				}
+
+				var missing = narcs - n_amount[i-9];
+				var value = parseInt(inpt[i].value);
+				if (n_amount[i-9] == 0) {
+					if (value == 0) {
+						inpt[i].value = narcs;
+						inpt[17].checked = 1; //sell
+					} else { z(); }
+				} else if (n_amount[i-9] == narcs) {
+					if (value == 0) {
+						inpt[i].value = narcs;
+						inpt[16].checked = 1; //buy
+					} else { z(); }
+				} else if (n_amount[i-9] < narcs) {
+					if (value == 0) {
+						inpt[i].value = missing;
+						inpt[17].checked = 1; //buy
+					} else if (value == missing) {
+						inpt[i].value = n_amount[i-9];
+						inpt[16].checked = 1; //sell
+					} else { z(); }
+				} else if (n_amount[i-9] > narcs) {
+					if (value == 0) {
+						inpt[i].value = n_amount[i-9];
+						inpt[17].checked = 1; //sell
+					} else { z(); }
+				}
+			}, true);
 		}
 	}
 
-	for (b_amounts = '', n_amounts = '', i = 0; i <= 6; i++) { //parse to string to add into 'string'-function
-		b_amounts += b_amount[i] + (i != 6 ? ',' : '');
-		n_amounts += n_amount[i] + (i != 6 ? ',' : '');
-	}
-	carry_n = n_amount.sum(); //how much is the user carrying already
-	carry_b = b_amount.sum();
-
 	//create more efficient info text
-	notempty = (carry_n != 0) ? 1 : 0; //toggle for Narcs ([) hotkey
 	info_xp = '//form/table/tbody/tr/td';
 	part = $I(info_xp).split('<br>');
 
@@ -5262,13 +5382,10 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 	str += '<td>' + 'Max ' + lang.smuggling[2] + ': ' + narcs + '</td>';
 	str += '</tr></table>';
 	str += '<a href="prices.php" target="main">Current Booze/Narcotics Prices</a>';
-	if (prefs[4]) { //add AF Hotkeys
-		str += '<hr><a accessKey="[" title="Fill in any narcs you carry, or fill in cocaine by default (Hotkey: [ )" onFocus="this.blur()" href="javascript:for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value=0;}for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value=0;}if(' + notempty + '){var n_amount = [' + n_amounts + '];for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[(i+9)].value=n_amount[i];}}else{document.getElementsByTagName(\'input\')[12].value = ' + narcs + ';}document.getElementsByTagName(\'input\')[18].focus();">' + lang.smuggling[2] + ' ([)</a>'; //LANG
-		str += ' - <a accessKey="]" title="Fill in any booze you carry (Hotkey: ] )" onFocus="this.blur()" href="javascript:for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value=0;}var b_amount = [' + b_amounts + '];for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value=b_amount[i];}document.getElementsByTagName(\'input\')[18].focus();">' + lang.smuggling[1] + ' (])</a>'; //LANG
-		str += ' - <a accessKey="=" title="Fill in any booze or narcs you carry, or fill in cocaine by default (Hotkey: = )" onFocus="this.blur()" href="javascript:for(var i=9;i<=15;i++){document.getElementsByTagName(\'input\')[i].value=0;}var b_amount = [' + b_amounts + '];for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[i].value=b_amount[i];} if(' + notempty + '){var n_amount = [' + n_amounts + '];for(var i=0;i<=6;i++){document.getElementsByTagName(\'input\')[(i+9)].value=n_amount[i];}}else{document.getElementsByTagName(\'input\')[12].value = ' + narcs + ';}document.getElementsByTagName(\'input\')[18].focus();">' + lang.smuggling[5] + ' (=)</a><br>'; //LANG
-	}
+
 	$X(bn_xp).innerHTML = str;
 	inputs[18].focus(); //focus captcha
+
 	//AF stuff on Smuggling page
 	if (dls != '') { //we found a BRC request!
 		key = [0, 4, 6, 1, 2, 3, 5]; //convert b/n order to order on smuggling page
