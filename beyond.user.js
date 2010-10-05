@@ -2,6 +2,7 @@
 // @name			Omerta Beyond
 // @version			1.9.3
 // @date			05-10-2010
+// @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
 // @author			Rix <rix@omertabeyond.com>
@@ -11,6 +12,7 @@
 // @homepageURL			http://www.omertabeyond.com/
 // @description			Omerta Beyond 1.9.3 (Still the best 'legal' script! ;))
 // @icon			http://www.omertabeyond.com/html/images/favicon.png
+// @screenshot			http://dump.omertabeyond.com/images/875sshot_0019.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
@@ -133,6 +135,8 @@ const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.9.3';
 const SCRIPT_SUBVERSION = 93;
 var minFFVersion = '3.6';
+const FINGON_VERSION_COM = 9;
+const FINGON_VERSION_DM = 2;
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
 const UPDATE_URL = SCRIPT_LINK+"/version.xml";
@@ -140,8 +144,8 @@ var PrefsLink = SCRIPT_LINK + sets.prefslink;
 var PricesLink = SCRIPT_LINK + sets.priceslink;
 var ContactLink = SCRIPT_LINK + sets.contactlink;
 var PollLink = SITE_LINK + sets.polllink;
-var FingonUrl = 'http://89.149.221.178/~fingon';
-var EdoUrl = 'http://www.edo-nieuws.nl/news.php';
+const FingonUrl = 'http://89.149.221.178/~fingon';
+const EdoUrl = 'http://www.edo-nieuws.nl/news.php';
 var ff = navigator.userAgent.split('/')[3].split(' ')[0];
 const OB = SCRIPT_VERSION + '.' + SCRIPT_SUBVERSION;
 
@@ -1549,7 +1553,7 @@ if(prefs[2] && dlp == '/info.php'){
 		}
 		//We have better news
 		var times = $X('//a[contains(@href,"news.html")] | //a[contains(@href,"mag.php")]');
-		times.href = sets.version=='_com'?FingonUrl+'?v=9':sets.version=='_dm'?FingonUrl+'?v=2':EdoUrl;
+		times.href = sets.version=='_com'?FingonUrl+'?v='+FINGON_VERSION_COM : sets.version=='_dm'?FingonUrl+'?v='+FINGON_VERSION_DM : EdoUrl;
 		times.style.fontSize = '11px';
 		times.innerHTML = lang.login[2];
 	}

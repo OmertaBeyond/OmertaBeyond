@@ -1,6 +1,6 @@
 Omerta Beyond Changelog
 
-Version 1.9.3.91 		05/10/2010
+Version 1.9.3.93 		05/10/2010
 
 	* Removed obsolete code (~1.9kB)
 	* Minor code tweaks and optimizations
