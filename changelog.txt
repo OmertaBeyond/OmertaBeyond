@@ -1,5 +1,10 @@
 Omerta Beyond Changelog
 
+Version 1.10.XX 		XX/XX/2010
+
+
+	* Bumped version to 1.10 xD
+
 Version 1.9.3.93 		05/10/2010
 
 	* Removed obsolete code (~1.9kB)

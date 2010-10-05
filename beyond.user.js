@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.9.3
+// @version			1.10
 // @date			05-10-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -132,8 +132,8 @@ if (whereToRun() == 'com') {
 }
 
 const SCRIPT_NAME = 'Omerta Beyond';
-const SCRIPT_VERSION = '1.9.3';
-const SCRIPT_SUBVERSION = 93;
+const SCRIPT_VERSION = '1.10';
+const SCRIPT_SUBVERSION = 1;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
