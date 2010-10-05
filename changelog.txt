@@ -1,17 +1,19 @@
 Omerta Beyond Changelog
 
-Version 1.9.3.XX 		XX/XX/2010
+Version 1.9.3.91 		05/10/2010
 
 	* Removed obsolete code (~1.9kB)
 	* Minor code tweaks and optimizations
 	* Several cosmetic fixes
+	* Compatibility fixes regarding Scriptish
 	* Several .dm tweaks to cope with new family system
 	* (FS#6) Implemented Bodyguards Overview
 	* (FS#60) Added - preserved state of menu caption upon refresh
 	* (FS#98) Implemented script updater
 	* (FS#109) Fixed - nickreader goes out of visible area
-	* (FS#158) (FS#405) (FS#411) Rewrote custom menu and it ways, making the "new menu content detected" msg obsolete.
-	* (FS#180) Made new FFvChecker which works nicely and just comes up once when logging in.
+	* (FS#158) (FS#405) (FS#411) Rewrote custom menu and it ways, making the "new menu content detected" msg obsolete
+	* (FS#180) Made new FFvChecker which works nicely and just comes up once when logging in
+	* (FS#285) Fixed - hotkeys smuggling
 	* (FS#291) fixed more/less on jhl prefs
 	* (FS#298) (FS#379) Implemented loop to add focus on "Accept" link
 	* (FS#301) Implemented - Jail HL @ Family
@@ -44,6 +46,7 @@ Version 1.9.3.XX 		XX/XX/2010
 	* (FS#447) Fixed - Name focus on dets
 	* (FS#460) Fixed Bullettracker failing when owning BF
 	* (FS#462) Fixed all fails cuz of new link to family control panel (linkify log, invite from profile, cd gf/fl promo)
+	* (FS#468) Fixed wrong link for daily famstats on .com
 	* Added new theme based colors using new getTintedColors() @ Garage
 	* Fixed "Select some cars first" msg @ Garage
 	* Fixed not showing capo list (we still assumed don was 1 capo)
