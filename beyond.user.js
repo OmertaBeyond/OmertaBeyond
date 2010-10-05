@@ -4512,8 +4512,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		// b_amount - n_amount == amount per item user is carrying
 		// b        - n        == item we want
 
-		console.log(n)
-
 		if (n > -1) { //do we want narcs?
 			if (carry_n == 0) { //nothing in pocket, fill it all
 				values[7+n] = narcs;
@@ -4544,7 +4542,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			}
 			inputs[16].checked = 1; //sell
 		}
-		console.log(b);
+
 		if (b > -1) { //do we want booze?
 			if (carry_b == 0) {
 				values[b] = booze; //nothing in pocket, fill it all
@@ -4570,7 +4568,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				}
 			}
 		} else if(mode != 3) { //sell the leftovers
-		console.log('selllll');
 			for (i=0; i<=6; i++) {
 				values[i] = b_amount[i];
 			}
@@ -4580,14 +4577,6 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		//fill in the boxes with the calculated values
 		boxes = $x('//input[@type="text"]');
 		for (i=0; i<=13; i++) {
-			if (mode < 2) { //double check no
-				if (b == -1 && i < 7) {
-					values[i] = 0;
-				}
-				if (n == -1 && i > 6) {
-					values[i] = 0;
-				}
-			}
 			boxes[i].value = values[i];
 		}
 		if ($X('//input[@name="ver"]')) {
