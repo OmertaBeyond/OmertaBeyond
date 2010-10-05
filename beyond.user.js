@@ -4512,6 +4512,8 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		// b_amount - n_amount == amount per item user is carrying
 		// b        - n        == item we want
 
+		console.log(n)
+
 		if (n > -1) { //do we want narcs?
 			if (carry_n == 0) { //nothing in pocket, fill it all
 				values[7+n] = narcs;
@@ -4530,7 +4532,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 						inputs[17].checked = 1; //buy
 					}
 				} else { //full of wanted
-					if (mode == 1) { //CD mode, sell all
+					if (mode > 0) { //CD/RP mode, sell all
 						values[7+n] = n_amount[n];
 						inputs[16].checked = 1; //sell
 					}
@@ -4542,7 +4544,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			}
 			inputs[16].checked = 1; //sell
 		}
-
+		console.log(b);
 		if (b > -1) { //do we want booze?
 			if (carry_b == 0) {
 				values[b] = booze; //nothing in pocket, fill it all
@@ -4561,13 +4563,14 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 						inputs[8].checked = 1; //buy
 					}
 				} else { //full of wanted
-					if (mode == 1) { //CD mode, sell all
+					if (mode > 0) { //CD/RP mode, sell all
 						values[b] = b_amount[b];
 						inputs[7].checked = 1; //sell
 					}
 				}
 			}
 		} else if(mode != 3) { //sell the leftovers
+		console.log('selllll');
 			for (i=0; i<=6; i++) {
 				values[i] = b_amount[i];
 			}
@@ -5373,6 +5376,13 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 			}, true);
 		}
 	}
+	$x('//input[@name="typebooze"] | //input[@name="typedrugs"]').forEach(function($n){
+		$n.addEventListener('click', function() {
+			if ($X('//input[@name="ver"]')) {
+				$X('//input[@name="ver"]').focus();
+			}
+		}, true);
+	});
 
 	//create more efficient info text
 	info_xp = '//form/table/tbody/tr/td';
