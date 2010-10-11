@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.10';
-const SCRIPT_SUBVERSION = 1;
+const SCRIPT_SUBVERSION = 2;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -1366,7 +1366,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 			//<table cellpadding="0" cellspacing="0"><tr><td>
 			trdump += '<tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'">';
 			trdump += '<td style="text-align:center;">'+bgsname[y]+'</td>';
-			trdump += '<td style="text-align:center;">'+commafy(bgsid[y])+'</td>';
+			trdump += '<td style="text-align:center;"><a href="http://www.barafranca.com/obay.php?action=tosell&type=14&id='+bgsid[y]+'">'+bgsid[y]+'</td>';
 			trdump += '<td style="text-align:center;">'+bgslvl[y]+'</td>';
 			trdump += '<td style="text-align:center;">'+bgsatt[y]+'</td>';
 			trdump += '<td style="text-align:center;">'+bgsdef[y]+'</td>';
@@ -3585,6 +3585,13 @@ if (dlp == '/obay.php' && dls.indexOf('type=10') != -1 && db.innerHTML.indexOf('
 	$x('//input')[5].focus();
 }
 
+//---------------- sell bg ----------------
+if (dlp == '/obay.php' && dls.indexOf('type=14') != -1 && db.innerHTML.indexOf('<table') != -1 && $x('//input')[3]) {
+	$x('//input')[2].value = (GetParam('id') ? GetParam('id') : '');
+	$x('//input')[3].checked = true;
+	$x('//input')[5].focus();
+}
+
 //---------------- OBAY ----------------
 if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 	//add price per bullet
@@ -3798,6 +3805,13 @@ if (dls.indexOf('action=showMsg') != -1) {
 		$I(msgTxt, arr.join(' '));
 	}
 
+	var WitnessMsg = new RegExp(lang.linkify[17]);
+	if (WitnessMsg.test(msgType)) { //witness
+		setArr(14);
+		setArr(16);
+		$I(msgTxt, arr.join(' '));
+	}
+
 	var famInv = new RegExp(lang.linkify[12]); //fam inv.
 	if (famInv.test(msgType)) {
 		if (arr.length < 18 + (sets.version == '_nl' ? 1 : 0)) {
@@ -3817,7 +3831,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 	var targetNotFound = new RegExp(lang.linkify[3]);
 	if (targetNotFound.test(msgType)) { //target not found
-		setArr((sets.version=='_com')?5:4);
+		setArr((sets.version=='_nl')?4:5);
 		$I(msgTxt, arr.join(' '));
 	}
 
