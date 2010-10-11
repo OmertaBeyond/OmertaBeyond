@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			05-10-2010
+// @date			12-10-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.10';
-const SCRIPT_SUBVERSION = 2;
+const SCRIPT_SUBVERSION = 3;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -1366,7 +1366,7 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 			//<table cellpadding="0" cellspacing="0"><tr><td>
 			trdump += '<tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'">';
 			trdump += '<td style="text-align:center;">'+bgsname[y]+'</td>';
-			trdump += '<td style="text-align:center;"><a href="http://www.barafranca.com/obay.php?action=tosell&type=14&id='+bgsid[y]+'">'+bgsid[y]+'</td>';
+			trdump += '<td style="text-align:center;"><a href="http://'+dlh+'/obay.php?action=tosell&type=14&id='+bgsid[y]+'">'+bgsid[y]+'</td>';
 			trdump += '<td style="text-align:center;">'+bgslvl[y]+'</td>';
 			trdump += '<td style="text-align:center;">'+bgsatt[y]+'</td>';
 			trdump += '<td style="text-align:center;">'+bgsdef[y]+'</td>';
@@ -4038,7 +4038,7 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 	}
 
 	if (db.innerHTML.indexOf(lang.scratcher[18]) != -1) { //grab 10 is enough event
-		db.innerHTML = db.innerHTML + '<br /><a href=http://'+dlh+'/scratch.php>'+lang.scratcher[19]+'</a>';
+		db.innerHTML = db.innerHTML + '<br /><a href="http://'+dlh+'/scratch.php">'+lang.scratcher[19]+'</a>';
 		getTAG('a')[0].focus();
 	}
 
