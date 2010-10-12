@@ -139,10 +139,9 @@ var langs = {
 			'Coke at: ',
 			'You are already staying in this city!'
 		],
-		newmenu: 'Detected new menu content! Please update your preferences.\nThis includes the menu AND the hotkey preferences!',
 		cusmenu: [
 			'Are you sure you want to reset your custom menu?',
-			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
+			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer than 3 seconds',
 			'You\'re already using that key!'
 		],
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
@@ -492,13 +491,11 @@ var langs = {
 			'Coke at: ',
 			'You are already staying in this city!'
 		],
-		newmenu: 'Detected new menu content! Please update your preferences.\nThis includes the menu AND the hotkey preferences!',
 		cusmenu: [
 			'Are you sure you want to reset your custom menu?',
-			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
+			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer than 3 seconds',
 			'You\'re already using that key!'
 		],
-		customs: ' settings updated! Returning to normal menu..<br><br>Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer then 3 seconds',
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
 		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
@@ -846,10 +843,9 @@ var langs = {
 			'Coke om: ',
 			'Je verblijft al in deze stad!'
 		],
-		newmenu: 'Nieuwe menu indeling gevonden! Selecteer opnieuw je voorkeuren.\nDit houd in de menu- EN de hotkey voorkeuren!',
 		cusmenu: [
 			'Weet je zeker dat je je menu wilt resetten?',
-			' indeling geupdate! <br><br>Click <a href="javascript:location.href=\'menu.php\'">Wacht of klik hier</a>',
+			' indeling geupdate! Keert terug naar normale menu..<br /><br />Klik <a href="javascript:location.href=\'menu.php\'">hier</a> als dit langer dan 3 seconden blijft',
 			'Je hebt die hotkey al in gebruik!'
 		],
 		login: ['Registreren', 'http://www.edo-nieuws.nl', 'Edo-nieuws'],
