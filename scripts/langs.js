@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.3
+	Version: 1.10.4
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -50,7 +50,7 @@ var langs = {
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs, obsolete
-			'Enable Trackers (Bullet, Poker, Scratching, BJ)',//33 - MISC
+			'Enable Trackers (Bullet, Poker, Scratching, BJ, Slots)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
@@ -90,7 +90,7 @@ var langs = {
 			'Remove \'Recent Posts\' from user\'s profile.',//30
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32, obsolete
-			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
+			'Keep track of how many bullets you have bought, how many poker-, blackjack- or slotsgames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals',//36
@@ -345,6 +345,14 @@ var langs = {
 			'User 2: You lost your bet of \\$(\\d+) was taken by the casino',
 			'User 2: You played even so you got your bet of \\$(\\d+) back'//20
 		],
+		slottracker: [
+			'SlotsTracker',
+			'Congratulations',
+			'Bummer',
+			'Congratulations! You won \\$(\\d+)',
+			'Jackpot:',
+			'Triple BAR:'
+		],
 		bgov: [
 			'Bodyguards overview',
 			'Name',
@@ -402,7 +410,7 @@ var langs = {
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
 			'Enable Scratcher',//32 - OTHER AFs
-			'Enable Trackers (Bullet, Poker, Scratching, BJ)',//33 - MISC
+			'Enable Trackers (Bullet, Poker, Scratching, BJ, Slots)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
@@ -442,7 +450,7 @@ var langs = {
 			'Remove \'Recent Posts\' from user\'s profile.',//30
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
 			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
-			'Keep track of how many bullets you have bought, how many pokergames you played or how many cards you have scratched',//33
+			'Keep track of how many bullets you have bought, how many poker-, blackjack- or slotsgames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals',//36
@@ -697,6 +705,14 @@ var langs = {
 			'User 2: You lost your bet of \\$(\\d+) was taken by the casino',
 			'User 2: You played even so you got your bet of \\$(\\d+) back'//20
 		],
+		slottracker: [
+			'SlotsTracker',
+			'Congratulations',
+			'Bummer',
+			'Congratulations! You won \\$(\\d+)',
+			'Jackpot:',
+			'Triple BAR:'
+		],
 		bgov: [
 			'Bodyguards overview',
 			'Name',
@@ -754,7 +770,7 @@ var langs = {
 			'Verwijder "Recente forumposts" van gebruikersprofielen',//30 - CLEAN-UP
 			'Sneltoetsen gebruiken bij de Postbus',//31 - MISC
 			'Auto-Krasser en Stats',//32 - OTHER AFs
-			'Voeg Volgers toe (Kogels, Poker, Krassen, BJ)',//33 - MISC
+			'Voeg Volgers toe (Kogels, Poker, Krassen, BJ, Fruitmachine)',//33 - MISC
 			'Ruim de Spot Overvallen pagina op',//34 - UI Extras
 			'Laat misdaad- en autojatstats zien op status pagina',//35 - CRIMES/CARS
 			'Voeg Lijfwachten Overzicht toe op BG\'s pagina',//36 - UI EXTRAS
@@ -794,7 +810,7 @@ var langs = {
 			'Verwijdert de regel met de laatste forumposts van profielen',//30
 			'Geeft je de mogelijkheid om berichten te openen met sneltoetsen en aldaar te antwoorden of het bericht te verwijderen met een sneltoets',//31
 			'Geef het Krasser paneel met stats weer op de Kras&Win pagina',//32
-			'Hou bij hoeveel kogels je koopt bij de kogelfabriek, hoeveel handen je hebt gespeeld met poker en hoeveel kaarten je hebt gekrast',//33
+			'Hou bij hoeveel kogels je koopt bij de kogelfabriek, hoeveel handen je hebt gespeeld met poker, hoeveel kaarten je hebt gekrast en hoeveel keer je blackjack of op de fruitmachine hebt gespeeld',//33
 			'Krijg een goed overzicht van de spots zodat je makkelijker je doel kunt kiezen',//34
 			'Laat het aantal misdaaden zien die succesvol waren en het total aantal auto\'s die je gestolen hebt, plus de totale winst van beide',//35
 			'Een mooi overzicht van al je lijfwachten en hun getrainde levels, inclusief het totale aantal',//36
@@ -1056,6 +1072,14 @@ var langs = {
 			'User 2: Je hebt gewonnen, je hebt je inzet van \\$(\\d+) terug',
 			'User 2: Je hebt verloren, je inzet van \\$(\\d+) is nu voor het casino',
 			'User 2: Je speelde gelijk, je krijgt je inzet van \\$(\\d+) dus terug'//20
+		],
+		slottracker: [
+			'Fruitmachine Volger',
+			'Gefeliciteerd',
+			'Jammer',
+			'Gefeliciteerd! Je wint \\$(\\d+)',
+			'Hoofdprijs:',
+			'3 maal BAR:'
 		],
 		bgov: [
 			'Lijfwachten overzicht',

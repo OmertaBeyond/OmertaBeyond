@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.10';
-const SCRIPT_SUBVERSION = 3;
+const SCRIPT_SUBVERSION = 4;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -1485,7 +1485,7 @@ if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
 		db.innerHTML += '<br><b>Auto Refresh in 1 sec</b>';
 		setTimeout(function () {
 			history.back();
-		}, 1000);
+		}, 0);
 	}
 }
 
@@ -4229,7 +4229,7 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 
 	getID('resetpt').addEventListener('click', function() {
 		getID('resetpt').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
-		getID('ptstats').innerHTML = lang.pokertracker[4]+' <font style="float:right"><b>0</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>0</b></font>';
+		getID('ptstats').innerHTML = lang.pokertracker[4]+' <font style="float:right"><b>0</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>$0</b></font>';
 		setValue('ptgplay', 0);
 		setValue('ptspent', 0);
 		setValue('ptgwon', 0);
@@ -4372,7 +4372,7 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 		}
 	}
 	var bjprofit = bjmwon - bjspent;
-	if (bjspent > 0) {
+	if (bjspent >= 0) {
 		if (bjprofit >= 0) bjprofit = '$'+commafy(bjprofit);
 		else bjprofit = '-$'+commafy(bjspent - bjmwon);
 	}
@@ -4391,7 +4391,7 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 
 	getID('resetbj').addEventListener('click', function() {
 		getID('resetbj').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
-		getID('bjstats').innerHTML = lang.pokertracker[4]+' <font style="float:right"><b>0</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.bjtracker[9]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.bjtracker[8]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>0</b></font>';
+		getID('bjstats').innerHTML = lang.pokertracker[4]+' <font style="float:right"><b>0</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.bjtracker[9]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.bjtracker[8]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>$0</b></font>';
 		setValue('bjgames', 0);
 		setValue('bjspent', 0);
 		setValue('bjgwon', 0);
@@ -4401,6 +4401,86 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 		setValue('bjbet', 0);
 	}, true);
 }
+
+//---------------- SlotsTracker ----------------
+if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
+	$x('//input')[1].focus();
+	var slotjp = getValue('slotjp', 0);
+	var slotbar = getValue('slotbar', 0);
+	var slotgames = getValue('slotgames', 0);
+	var slotgwon = getValue('slotgwon', 0);
+	var slotmwon = getValue('slotmwon', 0);
+	var slotspent = getValue('slotspent', 0);
+	var slotbet = getValue('slotbet', 0);
+	var jpmwon = getValue('jpmwon', 0);
+	var str = document.body.innerHTML.replace(/,/g, '');
+	var betinput = $x('//input')[1];
+	betinput.addEventListener('keyup', function() {
+		setValue('slotbet', parseInt(betinput.value, 10));
+	}, true);
+	
+	if (db.innerHTML.indexOf(lang.slottracker[1]) != -1) {//won
+		var slotpic1 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[1]/center').replace(/">/g, '').split('/');
+		var slotpic2 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[2]/center').replace(/">/g, '').split('/');
+		var slotpic3 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[3]/center').replace(/">/g, '').split('/');
+		if (slotpic1[6] == "a.gif" && slotpic2[6] == "a.gif" && slotpic3[6] == "a.gif") {
+			var rexjp = new RegExp(lang.slottracker[3]);
+			var jpm = str.match(rexjp); // get money
+			jpmwon += parseInt(jpm[1], 10); //jp money won;
+			setValue('jpmwon', jpmwon);
+			slotjp += 1; //jackpot +1;
+			setValue('slotjp', slotjp);
+		}
+		if (slotpic1[6] == "b.gif" && slotpic2[6] == "b.gif" && slotpic3[6] == "b.gif") {
+			slotbar += 1; //triple bar +1;
+			setValue('slotbar', slotbar);
+		}
+		var rex = new RegExp(lang.slottracker[3]);
+		var smw = str.match(rex); // get money
+		slotgames += 1; //games played +1;
+		setValue('slotgames', slotgames);
+		slotgwon += 1; //games won +1;
+		setValue('slotgwon', slotgwon);
+		slotmwon += parseInt(smw[1], 10); //money won;
+		slotmwon += parseInt(slotbet, 10); //bet back;
+		setValue('slotmwon', slotmwon);
+		slotspent += parseInt(slotbet, 10);//money spent
+		setValue('slotspent', slotspent);
+	}	
+	if (db.innerHTML.indexOf(lang.slottracker[2]) != -1) {//lost
+		slotgames += 1; //games played +1;
+		setValue('slotgames', slotgames);
+		slotspent += parseInt(slotbet, 10);//money spent
+		setValue('slotspent', slotspent);
+	}
+	
+	var slotprofit = slotmwon - slotspent;
+	if (slotspent >= 0) {
+		if (slotprofit >= 0) slotprofit = '$'+commafy(slotprofit);
+		else slotprofit = '-$'+commafy(slotspent - slotmwon);
+	}
+
+	var div = cEL('div');
+	div.id = 'slotstracker';
+	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:220px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; padding:4px');
+	var sgamesWon = Math.round((slotgwon / slotgames) * 100);
+	var sgamesWon2 = isNaN(sgamesWon) ? 0 : sgamesWon;
+	div.innerHTML = '<center><b>'+lang.slottracker[0]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="slotstats">'+lang.pokertracker[4]+' <font style="float:right"><b>'+slotgames+'</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>'+slotgwon+' ('+sgamesWon2+'%)</b></font><br />'+lang.slottracker[4]+' <font style="float:right"><b>'+slotjp+' ($'+commafy(jpmwon)+')</b></font><br />'+lang.slottracker[5]+' <font style="float:right"><b>'+slotbar+'</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$'+commafy(slotspent)+'</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$'+commafy(slotmwon)+'</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>'+slotprofit+'</b></font></div><br />&nbsp;<div id="resetslot" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
+	db.appendChild(div);
+
+	getID('resetslot').addEventListener('click', function() {
+		getID('resetslot').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
+		getID('slotstats').innerHTML = lang.pokertracker[4]+' <font style="float:right"><b>0</b></font><br />'+lang.pokertracker[5]+' <font style="float:right"><b>0 (0%)</b></font><br />'+lang.slottracker[4]+' <font style="float:right"><b>0 ($0)</b></font><br />'+lang.slottracker[5]+' <font style="float:right"><b>0</b></font><br />'+lang.pokertracker[6]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[7]+' <font style="float:right"><b>$0</b></font><br />'+lang.pokertracker[8]+' <font style="float:right"><b>$0</b></font>';
+		setValue('slotgames', 0);
+		setValue('slotgwon', 0);
+		setValue('slotmwon', 0);
+		setValue('slotspent', 0);
+		setValue('slotjp', 0);
+		setValue('slotbar', 0);
+		setValue('jpmwon', 0);
+	}, true);
+}
+
 
 //---------------- 1-Click Voter ----------------
 if (dlp == '/vfo.php') { //vote for omerta
