@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.4
+	Version: 1.10.5
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -196,7 +196,8 @@ var langs = {
 			'Married',
 			'Wedding Gift',
 			'Wedding',
-			'Wedding Invitation'
+			'Wedding Invitation',
+			'shot!'
 		],
 		title: 'Omerta (COM)',
 		menutitle: [
@@ -556,7 +557,8 @@ var langs = {
 			'Married',
 			'Wedding Gift',
 			'Wedding',
-			'Wedding Invitation'
+			'Wedding Invitation',
+			'shot!'
 		],
 		title: 'Omerta (DM)',
 		menutitle: [
@@ -924,7 +926,8 @@ var langs = {
 			'Married',
 			'Wedding Gift',
 			'Wedding',
-			'Wedding Invitation'
+			'Wedding Invitation',
+			'beschoten!'
 		],
 		title: 'Omerta (NL)',
 		menutitle: [

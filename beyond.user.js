@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.10';
-const SCRIPT_SUBVERSION = 4;
+const SCRIPT_SUBVERSION = 5;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -2113,6 +2113,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					if (dom.getElementsByTagName('laston')[0].textContent == 0) { // 1970, thus not seen by logger
 						$X('//span[@id="status"]').innerHTML = lang.lastontime[0]+' | '+lang.lastontime[3];
 					} else {
+
 						$X('//span[@id="status"]').innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
 					}
 				}
@@ -3856,8 +3857,17 @@ if (dls.indexOf('action=showMsg') != -1) {
 	var condolences = new RegExp(lang.linkify[8]);
 	if (condolences.test(msgType)) { //condolences msg
 		setArr(2);
+		setArr(54);
 		$I(msgTxt, arr.join(' '));
 	}
+
+	var shot = new RegExp(lang.linkify[18]);
+	if (shot.test(msgType)) { //you have been shot msg
+		setArr(38);
+		setArr(55);
+		$I(msgTxt, arr.join(' '));
+	}
+
 }
 
 //---------- refresh button @ poker -----------
@@ -4249,6 +4259,7 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 	var str = document.body.innerHTML.replace(/,/g, '');
 	if (db.innerHTML.indexOf(lang.bjtracker[10]) != -1) {
 		var betinput = $x('//input')[1];
+		betinput.focus();
 		betinput.addEventListener('keyup', function() {
 			setValue('bjbet', parseInt(betinput.value, 10));
 		}, true);
@@ -4400,11 +4411,16 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 		setValue('bj', 0);
 		setValue('bjbet', 0);
 	}, true);
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="bet"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
+	}
 }
 
 //---------------- SlotsTracker ----------------
 if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
-	$x('//input')[1].focus();
 	var slotjp = getValue('slotjp', 0);
 	var slotbar = getValue('slotbar', 0);
 	var slotgames = getValue('slotgames', 0);
@@ -4415,6 +4431,7 @@ if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
 	var jpmwon = getValue('jpmwon', 0);
 	var str = document.body.innerHTML.replace(/,/g, '');
 	var betinput = $x('//input')[1];
+	betinput.focus();
 	betinput.addEventListener('keyup', function() {
 		setValue('slotbet', parseInt(betinput.value, 10));
 	}, true);
@@ -4479,6 +4496,12 @@ if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
 		setValue('slotbar', 0);
 		setValue('jpmwon', 0);
 	}, true);
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="betted"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
+	}
 }
 
 
