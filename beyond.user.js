@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			12-10-2010
+// @date			20-10-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.10';
-const SCRIPT_SUBVERSION = 5;
+const SCRIPT_SUBVERSION = 6;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -931,49 +931,91 @@ function bnUpdate(current){
 	setPow('bninfo', 3, plane);//save
 }
 
-var d = new Date();//check once every hour for new info
-if(getValue('nick', '')=='' || getValue('bninfo', -1)==-1 || getValue('brcDate', -1) != d.getHours()){
-	var d = new Date();//set check date
-	setValue('brcDate', d.getHours());
-	GM_xmlhttpRequest({
-		method:'GET',
-		url:'/information.php', //get info from /information.php
-		onload:function(response){
-			var a = response.responseText.split('<tbody');
-			if(a[2]){//fails on clicklimit or other error
+if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/pic.php' && dlp != '/mid.php' && dlp != '/right.php' && dlp != '/main.php') {
+
+	var d = new Date();//check once every hour for new info
+	if( getValue('nick', '')=='' || getValue('bninfo', -1)==-1 || getValue('brcDate', -1) != d.getHours()){
+		GM_xmlhttpRequest({
+			method:'GET',
+			url:'/information.php', //get info from /information.php
+			onload:function(response){
+				var a = response.responseText.split('<tbody');
+				if(a[2]){//fails on clicklimit or other error
+					var str2dom = cEL('div');//we'd like to use DOM here
+					str2dom.style.display = 'none';
+					str2dom.id = 'str2dom';
+					str2dom.innerHTML = response.responseText;
+					db.appendChild(str2dom);
+					bnUpdate(0);//call update fucntion
+
+					GM_xmlhttpRequest({//grab family and position from profile
+						method:'GET',
+						url:'/user.php?nick='+getValue('nick', ''),
+						onload:function(resp){
+							var dummy = cEL('div');//we'd like to use DOM here
+							dummy.style.display = 'none';
+							dummy.id = 'xhr';
+							dummy.innerHTML = resp.responseText;
+							db.appendChild(dummy);
+							if($X('//div[@id="xhr"]')) {
+								var role = 1;//default is in a family
+								var pos = $X('//div[@id="xhr"]//span[@id="position"]').getAttribute('value');
+								var fam = $X('//div[@id="xhr"]//span[@id="family"]').getAttribute('value');
+
+								if(/None|Geen/.test(fam)){
+									role = 0;
+								} else {
+									if(/Capo (of|van):/.test(pos)){
+										role = 2;
+									}
+									if(/(Sottocapo|Consiglieri|Don) (of|van):/.test(pos)){
+										role = 3;
+									}
+								}
+								setValue('family',fam);
+								setPow('bninfo',4,role);//save
+							}
+
+							var d = new Date();//set check date
+							setValue('brcDate', d.getHours());
+						}
+					});
+				}
+			}
+		});
+	}
+
+
+	//grab Lex level once a day
+	if(getValue('lexDay', -1) != d.getDay()) {
+		GM_xmlhttpRequest({
+			method:'GET',
+			url:'/BeO/webroot/index.php?module=Bodyguards&action=', //get info from BG page
+			onload:function(response){
 				var str2dom = cEL('div');//we'd like to use DOM here
 				str2dom.style.display = 'none';
 				str2dom.id = 'str2dom';
 				str2dom.innerHTML = response.responseText;
 				db.appendChild(str2dom);
-				bnUpdate(0);//call update fucntion
 
-				GM_xmlhttpRequest({//grab family and position from profile
-					method:'GET',
-					url:'/user.php?nick='+getValue('nick', ''),
-					onload:function(resp){
-						var dummy = cEL('div');//we'd like to use DOM here
-						dummy.style.display = 'none';
-						dummy.id = 'xhr';
-						dummy.innerHTML = resp.responseText;
-						db.appendChild(dummy);
-
-						var role = 1;//default
-						var pos = $X('//span[@id="position"]').getAttribute('value');
-						var fam = $X('//span[@id="family"]').getAttribute('value');
-
-						if(/None|Geen/.test(fam)){ role = 0; }
-						else {
-							if(/Capo (of|van):/.test(pos)){ role = 2; }
-							if(/(Sottocapo|Consiglieri|Don) (of|van):/.test(pos)){ role = 3; }
+				if($X('//div[@id="str2dom"]//h2')) { //see we didn't hit clicklimit or worse
+					var found = 0;
+					$x('//div[@id="str2dom"]//h2').forEach(function($n) { //loop <h2>
+						if ($n.innerHTML.search('Lex')>-1) { //get lex
+							setValue('lex', parseInt($n.innerHTML.split(' ').reverse()[1]));
+							found = 1;
 						}
-						setValue('family',fam);
-						setPow('bninfo',4,role);//save
+					});
+					if (!found) {
+						setValue('lex', 0);
 					}
-				});
+					d = new Date();
+					setValue('lexDay', d.getDay());
+					setValue('lexHour', d.getHours());
+				}
 			}
-		}
-	});
+		});
+	}
 }
 
 if (urlsearch == '/BeO/webroot/index.php?module=Travel&action=TravelNow') { //Get city when traveling
@@ -1166,7 +1208,23 @@ if (dls == '?module=Launchpad') {
 }
 
 //---------------- Bodyguards -----------------------------------
-if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.indexOf('&action=obay_details') == NULL ) && prefs[36]) {
+if (((dls == '?module=Shop')|| dls.indexOf('?module=Bodyguards') != -1 && dlp.indexOf('&action=obay_details') == -1) && prefs[36]) {
+	function grabLex() { //grab Lex level for BRC
+		var found = 0;
+		$x('//h2').forEach(function($n) { //loop <h2>
+			if ($n.innerHTML.search('Lex')>-1) { //get lex
+				setValue('lex', parseInt($n.innerHTML.split(' ').reverse()[1]));
+				found = 1;
+			}
+		});
+		if (!found) {
+			setValue('lex', 0);
+		}
+		d = new Date();
+		setValue('lexDay', d.getDay());
+		setValue('lexHour', d.getHours());
+	}
+
 	function bgspage() {
 		var path = '//div[@class="otable widetable"][1]/center/table';
 		var a = $x(path).length; //amount of bg's you own
@@ -1392,29 +1450,37 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 		div.innerHTML = '<table class="thinline" style="width:620px"><tr><td class="tableheader">'+lang.bgov[1]+'</td><td class="tableheader">'+lang.bgov[2]+'</td><td class="tableheader">'+lang.bgov[3]+'</td><td class="tableheader">'+lang.bgov[4]+'</td><td class="tableheader">'+lang.bgov[5]+'</td><td class="tableheader">'+lang.bgov[6]+'</td><td class="tableheader">'+lang.bgov[7]+'</td></tr><tr><td colspan="7" height="1" bgcolor="black"></td></tr>'+trdump+'<table>';
 		c.appendChild(div);
 		c.appendChild(br);
-		if (dls.indexOf('?module=Shop') != -1) {
+		if (dls.indexOf('?module=Shop') != -1 || (dls.indexOf('?module=Bodyguards&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) {
 			$X('//div[@id="smsdivcontainer"]').insertBefore(c, $X('//div[@class="otable widetable"]'));
 		}
-		if (dls.indexOf('?module=Bodyguards') != -1) {
+		if (dls.indexOf('?module=Bodyguards') != -1 && dls.indexOf('?module=Bodyguards&action=') == -1) {
 			db.insertBefore(c, $X('//div[@class="otable widetable"]'));
 		}
-
-
 	}
 
-	if (dls.indexOf('?module=Shop') != -1) { //via Shop
-		getID('smsdivcontainer').addEventListener('DOMNodeInserted', function (event) { //EventListener won't allow getValue()!
-			if (event.target.innerHTML.search('/static/images/game/bodyguards/lee') != -1) { //trigger
-				bgspage();
+	//eventListeners
+	if (dls.indexOf('?module=Shop') != -1 || (dls.indexOf('?module=Bodyguards&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) { //via Shop
+		getID('smsdivcontainer').addEventListener('DOMNodeInserted', function (event) { //wait for DOM
+			if (event.target.innerHTML.search('/static/images/game/bodyguards/lee') != -1) { //wait for BG overview node
+				getID('smsdivcontainer').addEventListener('load', function() { //add onLoad eventlistener
+					if(db.innerHTML.search('onceonly')==-1) { //onLoad bubbles more then once
+						bgspage();
+						grabLex();
+
+						var foo = cEL('div'); //create hardcoded fix so we run code only once
+						foo.innerHTML = 'onceonly';
+						foo.style.visibility = 'none';
+						getID('smsdivcontainer').appendChild(foo);
+					}
+				}, true);
 			}
 		}, false);
 	}
-	if (dls.indexOf('?module=Bodyguards') != -1) { //via stand-alone
+	if (dls.indexOf('?module=Bodyguards') != -1 && dls.indexOf('?module=Bodyguards&action=') == -1) { //via stand-alone
 		bgspage();
+		grabLex();
 	}
 }
-
-
 
 //---------------- External pages theme matching ----------------
 if (dlp == '/contact.php' || dlp == '/faq.php' || dlp == '/prices.php' || dlp == '/html/poll/poll.php') {
@@ -2431,6 +2497,7 @@ if(dlp == '/garage.php'){
 		types.forEach(function(array){ array.forEach(function($n){if($n==car){ eval(array[0] + 'car=1;');} }); });
 	}
 
+
 	function garageCrusher() {
 		var rows = $x('//tr').length; //get number of rows
 
@@ -2449,15 +2516,13 @@ if(dlp == '/garage.php'){
 
 			for(i=2;i<rows-2;i++){ //loop rows
 				var y = '//html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
-				var car = $X(y).href.match(/\d+/g)[0];
+				var car = $X(y).href.match(/\d*$/)[0];
 				var carType = '';
 				var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
-
 				types.forEach(function($n){ //loop car through types
 					if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
 						carType = titles[$n[0]]; //set car type
 						carRow.setAttribute('title', titles[$n[0]]); //set popup title
-				//		carRow.setAttribute('class', carValues[$n[0]] + 'Car'); //set class
 						carRow.style.backgroundColor = carColors[$n[0]];
 						carRow.setAttribute('onmouseover', 'this.style.backgroundColor="#D0D0D0";'); //add mouseover event
 						carRow.setAttribute('onmouseout', 'this.style.backgroundColor="' + carColors[$n[0]] + '";'); //add mouseout event
@@ -4435,7 +4500,7 @@ if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
 	betinput.addEventListener('keyup', function() {
 		setValue('slotbet', parseInt(betinput.value, 10));
 	}, true);
-	
+
 	if (db.innerHTML.indexOf(lang.slottracker[1]) != -1) {//won
 		var slotpic1 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[1]/center').replace(/">/g, '').split('/');
 		var slotpic2 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[2]/center').replace(/">/g, '').split('/');
@@ -4463,14 +4528,14 @@ if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
 		setValue('slotmwon', slotmwon);
 		slotspent += parseInt(slotbet, 10);//money spent
 		setValue('slotspent', slotspent);
-	}	
+	}
 	if (db.innerHTML.indexOf(lang.slottracker[2]) != -1) {//lost
 		slotgames += 1; //games played +1;
 		setValue('slotgames', slotgames);
 		slotspent += parseInt(slotbet, 10);//money spent
 		setValue('slotspent', slotspent);
 	}
-	
+
 	var slotprofit = slotmwon - slotspent;
 	if (slotspent >= 0) {
 		if (slotprofit >= 0) slotprofit = '$'+commafy(slotprofit);
@@ -4603,8 +4668,8 @@ if (dlp == '/vfo.php') { //vote for omerta
 //---------------- Best Run Calculator ----------------		//**/ => signals for major function call
 if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 	//variable soup :D
-	var pp, sp, tp, bninfo, values, carry_n, carry_b, n_amount, b_amount, boxes, narc, booze, city, plane, fam;
-	var smugCity, nCityprofit, bCityprofit, border, table, tr, td, mOver, mOut, bestNarc, bestBooze;
+	var pp, sp, tp, bninfo, values, carry_n, carry_b, n_amount, b_amount, selling_n, fail_n, boxes, narc, booze, city, plane, fam;
+	var smugCity, nCityprofit, bCityprofit, border, table, tr, td, mOver, mOut, bestNarc, bestBooze, d, lex, lexHour, lexDay;
 	var allProfits, bestBN, profitNarc, profitBooze, famProfit, travelPrices, travelCost, totalProfit;
 	var key, n1, b1, aCell, link, c, center, br1, br2, target, bestRun, inputs, bn_xp, bn_text, cash, xpb, xpn, n, b;
 	var nItem, highNarc, bItem, highBooze, lowNarc, lowBooze, sel, div, color, title, H, wrap1, wrap2, wrap3, wrap4, e, icon;
@@ -4621,10 +4686,24 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		}
 	}
 
+	//grab Lex
+	if ($X('//span[@id="lexhelpsyou"]')) {
+		lex = parseInt($I('//span[@id="lexhelpsyou"]').replace(/[^0-9]/g,''), 10);
+		setValue('lex', lex);
+		d = new Date();
+		lexDay = d.getDay();
+		lexHour = d.getHours();
+		setValue('lexHour', lexHour);
+		setValue('lexDay', lexDay);
+	} else {
+		lex = getValue('lex', 0);
+		lexDay = getValue('lexDay', -1);
+		lexHour = getValue('lexHour', -1);
+	}
+
 	//--Assemble functions
 
 	function fillBRC(n, b, mode) { //actually filling the forms
-
 		//set defaults
 		values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -4664,7 +4743,14 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			inputs[16].checked = 1; //sell
 		}
 
-		if (b > -1) { //do we want booze?
+		//check for scenario: failed selling narcs in high
+		selling_n = 0;
+		for (i=0; i<=6; i++) {
+			selling_n += values[i+7];
+		}
+		fail_n = (carry_b == 0 && carry_n == narcs && mode == 0 && selling_n > 0) ? 1 : 0;
+
+		if (b > -1 && !fail_n) { //do we want booze? Or are we still selling narcs in high?
 			if (carry_b == 0) {
 				values[b] = booze; //nothing in pocket, fill it all
 				inputs[8].checked = 1; //buy
@@ -4672,7 +4758,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				if (b_amount[b] < booze) { //not full of wanted
 					if (b_amount[b] != carry_b) { //there is unwanted stuff
 						for (i=0; i<=6; i++) {
-							if (i != b || mode == 1) { //only sell what we don't want or in CD mode
+							if ( (i != b || true) || mode == 1) { //only sell what we don't want or in CD mode
 								values[i] = b_amount[i];
 							}
 						}
@@ -4700,9 +4786,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		for (i=0; i<=13; i++) {
 			boxes[i].value = values[i];
 		}
-		if ($X('//input[@name="ver"]')) {
-			$X('//input[@name="ver"]').focus();
-		}
+
+		//focus
+		$X($X('//input[@name="ver"]')?'//input[@name="ver"]':'//input[@type="submit"]').focus();
 	}
 
 	function appBRC(BN) { //Best Run Calculator
@@ -4715,6 +4801,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		city = getInfo[2];
 		plane = getInfo[3];
 		fam = getInfo[4];
+		lex = parseInt(getInfo[8]);
+		lexHour = parseInt(getInfo[9]);
+		lexDay = parseInt(getInfo[10]);
 
 		if (sp) { //extra city checker
 			smugCity = $I('//h3');
@@ -4727,10 +4816,11 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		}
 
 		//calc profits per item per city
+		lex = 1 + 0.01*lex;
 		for (nCityprofit = [], bCityprofit = [], i = 0; i <= 7; i++) { //get profit per single unit of b/n
-			for (nCityprofit[i] = [], bCityprofit[i] = [], j = 0; j <= 6; j++) { //price here - price there
-				nCityprofit[i].push(BN[0][j][(i + 2)] - BN[0][j][(city - 4 + 2)]); //-4 correction for city ID,
-				bCityprofit[i].push(BN[1][j][(i + 2)] - BN[1][j][(city - 4 + 2)]); //+2 correction for min/max @ [0]+[1] in BN array
+			for (nCityprofit[i] = [], bCityprofit[i] = [], j = 0; j <= 6; j++) { //price there - price here
+				nCityprofit[i].push(Math.round(BN[0][j][(i + 2)]*lex) - BN[0][j][(city - 4 + 2)]); //-4 correction for city ID,
+				bCityprofit[i].push(Math.round(BN[1][j][(i + 2)]*lex) - BN[1][j][(city - 4 + 2)]); //+2 correction for min/max @ [0]+[1] in BN array
 			}
 			nCityprofit[i].unshift(nCityprofit[i].max()); //most profit per unit in this city
 			bCityprofit[i].unshift(bCityprofit[i].max());
@@ -4833,7 +4923,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 					[ 1350,  1725,  9450,  375,  4650,    0,   300,  9750], //phi
 					[ 1050,  1425,  9750,  675,  4350,  300,     0, 10050], //bal
 					[10800, 11400,  1875, 9375, 14400, 9750, 10050,     0]  //cor
-				];  //det   chi   pal   ny   lv   phi   bal   cor
+				];  //det   chi    pal    ny    lv     phi   bal    cor
 				travelCost = travelPrices[i][(city - 4)];
 				if (plane == 0) { //no plane => half travelcost
 					travelCost /= 2;
@@ -4905,6 +4995,17 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			}
 			table.appendChild(tr);
 		}
+		if(lex>1) {
+			lexRow = cEL('tr');
+			lexTd = cEL('td');
+			d = new Date();
+			lexTd.innerHTML = 'Lex Level: ' + parseInt((lex-1)*100) + ' - Seen ' + ((d.getDay() != lexDay)?'1 Day ago':d.getHours() - lexHour + ' Hours ago');
+			lexTd.setAttribute('colspan', '5');
+			lexTd.setAttribute('style', 'text-align: right; font-size:10px;');
+			lexRow.appendChild(lexTd);
+			table.appendChild(lexRow);
+		}
+
 
 		//add table page
 		if (pp) { //Duplicate page style and format
@@ -4939,7 +5040,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				for (i = 0; i <= 7; i++) {
 					if (db.innerHTML.indexOf('id="go' + i) != -1) { //check for Go! link
 						getID('go' + i).addEventListener('click', function () {
-							fillBRC(this.getAttribute('n'), this.getAttribute('b'));
+							fillBRC(parseInt(this.getAttribute('n')), parseInt(this.getAttribute('b')), 0);
 						}, true);
 					}
 				}
@@ -5278,7 +5379,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		info = cEL('div');
 		info.id = 'info';
 		info.style.display = 'none';
-		info.innerHTML = narc + '*' + booze + '*' + city + '*' + plane + '*' + fam + '*' + getValue('brcAF', 0) + '*' + getValue('brcDiv', 1) + '*' + GM_getResourceURL('brcGear');
+		info.innerHTML = narc + '*' + booze + '*' + city + '*' + plane + '*' + fam + '*' + getValue('brcAF', 0) + '*' + getValue('brcDiv', 1) + '*' + GM_getResourceURL('brcGear') + '*' + lex + '*' + lexHour + '*' + lexDay;
 		db.appendChild(info);
 
 		//get all prices
