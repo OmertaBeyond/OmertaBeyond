@@ -436,7 +436,7 @@ if(dlp == '/marquee.php'){
 				var p_C = [langs.en.cities[6], langs.en.cities[1], langs.en.cities[3], langs.en.cities[5], langs.en.cities[0], langs.en.cities[4], langs.en.cities[7], langs.en.cities[2]];
 				var p_id = ['6', '1', '3', '5', 'nul', '4', '7', '2'];
 
-				for(i=0;i<=7;i++){ p[i]=getPrice('Cocaine', p_C[i]); q[i]=p[i]; }
+				for (i=0;i<=7;i++){ p[i]=getPrice('Cocaine', p_C[i]); q[i]=p[i]; }
 
 				var max = p.sort( function(a, b){ return b-a; } )[0];
 				var min = p[(p.length-1)];
