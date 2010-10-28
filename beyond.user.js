@@ -133,7 +133,7 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.10';
-const SCRIPT_SUBVERSION = 6;
+const SCRIPT_SUBVERSION = 7;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -200,7 +200,7 @@ if (dlp == '/prefs.php') {
 	}
 	for (j = -1; ++j < querys.length;) {
 		if (ls.indexOf(querys[j]) != -1) {
-			setValue(querys[j], GetPost(querys[j])); //check for jail hl update
+			setValue(querys[j], GetPost(querys[j])); //check for  update
 		}
 	}
 
@@ -258,7 +258,7 @@ if (dlp == '/prefs.php') {
 	addCat(lang.preftitles[6]); //misc
 	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36, 37]);
 
-	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="checkbutton" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
+	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="button" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
 	string += '&nbsp;<button type="button" name="#" class="button" onClick="';
 
 	var nick = getValue('nick','');
@@ -391,7 +391,7 @@ if (dlp == '/game.php') { //just once on login
 	//annoy the user --- FFv Checker ---
 	if (parseInt(ff.split('.')[1], 10) < parseInt(minFFVersion.split('.')[1], 10) || parseInt(ff.split('.')[0], 10) < parseInt(minFFVersion.split('.')[0], 10)) {
 		if (parseInt(ff.split('.')[0], 10) <= parseInt(minFFVersion.split('.')[0], 10)) {
-			alert('You don\'t use FireFox '+minFFVersion+'+. If you want Omerta Beyond to work properly, we recommend that you update.');
+			alert(lang.ffv+' '+minFFVersion);
 		}
 	}
 
@@ -763,7 +763,7 @@ if (dlp == '/menu.php') {
 	}
 	if (!dls) {
 		//add action buttons (change menu, change hotkeys, reset menu)
-		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="Customize Menu" onClick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="Customize Hotkeys" onClick="location.href=\'menu.php?keys\'" src="'+GM_getResourceURL('buttonKey')+'" style="vertical-align:-2px" /> <img id="reset_button" onMouseover="style.cursor=\'pointer\'" title="Reset menu" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px" /></span>'; //LANG
+		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img onMouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[3]+'" onClick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[4]+'" onClick="location.href=\'menu.php?keys\'" src="'+GM_getResourceURL('buttonKey')+'" style="vertical-align:-2px" /> <img id="reset_button" onMouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[5]+'" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px" /></span>';
 		getID('reset_button').addEventListener('click', function() {
 			if (confirm(lang.cusmenu[0])) { // are you sure?
 				setValue('remlinks', ''); //reset
@@ -1618,7 +1618,7 @@ if(prefs[2] && dlp == '/info.php'){
 			oNews[i].style.height = item.offsetHeight;
 		}
 		//We have better news
-		var times = $X('//a[contains(@href,"news.html")] | //a[contains(@href,"mag.php")]');
+		var times = $X('//a[contains(@href,"mag.php")]');
 		times.href = sets.version=='_com'?FingonUrl+'?v='+FINGON_VERSION_COM : sets.version=='_dm'?FingonUrl+'?v='+FINGON_VERSION_DM : EdoUrl;
 		times.style.fontSize = '11px';
 		times.innerHTML = lang.login[2];
@@ -2283,7 +2283,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					tbody.insertBefore(tr,tbody.lastChild.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling);
 				}
 
-				//Add to Jail HL
+				//Add to 
 				if(prefs[3]){
 					names = getValue('bust','')
 					add = 1;
@@ -2342,12 +2342,16 @@ if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
 			setValue('bust', names.join(',')); //join and save values
 			setValue('colours', cols.join(','));
 			setValue('priority', pris.join(','));
-			alert(who + ' added to jail highlighter using default color and priority'); //LANG
-			link = $X('/html/body//center/table/tbody/tr[3]/td[2]/a[3]');
+			alert(who+' '+lang.jhl[20]);
+			if($x('/html/body//center/table/tbody/tr[3]/td[2]/a').length == 3) {
+				link = $X('/html/body//center/table/tbody/tr[3]/td[2]/a[3]');
+			} else {
+				link = $X('/html/body//center/table/tbody/tr[3]/td[2]/a[2]');
+			}
 			link.href = dlp + '?nick=' + who + '&jh=0';
-			link.innerHTML = '<span class="red">Remove from busting list</span>'; //LANG
+			link.innerHTML = '<span class="red">'+lang.jhl[21]+'</span>';
 		} else {
-			alert('Oops! ' + who + ' is already in your busting list!'); //LANG
+			alert('Oops! ' + who + ' '+lang.jhl[22]);
 		}
 	} else if (add == 0) {
 		length = getValue('jailint', 0)
@@ -2368,17 +2372,21 @@ if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
 		setValue('bust', names.join(',')); //join and save values
 		setValue('colours', cols.join(','));
 		setValue('priority', pris.join(','));
-		alert(who + ' was removed from the busting list'); //LANG
-		link = $X('/html/body//center/table/tbody/tr[3]/td[2]/a[3]');
+		alert(who + ' '+lang.jhl[23]);
+		if($x('/html/body//center/table/tbody/tr[3]/td[2]/a').length == 3) {
+			link = $X('/html/body//center/table/tbody/tr[3]/td[2]/a[3]');
+		} else {
+			link = $X('/html/body//center/table/tbody/tr[3]/td[2]/a[2]');
+		}
 		link.href = dlp + '?nick=' + who + '&jh=1';
-		link.innerHTML = '<span class="red">Add to busting list</span>'; //LANG
+		link.innerHTML = '<span class="red">'+lang.jhl[24]+'</span>';
 	}
 }
 
 //---------------- Bank ----------------
 if (dlp == '/bank.php') {
 	if (db.innerHTML.search(lang.bank) != -1) {
-		db.innerHTML += '<br><b>Auto Refresh in 1 sec</b>'; //LANG
+		db.innerHTML += '<br><b>'+lang.calc[6]+'</b>';
 		setTimeout(function () {
 			history.back();
 		}, 1000);
@@ -2442,19 +2450,19 @@ if (dlp == '/bank.php') {
 	var tbl = '<table class="thinline" width="100% rules="none" align="center">';
 	tbl += '<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
 	tbl += '<br>';
-	tbl += '<tr><td align="right" width="25%">You send:</td>'; //LANG
+	tbl += '<tr><td align="right" width="25%">'+lang.calc[0]+'</td>';
 	tbl += '<td align="center" width="25%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'get' + func2 + '*0.9' + func3 + '">';
-	tbl += '</td><td align="right" width="25%">User gets:</td><td align="center" id="get" width="25%">$0</td></tr>'; //LANG
-	tbl += '<tr><td align="right" width="25%">You want:</td>'; //LANG
+	tbl += '</td><td align="right" width="25%">'+lang.calc[1]+'</td><td align="center" id="get" width="25%">$0</td></tr>';
+	tbl += '<tr><td align="right" width="25%">'+lang.calc[2]+'</td>';
 	tbl += '<td align="center" width="25%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'give' + func2 + '/0.9' + func3 + '">';
-	tbl += '</td><td align="right" width="25%">User sends:</td><td align="center" id="give" width="25%">$0</td></tr>'; //LANG
+	tbl += '</td><td align="right" width="25%">'+lang.calc[3]+'</td><td align="center" id="give" width="25%">$0</td></tr>';
 	tbl += '<br>';
-	tbl += '<tr><td align="right" width="25%">You put into bank:</td>'; //LANG
+	tbl += '<tr><td align="right" width="25%">'+lang.calc[4]+'</td>';
 	tbl += '<td align="center" width="25%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'int' + func2 + func_switch + func3 + '">';
-	tbl += '</td><td align="right" width="25%">You will recieve:</td><td align="center" id="int" width="25%">$0</td></tr>'; //LANG
+	tbl += '</td><td align="right" width="25%">'+lang.calc[5]+'</td><td align="center" id="int" width="25%">$0</td></tr>';
 	tbl += '<br>';
 	tbl += '</table>';
 
@@ -2511,7 +2519,7 @@ if(dlp == '/garage.php'){
 
 			var indexTd = cEL('td'); //add type collumn to header
 			indexTd.setAttribute('class', 'tableheader');
-			indexTd.innerHTML = lang.garage;
+			indexTd.innerHTML = lang.garage[17];
 			$X('/html/body//form/center/table/tbody/tr').insertBefore(indexTd, $X('/html/body//form/center/table/tbody/tr/td[2]'));
 
 			for(i=2;i<rows-2;i++){ //loop rows
@@ -2538,7 +2546,7 @@ if(dlp == '/garage.php'){
 		var head = $X('//h2');
 		var cars = head.textContent.match(/\d+/g)[2];
 		if(cars>0){
-			head.textContent = head.textContent + ' Potential Bullets: ' + cars*12; //LANG
+			head.textContent = head.textContent + ' '+lang.garage[0]+' ' + cars*12;
 		}
 
 		var xpath = '/html/body//form//center/table/tbody/tr[' + rows + ']/td';//add menu
@@ -2558,10 +2566,10 @@ if(dlp == '/garage.php'){
 		sTd = cEL('td');
 		sTd.id = 'selectTd';
 		sTd.innerHTML = ' <br><hr>' +
-		' <b>Select based on Value</b> <br><br><select size="1" id="X" style="width:100px;"><option value="1">Under</option><option value="0">Above</option></select> &nbsp;$<input type="text" value="6000" maxlength="5" size="8" style="width:110px;" id="max"/>' + //LANG
-		' &nbsp; <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&ob_oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&ob_moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&ob_heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="Go" name="action" />' +
-		'<table style="padding-top:10px; position:relative; right:7px;"><tr>'+string+'id="heist">Skip Heist cars</label></td>'+string+'id="oc">Skip OC cars</label></td>'+'</tr><tr>'+string+ //LANG
-		'id="truck">Skip Trucks</label></td>'+string+'id="moc">Skip MOC cars</label></td>'+'</tr><tr>'+string+'id="nodam">Skip 0% cars</label></td><td>&nbsp;</td>'+'</tr></table>'; //LANG
+		' <b>'+lang.garage[1]+'</b> <br><br><select size="1" id="X" style="width:100px;"><option value="1">'+lang.garage[2]+'</option><option value="0">'+lang.garage[3]+'</option></select> &nbsp;$<input type="text" value="6000" maxlength="5" size="8" style="width:110px;" id="max"/>' +
+		' &nbsp; <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&ob_oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&ob_moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&ob_heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="'+lang.garage[4]+'" name="action" />' +
+		'<table style="padding-top:10px; position:relative; right:7px;"><tr>'+string+'id="heist">'+lang.garage[5]+'</label></td>'+string+'id="oc">'+lang.garage[6]+'</label></td>'+'</tr><tr>'+string+
+		'id="truck">'+lang.garage[7]+'</label></td>'+string+'id="moc">'+lang.garage[8]+'</label></td>'+'</tr><tr>'+string+'id="nodam">'+lang.garage[9]+'</label></td><td>&nbsp;</td>'+'</tr></table>';
 		sTr.appendChild(sTd);
 		sTable.appendChild(sTr);
 		$X(xpath).appendChild(sTable);
@@ -2569,7 +2577,7 @@ if(dlp == '/garage.php'){
 		//add select All in SH button
 		var all = $X('//input[@type="button"]');
 		var allShButton = all.cloneNode(0);
-		allShButton.value = 'All in Safehouse';
+		allShButton.value = lang.garage[10];
 		allShButton.removeAttribute('onclick');
 		allShButton.addEventListener('click', function(){
 			$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
@@ -2606,7 +2614,7 @@ if(dlp == '/garage.php'){
 			});
 		}, true);
 		var init = cEL('option');
-		init.innerHTML = 'Choose a Name';
+		init.innerHTML = lang.garage[11];
 		selectN.appendChild(init);
 		names.forEach(function($n){
 			var option = cEL('option');
@@ -2636,7 +2644,7 @@ if(dlp == '/garage.php'){
 			});
 		}, true);
 		var init = cEL('option');
-		init.innerHTML = 'Choose a City';
+		init.innerHTML = lang.garage[12];
 		selectC.appendChild(init);
 		cities.forEach(function($n){
 			var option = cEL('option');
@@ -2646,16 +2654,16 @@ if(dlp == '/garage.php'){
 		});
 		var citySpan = cEL('span');
 		citySpan.style.width = '80px';
-		citySpan.innerHTML = 'City: &nbsp;&nbsp;&nbsp;';
+		citySpan.innerHTML = lang.garage[13]+'&nbsp;&nbsp;&nbsp;';
 
 		var keep = cEL('input');
 		keep.setAttribute('type', 'checkbox');
 		keep.id = 'keep';
 		var keepSpan = cEL('span');
-		keepSpan.innerHTML = 'Keep selected when selecting a new group';
+		keepSpan.innerHTML = lang.garage[14];
 
 		var gTd = cEL('td'); //group select
-		gTd.innerHTML = '<br><hr><b>Select group from current page</b><br><br>Name: ';
+		gTd.innerHTML = '<br><hr><b>'+lang.garage[15]+'</b><br><br>'+lang.garage[16];
 		gTd.appendChild(selectN);
 		gTd.appendChild(cEL('br'));
 		gTd.appendChild(cEL('br'));
@@ -2780,7 +2788,7 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 if (prefs[13] && dlp == '/family.php') {
 	//Add to busting list
 	addtojhl = cEL('span'); //not an anchor, will mess up grabbing tops etc..
-	addtojhl.innerHTML = 'Add to Busting List';
+	addtojhl.innerHTML = lang.jhl[24];
 	addtojhl.id = 'addlink';
 	addtojhl.setAttribute('class','red');
 	addtojhl.addEventListener('mouseover', function() { this.style.cursor = 'pointer'; }, true);
@@ -2817,9 +2825,9 @@ if (prefs[13] && dlp == '/family.php') {
 			setValue('bust', names.join(',')); //join and save values
 			setValue('colours', cols.join(','));
 			setValue('priority', pris.join(','));
-			alert(who + ' added to jail highlighter using default color and priority'); //LANG
+			alert(who+' '+lang.jhl[20]);
 		} else {
-			alert('Oops! ' + who + ' is already in your busting list!'); //LANG
+			alert('Oops! '+who+' '+lang.jhl[22]);
 		}
 	}, true);
 	$X('//td[@class="profilerow"]').appendChild(addtojhl);
@@ -2876,6 +2884,17 @@ if (prefs[13] && dlp == '/family.php') {
 	}
 	sOwners = aOwners.join();
 
+	//get spotowners
+	bOwners = [];
+	sObjects = $x('//table[@class="thinline"]')[3].getElementsByTagName('tr').length-5;
+	for (i = 0; i < sObjects; i++) {
+		std = $X('//center/table/tbody/tr[3]/td/table/tbody/tr['+(i+5)+']/td[2]');
+		sowner = std.textContent;
+		bOwners.push('#'+sowner+'#');//additional ## to prevent subtring recognision
+		std.innerHTML = '<a href="user.php?nick='+sowner+'">'+sowner+'</a>';//linkify
+	}
+	cOwners = bOwners.join();
+
 	//get onlines
 	aOnline = [];
 	$x('//a[@style="color: blue;"]').forEach(function($n){aOnline.push('#'+$n.textContent+'#');});
@@ -2903,6 +2922,12 @@ if (prefs[13] && dlp == '/family.php') {
 				color = 'green';
 			}
 		}
+		if (cOwners.search('#'+n+'#') !=- 1) {
+			$n.innerHTML = (vip!=''?'<u>':'')+n+(vip!=''?'</u>':'')+'<small><sup>(s)'+vip+'</sup></small>';
+			if (vip == '') {
+				color = 'purple';
+			}
+		}
 
 		if (sOnline.search('#'+n+'#') !=- 1) {
 			$n.setAttribute('class', color);
@@ -2914,7 +2939,7 @@ if (prefs[13] && dlp == '/family.php') {
 
 	//add legend to members table
 	memTable = $x('//table[@class="thinline"]')[6].getElementsByTagName('tr');
-	memTable[0].innerHTML = '<td class="tableheader" style="text-align:left !important">&nbsp;Members:</td><td class="tableheader" style="font-weight:normal !important; text-align:right !important;"><span><sup>(<u>capo/top3</u>) - (online > <span class="blue">member</span> | <span class="green">objectowner</span> | <span class="orange">capo</span> | <span class="red">top3</span>)</sup></span>&nbsp;</td>'; //LANG
+	memTable[0].innerHTML = '<td class="tableheader" style="text-align:left !important">&nbsp;'+lang.fampage[0]+'</td><td class="tableheader" style="font-weight:normal !important; text-align:right !important;"><span><sup>(<u>capo/top3</u>) - (online > <span class="blue">'+lang.fampage[1]+'</span> | <span class="green">'+lang.fampage[2]+'</span> | <span class="purple">'+lang.fampage[3]+'</span> | <span class="orange">capo</span> | <span class="red">top3</span>)</sup></span>&nbsp;</td>';
 
 	for (i = 0; ++i < memTable.length;) {//cosmetical fix for colspan
 		memTable[i].getElementsByTagName('td')[0].setAttribute('colspan', '2');
@@ -3042,14 +3067,14 @@ if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 	var tbl = '<table class="thinline" width="600" rules="none" align="center">';
 	tbl +='<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
 	tbl +='<br>';
-	tbl +='<tr><td align="right" width="25%">You send:</td>'; //LANG
+	tbl +='<tr><td align="right" width="25%">'+lang.calc[0]+'</td>';
 	tbl +='<td align="center" width="25%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'get'+func2+'*0.85'+func3+'">';
-	tbl += '</td><td align="right" width="25%">User gets:</td><td align="center" id="get" width="25%">$0</td></tr>'; //LANG
-	tbl +='<tr><td align="right" width="25%">You want:</td>'; //LANG
+	tbl += '</td><td align="right" width="25%">'+lang.calc[1]+'</td><td align="center" id="get" width="25%">$0</td></tr>';
+	tbl +='<tr><td align="right" width="25%">'+lang.calc[2]+'</td>';
 	tbl +='<td align="center" width="25l%">';
 	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'give'+func2+'/0.85'+func3+'">';
-	tbl += '</td><td align="right" width="25%">User sends:</td><td align="center" id="give" width="25%">$0</td></tr>'; //LANG
+	tbl += '</td><td align="right" width="25%">'+lang.calc[3]+'</td><td align="center" id="give" width="25%">$0</td></tr>';
 	tbl +='<br>';
 	tbl += '</table>';
 	$X('//table').innerHTML += '<br>'+tbl;
@@ -3702,6 +3727,12 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 		}
 		$x('//input')[2].checked = true;
 		$x('//input')[4].focus();
+		if (prefs[5]) {
+			var inputs = $x('//input[@name="bid"]');
+			inputs.forEach(function ($n) {
+				$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+			});
+		}
 	}
 }
 
@@ -3834,14 +3865,14 @@ if (dls.indexOf('action=showMsg') != -1) {
 		var between = $X(msgTxt).innerHTML.slice(first, last + 1);
 		setArr(arr.length - 2);
 		$I(msgTxt, arr.join(' '));
-		$X(msgTxt).innerHTML = $X(msgTxt).innerHTML.replace(between, '<a href="/tickets/index.php?action=view-my-tickets" title="click to open tickets page" target="_blank"><b>' + between + '</b></a>'); //LANG
+		$X(msgTxt).innerHTML = $X(msgTxt).innerHTML.replace(between, '<a href="/tickets/index.php?action=view-my-tickets" title="'+lang.msg[0]+'" target="_blank"><b>' + between + '</b></a>');
 	}
 	//if msg is WS
 	var wsMsg = new RegExp(lang.linkify[7]);
 	if (wsMsg.test(msgType)) { //if msg is WS
 		var wsIDnum = arr[arr.length - 1];
 		setValue('wsID', wsIDnum);
-		arr[arr.length - 1] = '<a href="/obay.php?action=tosell&type=10" title="click to sell this WS"><b>' + arr[arr.length - 1] + '</b></a>'; //LANG
+		arr[arr.length - 1] = '<a href="/obay.php?action=tosell&type=10" title="'+lang.msg[1]+'"><b>' + arr[arr.length - 1] + '</b></a>';
 		setArr(3 + (sets.version == '_nl' ? 4 : 0));
 		setArr(5 + (sets.version == '_nl' ? 4 : 0));
 		$I(msgTxt, arr.join(' '));
@@ -3849,7 +3880,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 	//if msg was crush msg
 	var crushedMSG = new RegExp(lang.linkify[11]);
 	if (crushedMSG.test(msgType)) {
-		$X(msgTxt).innerHTML = '<a href="/BeO/webroot/index.php?module=Bloodbank&action=" title="click to buy missing blood"><b>' + $X(msgTxt).innerHTML + '</b></a>'; //LANG
+		$X(msgTxt).innerHTML = '<a href="/BeO/webroot/index.php?module=Bloodbank&action=" title="'+lang.msg[2]+'"><b>' + $X(msgTxt).innerHTML + '</b></a>';
 	}
 
 	var raidInv = new RegExp(lang.linkify[13]);
@@ -4046,6 +4077,12 @@ if (dlp == '/kill.php') {
 	if ($X('//input[@name="name"]')) {
 		$X('//input[@name="name"]').value = GetParam('search');
 		$X('//input[@name="name"]/parent::*/input[last()]').focus();
+	}
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="bulletsf"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
 	}
 }
 
@@ -4579,8 +4616,8 @@ if (dlp == '/vfo.php') { //vote for omerta
 		$n.setAttribute('name', 'forbullets');
 	});
 
-	$x('//td[@class="tableheader"]')[0].innerHTML = '<a href="#" class="orange" title="Vote for Extra Ticket in Omerta Lottery">' + $x('//td[@class="tableheader"]')[0].textContent + '</a>'; //LANG
-	$x('//td[@class="tableheader"]')[1].innerHTML = '<a href="#" class="orange" title="Vote for Some bullets and money">' + $x('//td[@class="tableheader"]')[1].textContent + '</a>'; //LANG
+	$x('//td[@class="tableheader"]')[0].innerHTML = '<a href="#" class="orange" title="'+lang.oneclick[10]+'">' + $x('//td[@class="tableheader"]')[0].textContent + '</a>';
+	$x('//td[@class="tableheader"]')[1].innerHTML = '<a href="#" class="orange" title="'+lang.oneclick[11]+'">' + $x('//td[@class="tableheader"]')[1].textContent + '</a>';
 
 	$x('//td[@class="tableheader"]/a')[0].addEventListener('click', function () {
 		$x('//*[@name="forticket"]').forEach(function ($n) {
@@ -5175,9 +5212,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			//add button for each option
 			wrap1 = cEL('span');
 			a1 = cEL('a');
-			a1.innerHTML = (H ? 'Best: (8)' : 'Best: '); //LANG
+			a1.innerHTML = (H ? lang.smuggling[6]+'(8)' : lang.smuggling[6]);
 			a1.id = 'a1';
-			a1.title = 'Fill in the most profitable b/n (Hotkey: 8 )'; //LANG
+			a1.title = lang.smuggling[7];
 			if (H) {
 				a1.setAttribute('accesskey', '8');
 			}
@@ -5192,9 +5229,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			wrap2 = cEL('span');
 			wrap2.innerHTML = '<br>';
 			a2 = cEL('a');
-			a2.innerHTML = (H ? 'CD: (9)' : 'CD: '); //LANG?
+			a2.innerHTML = (H ? lang.smuggling[8]+'(9)' : lang.smuggling[8]);
 			a2.id = 'a2';
-			a2.title = 'Fill in the most expensive b/n (Hotkey: 9 )'; //LANG
+			a2.title = lang.smuggling[9];
 			if (H) {
 				a2.setAttribute('accesskey', '9');
 			}
@@ -5209,9 +5246,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			wrap3 = cEL('span');
 			wrap3.innerHTML = '<br>';
 			a3 = cEL('a');
-			a3.innerHTML = (H ? 'RP: (0)' : 'RP: '); //LANG
+			a3.innerHTML = (H ? lang.smuggling[10]+'(0)' : lang.smuggling[10]);
 			a3.id = 'a3';
-			a3.title = 'Fill in the cheapest b/n (Hotkey: 0 )'; //LANG
+			a3.title = lang.smuggling[11];
 			if (H) {
 				a3.setAttribute('accesskey', '0');
 			}
@@ -5227,9 +5264,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			wrap4 = cEL('span');
 			wrap4.innerHTML = '<br>';
 			a4 = cEL('a');
-			a4.innerHTML = (H ? 'None: (-)' : 'None: '); //LANG
+			a4.innerHTML = (H ? lang.smuggling[12]+'(-)' : lang.smuggling[12]);
 			a4.id = 'a4';
-			a4.title = 'Don\'t fill anything (Hotkey: - )'; //LANG
+			a4.title = lang.smuggling[13];
 			if (H) {
 				a4.setAttribute('accesskey', '-');
 			}
@@ -5346,9 +5383,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				bn_xp = '//form/table/tbody/tr[1]/td';
 				str = $I(bn_xp);
 
-				str += '<hr><a accessKey="[" id="do_n" title="AutoFill just narcs according to selected BRC mode (Hotkey: [ )" onFocus="this.blur()" href="#">' + lang.smuggling[2] + ' ([)</a>'; //LANG
-				str += ' - <a accessKey="]" id="do_b" title="AutoFill just booze according to selected BRC mode (Hotkey: ] )" onFocus="this.blur()" href="#">' + lang.smuggling[1] + ' (])</a>'; //LANG
-				str += ' - <a accessKey="=" id="do_sell" title="Sell all you have (Hotkey: = )" onFocus="this.blur()" href="#">' + lang.smuggling[5] + ' (=)</a><br>'; //LANG
+				str += '<hr><a accessKey="[" id="do_n" title="'+lang.smuggling[14]+'" onFocus="this.blur()" href="#">' + lang.smuggling[2] + ' ([)</a>';
+				str += ' - <a accessKey="]" id="do_b" title="'+lang.smuggling[15]+'" onFocus="this.blur()" href="#">' + lang.smuggling[1] + ' (])</a>';
+				str += ' - <a accessKey="=" id="do_sell" title="'+lang.smuggling[16]+'" onFocus="this.blur()" href="#">' + lang.smuggling[5] + ' (=)</a><br>';
 
 				$I(bn_xp, str);
 
@@ -5500,7 +5537,7 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 		if (i < 7) { //booze
 			var x = i + 4;
 			b_amount[i] = parseInt($I(xpb + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpb + x + ']/td', '<a id="bh'+i+'" index="'+i+'" ' + (prefs[4] ? 'accesskey="' + (i + 1) + '" ' : '') + 'title="Fill in this booze (Hotkey: ' + (i + 1) + ' )" onFocus="this.blur()" href="javascript:{}">' + (prefs[4] ? (i + 1) : '') + ' ' + $I(xpb + x + ']/td') + '</a>'); //LANG
+			$I(xpb + x + ']/td', '<a id="bh'+i+'" index="'+i+'" ' + (prefs[4] ? 'accesskey="' + (i + 1) + '" ' : '') + 'title="'+lang.smuggling[17]+' ' + (i + 1) + ' )" onFocus="this.blur()" href="javascript:{}">' + (prefs[4] ? (i + 1) : '') + ' ' + $I(xpb + x + ']/td') + '</a>');
 
 			getID('bh'+i).addEventListener('click', function(e){
 				function z() { getTAG('input')[i].value = 0; } //zero
@@ -5542,7 +5579,7 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 		if (i > 8) { //narcs
 			var x = i - 5;
 			n_amount[(i - 9)] = parseInt($I(xpn + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpn + x + ']/td', '<a onFocus="this.blur()" id="nh'+i+'" index="'+i+'" title="Fill in this narc" href="javascript:{}">' + $I(xpn + x + ']/td') + '</a>'); //LANG
+			$I(xpn + x + ']/td', '<a onFocus="this.blur()" id="nh'+i+'" index="'+i+'" title="'+lang.smuggling[18]+'" href="javascript:{}">' + $I(xpn + x + ']/td') + '</a>');
 
 			getID('nh'+i).addEventListener('click', function(e){
 				function z() { getTAG('input')[i].value = 0; } //fill zero
@@ -5604,7 +5641,7 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 	str += '<td>' + 'Max ' + lang.smuggling[1] + ': ' + booze + ' | </td>';
 	str += '<td>' + 'Max ' + lang.smuggling[2] + ': ' + narcs + '</td>';
 	str += '</tr></table>';
-	str += '<a href="prices.php" target="main">Current Booze/Narcotics Prices</a>';
+	str += '<a href="prices.php" target="main">'+lang.smuggling[19]+'</a>';
 
 	$X(bn_xp).innerHTML = str;
 	inputs[18].focus(); //focus captcha
@@ -5874,7 +5911,7 @@ if (dlp != '/game.php' && dlp != '/banner.php' && dlp != '/pic.php' && dlp != '/
 }
 
 //---------------- Title changer + Beyond Favicon Replacer ----------------
-if ((dlp == '/' || dlp == '/index.php' || dlp == '/game.php' || dlp == 'game-login.php' || dlp == 'game-register.php') && lh.indexOf('beyond') == -1) {
+if ((dlp == '/' || dlp == '/index.php' || dlp == '/game.php' || dlp == 'game-login.php') && lh.indexOf('beyond') == -1) {
 	window.addEventListener('load', function () {
 		setTimeout(function () {
 			setIcon(GM_getResourceURL('favoriteIco'));

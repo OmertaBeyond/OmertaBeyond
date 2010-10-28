@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.6
+	Version: 1.10.7
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -131,7 +131,12 @@ var langs = {
 			'If someone in jail is higher than one of the settings he/she will be highlighted with the color of the lowest priority number</span><br />The default priority number for friends is: <b>3</b> and for family is: <b>9</b><br />The default priority and color are used when automatically adding users to list<br />The lowest and default priority for anyone in jail is <b>10</b>',
 			'Go up',
 			'Go down',
-			'Random'
+			'Random',
+			'added to jail highlighter using default color and priority',
+			'Remove from busting list',
+			'is already in your busting list!',
+			'is removed from the busting list',
+			'Add to busting list'
 		],
 		marquee: [
 			'Are you sure you want to travel to ',
@@ -142,7 +147,10 @@ var langs = {
 		cusmenu: [
 			'Are you sure you want to reset your custom menu?',
 			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer than 3 seconds',
-			'You\'re already using that key!'
+			'You\'re already using that key!',
+			'Customize Menu',
+			'Customize Hotkeys',
+			'Reset menu'
 		],
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
 		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
@@ -155,7 +163,6 @@ var langs = {
 			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
 			'You don\'t have enough cash to make this deal.'
 		],
-		garage: 'Type',
 		race: 'You\'re still tired from your last race',
 		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
 		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
@@ -165,17 +172,38 @@ var langs = {
 			'Driver',
 			'Advanced Driver',
 			'Master Driver',
-			'Chauffeur',
+			'Chauffeur',//5
 			'Advanced Chauffeur',
 			'Master Chauffeur',
 			'Racing Driver',
 			'Race Supremo',
-			'Champion'
+			'Champion'//10
 		],
 		friends: 'Friends:',
 		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
-		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Sell All'],
+		smuggling: [
+			'Pocket: ',
+			'Booze',
+			'Narcs',
+			'Current Booze/Narcotics Prices',
+			'All Prices',
+			'Sell All',//5
+			'Best: ',
+			'Fill in the most profitable b/n (Hotkey: 8 )',
+			'CD: ',
+			'Fill in the most expensive b/n (Hotkey: 9 )',
+			'RP: ',//10
+			'Fill in the cheapest b/n (Hotkey: 0 )',
+			'None: ',
+			'Don\'t fill anything (Hotkey: - )',
+			'AutoFill just narcs according to selected BRC mode (Hotkey: [ )',
+			'AutoFill just booze according to selected BRC mode (Hotkey: ] )',//15
+			'Sell all you have (Hotkey: = )',
+			'Fill in this booze (Hotkey:',
+			'Fill in this narc',
+			'Current Booze/Narcotics Prices'
+		],
 		obay: ['Pack of bullets','bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
@@ -241,7 +269,9 @@ var langs = {
 			' days, ',
 			'Do you want to use the 1-click voter now?',
 			'Since you last used the 1-click voter, it\'s been: \n',
-			'Do you still want to vote?'
+			'Do you still want to vote?',
+			'Vote for an extra ticket in the Omerta Super Lottery',
+			'Vote for some free bullets and money'
 		],
 		scratcher: [
 			'<b>Congratulations!</b>',
@@ -372,7 +402,39 @@ var langs = {
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
 		busttracker: ['You busted this person out of jail', 'You busted this person', 'You busted yourself out of jail'],
-		accept: 'Accept'
+		accept: 'Accept',
+		calc: [
+			'You send:',
+			'User gets:',
+			'You want:',
+			'User sends:',
+			'You put into bank:',
+			'You will recieve:',
+			'Auto Refresh in 1 sec'
+		],
+		msg: ['Click to open the tickets page',	'Click to sell this WS on obay', 'Click to buy the missing blood'],
+		garage: [
+			'Potential Bullets:',
+			'Select based on Value',
+			'Under',
+			'Above',
+			'Go',
+			'Skip Heist cars',
+			'Skip OC cars',
+			'Skip Trucks',
+			'Skip MOC cars',
+			'Skip 0% cars',
+			'All in safehouse',
+			'Choose a Name',
+			'Choose a City',
+			'City: ',
+			'Keep selected when selecting a new group',
+			'Select group from current page',
+			'Name: ',
+			'Type'
+		],
+		fampage: ['Members:', 'member', 'objectowner', 'spotowner'],
+		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
 	},
 	dm: {
 		prefsname: 'Preferences',
@@ -492,7 +554,12 @@ var langs = {
 			'If someone in jail is higher than one of the settings he/she will be highlighted with the color of the lowest priority number</span><br />The default priority number for friends is: <b>3</b> and for family is: <b>9</b><br />The default priority and color are used when automatically adding users to list<br />The lowest and default priority for anyone in jail is <b>10</b>',
 			'Go up',
 			'Go down',
-			'Random'
+			'Random',
+			'added to jail highlighter using default color and priority',
+			'Remove from busting list',
+			'is already in your busting list!',
+			'is removed from the busting list',
+			'Add to busting list'
 		],
 		marquee: [
 			'Are you sure you want to travel to ',
@@ -503,7 +570,10 @@ var langs = {
 		cusmenu: [
 			'Are you sure you want to reset your custom menu?',
 			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer than 3 seconds',
-			'You\'re already using that key!'
+			'You\'re already using that key!',
+			'Customize Menu',
+			'Customize Hotkeys',
+			'Reset menu'
 		],
 		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
 		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
@@ -516,7 +586,6 @@ var langs = {
 			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
 			'You don\'t have enough cash to make this deal.'
 		],
-		garage: 'Type',
 		race: 'You\'re still tired from your last race',
 		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
 		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
@@ -536,7 +605,28 @@ var langs = {
 		friends: 'Friends:',
 		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
 		bank: 'You cannot transfer less than 100 dollars',
-		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Sell All'],
+		smuggling: [
+			'Pocket: ',
+			'Booze',
+			'Narcs',
+			'Current Booze/Narcotics Prices',
+			'All Prices',
+			'Sell All',//5
+			'Best: ',
+			'Fill in the most profitable b/n (Hotkey: 8 )',
+			'CD: ',
+			'Fill in the most expensive b/n (Hotkey: 9 )',
+			'RP: ',//10
+			'Fill in the cheapest b/n (Hotkey: 0 )',
+			'None: ',
+			'Don\'t fill anything (Hotkey: - )',
+			'AutoFill just narcs according to selected BRC mode (Hotkey: [ )',
+			'AutoFill just booze according to selected BRC mode (Hotkey: ] )',//15
+			'Sell all you have (Hotkey: = )',
+			'Fill in this booze (Hotkey:',
+			'Fill in this narc',
+			'Current Booze/Narcotics Prices'
+		],
 		obay: ['Pack of bullets','bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
@@ -602,7 +692,9 @@ var langs = {
 			' days, ',
 			'Do you want to use the 1-click voter now?',
 			'Since you last used the 1-click voter, it\'s been: \n',
-			'Do you still want to vote?'
+			'Do you still want to vote?',
+			'Vote for an extra ticket in the Omerta Super Lottery',
+			'Vote for some free bullets and money'
 		],
 		scratcher: [
 			'<b>Congratulations!</b>',
@@ -733,7 +825,39 @@ var langs = {
 		killpage: 'All cities',
 		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
 		busttracker: ['You busted this person out of jail', 'You busted this person', 'You busted yourself out of jail'],
-		accept: 'Accept'
+		accept: 'Accept',
+		calc: [
+			'You send:',
+			'User gets:',
+			'You want:',
+			'User sends:',
+			'You put into bank:',
+			'You will recieve:',
+			'Auto Refresh in 1 sec'
+		],
+		msg: ['Click to open the tickets page',	'Click to sell this WS on obay', 'Click to buy the missing blood'],
+		garage: [
+			'Potential Bullets:',
+			'Select based on Value',
+			'Under',
+			'Above',
+			'Go',
+			'Skip Heist cars',
+			'Skip OC cars',
+			'Skip Trucks',
+			'Skip MOC cars',
+			'Skip 0% cars',
+			'All in safehouse',
+			'Choose a Name',
+			'Choose a City',
+			'City: ',
+			'Keep selected when selecting a new group',
+			'Select group from current page',
+			'Name: ',
+			'Type'
+		],
+		fampage: ['Members:', 'member', 'objectowner', 'spotowner'],
+		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
 	},
 	nl: {
 		prefsname: 'Voorkeuren',
@@ -807,7 +931,7 @@ var langs = {
 			'Vult automatische het maximale aantal kogels in dat je kunt kopen, word gekeken naar aantal kogels in de fabriek en het geld dat je hebt',//25
 			'Vult kogels/wapen etc in voor heist, oc of moc',//26
 			'Vult het aantal eenheden bloed zodat je op 100% uitkomt, geslecteerd op goedkoopste soort die je kunt kopen',//27
-			'Vult het maximale aantal drank/drugs/beide dat je kan dragen. De beste run calculator vult in en geeft je ook de mogelijkheid om op het drank/drugs type te klikken waar die het maximum invult',//28
+			'Vult het maximale aantal drank/drugs/beide dat je kan dragen. De beste deal calculator vult in en geeft je ook de mogelijkheid om op het drank/drugs type te klikken waar die het maximum invult',//28
 			'Focust op accepteren en voegt een link to naar inbox nadat je een race hebt gedaan',//29
 			'Verwijdert de regel met de laatste forumposts van profielen',//30
 			'Geeft je de mogelijkheid om berichten te openen met sneltoetsen en aldaar te antwoorden of het bericht te verwijderen met een sneltoets',//31
@@ -829,12 +953,12 @@ var langs = {
 			'Interface Extra\'s'//6
 		],
 		prefsPage: [
-			'Controleer voor update',
-			'Vink alles aan',
+			'Controleer op update',
+			'Selecteer alles',
 			'Update'
 		],
 		jhl: [
-			'Uitbraak lijst en opties',
+			'Uitbreek lijst en opties',
 			'Familie of Gebruiker',
 			'Kleur',
 			'Prioriteit',
@@ -853,7 +977,12 @@ var langs = {
 			'Als iemand in het gevang in aanmerking komt voor voor 2 instellingen, krijgt hij/zij de kleur van het hoogste prioriteit<br>Het standaard nummer voor vrienden is: <b>3</b> en voor familie: <b>9</b><br>De standaard prioriteit en kleur worden gebruikt als je iemand toevoegt via een profiel link<br>De laagste prioriteit voor iemand is <b>10</b>',
 			'Omhoog',
 			'Omlaag',
-			'Willekeurige'
+			'Willekeurige',
+			'toegevoegd aan uitbreek lijst met de standaard kleur en prioriteit',
+			'Verwijder van uitbreek lijst',
+			'staat al in je uitbreek lijst!',
+			'is verwijderd van je uibtreeklijst',
+			'Voeg aan uitbreek lijst toe'
 		],
 		marquee: [
 			'Weet je zeker dat je wil reizen naar ',
@@ -864,7 +993,10 @@ var langs = {
 		cusmenu: [
 			'Weet je zeker dat je je menu wilt resetten?',
 			' indeling geupdate! Keert terug naar normale menu..<br /><br />Klik <a href="javascript:location.href=\'menu.php\'">hier</a> als dit langer dan 3 seconden blijft',
-			'Je hebt die hotkey al in gebruik!'
+			'Je hebt die hotkey al in gebruik!',
+			'Pas menu aan',
+			'Pas sneltoetsen aan',
+			'Reset menu'
 		],
 		login: ['Registreren', 'http://www.edo-nieuws.nl', 'Edo-nieuws'],
 		status: ['none', 'Geen', 'geslaagd', 'Geld van misdaden', 'misdaad', 'Waarde alle gestolen auto\'s', 'auto', 'Rente', 'in', 'Nu!'],
@@ -877,7 +1009,6 @@ var langs = {
 			'De code die je invoerde kwam niet overeen met die van de afbeelding. De code bevat alleen kleine letters en cijfers.',
 			'Je hebt niet genoeg geld voor deze deal.'
 		],
-		garage: 'Type',
 		race: 'Je bent nog moe van je vorige race',
 		profile: ['Burgerlijke staat:', 'SMS Status', 'Familie Uitbreker van', 'Dood', ' Geschiedenis'],
 		wealth: ['Sloeber', 'Arm', 'Modaal', 'Erg rijk', 'Te rijk om waar te zijn', 'Rijker dan God', 'Rijk'],
@@ -897,7 +1028,28 @@ var langs = {
 		friends: 'Vrienden:',
 		stats: ['naar boven', ['Dode Fams', 'Geëerd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
-		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Verkoop Alles'],
+		smuggling: [
+			'Zak: ',
+			'Drank',
+			'Drugs',
+			'Huidige Drank/Drugs Prijzen',
+			'Alle Prijzen',
+			'Verkoop Alles',//5
+			'Beste: ',
+			'Vul de meest winstvolle d&d in (Sneltoets: 8 )',
+			'CD: ',
+			'Vul de duurste D&D in (Sneltoets: 9 )',
+			'RV: ',//10
+			'Vul de goedkoopste D&D in (Sneltoets: 0 )',
+			'Geen: ',
+			'Niks invullen (Sneltoets: - )',
+			'Vul automatisch alleen drugs volgens de geselecteerde BDC modus in (Sneltoets: [ )',
+			'Vul automatisch alleen drank volgens de geselecteerde BDC modus in (Sneltoets: ] )',//15
+			'Verkkoop alles (Sneltoets: = )',
+			'Vul deze drank in (Sneltoets:',
+			'Vul deze drug in',
+			'Huidige Drank/Drugs prijzen'
+		],
 		obay: ['Pak met kogels','kogels'],
 		inbox: [
 			'Mededeling',
@@ -971,7 +1123,9 @@ var langs = {
 			' dag(en), ',
 			'Wil je de 1-klik stemmer nu gebruiken?',
 			'Sinds de laatste keer dat je hebt gestemd is er verstreken:\n',
-			'Wil je alsnog de 1-klik stemmer gebruiken?'
+			'Wil je alsnog de 1-klik stemmer gebruiken?',
+			'Stem voor een extra ticket in de Omerta Super Loterij',
+			'Stem voor wat gratis kogels en geld'
 		],
 		scratcher: [
 			'<b>Gefeliciteerd!</b>',
@@ -1031,8 +1185,8 @@ var langs = {
 			'Oud ijzer handel',
 			'Bar',
 			'Restaurant',
-			'Villa',
-			'Vakbond Kantoor',
+			'Legerdump Winkel',
+			'Advocaten Kantoor',
 		],
 		lastontime: [
 			'Levend',
@@ -1065,16 +1219,16 @@ var langs = {
 			'Blackjacks',
 			'Gelijkspel: ',
 			'Gok:',//10
-			'User 1: Je hebt gewonnen, je hebt je inzet van \\$(\\d+) terug',
-			'User 1: Je hebt verloren, je inzet van \\$(\\d+) is nu voor het casino',
-			'User 1: Je speelde gelijk, je krijgt je inzet van \\$(\\d+) dus terug',
+			'User 1: Je hebt gewonnen je hebt je inzet van \\$(\\d+) terug',
+			'User 1: Je hebt verloren je inzet van \\$(\\d+) is nu voor het casino',
+			'User 1: Je speelde gelijk je krijgt je inzet van \\$(\\d+) dus terug',
 			'Jij<b> 2 :</b>',
 			'User 2: Je hebt gewonnen',//15
 			'User 2: Je hebt verloren',
 			'User 2: Je speelde gelijk',
-			'User 2: Je hebt gewonnen, je hebt je inzet van \\$(\\d+) terug',
-			'User 2: Je hebt verloren, je inzet van \\$(\\d+) is nu voor het casino',
-			'User 2: Je speelde gelijk, je krijgt je inzet van \\$(\\d+) dus terug'//20
+			'User 2: Je hebt gewonnen je hebt je inzet van \\$(\\d+) terug',
+			'User 2: Je hebt verloren je inzet van \\$(\\d+) is nu voor het casino',
+			'User 2: Je speelde gelijk je krijgt je inzet van \\$(\\d+) dus terug'//20
 		],
 		slottracker: [
 			'Fruitmachine Volger',
@@ -1094,13 +1248,45 @@ var langs = {
 			'Speciaal',
 			'Kosten',
 			'Totaal',
-			'att',
-			'def',
+			'aanv',
+			'afw',
 			'getraind'
 		],
 		killpage: 'Alle steden',
 		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?'],
 		busttracker: ['Je hebt deze gangster uit de gevangenis gebroken.', 'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken', 'Je bent ontsnapt uit de gevangenis.'],
-		accept: 'Accepteer'
+		accept: 'Accepteer',
+		calc: [
+			'Je stuurt:',
+			'Ander krijgt:',
+			'Je wil:',
+			'Ander stuurt:',
+			'Je zet op de bank:',
+			'Je krijgt:',
+			'Opnieuw laden in 1 sec'
+		],
+		msg: ['Klik om de tickets pagina te openen', 'Klik om de getuigenverklaring op obay te verkopen', 'Klik om je verloren bloed te kopen'],
+		garage: [
+			'Mogelijke kogels:',
+			'Selecteer op waarde',
+			'Onder',
+			'Boven',
+			'Ga',
+			'Sla Heist autos over',
+			'Sla OC autos over',
+			'Sla Trucks over',
+			'Sla MOC autos over',
+			'Sla 0% autos over',
+			'Alle in safehouse',
+			'Kies een naam',
+			'Kies een stad',
+			'Stad: ',
+			'Hou geselecteerd wanneer je een nieuwe groep kiest',
+			'Selecteer groep op huidige pagina',
+			'Name: ',
+			'Type'
+		],
+		fampage: ['Gebruikers:', 'gebruiker', 'objecteigenaren', 'handelobjecteigenaren'],
+		ffv: 'Je FireFox versie is ouder dan onze eisen. Beyond zal niet goed werken todat je update naar een nieuwere versie. Minimale vereiste versie:'
 	}
 };

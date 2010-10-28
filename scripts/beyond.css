@@ -4,7 +4,7 @@
 	Changing these values are at your own risk. If you make bug changes or bugfixes,
 	please inform us too so we can make any changes if we think are necesary.
 
-	Version: 1.10.6
+	Version: 1.10.7
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -178,4 +178,8 @@ color:orange !important
 
 .blue {
 color:#00F !important
+}
+
+.purple {
+color:#FF00FF !important
 }
