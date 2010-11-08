@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			20-10-2010
+// @date			08-11-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -10,7 +10,7 @@
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
 // @homepageURL			http://www.omertabeyond.com/
-// @description			Omerta Beyond 1.9.3 (Still the best 'legal' script! ;))
+// @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @icon			http://www.omertabeyond.com/html/images/favicon.png
 // @screenshot			http://dump.omertabeyond.com/images/875sshot_0019.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
@@ -133,7 +133,11 @@ if (whereToRun() == 'com') {
 
 const SCRIPT_NAME = 'Omerta Beyond';
 const SCRIPT_VERSION = '1.10';
-const SCRIPT_SUBVERSION = 7;
+const SCRIPT_VERSION_MAJOR = 1;
+const SCRIPT_VERSION_MINOR = 10;
+const SCRIPT_VERSION_MAINTENANCE = 0;
+const SCRIPT_VERSION_BUILD = 8;
+const SCRIPT_SUBVERSION = 8;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -147,10 +151,11 @@ var PollLink = SITE_LINK + sets.polllink;
 const FingonUrl = 'http://89.149.221.178/~fingon';
 const EdoUrl = 'http://www.edo-nieuws.nl/news.php';
 var ff = navigator.userAgent.split('/')[3].split(' ')[0];
-const OB = SCRIPT_VERSION + '.' + SCRIPT_SUBVERSION;
+const OB_v = SCRIPT_VERSION_MAJOR + '.' + SCRIPT_VERSION_MINOR + '.' + SCRIPT_VERSION_MAINTENANCE;
+const OB = OB_v + '.' + SCRIPT_VERSION_BUILD;
 
 GM_registerMenuCommand('[' + SCRIPT_NAME + '] v' + OB, function () {
-    alert('You are using ' + SCRIPT_NAME + '\nVersion:\t' + SCRIPT_NAME + '\nRevision:\t' + SCRIPT_SUBVERSION);
+    alert('You are using ' + SCRIPT_NAME + '.\nVersion:\t\t' + OB_v +'\nRevision:\t\t' + SCRIPT_VERSION_BUILD);
 });
 
 GM_registerMenuCommand('[' + SCRIPT_NAME + '] Check for updates.', function () {
@@ -207,7 +212,7 @@ if (dlp == '/prefs.php') {
 	var prefstr = lang.prefs;
 	var prefsTitle = lang.prefsTitle;
 
-	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + SCRIPT_VERSION + '.' + SCRIPT_SUBVERSION + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <a href="#" name="updater" ><img src="'+GM_getResourceURL('updateIco')+'" border="0" title="'+lang.prefsPage[0]+'" alt="'+lang.prefsPage[0]+'" /></a></td></tr>';
+	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + OB + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <a href="#" name="updater" ><img src="'+GM_getResourceURL('updateIco')+'" border="0" title="'+lang.prefsPage[0]+'" alt="'+lang.prefsPage[0]+'" /></a></td></tr>';
 
 	function addCat(title) { //pref category
 		toggleStr = 'var node = this; while(node.nextSibling.innerHTML.search(/<input/)!=-1){ var node = node.nextSibling; var show = ((node.style.display == \'none\') ? \'\' : \'none\'); node.style.display = show; };'; //js to toggle hiding prefs for category
@@ -2283,7 +2288,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					tbody.insertBefore(tr,tbody.lastChild.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling);
 				}
 
-				//Add to 
+				//Add to
 				if(prefs[3]){
 					names = getValue('bust','')
 					add = 1;

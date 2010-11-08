@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.10.6
+	Version: 1.10.8
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -406,19 +406,48 @@ function OBUpdate(cb) {
 		onload: function(response) {
 			var ob_parser = new DOMParser();
 			var ob_dom = ob_parser.parseFromString(response.responseText, "text/xml");
-			var ob_version = ob_dom.getElementsByTagName("version")[0].textContent;
-			var ob_revision = parseInt(ob_dom.getElementsByTagName("revision")[0].textContent);
+			var obv_major = ob_dom.getElementsByTagName("major")[0].textContent;
+			var obv_minor = ob_dom.getElementsByTagName("minor")[0].textContent;
+			var obv_maintenance = ob_dom.getElementsByTagName("maintenance")[0].textContent;
+			var obv_build = ob_dom.getElementsByTagName("build")[0].textContent;
 			var ob_url = ob_dom.getElementsByTagName("url")[0].textContent;
+			var obv_avail = obv_major + '.' + obv_minor + '.' + obv_maintenance + '.' + obv_build;
 
-			if (SCRIPT_SUBVERSION < ob_revision) {
-			  if (confirm("There's an update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+SCRIPT_VERSION+"."+SCRIPT_SUBVERSION+"\nAvailable:\t"+SCRIPT_VERSION+"."+ob_revision+"")) {
-			  	GM_openInTab(ob_url);
-			  }
-			} else if (SCRIPT_SUBVERSION > ob_revision && cb) {
-				alert("Seems like you have newer version than our public release.\nLooks like you're our lovely beta tester.\n\nInstalled:\t\t"+SCRIPT_VERSION+"."+SCRIPT_SUBVERSION+"\nAvailable:\t"+SCRIPT_VERSION+"."+ob_revision+"");
+			if (SCRIPT_VERSION_MAJOR < obv_major) {
+				if (confirm("There's an major update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail)) {
+				GM_openInTab(ob_url);
+				}
+			} else if (SCRIPT_VERSION_MAJOR == obv_major) {
+				GM_log("[Omerta Beyond Updater] Same major version ... lets check minor version");
+				if (SCRIPT_VERSION_MINOR < obv_minor) {
+					if (confirm("There's an minor update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail)) {
+						GM_openInTab(ob_url);
+					}
+				} else if (SCRIPT_VERSION_MINOR == obv_minor) {
+					GM_log("[Omerta Beyond Updater] Same minor version ... lets check maintenance version");
+					if (SCRIPT_VERSION_MAINTENANCE < obv_maintenance) {
+						if (confirm("There's an maintenance update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail)) {
+							GM_openInTab(ob_url);
+						}
+					} else if (SCRIPT_VERSION_MAINTENANCE == obv_maintenance) {
+						GM_log("[Omerta Beyond Updater] Same maintenance version ... lets check build version");
+						if (SCRIPT_VERSION_BUILD < obv_build) {
+							if (confirm("There's an revision update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail)) {
+								GM_openInTab(ob_url);
+							}
+						} else if (SCRIPT_VERSION_BUILD == obv_build) {
+							alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail);
+						}
+					} else if (SCRIPT_VERSION_MAINTENANCE > obv_maintenance && cb) {
+						alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail);
+					}
+				} else if (SCRIPT_VERSION_MINOR > obv_minor && cb) {
+					alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail);
+				}
 			} else if (cb) {
-				alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+SCRIPT_VERSION+"."+SCRIPT_SUBVERSION+"\nAvailable:\t"+SCRIPT_VERSION+"."+ob_revision+"");
+				alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail);
 			}
+
 		}
 	});
 }
