@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.8
+	Version: 1.10.0.9
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -13,6 +13,429 @@
 
 // Get language vars.
 var langs = {
+		tr: {
+		prefsname: 'Preferences',
+		menuitem: ['OB Poll', 'Contact Form', 'Beyond FAQ', 'B/N Prices', 'Live famstats', 'Daily famstats'],
+		prefs: [
+			'Disable the "go for it" button until the image code entered is the correct length',//0 - CRIMES/CARS
+			'Cocaine prices in the marquee',//1 - SMUGGLING/PRICES
+			'Fingon\'s News in the info menu',//2 - FINGON
+			'Jail Highlighter, auto-form and hotkeys',//3 - JAIL/BUSTING
+			'Enable hotkeys (Smuggling)',//4 - SMUGGLING/PRICES
+			'Add "000" and "000000" when pressing k/m at bank amounts',//5 - MISC
+			'Remove Jailbusting Skill bar',//6 - CLEAN-UP
+			'Return to bullets page after failed bullet buy',//7 - OTHER AFs
+			'Auto-form crimes/car nicks',//8 - CRIMES/CARS
+			'1-Click Vote',//9 - MISC
+			'Refresh crimes/car nick page after waiting time is over',//10 - CRIMES/CARS
+			'Return to page after wrong image code',//11 - MISC
+			'Remove Capo Money texts (Non Capo users only)',//12 - CLEAN-UP
+			'Detailed Familypage',//13 - MISC
+			'Remove "Kill password not set" messages',//14 - CLEAN-UP
+			'Extra links on user profiles',//15 - MISC
+			'Enable Nickreader (hold \'Alt\' or switch on/off with \'Ctrl\')',//16 - MISC
+			'Extra prices popup in marquee',//17 - SMUGGLING/PRICES
+			'Remove blue profit calculations in CD-mode',//18 - CLEAN-UP
+			'Disable Avatars on forum and on friend\'s list on profile page',//19 - CLEAN-UP
+			'Clean login page',//20 - CLEAN-UP
+			'Add highlights @ prices page',//21 - SMUGGLING/PRICES
+			'Remove Race form bar',//22 - CLEAN-UP
+			'Return to jail page after failure',//23 - JAIL/BUSTING
+			'Enable Garage Car Highlighting',//24 - CRIMES/CARS
+			'Auto-form Bullets',//25 - OTHER AFs
+			'Auto-form Group Crimes',//26 (heist, oc, moc) - OTHER AFs
+			'Auto-form Bloodbank',//27 - OTHER AFs
+			'Auto-form Smuggling',//28 - SMUGGLING/PRICES
+			'Auto-form Races',//29 - OTHER AFs
+			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
+			'Add Hotkeys to Inbox',//31 - MISC
+			'Enable Scratcher',//32 - OTHER AFs, obsolete
+			'Enable Trackers (Bullet, Poker, Scratching, BJ, Slots)',//33 - MISC
+			'Tidy Spot raid page',//34 - UI Extras
+			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
+			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
+			'Automaticaly check for updates'//37 - MISC
+		],
+		prefsTitle: [ //describe the options
+			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
+			'Shows the cocaine prices for every city in the upper bar (with color highlight for low and high)',//1
+			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from fingon',//2
+			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
+			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
+			'While in bank, don\'t get confused with the amount of zero\'s use the k and m keys to literally add thousands and millions',//5
+			'Removes the jailbusting skill bar from your account page',//6
+			'If you don\'t get the bullets on first try, it auto-refreshes the bullet page',//7
+			'Auto-selects the best option for crimes and nick a car',//8
+			'You\'re one click away from free bullets and money',//9
+			'If you click on crimes/nick a car, but you still have waiting time on it, page will be refreshed after the waiting time is over',//10
+			'Returns to the page you were on after entering the wrong code',//11
+			'Removes the capo profit text from your account page',//12
+			'You see the tops/capos/object holders in different colors, and with a letter next to the name that shows what they are',//13
+			'Remove semi annoying text that you didn\'t enable kill password',//14
+			'You get an extra line on users profile, with links for heisting or raiding with that person, setting him mentor, or hire detectives on him',//15
+			'You get info from a users profile when you mouse-over his name (ex. in jail)',//16
+			'If you put your mouse over the cities in the marquee, you get the prices for other b/n (the ones most used in b/n runs)',//17
+			'Want to save room on your screen and maybe actually see the image code at once? Remove the calculation text',//18
+			'While on Omerta forum or profile page you wont see users avatars anymore',//19
+			'Clean up login page',//20
+			'Adds coloring with green (low) and red (high) on the prices page',//21
+			'Removes the race form progress bar from your account page',//22
+			'Returns to jail page after your jail time is over',//23
+			'Highlights the cars in your garage in different colors, depending on the use for that car (heist/oc/moc)',//24
+			'Auto-fills in the maximum amount of bullets you can buy, according to the number of bullets in the bullet factory and the amount of money in your pocket',//25
+			'Auto fills in the bullets, gun etc you need to do a heist, oc or moc',//26
+			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
+			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
+			'Sets focus on editbox and adds link to inbox after finished race',//29
+			'Remove \'Recent Posts\' from user\'s profile.',//30
+			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
+			'Show the Scratcher Panel with stats on the Scratch&Win page',//32, obsolete
+			'Keep track of how many bullets you have bought, how many poker-, blackjack- or slotsgames you played or how many cards you have scratched',//33
+			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
+			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
+			'A nice overview of all your bodyguards and their trained levels, including totals',//36
+			'Automaticaly check for updates'//37
+		],
+		maxprefs: 38, // 1 + last pref #
+		preftitles: [
+			'Crimes/Car Nicks',//0
+			'Smuggling and Booze/Narc Prices',//1
+			'Jail/Busting',//2
+			'Other Auto-formers',//3
+			'Clean-up',//4
+			'Fingon\'s News',//5
+			'Interface Extras'//6
+		],
+		prefsPage: [
+			'Check for update',
+			'Check all',
+			'Update'
+		],
+		jhl: [
+			'Busting List and Options',
+			'Family or Ingame nick',
+			'Color',
+			'Priority',
+			'More',
+			'Less',
+			'Save!',
+			'Swines, Beggars \'n Fools who don\'t deserve my busting',
+			'Adding via profiles',
+			'Jailpage Settings',
+			'Default Priority',
+			'Default Color',
+			'Maximum length highlight list',
+			'Buy out Hotkey when in jail',
+			'Friend List Priority',
+			'Family Priority',
+			'If someone in jail is higher than one of the settings he/she will be highlighted with the color of the lowest priority number</span><br />The default priority number for friends is: <b>3</b> and for family is: <b>9</b><br />The default priority and color are used when automatically adding users to list<br />The lowest and default priority for anyone in jail is <b>10</b>',
+			'Go up',
+			'Go down',
+			'Random',
+			'added to jail highlighter using default color and priority',
+			'Remove from busting list',
+			'is already in your busting list!',
+			'is removed from the busting list',
+			'Add to busting list'
+		],
+		marquee: [
+			'Are you sure you want to travel to ',
+			'All Prices',
+			'Coke at: ',
+			'You are already staying in this city!'
+		],
+		cusmenu: [
+			'Are you sure you want to reset your custom menu?',
+			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer than 3 seconds',
+			'You\'re already using that key!',
+			'Customize Menu',
+			'Customize Hotkeys',
+			'Reset menu'
+		],
+		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
+		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
+		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
+		failedBullets: [
+			'You may only buy 500 bullets.',
+			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
+			'This factory doesn\'t have that many bullets.<br><br>The price of bullets may also have changed RIGHT NOW, please try again.3',
+			'You cant buy a negative amount of bullets',
+			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
+			'You don\'t have enough cash to make this deal.'
+		],
+		race: 'You\'re still tired from your last race',
+		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
+		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
+		driver: [
+			'Rookie',
+			'Co-Driver',
+			'Driver',
+			'Advanced Driver',
+			'Master Driver',
+			'Chauffeur',//5
+			'Advanced Chauffeur',
+			'Master Chauffeur',
+			'Racing Driver',
+			'Race Supremo',
+			'Champion'//10
+		],
+		friends: 'Friends:',
+		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
+		bank: 'You cannot transfer less than 100 dollars',
+		smuggling: [
+			'Pocket: ',
+			'Booze',
+			'Narcs',
+			'Current Booze/Narcotics Prices',
+			'All Prices',
+			'Sell All',//5
+			'Best: ',
+			'Fill in the most profitable b/n (Hotkey: 8 )',
+			'CD: ',
+			'Fill in the most expensive b/n (Hotkey: 9 )',
+			'RP: ',//10
+			'Fill in the cheapest b/n (Hotkey: 0 )',
+			'None: ',
+			'Don\'t fill anything (Hotkey: - )',
+			'AutoFill just narcs according to selected BRC mode (Hotkey: [ )',
+			'AutoFill just booze according to selected BRC mode (Hotkey: ] )',//15
+			'Sell all you have (Hotkey: = )',
+			'Fill in this booze (Hotkey:',
+			'Fill in this narc',
+			'Current Booze/Narcotics Prices'
+		],
+		obay: ['Pack of bullets','bullets'],
+		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
+		linkify: [
+			'Route 66 heist',
+			'Organised Crime',
+			'Mega Organized Crime',
+			'Target not found',
+			'Carrace invite',
+			'Target found',
+			'Kill success',
+			'Witness statement',
+			'Condolences',
+			'found',
+			'Ticket update',
+			'Crashed Message',
+			'Invitation',
+			'Raid Notification',
+			'Married',
+			'Wedding Gift',
+			'Wedding',
+			'Wedding Invitation',
+			'shot!'
+		],
+		title: 'Omerta (TR)',
+		menutitle: [
+			'Preferences page where you can change most of our options',
+			'Place where we ask our users some questions',
+			'Here you can send us your ideas or found bugs',
+			'List of frequently asked questions',
+			'Omerta prices with little flavor of ours :P',
+			'Live Family stats based by Rix\'s calculation.',
+			'Latest family stats based by Fingon\'s calculation'
+		],
+		NR: {
+			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
+			positions: 'Don of,Capo of:,Sottocapo of:,Consiglieri of:',
+			objects: 'Blackjack:,Roulette:,Bulletfactory:,Numbers Game:,Slotmachine:,Punto Banco:,Bookmaker office:',
+			properties: 'User:,Rank:,Honor points:,Status,Wealth',
+			error: 'Could not load page.'
+		},
+		BR: [
+			'Best Run Calculator',
+			'City',
+			'Booze',
+			'Narc',
+			'Profit',
+			'You are in ',
+			'You can\'t fly to ',
+			'You won\'t make any profit in ',
+			'Auto-Fill',
+			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
+			'NOW'
+		],
+		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
+		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		oneclick: [
+			'You haven\'t used the 1-click voter yet!\nDo you want to use it now?\n',
+			'You can\'t vote again yet!\nPlease wait another:\n',
+			' hours, ',
+			' minutes, and ',
+			' seconds.\n',
+			'You haven\'t used the 1-click voter today!\n',
+			' days, ',
+			'Do you want to use the 1-click voter now?',
+			'Since you last used the 1-click voter, it\'s been: \n',
+			'Do you still want to vote?',
+			'Vote for an extra ticket in the Omerta Super Lottery',
+			'Vote for some free bullets and money'
+		],
+		scratcher: [
+			'<b>Congratulations!</b>',
+			'bullets<br>They have been added to your account!<br>',
+			'won (\\d+) bullets',
+			'<br>It has been added to your account!<br>',
+			'You have won \\$ (\\d+)',
+			'<b>Start scratching</b>',
+			'ScratchTracker',
+			'Scratched:',
+			'Money spent:',
+			'Money won:',
+			'Profit:',
+			'Millions:',
+			'Bullets won:',
+			'Price per bullet:',
+			'Turn off',
+			'Turn on',
+			'Reset stats',
+			'Stats have been reset!',
+			'Sorry, but 10 per minute is enough.',
+			'Go back to the main Scratch&Win page.'
+		],
+		bullettracker: [
+			'Success, you bought',
+			'Success you bought (\\d+) bullets for \\$ (\\d+)',
+			'BulletTracker',
+			'Bullets bought:',
+			'Money spent:',
+			'Price per bullet:',
+			'You need to wait another'
+		],
+		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
+		raidpage: [
+			'<b>now</b>',
+			'Now!',
+			'Spot',
+			'Type',
+			'Owner',
+			'Profit left',
+			'Protection',
+			'Next raid',
+			'Bullets',
+			'Driver',
+			'Information',
+			'Invite',
+			'Local Mob',
+			'Car Lot (Thunderbolt)',
+			'Car Lot (Avus)',
+			'Car Lot (Spyder)',
+			'Whiskey Stills',
+			'Farm (Marijuana)',
+			'Farm (Beer)',
+			'Docks (Heroin)',
+			'Docks (Cognac)',
+			'Factory',
+			'Scrapyard',
+			'Bar',
+			'Restaurant',
+			'Army Surplus Store',
+			'Lawyers Office',
+		],
+		lastontime: [
+			'Alive',
+			'Last on:',
+			'ago',
+			'This user has not been seen online by our logger yet'
+		],
+		pokertracker: [
+			'PokerTracker',
+			'You have joined the game.',
+			'You have called the current bet.',
+			'You have raised the bet.',
+			'Games played: ',
+			'Games won: ',
+			'Money spent: ',
+			'Money won: ',
+			'Profit: ',
+			'You have checked the current bet.',
+			'You have started a new game.'
+		],
+		bjtracker: [
+			'BJ Tracker',
+			'Play again',
+			'User 1: You won',
+			'User 1: You lost',
+			'User 1: You played even',
+			'User 1: Blackjack!!',//5
+			'Insurance Set',
+			'Dealer had a black jack',
+			'Blackjacks',
+			'Games tie: ',
+			'Bet:',//10
+			'User 1: You won you got your bet of \\$(\\d+) back',
+			'User 1: You lost your bet of \\$(\\d+) was taken by the casino',
+			'User 1: You played even so you got your bet of \\$(\\d+) back',
+			'You<b> 2 :</b>',
+			'User 2: You won',//15
+			'User 2: You lost',
+			'User 2: You played even',
+			'User 2: You won you got your bet of \\$(\\d+) back',
+			'User 2: You lost your bet of \\$(\\d+) was taken by the casino',
+			'User 2: You played even so you got your bet of \\$(\\d+) back'//20
+		],
+		slottracker: [
+			'SlotsTracker',
+			'Congratulations',
+			'Bummer',
+			'Congratulations! You won \\$(\\d+)',
+			'Jackpot:',
+			'Triple BAR:'
+		],
+		bgov: [
+			'Bodyguards overview',
+			'Name',
+			'ID',
+			'Level',
+			'Attack',
+			'Defense',
+			'Special',
+			'Costs',
+			'Total',
+			'att',
+			'def',
+			'trained'
+		],
+		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
+		killpage: 'All cities',
+		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
+		busttracker: ['You busted this person out of jail', 'You busted this person', 'You busted yourself out of jail'],
+		accept: 'Accept',
+		calc: [
+			'You send:',
+			'User gets:',
+			'You want:',
+			'User sends:',
+			'You put into bank:',
+			'You will recieve:',
+			'Auto Refresh in 1 sec'
+		],
+		msg: ['Click to open the tickets page',	'Click to sell this WS on obay', 'Click to buy the missing blood'],
+		garage: [
+			'Potential Bullets:',
+			'Select based on Value',
+			'Under',
+			'Above',
+			'Go',
+			'Skip Heist cars',
+			'Skip OC cars',
+			'Skip Trucks',
+			'Skip MOC cars',
+			'Skip 0% cars',
+			'All in safehouse',
+			'Choose a Name',
+			'Choose a City',
+			'City: ',
+			'Keep selected when selecting a new group',
+			'Select group from current page',
+			'Name: ',
+			'Type'
+		],
+		fampage: ['Members:', 'member', 'objectowner', 'spotowner'],
+		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
+	},
 	en: {
 		prefsname: 'Preferences',
 		menuitem: ['OB Poll', 'Contact Form', 'Beyond FAQ', 'B/N Prices', 'Live famstats', 'Daily famstats'],

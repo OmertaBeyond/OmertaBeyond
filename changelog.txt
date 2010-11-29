@@ -1,7 +1,6 @@
 Omerta Beyond Changelog
 
-Version 1.10.XX 		XX/XX/2010
-
+Version 1.10.0.XX 		XX/XX/2010
 
 	* Bumped version to 1.10 xD
 

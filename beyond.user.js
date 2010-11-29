@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			08-11-2010
+// @date			29-11-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -45,6 +45,8 @@
 // @include			http://deathmatch.barafranca.com/*
 // @include			http://www.barafranca.nl/*
 // @include			http://barafranca.nl/*
+// @include			http://www.barafranca.gen.tr/*
+// @include			http://barafranca.gen.tr/*
 // @include			http://89.149.221.178/~fingon/beyond.php*
 // @exclude			http://gamewiki.barafranca.com/*
 // @exclude			http://ircwiki.barafranca.com/*
@@ -103,6 +105,10 @@ function whereToRun(hostname) {
 		case 'barafranca.nl':
 			return 'nl';
 			break;
+		case 'www.barafranca.gen.tr':
+		case 'barafranca.gen.tr':
+			return 'tr';
+			break;
 		case 'gm.omertabeyond.com':
 		case 'www.omertabeyond.com':
 			var version = window.location.search.split('=')[1];
@@ -127,8 +133,12 @@ if (whereToRun() == 'com') {
 	whoami = GM_getValue('nick_dm', '');
 } else if (whereToRun() == 'nl') {
 	lang = langs.nl;
-	sets = sets = settings.nl;
+	sets = settings.nl;
 	whoami = GM_getValue('nick_nl', '');
+} else if (whereToRun() == 'tr') {
+	lang = langs.tr;
+	sets = settings.tr;
+	whoami = GM_getValue('nick_tr', '');
 }
 
 const SCRIPT_NAME = 'Omerta Beyond';
@@ -136,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 8;
-const SCRIPT_SUBVERSION = 8;
+const SCRIPT_VERSION_BUILD = 9;
+const SCRIPT_SUBVERSION = 9;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -585,6 +595,12 @@ if (dlp == '/menu.php') {
 	var qtitle = lang.menutitle;
 
 	if(sets.version!='_com'){ //only .com support fingon famstats
+		descr.pop();
+		qlinks.pop();
+		qtitle.pop();
+	}
+
+	if(sets.version=='_tr'){
 		descr.pop();
 		qlinks.pop();
 		qtitle.pop();
@@ -5659,7 +5675,6 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 		fillBRC(n, b); //we know what we want, now fill it in!
 	}
 }
-
 //---------------- Clean login page ----------------
 if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]) {
 	$Del('/html/body/table/tbody/tr[2]'); //rough cleansing!
