@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			14-12-2010
+// @date			15-12-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -12,7 +12,7 @@
 // @homepageURL			http://www.omertabeyond.com/
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
-// @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png
+// @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 10;
-const SCRIPT_SUBVERSION = 10;
+const SCRIPT_VERSION_BUILD = 11;
+const SCRIPT_SUBVERSION = 11;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -2171,6 +2171,15 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 				var akill = '<span style="color:red; font-weight:bold;"> (Akill) </span>';
 				status += akill;
 			}
+			GM_xmlhttpRequest({
+				method: 'GET',
+				url: SCRIPT_LINK+'?p=stats&w=deaths&v='+sets.version.replace('_','')+'&ing='+$X('//span[@id=\'username\']').innerHTML,
+				onload: function(xhr) {
+					var response = JSON.parse(xhr.responseText);
+					console.log(response);
+					$X('//span[@id="status"]').innerHTML = status + ' | Died at '+response["Date"]+' ('+response["Agod"]+'d '+response["Agoh"]+'h '+response["Agom"]+'m ago)';
+				}
+			});
 		}
 
 
@@ -2191,7 +2200,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 				}
 			});
 		} else {
-			$X('//span[@id="status"]').innerHTML = status
+			$X('//span[@id="status"]').innerHTML = status;
 		}
 
 		var forumposts = false;
@@ -2245,8 +2254,8 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		var self = ($X('/html/body//center/table/tbody/tr[3]/td[2]/a').textContent.toUpperCase() == getValue('nick').toUpperCase());//self/other
 		var other = $X('/html/body//center/table/tbody/tr/td/i').textContent;
 
-		if (alive) {//Add interesting stuff here
-			if (!self) {//additions useless for self
+		if (alive) { //Add interesting stuff here
+			if (!self) { //additions useless for self
 				//Send HP's
 				$X('//span[@id="hp"]').innerHTML = '<a href="/honorpoints.php?who='+nick+'" class="red">'+$X('//span[@id="hp"]').innerHTML+'</a>';
 
@@ -2976,6 +2985,32 @@ if (prefs[13] && dlp == '/family.php') {
 	var gfP = (parseInt((cdP*percentage), 10)+parseInt(cdP, 10));
 
 	promo[3].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
+
+	// add HR
+	var famname = $x('//td[@class="profilerow"]')[0].textContent.split(" ")[0].trim().toLowerCase();
+	var maintable = $x('//table[@class="thinline"]/tbody')[0];
+	var newtr = document.createElement("tr");
+
+	GM_xmlhttpRequest({
+		method: 'GET',
+		url: SCRIPT_LINK+'?p=stats&w=hr&v='+sets.version.replace('_','')+'&ing='+famname,
+		onload: function(xhr) {
+			var response = JSON.parse(xhr.responseText);
+			var newtd = document.createElement("td");
+			var newtd2 = document.createElement("td");
+			var newtr = document.createElement("tr");
+
+			newtd.setAttribute("class","subtableheader");
+			newtd.textContent = 'Ranks:';
+			newtd2.setAttribute("class","profilerow");
+
+			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td> ' + response["gf"] + ' </td></tr> <tr><td>Capodecina:</td><td> ' + response["cd"] + ' </td></tr> <tr><td>Bruglione:</td><td> ' + response["brug"] + ' </td></tr> <tr><td>Chief:</td><td> ' + response["chief"] + ' </td></tr> <tr><td>Local Chief:</td><td> ' + response["lc"] + ' </td></tr> <tr><td>Assassin:</td><td> ' + response["assa"] + ' </td></tr> <tr><td>Swindler:</td><td> ' + response["swin"] + ' </td></tr> <tr><td>Soldier</td><td> ' + response["sol"] + ' </td></tr> <tr><hr></tr> <tr><td>Total points:</td><td> ' + response["pts"] + ' </td></tr> </table>';
+
+			newtr.appendChild(newtd);
+			newtr.appendChild(newtd2);
+			maintable.appendChild(newtr);
+		}
+	});
 }
 
 //---------------- Manage Users (top3 only) ----------------
