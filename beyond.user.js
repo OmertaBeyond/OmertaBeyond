@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			29-11-2010
+// @date			14-12-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -11,8 +11,8 @@
 // @namespace			v3.omertabeyond.com
 // @homepageURL			http://www.omertabeyond.com/
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
-// @icon			http://www.omertabeyond.com/html/images/favicon.png
-// @screenshot			http://dump.omertabeyond.com/images/875sshot_0019.png
+// @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
+// @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 9;
-const SCRIPT_SUBVERSION = 9;
+const SCRIPT_VERSION_BUILD = 10;
+const SCRIPT_SUBVERSION = 10;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -1550,21 +1550,6 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 			bf = $I(x + '[2]' + path).split('<br>')[4].replace(',', '').match(/\d+/g)[0];
 			$X('//fieldset//input[@type="text"][@name="amount_bull"]').value = bf;
 		}
-	}
-
-	if (getELNAME('become')[0] == null && getELNAME('produce')[0] == null) { // no owner fix
-		arr = $I(BFTextXp).split(' ');
-		if (sets.version == '_com') {
-			arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
-		} else if (sets.version == '_nl') {
-			arr[7] = '<u>' + arr[7] + '</u>';
-			arr[4] = '<u>' + setArr(4).replace('</b>', '') + '</u>';
-		} else {
-			arr[6] = '<u>' + arr[6] + '</u>';
-			arr[3] = '<u>' + setArr(3).replace('</b>', '') + '</u>';
-		}
-		$I(BFTextXp, arr.join(' '));
-		$x('//input[@type="text"]')[1].focus();
 	}
 }
 if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
