@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 11;
-const SCRIPT_SUBVERSION = 11;
+const SCRIPT_VERSION_BUILD = 12;
+const SCRIPT_SUBVERSION = 12;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -2176,8 +2176,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 				url: SCRIPT_LINK+'?p=stats&w=deaths&v='+sets.version.replace('_','')+'&ing='+$X('//span[@id=\'username\']').innerHTML,
 				onload: function(xhr) {
 					var response = JSON.parse(xhr.responseText);
-					console.log(response);
-					$X('//span[@id="status"]').innerHTML = status + ' | Died at '+response["Date"]+' ('+response["Agod"]+'d '+response["Agoh"]+'h '+response["Agom"]+'m ago)';
+					$X('//span[@id="status"]').innerHTML = status + ' | Died at '+response["Date"]+' OT ('+response["Agod"]+'d '+response["Agoh"]+'h '+response["Agom"]+'m ago)';
 				}
 			});
 		}
@@ -2186,16 +2185,13 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		if (status == lang.lastontime[0]) { // show last online time on profile
 			GM_xmlhttpRequest({
 				method: 'GET',
-				url: 'http://rix.omertabeyond.com/laston.xml.php?v='+sets.version.replace('_','')+'&ing='+$X('//span[@id=\'username\']').innerHTML,
-				headers: {'User-agent': SCRIPT_NAME + ' ' + SCRIPT_VERSION + '.'+ SCRIPT_SUBVERSION, 'Accept': 'application/xml,text/xml'},
+				url: SCRIPT_LINK+'?p=stats&w=laston&v='+sets.version.replace('_','')+'&ing='+$X('//span[@id=\'username\']').innerHTML,
 				onload: function (resp) {
-					var parser = new DOMParser();
-					var dom = parser.parseFromString(resp.responseText, 'application/xml');
-					if (dom.getElementsByTagName('laston')[0].textContent == 0) { // 1970, thus not seen by logger
+					var response = JSON.parse(resp.responseText);
+					if (response["LastOn"] === 0) { // 1970, thus not seen by logger
 						$X('//span[@id="status"]').innerHTML = lang.lastontime[0]+' | '+lang.lastontime[3];
 					} else {
-
-						$X('//span[@id="status"]').innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+dom.getElementsByTagName('lastdate')[0].textContent+' OT ('+dom.getElementsByTagName('agod')[0].textContent+'d '+dom.getElementsByTagName('agoh')[0].textContent+'h '+dom.getElementsByTagName('agom')[0].textContent+'m '+lang.lastontime[2]+')';
+						$X('//span[@id="status"]').innerHTML = lang.lastontime[0]+' | '+lang.lastontime[1]+' '+response["Date"]+' OT ('+response["Agod"]+'d '+response["Agoh"]+'h '+response["Agom"]+'m ago)';
 					}
 				}
 			});
@@ -3004,7 +3000,7 @@ if (prefs[13] && dlp == '/family.php') {
 			newtd.textContent = 'Ranks:';
 			newtd2.setAttribute("class","profilerow");
 
-			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td> ' + response["gf"] + ' </td></tr> <tr><td>Capodecina:</td><td> ' + response["cd"] + ' </td></tr> <tr><td>Bruglione:</td><td> ' + response["brug"] + ' </td></tr> <tr><td>Chief:</td><td> ' + response["chief"] + ' </td></tr> <tr><td>Local Chief:</td><td> ' + response["lc"] + ' </td></tr> <tr><td>Assassin:</td><td> ' + response["assa"] + ' </td></tr> <tr><td>Swindler:</td><td> ' + response["swin"] + ' </td></tr> <tr><td>Soldier</td><td> ' + response["sol"] + ' </td></tr> <tr><hr></tr> <tr><td>Total points:</td><td> ' + response["pts"] + ' </td></tr> </table>';
+			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td> ' + response["gf"] + ' </td></tr> <tr><td>Capodecina:</td><td> ' + response["cd"] + ' </td></tr> <tr><td>Bruglione:</td><td> ' + response["brug"] + ' </td></tr> <tr><td>Chief:</td><td> ' + response["chief"] + ' </td></tr> <tr><td>Local Chief:</td><td> ' + response["lc"] + ' </td></tr> <tr><td>Assassin:</td><td> ' + response["assa"] + ' </td></tr> <tr><hr></tr> <tr><td>Total points:</td><td> ' + response["pts"] + ' </td></tr> </table>';
 
 			newtr.appendChild(newtd);
 			newtr.appendChild(newtd2);
