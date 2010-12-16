@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			15-12-2010
+// @date			16-12-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 12;
-const SCRIPT_SUBVERSION = 12;
+const SCRIPT_VERSION_BUILD = 13;
+const SCRIPT_SUBVERSION = 13;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -3729,47 +3729,61 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 		var price = parseInt($X(xpath).getElementsByTagName('td')[(2 + num)].innerHTML.replace(/[^0-9.]/g, ''), 10);
 		$X(xpath).getElementsByTagName('td')[(1 + num)].innerHTML = $X(xpath).getElementsByTagName('td')[(1 + num)].innerHTML + ' ($ ' + Math.round(price / bullets) + ')';
 	}
-	trlen = $x('//center/table[3]/tbody/tr').length;
-	for (i = 4; i <= trlen; i++) {
+
+	trlen = $x('//center/table[3]/tbody/tr[@class="one"]').length;
+	for (i = 1; i <= trlen; ++i) {
 		if (dls.indexOf('specific') == -1) { //on view object page
-			var xpath = '/html/body//center/table[3]/tbody/tr[' + i + ']';
-			if (!$X(xpath) || $I(xpath).indexOf(lang.obay[0]) > 100) {
+			var xpath = '/html/body//center/table[3]/tbody/tr[@class="one"][' + i + ']';
+			if (!$X(xpath) || $I(xpath).indexOf(sets.obay[0]) > 100) {
 				break;
 			}
-			if ($I(xpath).indexOf(lang.obay[0]) != -1) {
+			if ($I(xpath).indexOf(sets.obay[0]) != -1) {
 				addPrice(1);
 			}
 		}
 		if (dls.indexOf('type=11') != -1) {
-			var xpath = '/html/body//center/table[3]/tbody/tr[' + i + ']';
-			if (!$X(xpath) || $I(xpath).indexOf(lang.obay[1]) > 100) {
+			var xpath = '/html/body//center/table[3]/tbody/tr[@class="one"][' + i + ']';
+			if (!$X(xpath) || $I(xpath).indexOf(sets.obay[1]) > 100) {
 				break;
 			}
-			if ($I(xpath).indexOf(lang.obay[1]) != -1) {
+			if ($I(xpath).indexOf(sets.obay[1]) != -1) {
 				addPrice(0);
 			}
 		}
 	}
 
-	if (dls.indexOf('specific') == 1) { //add focus and check on every page
-		if (db.innerHTML.indexOf(lang.obay) != -1) { //on objects page
-			var xpath = '/html/body//center/table/tbody/tr[3]/td[3]';
-			var xpath2 = '/html/body//center/table/tbody/tr[4]/td';
-			if (lang.obay.match($I(xpath).split('<br>')[0])) {
-				var price = $I(xpath).split('<br>')[3].replace(/[^0-9.]/g, '');
-				var bullets = $I(xpath2).replace(/[^0-9.]/g, '');
-				$I(xpath2, $I(xpath2) + '<br><b>$ ' + Math.round(price / bullets) + '</b>');
+	if (dls.indexOf('specific') != -1) { //add focus and check on every page
+		if (document.body.innerHTML.indexOf(sets.obay[1]) != -1) {
+
+			if (sets.version == '_dm') {
+				var xpathtr = '';
+				var xpath2tr = '[2]';
+			} else {
+				var xpathtr = '[3]';
+				var xpath2tr = '[4]';
+			}
+
+			var xpath = '/html/body//center/table/tbody/tr'+xpathtr+'/td[3]';
+			var xpath2 = '/html/body//center/table/tbody/tr'+xpath2tr+'/td';
+
+			if (sets.obay[0].match($I(xpath).split('<br>')[0])) {
+				var price = $X(xpath).innerHTML.split('<br>')[3].replace(/[^0-9.]/g, '');
+				var bullets = $X(xpath2).innerHTML.replace(/[^0-9.]/g, '');
+				$I(xpath2, $I(xpath2) + '<br><b>$' + Math.round(price / bullets) + ' per bullet</b>');
 				$x('//input')[1].select();
 			}
 		}
-		$x('//input')[2].checked = true;
-		$x('//input')[4].focus();
+
+		$x('//input[@type="radio"]')[2].checked = true;
+		$x('//input[@type="submit"]')[1].focus();
+
 		if (prefs[5]) {
 			var inputs = $x('//input[@name="bid"]');
 			inputs.forEach(function ($n) {
 				$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 			});
 		}
+
 	}
 }
 
@@ -3972,6 +3986,8 @@ if (dls.indexOf('action=showMsg') != -1) {
 	var raceInv = new RegExp(lang.linkify[4]);
 	if (raceInv.test(msgType)) { //race invite
 		setArr(8);
+		arr[arr.length - 15] = '<a href="/races.php"><strong>' + arr[arr.length - 15];
+		arr[arr.length - 14] = arr[arr.length - 14] + '</strong></a>';
 		$I(msgTxt, arr.join(' '));
 	}
 

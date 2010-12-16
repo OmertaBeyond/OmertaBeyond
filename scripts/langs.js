@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.12
+	Version: 1.10.0.13
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -13,7 +13,7 @@
 
 // Get language vars.
 var langs = {
-		tr: {
+	tr: {
 		prefsname: 'Preferences',
 		menuitem: ['OB Poll', 'Contact Form', 'Beyond FAQ', 'B/N Prices', 'Live famstats', 'Daily famstats'],
 		prefs: [
@@ -204,7 +204,6 @@ var langs = {
 			'Fill in this narc',
 			'Current Booze/Narcotics Prices'
 		],
-		obay: ['Pack of bullets','bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
@@ -627,7 +626,6 @@ var langs = {
 			'Fill in this narc',
 			'Current Booze/Narcotics Prices'
 		],
-		obay: ['Pack of bullets','bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
@@ -1050,7 +1048,6 @@ var langs = {
 			'Fill in this narc',
 			'Current Booze/Narcotics Prices'
 		],
-		obay: ['Pack of bullets','bullets'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
@@ -1473,7 +1470,6 @@ var langs = {
 			'Vul deze drug in',
 			'Huidige Drank/Drugs prijzen'
 		],
-		obay: ['Pak met kogels','kogels'],
 		inbox: [
 			'Mededeling',
 			'(Admin bericht)',
