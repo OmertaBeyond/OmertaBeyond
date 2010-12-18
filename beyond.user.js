@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			16-12-2010
+// @date			18-12-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 13;
-const SCRIPT_SUBVERSION = 13;
+const SCRIPT_VERSION_BUILD = 14;
+const SCRIPT_SUBVERSION = 14;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -434,7 +434,6 @@ if(dlp == '/marquee.php'){
 		GM_xmlhttpRequest({
 			method: 'GET',
 			url: 'http://gm.omertabeyond.com/prices.xml.php?v='+sets.version.replace('_', ''),
-			headers: {'User-agent': SCRIPT_NAME + ' ' + SCRIPT_VERSION + '.'+ SCRIPT_SUBVERSION, 'Accept': 'application/xml,text/xml'},
 			onload: function(resp){
 				var marquee = document.getElementsByTagName('div')[0];
 				marquee.innerHTML = '';
@@ -590,7 +589,7 @@ if (dlp == '/menu.php') {
 	//beyond menu descriptions
 	var descr = [lang.prefsname].concat(lang.menuitem);
 	//beyond menu links
-	var qlinks = [PrefsLink +'&ob='+OB, PollLink, ContactLink, SCRIPT_LINK + '/faq.php', PricesLink, sets.statslink, sets.statslink2];
+	var qlinks = [PrefsLink +'&ob='+OB, PollLink, ContactLink, SCRIPT_LINK + '/?p=faq', PricesLink, sets.statslink, sets.statslink2];
 	//beyond menu titles
 	var qtitle = lang.menutitle;
 
@@ -2176,7 +2175,11 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 				url: SCRIPT_LINK+'?p=stats&w=deaths&v='+sets.version.replace('_','')+'&ing='+$X('//span[@id=\'username\']').innerHTML,
 				onload: function(xhr) {
 					var response = JSON.parse(xhr.responseText);
-					$X('//span[@id="status"]').innerHTML = status + ' | Died at '+response["Date"]+' OT ('+response["Agod"]+'d '+response["Agoh"]+'h '+response["Agom"]+'m ago)';
+					if (response["DiedAt"] === null) {
+						$X('//span[@id="status"]').innerHTML = status + ' | Death date is not known';
+					} else {
+						$X('//span[@id="status"]').innerHTML = status + ' | Died at '+response["Date"]+' OT ('+response["Agod"]+'d '+response["Agoh"]+'h '+response["Agom"]+'m ago)';
+					}
 				}
 			});
 		}
@@ -3000,7 +3003,7 @@ if (prefs[13] && dlp == '/family.php') {
 			newtd.textContent = 'Ranks:';
 			newtd2.setAttribute("class","profilerow");
 
-			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td> ' + response["gf"] + ' </td></tr> <tr><td>Capodecina:</td><td> ' + response["cd"] + ' </td></tr> <tr><td>Bruglione:</td><td> ' + response["brug"] + ' </td></tr> <tr><td>Chief:</td><td> ' + response["chief"] + ' </td></tr> <tr><td>Local Chief:</td><td> ' + response["lc"] + ' </td></tr> <tr><td>Assassin:</td><td> ' + response["assa"] + ' </td></tr> <tr><hr></tr> <tr><td>Total points:</td><td> ' + response["pts"] + ' </td></tr> </table>';
+			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td> ' + response["gf"] + ' </td></tr> <tr><td>Capodecina:</td><td> ' + response["cd"] + ' </td></tr> <tr><td>Bruglione:</td><td> ' + response["brug"] + ' </td></tr> <tr><td>Chief:</td><td> ' + response["chief"] + ' </td></tr> <tr><td>Local Chief:</td><td> ' + response["lc"] + ' </td></tr> <tr><td>Assassin:</td><td> ' + response["assa"] + ' </td></tr> <tr><td colspan="2"><hr></td></tr> <tr><td>Total points:</td><td> ' + response["pts"] + ' </td></tr> </table>';
 
 			newtr.appendChild(newtd);
 			newtr.appendChild(newtd2);
@@ -3783,12 +3786,11 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 				$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 			});
 		}
-
 	}
 }
 
 //---------------- INBOX -----------------------
-if (dls.indexOf('action=inbox') != -1 || dls.indexOf('action=delMsg') != -1) {
+if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1) {
 	var br = cEL('br');
 	var span = document.getElementsByTagName('span')[0];
 	var chkbutton = cEL('input');
@@ -3840,15 +3842,21 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('action=delMsg') != -1) {
 		}
 	});
 
-
 	var keys = ['-', '=', '[', ']', ';', '\''];
 	var selectors = $x('//td[@align="right"][@colspan="100%"]//a');
 	for (i = -1; ++i < selectors.length;) {
 		selectors[i].innerHTML = '[<b>' + keys[i] + '</b>] ' + selectors[i].innerHTML;
 		selectors[i].setAttribute('accesskey', keys[i]);
 	}
-
 }
+if (dls.indexOf('action=outbox') != -1 || dls.indexOf('iParty=1') != -1){
+		$x('//a[contains(@href,"showSentMsg")]').forEach(function ($n) {
+			var id = $n.href.split('?')[1].match(/\d+/g)[0];
+			var delImg = "<img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=delMsg&iId=" + id + "&iParty=1\"' src='"+GM_getResourceURL('deleteIcon')+"' title='Delete' style='cursor:pointer; padding-right:3px; padding-left:4px; height:16px; width:16px; border:1px' />";
+			$n.parentNode.innerHTML = delImg + ' ' + $n.parentNode.innerHTML;
+		});
+}
+
 if (dls.indexOf('action=showMsg') != -1) {
 	if ($X('//a[contains(@href,"/family.php?join=yes")]')) {
 		$X('//a[contains(@href,"/family.php?join=yes")]').removeAttribute('target');
