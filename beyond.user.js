@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			18-12-2010
+// @date			27-12-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 14;
-const SCRIPT_SUBVERSION = 14;
+const SCRIPT_VERSION_BUILD = 15;
+const SCRIPT_SUBVERSION = 15;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -3003,13 +3003,19 @@ if (prefs[13] && dlp == '/family.php') {
 			newtd.textContent = 'Ranks:';
 			newtd2.setAttribute("class","profilerow");
 
-			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td> ' + response["gf"] + ' </td></tr> <tr><td>Capodecina:</td><td> ' + response["cd"] + ' </td></tr> <tr><td>Bruglione:</td><td> ' + response["brug"] + ' </td></tr> <tr><td>Chief:</td><td> ' + response["chief"] + ' </td></tr> <tr><td>Local Chief:</td><td> ' + response["lc"] + ' </td></tr> <tr><td>Assassin:</td><td> ' + response["assa"] + ' </td></tr> <tr><td colspan="2"><hr></td></tr> <tr><td>Total points:</td><td> ' + response["pts"] + ' </td></tr> </table>';
+			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td class="bold"> ' + response["gf"] + ' </td></tr> <tr><td>Capodecina:</td><td class="bold"> ' + response["cd"] + ' </td></tr> <tr><td>Bruglione:</td><td class="bold"> ' + response["brug"] + ' </td></tr> <tr><td>Chief:</td><td class="bold"> ' + response["chief"] + ' </td></tr> <tr><td>Local Chief:</td><td class="bold"> ' + response["lc"] + ' </td></tr> <tr><td>Assassin:</td><td class="bold"> ' + response["assa"] + ' </td></tr> <tr><td colspan="2"><hr></td></tr> <tr><td>Total points:</td><td class="bold"> ' + response["pts"] + ' </td></tr> </table>';
 
 			newtr.appendChild(newtd);
 			newtr.appendChild(newtd2);
 			maintable.appendChild(newtr);
 		}
 	});
+
+	// add deaths inside fam
+
+	// url to use:	SCRIPT_LINK+'?p=stats&w=famdeaths&v='+sets.version.replace('_','')+'&ing='+famname
+
+
 }
 
 //---------------- Manage Users (top3 only) ----------------
@@ -3569,7 +3575,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		for (y = 0; y <= am; y+=1) {
 			if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
 		}
-		var str = getID('raidpagedriver').value;
+		var str = GetParam('driver');
 		str = str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
 		for (y = 0; y <= am; y+=1) {
 			if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = str; }
@@ -4014,7 +4020,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 	var condolences = new RegExp(lang.linkify[8]);
 	if (condolences.test(msgType)) { //condolences msg
 		setArr(2);
-		setArr(54);
+		setArr(51);
 		$I(msgTxt, arr.join(' '));
 	}
 
