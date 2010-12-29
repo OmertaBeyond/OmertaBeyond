@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			27-12-2010
+// @date			29-12-2010
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 15;
-const SCRIPT_SUBVERSION = 15;
+const SCRIPT_VERSION_BUILD = 16;
+const SCRIPT_SUBVERSION = 16;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -2184,7 +2184,6 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 			});
 		}
 
-
 		if (status == lang.lastontime[0]) { // show last online time on profile
 			GM_xmlhttpRequest({
 				method: 'GET',
@@ -2252,6 +2251,8 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		var nick = $X('/html/body//center/table/tbody/tr[3]/td[2]/a').textContent;
 		var self = ($X('/html/body//center/table/tbody/tr[3]/td[2]/a').textContent.toUpperCase() == getValue('nick').toUpperCase());//self/other
 		var other = $X('/html/body//center/table/tbody/tr/td/i').textContent;
+		var checkHistory = $X('//td[@class="tableheader"]/i').textContent
+		$x('//td[@class="tableheader"]')[0].innerHTML = $x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?name='+checkHistory+'">View History</a>';
 
 		if (alive) { //Add interesting stuff here
 			if (!self) { //additions useless for self
@@ -3577,6 +3578,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		}
 		var str = GetParam('driver');
 		str = str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
+
 		for (y = 0; y <= am; y+=1) {
 			if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = str; }
 		}
@@ -3863,7 +3865,7 @@ if (dls.indexOf('action=outbox') != -1 || dls.indexOf('iParty=1') != -1){
 		});
 }
 
-if (dls.indexOf('action=showMsg') != -1) {
+if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != -1) {
 	if ($X('//a[contains(@href,"/family.php?join=yes")]')) {
 		$X('//a[contains(@href,"/family.php?join=yes")]').removeAttribute('target');
 	}
