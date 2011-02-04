@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			16-01-2011
+// @date			04-02-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 18;
-const SCRIPT_SUBVERSION = 18;
+const SCRIPT_VERSION_BUILD = 19;
+const SCRIPT_SUBVERSION = 19;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -2041,11 +2041,6 @@ if (prefs[11]) {
 
 //----------------- Crime Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
-	// Remove damned picture.
-	if ($XLast('//img[not(@id)]') != null) {
-		$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]'));
-	}
-
 	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
 		$x('//input[@type="radio"]')[4].checked = true;
 	} else if (prefs[10]) {
@@ -2074,11 +2069,6 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes&action=docrime') {
 
 //---------------- Cars Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
-	// Remove damned picture.
-	if ($XLast('//img[not(@id)]') != null) {
-		$XLast('//img[not(@id)]').parentNode.removeChild($XLast('//img[not(@id)]'));
-	}
-
 	if (db.innerHTML.search(/table/i) > -1 && prefs[8]) { //if Car Nick AF is enabled
 		for (p = [], i = 0; i <= 3; i++) { //Get percentages
 			p.push($i('//form//td[3]', i).replace(/\D|/g, ''));
@@ -2252,7 +2242,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		var self = ($X('/html/body//center/table/tbody/tr[3]/td[2]/a').textContent.toUpperCase() == getValue('nick').toUpperCase());//self/other
 		var other = $X('/html/body//center/table/tbody/tr/td/i').textContent;
 		var checkHistory = $X('//td[@class="tableheader"]/i').textContent
-		$x('//td[@class="tableheader"]')[0].innerHTML = $x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?name='+checkHistory+'">View History</a>';
+		$x('//td[@class="tableheader"]')[0].innerHTML = $x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a>';
 
 		if (alive) { //Add interesting stuff here
 			if (!self) { //additions useless for self
@@ -4021,8 +4011,11 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 	var condolences = new RegExp(lang.linkify[8]);
 	if (condolences.test(msgType)) { //condolences msg
-		setArr(2);
-		setArr(51);
+		var nickPos = arr[2];
+		var nickFirst = arr.indexOf(nickPos);
+		var nickLast = arr.lastIndexOf(nickPos);
+		setArr(nickFirst);
+		setArr(nickLast);
 		$I(msgTxt, arr.join(' '));
 	}
 
