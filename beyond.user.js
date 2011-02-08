@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			04-02-2011
+// @date			08-02-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 19;
-const SCRIPT_SUBVERSION = 19;
+const SCRIPT_VERSION_BUILD = 20;
+const SCRIPT_SUBVERSION = 20;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -2977,13 +2977,23 @@ if (prefs[13] && dlp == '/family.php') {
 	promo[3].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
 
 	// add HR
+	var famid, famIdFromImg;
+	var famid = dls.split("=")[1];
+	var famIdFromImg = $X('//img[contains(@src, "family_image.php")]').src.match(/\d+/g)[0];
+
+	if(famid === famIdFromImg) {
+		var url = 'id='+famid;
+	} else {
+		var url = 'ing='+famname;
+	}
 	var famname = $x('//td[@class="profilerow"]')[0].textContent.split(" ")[0].trim().toLowerCase();
 	var maintable = $x('//table[@class="thinline"]/tbody')[0];
+	var maintable2 = $x('//table/tbody/tr[1]/td')[2];
 	var newtr = document.createElement("tr");
 
 	GM_xmlhttpRequest({
 		method: 'GET',
-		url: SCRIPT_LINK+'?p=stats&w=hr&v='+sets.version.replace('_','')+'&ing='+famname,
+		url: SCRIPT_LINK+'?p=stats&w=hr&v='+sets.version.replace('_','')+'&'+url,
 		onload: function(xhr) {
 			var response = JSON.parse(xhr.responseText);
 			var newtd = document.createElement("td");
@@ -3001,12 +3011,26 @@ if (prefs[13] && dlp == '/family.php') {
 			maintable.appendChild(newtr);
 		}
 	});
+	GM_xmlhttpRequest({
+		method: 'GET',
+		url: SCRIPT_LINK+'?p=stats&w=famdeaths&v='+sets.version.replace('_','')+'&'+url,
+		onload: function(xhr) {
+			var responsed = JSON.parse(xhr.responseText);
+			var newtd = document.createElement("td");
+			var newtr = document.createElement("tr");
+			newtd.setAttribute("valign","top");
+			newtd.setAttribute("width","50%");
 
-	// add deaths inside fam
-
-	// url to use:	SCRIPT_LINK+'?p=stats&w=famdeaths&v='+sets.version.replace('_','')+'&ing='+famname
-
-
+			newtable = '<table width="100%" class=thinline cellspacing=0 cellpadding=2 rules=none> <tr><td colspan="100%" class=tableheader>Last family deaths</td></tr> <tr><td colspan="100%" bgcolor=black height=1></td></tr><tr align="center"><td class="bold">Name</td><td class="bold">Rank</td><td class="bold">Time</td><td class="bold">Ago</td></tr>';
+			for (i = -1; ++i < responsed.length;) {
+				newtable += '<tr><td> ' + responsed[i]["Name"] + ' </td><td> ' + responsed[i]["Rank"] + ' </td><td> ' + responsed[i]["Date"] + ' </td><td>'+responsed[i]["Agod"]+'day(s)  '+responsed[i]["Agoh"]+'hour(s) '+responsed[i]["Agom"]+'minute(s)</td></tr>';
+			}
+			newtable += '</table>';
+			newtd.innerHTML = newtable;
+			newtr.appendChild(newtd);
+			maintable2.appendChild(newtr);
+		}
+	});
 }
 
 //---------------- Manage Users (top3 only) ----------------
