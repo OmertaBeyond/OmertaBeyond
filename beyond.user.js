@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			08-02-2011
+// @date			09-02-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 20;
-const SCRIPT_SUBVERSION = 20;
+const SCRIPT_VERSION_BUILD = 21;
+const SCRIPT_SUBVERSION = 21;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -698,7 +698,7 @@ if (dlp == '/menu.php') {
 					but.addEventListener('focus', function(){this.blur();}, false);
 				}
 			}
-			if (removed == buttons[i-1]) {
+			if (removed == buttons[i-1] && i < subs) {
 				$Del('/html/body//div/table['+i+']');//remove entire submenu
 			}
 		}
@@ -2564,17 +2564,17 @@ if(dlp == '/garage.php'){
 		sTr.id = 'selectRow';
 
 		spacer = cEL('td');
-		spacer.innerHTML = '<br><hr><br>';
+		spacer.innerHTML = '<br /><hr /><br />';
 		spacer.setAttribute('style', 'width:5%; vertical-align:top;');
 		sTr.appendChild(spacer);
 
 		sTd = cEL('td');
 		sTd.id = 'selectTd';
-		sTd.innerHTML = ' <br><hr>' +
-		' <b>'+lang.garage[1]+'</b> <br><br><select size="1" id="X" style="width:100px;"><option value="1">'+lang.garage[2]+'</option><option value="0">'+lang.garage[3]+'</option></select> &nbsp;$<input type="text" value="6000" maxlength="5" size="8" style="width:110px;" id="max"/>' +
+		sTd.innerHTML = ' <br /><hr />' +
+		' <b>'+lang.garage[1]+'</b> <br /><br /><select size="1" id="X" style="width:100px;"><option value="1">'+lang.garage[2]+'</option><option value="0">'+lang.garage[3]+'</option></select> &nbsp;$<input type="text" value="6000" maxlength="5" size="8" style="width:110px;" id="max" onkeydown="javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + \'000\'; } if(symcode == 77){ this.value = this.value + \'000000\'; }this.value = this.value.replace(/k|m/g,\'\'); return (symcode == 75||symcode == 77)?false:true;" />' +
 		' &nbsp; <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&ob_oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&ob_moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&ob_heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="'+lang.garage[4]+'" name="action" />' +
 		'<table style="padding-top:10px; position:relative; right:7px;"><tr>'+string+'id="heist">'+lang.garage[5]+'</label></td>'+string+'id="oc">'+lang.garage[6]+'</label></td>'+'</tr><tr>'+string+
-		'id="truck">'+lang.garage[7]+'</label></td>'+string+'id="moc">'+lang.garage[8]+'</label></td>'+'</tr><tr>'+string+'id="nodam">'+lang.garage[9]+'</label></td><td>&nbsp;</td>'+'</tr></table>';
+		'id="truck">'+lang.garage[7]+'</label></td>'+string+'id="moc" />'+lang.garage[8]+'</label></td>'+'</tr><tr>'+string+'id="nodam">'+lang.garage[9]+'</label></td><td>&nbsp;</td>'+'</tr></table>';
 		sTr.appendChild(sTd);
 		sTable.appendChild(sTr);
 		$X(xpath).appendChild(sTable);
@@ -3004,7 +3004,7 @@ if (prefs[13] && dlp == '/family.php') {
 			newtd.textContent = 'Ranks:';
 			newtd2.setAttribute("class","profilerow");
 
-			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td class="bold"> ' + response["gf"] + ' </td></tr> <tr><td>Capodecina:</td><td class="bold"> ' + response["cd"] + ' </td></tr> <tr><td>Bruglione:</td><td class="bold"> ' + response["brug"] + ' </td></tr> <tr><td>Chief:</td><td class="bold"> ' + response["chief"] + ' </td></tr> <tr><td>Local Chief:</td><td class="bold"> ' + response["lc"] + ' </td></tr> <tr><td>Assassin:</td><td class="bold"> ' + response["assa"] + ' </td></tr> <tr><td colspan="2"><hr></td></tr> <tr><td>Total points:</td><td class="bold"> ' + response["pts"] + ' </td></tr> </table>';
+			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td class="bold">'+response["gf"]+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response["cd"]+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response["brug"]+'</td></tr><tr><td>Chief:</td><td class="bold">'+response["chief"]+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response["lc"]+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response["assa"]+'</td></tr><tr><td colspan="2"><hr></td></tr><tr><td>Total points:</td><td class="bold">'+response["pts"]+'</td></tr></table>';
 
 			newtr.appendChild(newtd);
 			newtr.appendChild(newtd2);
@@ -3016,19 +3016,19 @@ if (prefs[13] && dlp == '/family.php') {
 		url: SCRIPT_LINK+'?p=stats&w=famdeaths&v='+sets.version.replace('_','')+'&'+url,
 		onload: function(xhr) {
 			var responsed = JSON.parse(xhr.responseText);
-			var newtd = document.createElement("td");
-			var newtr = document.createElement("tr");
-			newtd.setAttribute("valign","top");
-			newtd.setAttribute("width","50%");
+			var newtable = document.createElement("table");
+			newtable.setAttribute("class","thinline");
+			newtable.setAttribute("width","100%");
+			newtable.setAttribute("cellspacing","0");
+			newtable.setAttribute("cellpadding","2");
+			newtable.setAttribute("rules","none");
 
-			newtable = '<table width="100%" class=thinline cellspacing=0 cellpadding=2 rules=none> <tr><td colspan="100%" class=tableheader>Last family deaths</td></tr> <tr><td colspan="100%" bgcolor=black height=1></td></tr><tr align="center"><td class="bold">Name</td><td class="bold">Rank</td><td class="bold">Time</td><td class="bold">Ago</td></tr>';
+			var dtable = '<tr><td colspan="100%" class=tableheader>Last family deaths</td></tr> <tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left">Name</td><td class="bold" align="center">Rank</td><td class="bold" align="center">Time</td><td class="bold" align="right">Ago</td></tr>';
 			for (i = -1; ++i < responsed.length;) {
-				newtable += '<tr><td> ' + responsed[i]["Name"] + ' </td><td> ' + responsed[i]["Rank"] + ' </td><td> ' + responsed[i]["Date"] + ' </td><td>'+responsed[i]["Agod"]+'day(s)  '+responsed[i]["Agoh"]+'hour(s) '+responsed[i]["Agom"]+'minute(s)</td></tr>';
+				dtable += '<tr><td><a href="user.php?name='+responsed[i]["Name"]+'">'+responsed[i]["Name"]+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+responsed[i]["Name"]+'">'+responsed[i]["Rank"]+'</td><td align="center">'+responsed[i]["Date"]+'</td><td align="right">'+responsed[i]["Agod"]+'d '+responsed[i]["Agoh"]+'h '+responsed[i]["Agom"]+'m</td></tr>';
 			}
-			newtable += '</table>';
-			newtd.innerHTML = newtable;
-			newtr.appendChild(newtd);
-			maintable2.appendChild(newtr);
+			newtable.innerHTML = dtable;
+			maintable2.appendChild(newtable);
 		}
 	});
 }
@@ -3634,6 +3634,16 @@ if (prefs[29]) {
 	}
 }
 
+//---------- m/k usage race -----------
+if (dlp == '/races.php') {
+	//add m/k usage in amount boxes
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="amount"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
+	}
+}
 //---------------- Blood AF ----------------
 if (prefs[27] && (dls.indexOf('?module=Bloodbank&action=') != -1 || dls.indexOf('?module=Shop') != -1)) {
 	var table, prices, tr, missing, A, B, t, m, type, types, ajaxDiv;
@@ -3808,6 +3818,14 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 				$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 			});
 		}
+	}
+}
+if (dls.indexOf('action=tosell') != -1) {
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="minbid"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
 	}
 }
 
@@ -4057,8 +4075,70 @@ if (dls.search('module=Poker') != -1) {
 	refresh = $X('//span/a[contains(@href, "BeO/webroot/index.php?module=Poker&action=")]');
 	refresh.innerHTML = refresh.innerHTML + '(=)';
 	refresh.accessKey = '=';
+
+	//add m/k usage in amount boxes
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="ante"] | //input[@name="buy_in"] | //input[@name="max_raise"] | //input[@name="raiseby"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
+	}
 }
 
+//---------- m/k usage roulette -----------
+if (dlp.indexOf('/gambling/roulette.php') != -1) {
+	//add m/k usage in amount boxes
+	if (prefs[5]) {
+		var inputs = $x('//input');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
+	}
+}
+
+//---------- m/k usage pb -----------
+if (dlp.indexOf('/gambling/puntobanco.php') != -1) {
+	//add m/k usage in amount boxes
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="bet"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
+	}
+}
+
+//---------- m/k usage bookie -----------
+if (dlp.indexOf('/gambling/nookie.php') != -1) {
+	//add m/k usage in amount boxes
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="bet"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
+	}
+}
+
+//---------- m/k usage ng -----------
+if (dlp.indexOf('/gambling/numbersgame.php') != -1) {
+	//add m/k usage in amount boxes
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="bet"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
+	}
+}
+
+//---------- m/k usage hitlist -----------
+if (dls.search('module=Hitlist') != -1) {
+	//add m/k usage in amount boxes
+	if (prefs[5]) {
+		var inputs = $x('//input[@name="amount"]');
+		inputs.forEach(function ($n) {
+			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+		});
+	}
+}
 //----------- link names at capo log --------------
 if (urlsearch == '/capocp.php' + dls) {
 	logxp = '/html/body//center/table[2]/tbody//td[2]';
@@ -4163,6 +4243,15 @@ if (dlp == '/kill.php') {
 	if ($X('//input[@name="name"]')) {
 		$X('//input[@name="name"]').value = GetParam('search');
 		$X('//input[@name="name"]/parent::*/input[last()]').focus();
+	}
+	if ($X('//input[@name="safehouse"]')) {
+		var func = 'javascript: var amt=this.value.replace(/\\D/g,\'\'); if(amt){ get = document.getElementById(\'cost\'); if(get){ tmp = \'\'+Math.round(amt*amt*100); str =\'\'; while(tmp > 0){ if(str!=\'\'){ while(str.length % 4 !=3 ){ str = \'0\' + str;}; str = \',\' + str;};dec = (tmp % 1000)+\'\';str = dec + str;tmp = Math.floor(tmp/1000);}; get.textContent = \'$\' + str}; };';
+		$X('//input[@name="safehouse"]').setAttribute('onKeyUp',func);
+		var shtable = $X('//center/table[4]/tbody/tr[5]/td/form');
+		var newp = document.createElement("p");
+		newp.setAttribute('id','cost');
+		newp.innerHTML = '$0';
+		shtable.appendChild(newp);
 	}
 	if (prefs[5]) {
 		var inputs = $x('//input[@name="bulletsf"]');

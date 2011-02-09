@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.19
+	Version: 1.10.0.21
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -22,7 +22,7 @@ var langs = {
 			'Fingon\'s News in the info menu',//2 - FINGON
 			'Jail Highlighter, auto-form and hotkeys',//3 - JAIL/BUSTING
 			'Enable hotkeys (Smuggling)',//4 - SMUGGLING/PRICES
-			'Add "000" and "000000" when pressing k/m at bank amounts',//5 - MISC
+			'Add "000" and "000000" when pressing k/m at inputfields',//5 - MISC
 			'Remove Jailbusting Skill bar',//6 - CLEAN-UP
 			'Return to bullets page after failed bullet buy',//7 - OTHER AFs
 			'Auto-form crimes/car nicks',//8 - CRIMES/CARS
@@ -62,7 +62,7 @@ var langs = {
 			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from fingon',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
 			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
-			'While in bank, don\'t get confused with the amount of zero\'s use the k and m keys to literally add thousands and millions',//5
+			'Don\'t typ numerous zero\'s anymore in input fields, with this option u can typ \'k\' for 000 and \'m\' for 000000.',//5
 			'Removes the jailbusting skill bar from your account page',//6
 			'If you don\'t get the bullets on first try, it auto-refreshes the bullet page',//7
 			'Auto-selects the best option for crimes and nick a car',//8
@@ -444,7 +444,7 @@ var langs = {
 			'Fingon\'s News in the info menu',//2 - FINGON
 			'Jail Highlighter, auto-form and hotkeys',//3 - JAIL/BUSTING
 			'Enable hotkeys (Smuggling)',//4 - SMUGGLING/PRICES
-			'Add "000" and "000000" when pressing k/m at bank amounts',//5 - MISC
+			'Add "000" and "000000" when pressing k/m at inputfields',//5 - MISC
 			'Remove Jailbusting Skill bar',//6 - CLEAN-UP
 			'Return to bullets page after failed bullet buy',//7 - OTHER AFs
 			'Auto-form crimes/car nicks',//8 - CRIMES/CARS
@@ -484,7 +484,7 @@ var langs = {
 			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from fingon',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
 			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
-			'While in bank, don\'t get confused with the amount of zero\'s use the k and m keys to literally add thousands and millions',//5
+			'Don\'t typ numerous zero\'s anymore in input fields, with this option u can typ \'k\' for 000 and \'m\' for 000000.',//5
 			'Removes the jailbusting skill bar from your account page',//6
 			'If you don\'t get the bullets on first try, it auto-refreshes the bullet page',//7
 			'Auto-selects the best option for crimes and nick a car',//8
@@ -866,7 +866,7 @@ var langs = {
 			'Fingon\'s News in the info menu',//2 - FINGON
 			'Jail Highlighter, auto-form and hotkeys',//3 - JAIL/BUSTING
 			'Enable hotkeys (Smuggling)',//4 - SMUGGLING/PRICES
-			'Add "000" and "000000" when pressing k/m at bank amounts',//5 - MISC
+			'Add "000" and "000000" when pressing k/m at inputfields',//5 - MISC
 			'Remove Jailbusting Skill bar',//6 - CLEAN-UP
 			'Return to bullets page after failed bullet buy',//7 - OTHER AFs
 			'Auto-form crimes/car nicks',//8 - CRIMES/CARS
@@ -906,7 +906,7 @@ var langs = {
 			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from fingon',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
 			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
-			'While in bank, don\'t get confused with the amount of zero\'s use the k and m keys to literally add thousands and millions',//5
+			'Don\'t typ numerous zero\'s anymore in input fields, with this option u can typ \'k\' for 000 and \'m\' for 000000.',//5
 			'Removes the jailbusting skill bar from your account page',//6
 			'If you don\'t get the bullets on first try, it auto-refreshes the bullet page',//7
 			'Auto-selects the best option for crimes and nick a car',//8
@@ -1288,7 +1288,7 @@ var langs = {
 			'Edo-Nieuws in het info menu',//2 - EDO
 			'Jail Highlighter, automatisch invullen en sneltoetsen',//3 - JAIL/BUSTING
 			'Voeg extra sneltoetsen toe (Smokkelen)',//4 - Non-existant
-			'Voeg "000" en "000000" toe door k of m in te toetsen op de bank pagina',//5 - MISC
+			'Voeg "000" en "000000" toe door k of m in te toetsen in een invoerveld',//5 - MISC
 			'Verwijder Uitbreekervaring balk',//6 - CLEAN-UP
 			'Ga terug naar kogelfabriek na mislukte koop',//7 - OTHER AFs
 			'Automatisch invullen misdaden/auto\'s stelen',//8 - CRIMES/CARS
@@ -1328,7 +1328,7 @@ var langs = {
 			'Naast het gewone laatste nieuws van de admins komen nieuwsposts van Edo er ook te staan',//2
 			'Schakelt jail highlighter in, vrienden en familie, selecteert automatisch naar prioriteit, en schakelt de hotkeys in',//3
 			'Schakelt drank/drugs/beide hotkeys in en voor het automatisch invullen kies je (best/CD/RV/none)',//4
-			'Bij de bank pagina kan je op de k of m toetsen drukken om duizenden of miljoenen toe te voegen aan het bedrag',//5
+			'Je hoeft niet eindeloos nullen te typen in invoervelden, met deze optie kan je \'k\' voor 000 en \'m\' voor 000000 typen.',//5
 			'Verwijdert uitbreekervaring van je account pagina',//6
 			'Als je bij je eerste poging faalt met kogels kopen vernieuwt het de kogels pagina',//7
 			'Selecteert automatisch de beste optie bij misdaden en auto\'s jatten',//8
