@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			09-02-2011
+// @date			10-02-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 21;
-const SCRIPT_SUBVERSION = 21;
+const SCRIPT_VERSION_BUILD = 22;
+const SCRIPT_SUBVERSION = 22;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -501,7 +501,8 @@ if(dlp == '/marquee.php'){
 				}
 
 				function flytolink(city, priceStr, priceToFly, cityId) {
-					var link = cEL('a');
+					var link, owncity;
+					link = cEL('a');
 					link.href = '#';
 					link.id = city;
 					link.style.color = '#FFF';
@@ -542,6 +543,7 @@ if(dlp == '/marquee.php'){
 					return link;
 				}
 
+				var span, priceandtime, link, city, owncity;
 				var span = cEL('span');
 				var priceandtime = cEL('span');
 				span.appendChild(priceandtime);

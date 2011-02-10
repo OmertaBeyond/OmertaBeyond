@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.10.0.19
+	Version: 1.10.0.22
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -11,6 +11,18 @@
 */
 
 var dl, dlp, dls, dlh, lh, ls, db, i, arr, host, urlsearch, hOne;
+
+dl = document.location;
+ds = document.search;
+db = document.body;
+dlp = document.location.pathname;
+dls = document.location.search;
+ls = document.location.search;
+dlh = document.location.hostname;
+lh = location.href;
+host = location.hostname.toLowerCase();
+urlsearch = location.pathname + location.search;
+arr = [];
 
 function decbin(dec, max) { //deprecated function - only used for prefs transition compatibility
 	var bin = [];
@@ -26,17 +38,18 @@ function decbin(dec, max) { //deprecated function - only used for prefs transiti
 }
 
 function prefsArray(input, len) {
+	var fail, in_2, out;
 	//compatibility checking
-	var fail = input.replace(/[01]/g, '');
+	fail = input.replace(/[01]/g, '');
 	if (fail) {
-		var in_2 = decbin(input, len);
+		in_2 = decbin(input, len);
 		input = '';
 		for (i = 0; i < in_2.length; i++) {
 			input += (in_2[i] ? 1 : 0);
 		}
 		setValue('prefs', input);
 	}
-	var out = []; //create array for prefs
+	out = []; //create array for prefs
 	for (i = 0; i < input.length; i++) {
 		out[i] = (input.charAt(i) == 1 ? 1 : 0);
 	}
@@ -64,7 +77,8 @@ function GetPost(name) {
 }
 
 function GetParam(name) {
-	var start = location.search.indexOf("?" + name + "=");
+	var start, end, result;
+	start = location.search.indexOf("?" + name + "=");
 	if (start < 0) {
 		start = location.search.indexOf("&" + name + "=");
 	}
@@ -72,11 +86,11 @@ function GetParam(name) {
 		return '';
 	}
 	start += name.length + 2;
-	var end = location.search.indexOf("&", start) - 1;
+	end = location.search.indexOf("&", start) - 1;
 	if (end < 0) {
 		end = location.search.length;
 	}
-	var result = '';
+	result = '';
 	for (I = start; I <= end; I++) {
 		var c = location.search.charAt(I);
 		result = result + (c == '+' ? ' ' : c);
@@ -85,17 +99,18 @@ function GetParam(name) {
 }
 
 function setIcon(icon) {
-	var head = window.document.getElementsByTagName('head')[0];
-	var links = head.getElementsByTagName('link');
-	for (I = 0; I < links.length; I++) {
-		if (links[I].type == 'image/x-icon' && (links[I].rel == 'shortcut icon' || links[I].rel == 'icon') && links[I].href != icon) {
-			head.removeChild(links[I]);
+	var head, links, i, newIcon;
+	head = window.document.getElementsByTagName('head')[0];
+	links = head.getElementsByTagName('link');
+	for (i = 0; i < links.length; i++) {
+		if (links[i].type == 'image/x-icon' && (links[i].rel == 'shortcut icon' || links[i].rel == 'icon') && links[i].href != icon) {
+			head.removeChild(links[i]);
 		}
-		else if (links[I].href == icon) {
+		else if (links[i].href == icon) {
 			return;
 		}
 	}
-	var newIcon = document.createElement('link');
+	newIcon = document.createElement('link');
 	newIcon.type = 'image/x-icon';
 	newIcon.rel = 'shortcut icon';
 	newIcon.href = icon;
@@ -126,8 +141,9 @@ function $X(xpath, root) {
 }
 
 function $XLast(xpath, root) {
-	var got = $x(xpath, root);
-	var len = got.length-1;
+	var got, len;
+	got = $x(xpath, root);
+	len = got.length-1;
 	return got instanceof Array ? got[len] : got;
 }
 
@@ -176,8 +192,9 @@ function replaceLast(str, fnd, rpl, glb) {
 }
 
 function findPos(obj) {
-	var curleft = 0;
-	var curtop = 0;
+	var curleft, curtop;
+	curleft = 0;
+	curtop = 0;
 	if (obj.offsetParent) {
 		curleft += obj.offsetLeft;
 		curtop += obj.offsetTop;
@@ -327,13 +344,14 @@ function setPow(name, i, value) {
 }
 
 function refreshIn(page) {
-	var getTimeLeft = db.innerHTML.split('<br>')[1];
-	var getMinLeft = getTimeLeft.match(/\d+/g)[0];
-	var getSecLeft = getTimeLeft.match(/\d+/g)[1];
-	var minToSec = parseInt((getMinLeft * 60), 10);
-	var totalSecLeft = parseInt(minToSec, 10) + parseInt(getSecLeft, 10);
-	var totalTime = totalSecLeft * 1000;
-	var addExtraSec = parseInt((totalTime + 1000), 10);
+	var getTimeLeft, getMinLeft, getSecLeft, minToSec, totalSecLeft, totalTime, addExtraSec;
+	getTimeLeft = db.innerHTML.split('<br>')[1];
+	getMinLeft = getTimeLeft.match(/\d+/g)[0];
+	getSecLeft = getTimeLeft.match(/\d+/g)[1];
+	minToSec = parseInt((getMinLeft * 60), 10);
+	totalSecLeft = parseInt(minToSec, 10) + parseInt(getSecLeft, 10);
+	totalTime = totalSecLeft * 1000;
+	addExtraSec = parseInt((totalTime + 1000), 10);
 	setTimeout(function () {
 		document.location.href = page;
 	}, addExtraSec);
@@ -379,18 +397,19 @@ function grabHTML(url, func) {
 }
 
 function getTintedColor(color, v) {
-    if (color.length >6) { color= color.substring(1,color.length)}
-    var rgb = parseInt(color, 16);
-    var r = Math.abs(((rgb >> 16) & 0xFF)+v); if (r>255) r=r-(r-255);
-    var g = Math.abs(((rgb >> 8) & 0xFF)+v); if (g>255) g=g-(g-255);
-    var b = Math.abs((rgb & 0xFF)+v); if (b>255) b=b-(b-255);
-    r = Number(r < 0 || isNaN(r)) ? 0 : ((r > 255) ? 255 : r).toString(16);
-    if (r.length == 1) r = '0' + r;
-    g = Number(g < 0 || isNaN(g)) ? 0 : ((g > 255) ? 255 : g).toString(16);
-    if (g.length == 1) g = '0' + g;
-    b = Number(b < 0 || isNaN(b)) ? 0 : ((b > 255) ? 255 : b).toString(16);
-    if (b.length == 1) b = '0' + b;
-    return '#' + r + g + b;
+	var rgb, r, g, b;
+	if (color.length >6) { color= color.substring(1,color.length)}
+	rgb = parseInt(color, 16);
+	r = Math.abs(((rgb >> 16) & 0xFF)+v); if (r>255) r=r-(r-255);
+	g = Math.abs(((rgb >> 8) & 0xFF)+v); if (g>255) g=g-(g-255);
+	b = Math.abs((rgb & 0xFF)+v); if (b>255) b=b-(b-255);
+	r = Number(r < 0 || isNaN(r)) ? 0 : ((r > 255) ? 255 : r).toString(16);
+	if (r.length == 1) r = '0' + r;
+	g = Number(g < 0 || isNaN(g)) ? 0 : ((g > 255) ? 255 : g).toString(16);
+	if (g.length == 1) g = '0' + g;
+	b = Number(b < 0 || isNaN(b)) ? 0 : ((b > 255) ? 255 : b).toString(16);
+	if (b.length == 1) b = '0' + b;
+	return '#' + r + g + b;
 }
 
 function hOne() {
@@ -404,14 +423,15 @@ function OBUpdate(cb) {
 		method: "GET",
 		url: UPDATE_URL +"?uid="+new Date().getTime(),
 		onload: function(response) {
-			var ob_parser = new DOMParser();
-			var ob_dom = ob_parser.parseFromString(response.responseText, "text/xml");
-			var obv_major = ob_dom.getElementsByTagName("major")[0].textContent;
-			var obv_minor = ob_dom.getElementsByTagName("minor")[0].textContent;
-			var obv_maintenance = ob_dom.getElementsByTagName("maintenance")[0].textContent;
-			var obv_build = ob_dom.getElementsByTagName("build")[0].textContent;
-			var ob_url = ob_dom.getElementsByTagName("url")[0].textContent;
-			var obv_avail = obv_major + '.' + obv_minor + '.' + obv_maintenance + '.' + obv_build;
+			var ob_parser, ob_dom, obv_major, obv_minor, obv_maintenance, obv_build, ob_url, obv_avail;
+			ob_parser = new DOMParser();
+			ob_dom = ob_parser.parseFromString(response.responseText, "text/xml");
+			obv_major = ob_dom.getElementsByTagName("major")[0].textContent;
+			obv_minor = ob_dom.getElementsByTagName("minor")[0].textContent;
+			obv_maintenance = ob_dom.getElementsByTagName("maintenance")[0].textContent;
+			obv_build = ob_dom.getElementsByTagName("build")[0].textContent;
+			ob_url = ob_dom.getElementsByTagName("url")[0].textContent;
+			obv_avail = obv_major + '.' + obv_minor + '.' + obv_maintenance + '.' + obv_build;
 
 			if (SCRIPT_VERSION_MAJOR < obv_major) {
 				if (confirm("There's an major update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail)) {
@@ -469,15 +489,3 @@ Array.prototype.iMax = function () {
 Array.prototype.iMin = function () {
 	return this.indexOf(Math.min.apply({}, this));
 };
-
-dl = document.location;
-ds = document.search;
-db = document.body;
-dlp = document.location.pathname;
-dls = document.location.search;
-dlh = document.location.hostname;
-lh = location.href;
-ls = dls;
-host = location.hostname.toLowerCase();
-urlsearch = location.pathname + location.search;
-arr = [];
