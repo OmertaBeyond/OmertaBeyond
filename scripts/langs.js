@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.22
+	Version: 1.10.0.23
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -331,7 +331,7 @@ var langs = {
 			'Bar',
 			'Restaurant',
 			'Army Surplus Store',
-			'Lawyers Office',
+			'Lawyers Office'
 		],
 		lastontime: [
 			'Alive',
@@ -753,7 +753,7 @@ var langs = {
 			'Bar',
 			'Restaurant',
 			'Army Surplus Store',
-			'Lawyers Office',
+			'Lawyers Office'
 		],
 		lastontime: [
 			'Alive',
@@ -1175,7 +1175,7 @@ var langs = {
 			'Bar',
 			'Restaurant',
 			'Army Surplus Store',
-			'Lawyers Office',
+			'Lawyers Office'
 		],
 		lastontime: [
 			'Alive',
@@ -1605,7 +1605,7 @@ var langs = {
 			'Bar',
 			'Restaurant',
 			'Legerdump Winkel',
-			'Advocaten Kantoor',
+			'Advocaten Kantoor'
 		],
 		lastontime: [
 			'Levend',

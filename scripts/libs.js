@@ -3,14 +3,14 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.10.0.22
+	Version: 1.10.0.23
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
 	$Date$:  Date of last commit
 */
 
-var dl, dlp, dls, dlh, lh, ls, db, i, arr, host, urlsearch, hOne;
+var dl, ds, dlp, dls, dlh, lh, ls, db, i, I, arr, host, urlsearch, hOne;
 
 dl = document.location;
 ds = document.search;
@@ -143,7 +143,7 @@ function $X(xpath, root) {
 function $XLast(xpath, root) {
 	var got, len;
 	got = $x(xpath, root);
-	len = got.length-1;
+	len = (got.length - 1);
 	return got instanceof Array ? got[len] : got;
 }
 
@@ -398,7 +398,9 @@ function grabHTML(url, func) {
 
 function getTintedColor(color, v) {
 	var rgb, r, g, b;
-	if (color.length >6) { color= color.substring(1,color.length)}
+	if (color.length > 6) {
+		color = color.substring(1, color.length);
+	}
 	rgb = parseInt(color, 16);
 	r = Math.abs(((rgb >> 16) & 0xFF)+v); if (r>255) r=r-(r-255);
 	g = Math.abs(((rgb >> 8) & 0xFF)+v); if (g>255) g=g-(g-255);
@@ -421,8 +423,8 @@ function hOne() {
 function OBUpdate(cb) {
 	GM_xmlhttpRequest({
 		method: "GET",
-		url: UPDATE_URL +"?uid="+new Date().getTime(),
-		onload: function(response) {
+		url: UPDATE_URL + "?uid=" + new Date().getTime(),
+		onload: function (response) {
 			var ob_parser, ob_dom, obv_major, obv_minor, obv_maintenance, obv_build, ob_url, obv_avail;
 			ob_parser = new DOMParser();
 			ob_dom = ob_parser.parseFromString(response.responseText, "text/xml");
@@ -434,47 +436,47 @@ function OBUpdate(cb) {
 			obv_avail = obv_major + '.' + obv_minor + '.' + obv_maintenance + '.' + obv_build;
 
 			if (SCRIPT_VERSION_MAJOR < obv_major) {
-				if (confirm("There's an major update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail)) {
-				GM_openInTab(ob_url);
+				if (confirm("There's an major update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail)) {
+					GM_openInTab(ob_url);
 				}
 			} else if (SCRIPT_VERSION_MAJOR == obv_major) {
 				GM_log("[Omerta Beyond Updater] Same major version ... lets check minor version");
 				if (SCRIPT_VERSION_MINOR < obv_minor) {
-					if (confirm("There's an minor update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail)) {
+					if (confirm("There's an minor update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail)) {
 						GM_openInTab(ob_url);
 					}
 				} else if (SCRIPT_VERSION_MINOR == obv_minor) {
 					GM_log("[Omerta Beyond Updater] Same minor version ... lets check maintenance version");
 					if (SCRIPT_VERSION_MAINTENANCE < obv_maintenance) {
-						if (confirm("There's an maintenance update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail)) {
+						if (confirm("There's an maintenance update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail)) {
 							GM_openInTab(ob_url);
 						}
 					} else if (SCRIPT_VERSION_MAINTENANCE == obv_maintenance) {
 						GM_log("[Omerta Beyond Updater] Same maintenance version ... lets check build version");
 						if (SCRIPT_VERSION_BUILD < obv_build) {
-							if (confirm("There's an revision update available for "+SCRIPT_NAME+"!\nWould you like to upgrade?\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail)) {
+							if (confirm("There's an revision update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail)) {
 								GM_openInTab(ob_url);
 							}
 						} else if (SCRIPT_VERSION_BUILD == obv_build) {
-							alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail);
+							alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 						}
 					} else if (SCRIPT_VERSION_MAINTENANCE > obv_maintenance && cb) {
-						alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail);
+						alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 					}
 				} else if (SCRIPT_VERSION_MINOR > obv_minor && cb) {
-					alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail);
+					alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 				}
 			} else if (cb) {
-				alert(SCRIPT_NAME+" is up to date.\n\nInstalled:\t\t"+OB+"\nAvailable:\t"+obv_avail);
+				alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 			}
-
 		}
 	});
 }
 
 Array.prototype.sum = function () {
-	for (i = 0, sum = 0; i < this.length; sum += this[i++]);
-	return sum;
+	for (i = 0, sum = 0; i < this.length; sum += this[i++]) {
+		return sum;
+	}
 };
 Array.prototype.max = function () {
 	return Math.max.apply({}, this);
