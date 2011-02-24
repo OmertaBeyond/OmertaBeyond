@@ -19,7 +19,7 @@ var langs = {
 		prefs: [
 			'Disable the "go for it" button until the image code entered is the correct length',//0 - CRIMES/CARS
 			'Cocaine prices in the marquee',//1 - SMUGGLING/PRICES
-			'Fingon\'s News in the info menu',//2 - FINGON
+			'News in the info menu',//2 - News
 			'Jail Highlighter, auto-form and hotkeys',//3 - JAIL/BUSTING
 			'Enable hotkeys (Smuggling)',//4 - SMUGGLING/PRICES
 			'Add "000" and "000000" when pressing k/m at inputfields',//5 - MISC
@@ -59,7 +59,7 @@ var langs = {
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
 			'Shows the cocaine prices for every city in the upper bar (with color highlight for low and high)',//1
-			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from fingon',//2
+			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from INA',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
 			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
 			'Don\'t typ numerous zero\'s anymore in input fields, with this option u can typ \'k\' for 000 and \'m\' for 000000.',//5
@@ -103,7 +103,7 @@ var langs = {
 			'Jail/Busting',//2
 			'Other Auto-formers',//3
 			'Clean-up',//4
-			'Fingon\'s News',//5
+			'News',//5
 			'Interface Extras'//6
 		],
 		prefsPage: [
@@ -233,8 +233,7 @@ var langs = {
 			'Here you can send us your ideas or found bugs',
 			'List of frequently asked questions',
 			'Omerta prices with little flavor of ours :P',
-			'Live Family stats based by Rix\'s calculation.',
-			'Latest family stats based by Fingon\'s calculation'
+			'Live Family stats based by Rix\'s calculation.'
 		],
 		NR: {
 			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
@@ -441,7 +440,7 @@ var langs = {
 		prefs: [
 			'Disable the "go for it" button until the image code entered is the correct length',//0 - CRIMES/CARS
 			'Cocaine prices in the marquee',//1 - SMUGGLING/PRICES
-			'Fingon\'s News in the info menu',//2 - FINGON
+			'News in the info menu',//2 - News
 			'Jail Highlighter, auto-form and hotkeys',//3 - JAIL/BUSTING
 			'Enable hotkeys (Smuggling)',//4 - SMUGGLING/PRICES
 			'Add "000" and "000000" when pressing k/m at inputfields',//5 - MISC
@@ -481,7 +480,7 @@ var langs = {
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
 			'Shows the cocaine prices for every city in the upper bar (with color highlight for low and high)',//1
-			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from fingon',//2
+			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from INA',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
 			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
 			'Don\'t typ numerous zero\'s anymore in input fields, with this option u can typ \'k\' for 000 and \'m\' for 000000.',//5
@@ -525,7 +524,7 @@ var langs = {
 			'Jail/Busting',//2
 			'Other Auto-formers',//3
 			'Clean-up',//4
-			'Fingon\'s News',//5
+			'News',//5
 			'Interface Extras'//6
 		],
 		prefsPage: [
@@ -655,8 +654,7 @@ var langs = {
 			'Here you can send us your ideas or found bugs',
 			'List of frequently asked questions',
 			'Omerta prices with little flavor of ours :P',
-			'Live Family stats based by Rix\'s calculation.',
-			'Latest family stats based by Fingon\'s calculation'
+			'Live Family stats based by Rix\'s calculation.'
 		],
 		NR: {
 			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
@@ -863,7 +861,7 @@ var langs = {
 		prefs: [
 			'Disable the "go for it" button for too short image code',//0 - CRIMES/CARS
 			'Cocaine prices in the marquee',//1 - SMUGGLING/PRICES
-			'Fingon\'s News in the info menu',//2 - FINGON
+			'News in the info menu',//2 - News
 			'Jail Highlighter, auto-form and hotkeys',//3 - JAIL/BUSTING
 			'Enable hotkeys (Smuggling)',//4 - SMUGGLING/PRICES
 			'Add "000" and "000000" when pressing k/m at inputfields',//5 - MISC
@@ -903,7 +901,7 @@ var langs = {
 		prefsTitle: [ //describe the options
 			'Disable the "go for it" button until the image code entered is the correct length',//0
 			'Shows the cocaine prices for every city in the upper bar (with color highlight for low and high)',//1
-			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from fingon',//2
+			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from INA',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
 			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
 			'Don\'t typ numerous zero\'s anymore in input fields, with this option u can typ \'k\' for 000 and \'m\' for 000000.',//5
@@ -947,7 +945,7 @@ var langs = {
 			'Jail/Busting',//2
 			'Other Auto-formers',//3
 			'Clean-up',//4
-			'Fingon\'s News',//5
+			'News',//5
 			'Interface Extras'//6
 		],
 		prefsPage: [

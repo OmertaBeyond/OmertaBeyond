@@ -271,7 +271,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([2]);
 
 	addCat(lang.preftitles[6]); //misc
-	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36, 37]);
+	addPrefItems([16, 11, 13, 5, 15, 31, 33, 34, 36, 37]);
 
 	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="button" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
 	string += '&nbsp;<button type="button" name="#" class="button" onClick="';
