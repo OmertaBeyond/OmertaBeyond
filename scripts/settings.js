@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Variables depending on version
 
-	Version: 1.10.0.23
+	Version: 1.10.0.24
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -20,7 +20,6 @@ var settings = {
 		contactlink: '/contact.php?v=tr',
 		polllink: '/html/poll/poll.php?v=tr',
 		statslink: '',
-		statslink2: '',
 		status: ['none', 'None'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
@@ -167,7 +166,6 @@ var settings = {
 		contactlink: '/contact.php?v=com',
 		polllink: '/html/poll/poll.php?v=com',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=com&d=n',
-		statslink2: 'http://89.149.221.178/~fingon/latestpicture.php?version=9',
 		status: ['none', 'None'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
@@ -314,7 +312,6 @@ var settings = {
 		contactlink: '/contact.php?v=dm',
 		polllink: '/html/poll/poll.php?v=dm',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=dm&d=n',
-		statslink2: '', // DO NOT REMOVE IT !
 		status: ['none', 'None'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
@@ -461,7 +458,6 @@ var settings = {
 		contactlink: '/contact.php?v=nl',
 		polllink: '/html/poll/poll.php?v=nl',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=nl&d=n',
-		statslink2: '', // DO NOT REMOVE IT !
 		status: ['none', 'Geen'],
 		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],
 		failedBullets: [
