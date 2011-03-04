@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			02-03-2011
+// @date			04-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 25;
-const SCRIPT_SUBVERSION = 25;
+const SCRIPT_VERSION_BUILD = 26;
+const SCRIPT_SUBVERSION = 26;
 var minFFVersion = '3.6';
 const FINGON_VERSION_COM = 9;
 const FINGON_VERSION_DM = 2;
@@ -271,7 +271,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([2]);
 
 	addCat(lang.preftitles[6]); //misc
-	addPrefItems([16, 11, 13, 5, 15, 31, 33, 34, 36, 37]);
+	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36, 37]);
 
 	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="button" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
 	string += '&nbsp;<button type="button" name="#" class="button" onClick="';
@@ -4774,6 +4774,91 @@ if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
 		inputs.forEach(function ($n) {
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 		});
+	}
+}
+
+//---------------- 1-Click Voter ----------------
+if (dlp == '/vfo.php') { //vote for omerta
+	$x('/html/body//table/tbody/tr[3]//a[contains(@href, "votelot.php")]').forEach(function ($n) {
+		$n.setAttribute('name', 'forticket');
+	});
+
+	$x('//td[@class="tableheader"]')[0].innerHTML = '<a href="#" class="orange" title="'+lang.oneclick[10]+'">' + $x('//td[@class="tableheader"]')[0].textContent + '</a>';
+
+	$x('//td[@class="tableheader"]/a')[0].addEventListener('click', function () {
+		$x('//*[@name="forticket"]').forEach(function ($n) {
+			GM_openInTab($n);
+		});
+	}, true);
+
+	if (prefs[9]) {
+		lastSTR = getValue('lastvote', 0); //get last voting time
+		vote = 0; //initialize to DON'T VOTE
+		if (!lastSTR) {
+			vote = confirm(lang.oneclick[0]);
+		} else { //not first run
+			//initialize last voting time and current time as Date objects
+			last = new Date(lastSTR);
+			now = new Date();
+
+			//time since last vote
+			date = now.getDate() - last.getDate();
+			hr = now.getHours() - last.getHours();
+			min = now.getMinutes() - last.getMinutes();
+			sec = now.getSeconds() - last.getSeconds();
+
+			//check for negative values
+			if (sec < 0) {
+				min--;
+				sec += 60;
+			}
+			if (min < 0) {
+				hr--;
+				min += 60;
+			}
+			if (hr < 0) {
+				date--;
+				hr += 24;
+			}
+			if (date < 0) {
+				month = last.getMonth();
+				month++; //getMonth starts with Jan=0
+				if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+					date += 31;
+				}
+				if (month == 4 || month == 6 || month == 9 || month == 11) {
+					date += 30;
+				}
+				if (month == 2) {
+					date += 28;
+				}
+			}
+
+			msg = '';
+			if (now.getUTCDate() != last.getUTCDate()) { //different day, ask for vote [user decision to wait full 24hr]
+				msg += lang.oneclick[5] + '\n' + lang.oneclick[8];
+				msg += date + lang.oneclick[6] + hr + lang.oneclick[2] + min + lang.oneclick[3] + sec + lang.oneclick[4];
+				msg += '\n' + lang.oneclick[7];
+				vote = confirm(msg);
+			} else { //same day, no vote [not encouraging vote abusers]
+				hr = 23 - now.getUTCHours(); //time till 0:00 OT
+				min = 59 - now.getUTCMinutes();
+				sec = 59 - now.getUTCSeconds();
+				msg += lang.oneclick[1];
+				msg += hr + lang.oneclick[2] + min + lang.oneclick[3] + sec + lang.oneclick[4] + '\n';
+				msg += lang.oneclick[9];
+				vote = confirm(msg);
+			}
+		}
+		if (vote) { //give me liberty or give me death!
+			$x('/html/body//table/tbody/tr[3]//a[contains(@href, "votelot.php")]').forEach(function ($n) {
+				GM_openInTab($n.href);
+			});
+			//get current time after voting and store as last voting time
+			now2 = new Date();
+			nowSTR = now2.toUTCString();
+			setValue('lastvote', nowSTR);
+		}
 	}
 }
 

@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.25
+	Version: 1.10.0.26
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -26,7 +26,7 @@ var langs = {
 			'Remove Jailbusting Skill bar',//6 - CLEAN-UP
 			'Return to bullets page after failed bullet buy',//7 - OTHER AFs
 			'Auto-form crimes/car nicks',//8 - CRIMES/CARS
-			'',//9
+			'1-Click Vote',//9 - MISC
 			'Refresh crimes/car nick page after waiting time is over',//10 - CRIMES/CARS
 			'Return to page after wrong image code',//11 - MISC
 			'Remove Capo Money texts (Non Capo users only)',//12 - CLEAN-UP
@@ -66,7 +66,7 @@ var langs = {
 			'Removes the jailbusting skill bar from your account page',//6
 			'If you don\'t get the bullets on first try, it auto-refreshes the bullet page',//7
 			'Auto-selects the best option for crimes and nick a car',//8
-			'',//9
+			'You\'re one click away from the super lottery',//9
 			'If you click on crimes/nick a car, but you still have waiting time on it, page will be refreshed after the waiting time is over',//10
 			'Returns to the page you were on after entering the wrong code',//11
 			'Removes the capo profit text from your account page',//12
@@ -447,7 +447,7 @@ var langs = {
 			'Remove Jailbusting Skill bar',//6 - CLEAN-UP
 			'Return to bullets page after failed bullet buy',//7 - OTHER AFs
 			'Auto-form crimes/car nicks',//8 - CRIMES/CARS
-			'',//9
+			'1-Click Vote',//9 - MISC
 			'Refresh crimes/car nick page after waiting time is over',//10 - CRIMES/CARS
 			'Return to page after wrong image code',//11 - MISC
 			'Remove Capo Money texts (Non Capo users only)',//12 - CLEAN-UP
@@ -487,7 +487,7 @@ var langs = {
 			'Removes the jailbusting skill bar from your account page',//6
 			'If you don\'t get the bullets on first try, it auto-refreshes the bullet page',//7
 			'Auto-selects the best option for crimes and nick a car',//8
-			'',//9
+			'You\'re one click away from the super lottery',//9
 			'If you click on crimes/nick a car, but you still have waiting time on it, page will be refreshed after the waiting time is over',//10
 			'Returns to the page you were on after entering the wrong code',//11
 			'Removes the capo profit text from your account page',//12
@@ -868,7 +868,7 @@ var langs = {
 			'Remove Jailbusting Skill bar',//6 - CLEAN-UP
 			'Return to bullets page after failed bullet buy',//7 - OTHER AFs
 			'Auto-form crimes/car nicks',//8 - CRIMES/CARS
-			'',//9
+			'1-Click Vote',//9 - MISC
 			'Refresh crimes/car nick page after waiting time is over',//10 - CRIMES/CARS
 			'Return to page after wrong image code',//11 - MISC
 			'Remove Capo Money texts (Non Capo users only)',//12 - CLEAN-UP
@@ -908,7 +908,7 @@ var langs = {
 			'Removes the jailbusting skill bar from your account page',//6
 			'If you don\'t get the bullets on first try, it auto-refreshes the bullet page',//7
 			'Auto-selects the best option for crimes and nick a car',//8
-			'',//9
+			'You\'re one click away from the super lottery',//9
 			'If you click on crimes/nick a car, but you still have waiting time on it, page will be refreshed after the waiting time is over',//10
 			'Returns to the page you were on after entering the wrong code',//11
 			'Removes the capo profit text from your account page',//12
@@ -1290,7 +1290,7 @@ var langs = {
 			'Verwijder Uitbreekervaring balk',//6 - CLEAN-UP
 			'Ga terug naar kogelfabriek na mislukte koop',//7 - OTHER AFs
 			'Automatisch invullen misdaden/auto\'s stelen',//8 - CRIMES/CARS
-			'',//9
+			'Stem in 1 klik!',//9 - MISC
 			'Ververs Misdaden/Steel een auto pagina nadat de wachttijd voorbij is',//10 - CRIMES/CARS
 			'Ga automatisch terug nadat je een verkeerde code hebt ingetoetst',//11 - MISC
 			'Verwijder "Capo opbrengsten" tekst (alleen voor niet Capo\'s)',//12 - CLEAN-UP
@@ -1330,7 +1330,7 @@ var langs = {
 			'Verwijdert uitbreekervaring van je account pagina',//6
 			'Als je bij je eerste poging faalt met kogels kopen vernieuwt het de kogels pagina',//7
 			'Selecteert automatisch de beste optie bij misdaden en auto\'s jatten',//8
-			'',//9
+			'Hiermee kan je alle pagina\'s openen waar je op kan stemmen (bij "stem op omerta") met 1 druk op de knop',//9
 			'Als je op misdaad/auto stelen klikt terwijl je nog wachttijd hebt word de pagina automatisch vernieuwt als de wachttijd voorbij is',//10
 			'Keert terug naar de pagina waar je was als je een verkeerde code invulde',//11
 			'Verwijdert capogeld tekst van je status pagina(Als je $0 capo geld hebt)',//12
