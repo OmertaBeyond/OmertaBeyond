@@ -145,8 +145,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 27;
-const SCRIPT_SUBVERSION = 27;
+const SCRIPT_VERSION_BUILD = 28;
+const SCRIPT_SUBVERSION = 28;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1197,7 +1197,7 @@ if (dls == '?module=Launchpad') {
 
 	//grab ajax event
 	getID('smsdivcontainer').addEventListener('DOMNodeInserted', function (event) {
-		var trigger = '<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">';
+		var trigger = '<b>Status</b>';
 		if (event.target.innerHTML.search(trigger) != -1) {
 			runCode(selectedTab());//we found html in the Node => run the code
 		}
