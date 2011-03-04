@@ -32,7 +32,6 @@
 // @resource	reply		http://omertabeyond.googlecode.com/svn/trunk/images/reply.png
 // @resource	loading		http://omertabeyond.googlecode.com/svn/trunk/images/loading.png
 // @resource	nickreader	http://omertabeyond.googlecode.com/svn/trunk/images/magnifier.png
-// @resource	finfavi		http://omertabeyond.googlecode.com/svn/trunk/images/finfavi.ico
 // @include			http://gm.omertabeyond.com/*.php*
 // @include			http://www.omertabeyond.com/html/poll/poll.php*
 // @include			http://www.omerta3.com/*
@@ -146,11 +145,9 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 26;
-const SCRIPT_SUBVERSION = 26;
+const SCRIPT_VERSION_BUILD = 27;
+const SCRIPT_SUBVERSION = 27;
 var minFFVersion = '3.6';
-const FINGON_VERSION_COM = 9;
-const FINGON_VERSION_DM = 2;
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
 const UPDATE_URL = SCRIPT_LINK+"/version.xml";
@@ -158,7 +155,7 @@ var PrefsLink = SCRIPT_LINK + sets.prefslink;
 var PricesLink = SCRIPT_LINK + sets.priceslink;
 var ContactLink = SCRIPT_LINK + sets.contactlink;
 var PollLink = SITE_LINK + sets.polllink;
-const FingonUrl = 'http://89.149.221.178/~fingon';
+const OBnUrl = 'http://news.omertabeyond.com/';
 const EdoUrl = 'http://www.edo-nieuws.nl/news.php';
 var ff = navigator.userAgent.split('/')[3].split(' ')[0];
 const OB_v = SCRIPT_VERSION_MAJOR + '.' + SCRIPT_VERSION_MINOR + '.' + SCRIPT_VERSION_MAINTENANCE;
@@ -1224,7 +1221,7 @@ if (dls == '?module=Launchpad') {
 }
 
 //---------------- Bodyguards -----------------------------------
-if (((dls == '?module=Shop')|| dls.indexOf('?module=Bodyguards') != -1 && dlp.indexOf('&action=obay_details') == -1) && prefs[36]) {
+if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.indexOf('&action=obay_details') == -1) && prefs[36]) {
 	function grabLex() { //grab Lex level for BRC
 		var found = 0;
 		$x('//h2').forEach(function($n) { //loop <h2>
@@ -1485,7 +1482,7 @@ if (((dls == '?module=Shop')|| dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 
 						var foo = cEL('div'); //create hardcoded fix so we run code only once
 						foo.innerHTML = 'onceonly';
-						foo.style.visibility = 'none';
+						foo.style.visibility = 'hidden';
 						getID('smsdivcontainer').appendChild(foo);
 					}
 				}, true);
@@ -1556,7 +1553,7 @@ if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
 	}
 }
 
-//---------------- Fingons/Edo News ----------------
+//---------------- OB/Edo News ----------------
 if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
 	$x('//tr').forEach(function ($n) {
 		$n.style.backgroundColor = getValue('tableBg', '#F0F0F0');
@@ -1570,7 +1567,7 @@ if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
 
 	var goToFin = $XLast('//b');
 	goToFin.style.textAlign = 'center';
-	goToFin.innerHTML = '<a style="color:#EEE !important; font-weight:bold;" href="http://89.149.221.178/~fingon/index.php' + dls + '" target="_blank">Click here to go to the actual news post</a>';
+	goToFin.innerHTML = '<a style="color:#EEE !important; font-weight:bold;" href="http://news.omertabeyond.com' + dls + '" target="_blank">Click here to go to the actual news post</a>';
 
 }
 
@@ -1590,11 +1587,11 @@ if(prefs[2] && dlp == '/info.php'){
 		}
 
 		var news=[];
-		var url = (sets.version == '_com' || sets.version == '_dm') ? 'http://89.149.221.178/~fingon/beyond.php?a=' : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
+		var url = (sets.version == '_com') ? OBnUrl : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
 		for(var o=0,f=0;(o+f)<=4;1){//loop dates
 			var nextmonth=0;
 			if((oDay[o]<fDay[f] && oMonth[o]<=fMonth[f]) || (oDay[o]>fDay[f] && oMonth[o]<fMonth[f]) || (oMonth[o]>fMonth[f] && fMonth!=1)){//check dates
-				if(sets.version == '_com' || sets.version == '_dm'){//fingon
+				if(sets.version == '_com'){//ob
 					news.push([url+fUrl[f],fArticles[f].replace(/ /,' <br>')]);
 				} else {//edo
 					news.push([url+fUrl[f],fDay[f]+'-'+(fMonth[f].toString().length==1?'0'+fMonth[f]:fMonth[f])+ ' <br>' + fArticles[f]]);
@@ -1610,7 +1607,8 @@ if(prefs[2] && dlp == '/info.php'){
 			item.href = news[i][0];
 			item.setAttribute('style', 'font-size:11px !important;');//manuall override to make sure it keeps font-size
 			if(item.href.search('barafranca')==-1) {
-				item.parentNode.parentNode.setAttribute('style', 'background:url(\''+GM_getResourceURL('finfavi')+'\') no-repeat 90% 20%;');
+				item.parentNode.parentNode.setAttribute('style', 'background:url(\''+GM_getResourceURL('favoriteIco')+'\') no-repeat 90% 20%;');
+				item.setAttribute('target', 'blank');
 			}
 			if(news[i][1].search(lang.login[2])!=-1 && sets.version=='_nl'){
 				item.setAttribute('target', 'main');
@@ -1620,9 +1618,9 @@ if(prefs[2] && dlp == '/info.php'){
 		}
 		//We have better news
 		var times = $X('//a[contains(@href,"mag.php")]');
-		times.href = sets.version=='_com'?FingonUrl+'?v='+FINGON_VERSION_COM : sets.version=='_dm'?FingonUrl+'?v='+FINGON_VERSION_DM : EdoUrl;
+		times.href = sets.version=='_com' ? OBnUrl : sets.version=='_dm' ? OBnUrl : EdoUrl;
 		times.style.fontSize = '11px';
-		times.innerHTML = lang.login[2];
+		times.innerHTML = 'OBNews';
 	}
 	//prep arrays
 	var fUrl=[];
@@ -1630,10 +1628,10 @@ if(prefs[2] && dlp == '/info.php'){
 	var fDay=[];
 	var fMonth=[];
 
-	if(sets.version=='_dm'||sets.version=='_com'){//grab news from Fingon rss feed
+	if(sets.version=='_com'){//grab news from obnews rss feed
 		GM_xmlhttpRequest({
 			method: 'GET',
-			url: 'http://89.149.221.178/~fingon/rss.php',
+			url: 'http://news.omertabeyond.com/rss.php',
 			onload: function(resp){
 				var parser = new DOMParser();
 				var dom = parser.parseFromString(resp.responseText, 'application/xml');
@@ -1642,23 +1640,10 @@ if(prefs[2] && dlp == '/info.php'){
 				for(i=-1; ++i<item.length-1;){//loop news items
 					fUrl.push(dom.getElementsByTagName('link')[i+2].textContent.substr(-4).replace(/[^0-9]/g,''));//grab url
 					fArticles.push(dom.getElementsByTagName('title')[i+2].textContent);//grab article
-
 					if(/\d?\d-\d?\d/.test(fArticles[i])){//check for a date
-						fDay.push(parseInt(/ \d?\d-/.exec(fArticles[i])[0],10));//parse date from title
-						fMonth.push(parseInt(/-\d?\d /.exec(fArticles[i])[0].replace('-', ''),10));
-
-						//booleans for versions
-						var fNewsC = sets.version == '_com' && /Com /.test(fArticles[i]);
-						var fNewsD = sets.version == '_dm' && /DM /.test(fArticles[i]);
-
-						if(fNewsC || fNewsD){//check if it's for this version
-							fArticles[i] = fArticles[i].slice(fArticles[i].indexOf(') ')+2);
-						} else {//not applicable for this version, ignore it
-							fArticles[i]='';
-							fUrl[i]='';
-							fDay[i]='';
-							fMonth[i]='';
-						}
+						fDay.push(parseInt(/\d?\d-/.exec(fArticles[i])[0],10));//parse date from title
+						fMonth.push(parseInt(/-\d?\d/.exec(fArticles[i])[0].replace('-', ''),10));
+						fArticles[i] = fArticles[i].slice(fArticles[i].indexOf(') ')+2);
 					} else {//no date, ignore it
 						fUrl[i]='';
 						fArticles[i]='';
@@ -2314,6 +2299,7 @@ if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
 	add = GetPost('jh');
 	if (add == 1) {
 		length = getValue('jailint', 0);
+
 		names = getValue('bust', '');
 		cols = getValue('colours');
 		pris = getValue('priority');
@@ -4539,6 +4525,7 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 	}
 	if (db.innerHTML.indexOf('<img src="/static/images/game/casino/cards') != -1) {//game active
 		if (db.innerHTML.indexOf(lang.bjtracker[6]) != -1) {//insurance set
+
 			bjspent += bet*0.5;
 			setValue('bjspent', bjspent);
 		}
@@ -5479,6 +5466,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				}
 				if (div.getAttribute('mode') == -1) { //mode 1 - visible
 					div.setAttribute('mode', 0); //mode 0 - moving
+
 					setTimeout(function () {
 						s.right = '-65';
 						s.top = '-60';
