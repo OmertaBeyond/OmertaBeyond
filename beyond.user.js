@@ -145,8 +145,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 28;
-const SCRIPT_SUBVERSION = 28;
+const SCRIPT_VERSION_BUILD = 27;
+const SCRIPT_SUBVERSION = 27;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1025,6 +1025,8 @@ if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/
 					d = new Date();
 					setValue('lexDay', d.getDay());
 					setValue('lexHour', d.getHours());
+
+
 				}
 			}
 		});
@@ -1754,6 +1756,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	//Run JHL (if there are players in jail)
 	count = j = 0;
 	var HL_row = new Array(maxHL);
+
 	var inJail = $x('//tr[@bgcolor]');//add priority and bgcolor to html
 	if(inJail.length > 0){
 		inJail.forEach(function($n){//loop inmates and check if they have a priority listed
@@ -2321,6 +2324,7 @@ if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
 		while (names[++i] && names[i] != nick); //find first open spot
 		if (names[i] != nick) {
 			if (i == length) { //extend jailint if neccesary
+
 				setValue('jailint', ++length);
 			}
 			names[i] = nick; //insert new data into arrays
@@ -2536,21 +2540,21 @@ if(dlp == '/garage.php'){
 			head.textContent = head.textContent + ' '+lang.garage[0]+' ' + cars*12;
 		}
 
-		var xpath = '/html/body//form//center/table/tbody/tr[' + rows + ']/td';//add menu
+		var xpath = $X('/html/body//form//center/table');//add menu
 		var string = '<td><label><input type="checkbox" checked="1" ';
 
 		var sTable = cEL('table');
 		sTable.id = 'selectTable';
 		sTable.setAttribute('style', 'border:0px; width:100%;');
-		sTr = cEL('tr');
+		var sTr = cEL('tr');
 		sTr.id = 'selectRow';
 
-		spacer = cEL('td');
+		var spacer = cEL('td');
 		spacer.innerHTML = '<br /><hr /><br />';
 		spacer.setAttribute('style', 'width:5%; vertical-align:top;');
 		sTr.appendChild(spacer);
 
-		sTd = cEL('td');
+		var sTd = cEL('td');
 		sTd.id = 'selectTd';
 		sTd.innerHTML = ' <br /><hr />' +
 		' <b>'+lang.garage[1]+'</b> <br /><br /><select size="1" id="X" style="width:100px;"><option value="1">'+lang.garage[2]+'</option><option value="0">'+lang.garage[3]+'</option></select> &nbsp;$<input type="text" value="6000" maxlength="5" size="8" style="width:110px;" id="max" onkeydown="javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + \'000\'; } if(symcode == 77){ this.value = this.value + \'000000\'; }this.value = this.value.replace(/k|m/g,\'\'); return (symcode == 75||symcode == 77)?false:true;" />' +
@@ -2559,7 +2563,7 @@ if(dlp == '/garage.php'){
 		'id="truck">'+lang.garage[7]+'</label></td>'+string+'id="moc" />'+lang.garage[8]+'</label></td>'+'</tr><tr>'+string+'id="nodam">'+lang.garage[9]+'</label></td><td>&nbsp;</td>'+'</tr></table>';
 		sTr.appendChild(sTd);
 		sTable.appendChild(sTr);
-		$X(xpath).appendChild(sTable);
+		xpath.parentNode.insertBefore(sTable, xpath.nextSibling);
 
 		//add select All in SH button
 		var all = $X('//input[@type="button"]');
@@ -2690,6 +2694,7 @@ if(dlp == '/garage.php'){
 					if(stop == 0){
 						tr = $i('//tr', (i+1));//get worth
 						tr = (tr.indexOf(')') == -1) ? tr.slice(tr.indexOf('%')) : tr.slice(tr.indexOf(')'));
+
 						tr = tr.replace('<td>', '');
 						tr = tr.slice(tr.indexOf('$')+6);
 						tr = tr.replace('<td>', '');
@@ -2705,7 +2710,7 @@ if(dlp == '/garage.php'){
 			}
 		}
 	}
-	setTimeout(function(){ garageCrusher(); }, 150); //minimal delay in attempt to fix breaking up of html with slow connections
+	setTimeout(function(){ garageCrusher(); }, 1000); //minimal delay in attempt to fix breaking up of html with slow connections
 }
 
 //---------------- Statistics ----------------
@@ -6024,6 +6029,7 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php')
 				div.id = 'proc';
 				div.innerHTML = 0;
 				db.appendChild(div);
+
 
 				//add eventListeners with slide!
 				db.setAttribute('onKeydown', 'function slideIn(){ var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-140;},100);setTimeout(function(){s.style.right=-100;},200);setTimeout(function(){s.style.right=-60;},300); setTimeout(function(){s.style.right=-30;},400);setTimeout(function(){s.style.right=10;},500);} if(event.keyCode==18){ if(document.getElementById("alt").innerHTML == 0){slideIn();} document.getElementById("alt").innerHTML = 1; } if(event.keyCode==17){ if(document.getElementById("ctrl").innerHTML == 0){ slideIn();document.getElementById("ctrl").innerHTML = 1;}else{var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-30;},100);setTimeout(function(){s.style.right=-60;},200);setTimeout(function(){s.style.right=-100;},300); setTimeout(function(){s.style.right=-140;},400);setTimeout(function(){s.style.right=-180;},500);document.getElementById("ctrl").innerHTML = 0;}}');
