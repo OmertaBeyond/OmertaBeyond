@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			04-03-2011
+// @date			06-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -145,8 +145,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 27;
-const SCRIPT_SUBVERSION = 27;
+const SCRIPT_VERSION_BUILD = 29;
+const SCRIPT_SUBVERSION = 29;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -350,7 +350,7 @@ if (dlp == '/prefs.php') {
 			string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> &nbsp;-&nbsp;'+savestring+'</td></tr>';
 		}
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2"><center><b>'+lang.jhl[8]+'</b></center><td class="td" colspan="2"><center><b>'+lang.jhl[9]+'</b></center></td><td class="td">&nbsp;</td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall"></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td width="10"><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
@@ -1548,7 +1548,7 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 }
 if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
 	if (db.innerHTML.search(lang.failedBullets[0]) != -1 || db.innerHTML.search(lang.failedBullets[1]) != -1 || db.innerHTML.search(lang.failedBullets[2]) != -1 || db.innerHTML.search(lang.failedBullets[3]) != -1 || db.innerHTML.search(lang.failedBullets[4]) != -1 || db.innerHTML.search(lang.failedBullets[5]) != -1) {
-		db.innerHTML += '<br><b>Auto Refresh in 1 sec</b>';
+		db.innerHTML += '<br /><b>Auto Refresh in 1 sec</b>';
 		setTimeout(function () {
 			history.back();
 		}, 0);
@@ -1596,7 +1596,7 @@ if(prefs[2] && dlp == '/info.php'){
 				if(sets.version == '_com'){//ob
 					news.push([url+fUrl[f],fArticles[f].replace(/ /,' <br>')]);
 				} else {//edo
-					news.push([url+fUrl[f],fDay[f]+'-'+(fMonth[f].toString().length==1?'0'+fMonth[f]:fMonth[f])+ ' <br>' + fArticles[f]]);
+					news.push([url+fUrl[f],fDay[f]+'-'+(fMonth[f].toString().length==1?'0'+fMonth[f]:fMonth[f])+ ' <br />' + fArticles[f]]);
 				}
 				f++;//next fingon item
 			} else {
@@ -1677,7 +1677,7 @@ if(prefs[2] && dlp == '/info.php'){
 					var	n = news[(i+1)];
 					fUrl.push(n.slice(0,n.indexOf('\' id')));
 					fArticles.push(n.slice(n.indexOf('/a>')+3,n.indexOf('</b>')));
-					n = n.slice(n.indexOf('Geplaatst door'),n.indexOf('<img src="themes/Tweaked-Blue/images/border/news/readmore.gif">'));
+					n = n.slice(n.indexOf('Geplaatst door'),n.indexOf('<img src="themes/Tweaked-Blue/images/border/news/readmore.gif" />'));
 					n = n.slice(n.indexOf('</a>')+8,n.indexOf('-20'));
 					fDay.push(parseInt(n.slice(n.indexOf('>')+1,n.indexOf('-')),10));
 					fMonth.push(parseInt(n.slice(n.indexOf('-')+1,n.indexOf('-')+3),10));
@@ -1732,7 +1732,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 	}
 	var span = cEL('span');
 	var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-	span.innerHTML = '<br>&nbsp;Bust outs: ' + commafy(getValue('bustouts', 0));
+	span.innerHTML = '<br />&nbsp;Bust outs: ' + commafy(getValue('bustouts', 0));
 	$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 
 	//Grab ingame HL colors
@@ -1904,18 +1904,6 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 				}
 			}
 
-			//Add amount of ppl in jail since the above made div covers original one AND add busttracker + arrow key instructions
-			var span = cEL('span');
-			var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-			span.innerHTML = '<br>&nbsp;In jail: ' + count + '<br>&nbsp;[#] = alt+shift hotkey<br>&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
-			$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
-		} else {
-			var span = cEL('span'); //add busttracker + arrow key instructions
-			var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
-			span.innerHTML = '<br>&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
-			$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
-		}
-
 		//Add arrow key controls
 		window.addEventListener('keypress', function(e){
 			var key = e.keyCode;
@@ -1963,6 +1951,17 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 				updateShow(inmates[next]);
 			}
 		}, true);
+	}
+		//Add amount of ppl in jail since the above made div covers original one AND add busttracker + arrow key instructions
+		var span = cEL('span');
+		var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
+		span.innerHTML = '<br />&nbsp;In jail: ' + count + '<br />&nbsp;[#] = alt+shift hotkey<br />&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
+		$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
+	} else {
+		var span = cEL('span'); //add busttracker + arrow key instructions
+		var count = $X('/html/body//form/center').innerHTML.split('<br>')[1].match(/\d+/g)[0];
+		span.innerHTML = '<br />&nbsp;&uarr; ' + lang.jhl[17] + ' | &darr; ' + lang.jhl[18] + ' | &rarr; ' + lang.jhl[19];
+		$X('//fieldset').parentNode.insertBefore(span, $X('//fieldset').nextSibling);
 	}
 }
 
@@ -2244,23 +2243,23 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 
 					links = '<table cellspacing="0" cellpadding="0" border="0" width="100%"><tbody><tr align="center" valign="top">';
 					links += '<td width="20%">';
-					links += '<a class="red" href="BeO/webroot/index.php?module=Heist&action=&who='+nick+'">Heist</a><br>';//heist link
+					links += '<a class="red" href="BeO/webroot/index.php?module=Heist&action=&who='+nick+'">Heist</a><br />';//heist link
 					links += '</td>';
 					links += '<td width="20%">';
-					links += '<a class="red" href="BeO/webroot/index.php?module=Spots&action=&driver='+nick+'">Raid</a><br>';//raid link
+					links += '<a class="red" href="BeO/webroot/index.php?module=Spots&action=&driver='+nick+'">Raid</a><br />';//raid link
 					links += '</td>';
 					links += '<td width="20%">';
-					links += '<a class="red" href="javascript:if(confirm(\'Are you sure you want to make '+nick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+nick+'\';">Set Mentor</a><br>';//mentor link
+					links += '<a class="red" href="javascript:if(confirm(\'Are you sure you want to make '+nick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+nick+'\';">Set Mentor</a><br />';//mentor link
 					links += '</td>';
 					links += '<td width="20%">';
-					links += '<a class="red" href="kill.php?search='+nick+'" onClick="">Hire Detectives</a> <br>';//dets link
+					links += '<a class="red" href="kill.php?search='+nick+'" onClick="">Hire Detectives</a><br />';//dets link
 					links += '</td>';
 					if(parseInt(getPow('bninfo',4,-1),10)>2){//check for top3 position
 						links += '<td width="20%">';
 						if (sets.version == '_dm') {
-							links += '<a class="red" href="/BeO/webroot/index.php?module=Family&who='+nick+'">Invite to Family</a> <br>';//family link
+							links += '<a class="red" href="/BeO/webroot/index.php?module=Family&who='+nick+'">Invite to Family</a><br />';//family link
 						} else {
-							links += '<a class="red" href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br>';//family link
+							links += '<a class="red" href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br />';//family link
 						}
 						links += '</td>';
 					}
@@ -2377,7 +2376,7 @@ if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
 //---------------- Bank ----------------
 if (dlp == '/bank.php') {
 	if (db.innerHTML.search(lang.bank) != -1) {
-		db.innerHTML += '<br><b>'+lang.calc[6]+'</b>';
+		db.innerHTML += '<br /><b>'+lang.calc[6]+'</b>';
 		setTimeout(function () {
 			history.back();
 		}, 1000);
@@ -2440,21 +2439,21 @@ if (dlp == '/bank.php') {
 
 	var tbl = '<table class="thinline" width="100% rules="none" align="center">';
 	tbl += '<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
-	tbl += '<br>';
+	tbl += '<br />';
 	tbl += '<tr><td align="right" width="25%">'+lang.calc[0]+'</td>';
 	tbl += '<td align="center" width="25%">';
-	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'get' + func2 + '*0.9' + func3 + '">';
+	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'get' + func2 + '*0.9' + func3 + '" />';
 	tbl += '</td><td align="right" width="25%">'+lang.calc[1]+'</td><td align="center" id="get" width="25%">$0</td></tr>';
 	tbl += '<tr><td align="right" width="25%">'+lang.calc[2]+'</td>';
 	tbl += '<td align="center" width="25%">';
-	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'give' + func2 + '/0.9' + func3 + '">';
+	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'give' + func2 + '/0.9' + func3 + '" />';
 	tbl += '</td><td align="right" width="25%">'+lang.calc[3]+'</td><td align="center" id="give" width="25%">$0</td></tr>';
-	tbl += '<br>';
+	tbl += '<br />';
 	tbl += '<tr><td align="right" width="25%">'+lang.calc[4]+'</td>';
 	tbl += '<td align="center" width="25%">';
-	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'int' + func2 + func_switch + func3 + '">';
+	tbl += '<input name="amount" type="text" value="" onKeyUp="' + func1 + 'int' + func2 + func_switch + func3 + '" />';
 	tbl += '</td><td align="right" width="25%">'+lang.calc[5]+'</td><td align="center" id="int" width="25%">$0</td></tr>';
-	tbl += '<br>';
+	tbl += '<br />';
 	tbl += '</table>';
 
 	//DOM-ify
@@ -2496,10 +2495,8 @@ if(dlp == '/garage.php'){
 		types.forEach(function(array){ array.forEach(function($n){if($n==car){ eval(array[0] + 'car=1;');} }); });
 	}
 
-
 	function garageCrusher() {
 		var rows = $x('//tr').length; //get number of rows
-
 		if(prefs[24]){ //crusher
 			//define car arrays
 			var titles = { h:'Heist', oc:'OC', moc:'MOC', tr:'Truck' };
@@ -2546,21 +2543,23 @@ if(dlp == '/garage.php'){
 		var sTable = cEL('table');
 		sTable.id = 'selectTable';
 		sTable.setAttribute('style', 'border:0px; width:100%;');
+		sTable.setAttribute('cellspacing', '0');
 		var sTr = cEL('tr');
 		sTr.id = 'selectRow';
 
 		var spacer = cEL('td');
-		spacer.innerHTML = '<br /><hr /><br />';
-		spacer.setAttribute('style', 'width:5%; vertical-align:top;');
+		spacer.innerHTML = '<br /><br /><br />';
+		spacer.setAttribute('style', 'width:10%; vertical-align:top;');
 		sTr.appendChild(spacer);
 
 		var sTd = cEL('td');
 		sTd.id = 'selectTd';
+        sTd.setAttribute('align', 'center');
 		sTd.innerHTML = ' <br /><hr />' +
 		' <b>'+lang.garage[1]+'</b> <br /><br /><select size="1" id="X" style="width:100px;"><option value="1">'+lang.garage[2]+'</option><option value="0">'+lang.garage[3]+'</option></select> &nbsp;$<input type="text" value="6000" maxlength="5" size="8" style="width:110px;" id="max" onkeydown="javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + \'000\'; } if(symcode == 77){ this.value = this.value + \'000000\'; }this.value = this.value.replace(/k|m/g,\'\'); return (symcode == 75||symcode == 77)?false:true;" />' +
 		' &nbsp; <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&ob_oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&ob_moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&ob_heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="'+lang.garage[4]+'" name="action" />' +
 		'<table style="padding-top:10px; position:relative; right:7px;"><tr>'+string+'id="heist">'+lang.garage[5]+'</label></td>'+string+'id="oc">'+lang.garage[6]+'</label></td>'+'</tr><tr>'+string+
-		'id="truck">'+lang.garage[7]+'</label></td>'+string+'id="moc" />'+lang.garage[8]+'</label></td>'+'</tr><tr>'+string+'id="nodam">'+lang.garage[9]+'</label></td><td>&nbsp;</td>'+'</tr></table>';
+		'id="truck" />'+lang.garage[7]+'</label></td>'+string+'id="moc" />'+lang.garage[8]+'</label></td>'+'</tr><tr>'+string+'id="nodam" />'+lang.garage[9]+'</label></td><td>&nbsp;</td>'+'</tr></table>';
 		sTr.appendChild(sTd);
 		sTable.appendChild(sTr);
 		xpath.parentNode.insertBefore(sTable, xpath.nextSibling);
@@ -2654,7 +2653,8 @@ if(dlp == '/garage.php'){
 		keepSpan.innerHTML = lang.garage[14];
 
 		var gTd = cEL('td'); //group select
-		gTd.innerHTML = '<br><hr><b>'+lang.garage[15]+'</b><br><br>'+lang.garage[16];
+        gTd.setAttribute('align', 'center');
+		gTd.innerHTML = '<br /><hr /><b>'+lang.garage[15]+'</b><br /><br />'+lang.garage[16];
 		gTd.appendChild(selectN);
 		gTd.appendChild(cEL('br'));
 		gTd.appendChild(cEL('br'));
@@ -2668,8 +2668,8 @@ if(dlp == '/garage.php'){
 		$X('//tr[@id="selectRow"]').appendChild(gTd);
 
 		spacer = cEL('td');
-		spacer.innerHTML = '<br><hr><br>';
-		spacer.setAttribute('style', 'width:5%; vertical-align:top;');
+		spacer.innerHTML = '<br /><br /><br />';
+		spacer.setAttribute('style', 'width:10%; vertical-align:top;');
 		$X('//tr[@id="selectRow"]').appendChild(spacer);
 
 		//select cars
@@ -2694,7 +2694,6 @@ if(dlp == '/garage.php'){
 					if(stop == 0){
 						tr = $i('//tr', (i+1));//get worth
 						tr = (tr.indexOf(')') == -1) ? tr.slice(tr.indexOf('%')) : tr.slice(tr.indexOf(')'));
-
 						tr = tr.replace('<td>', '');
 						tr = tr.slice(tr.indexOf('$')+6);
 						tr = tr.replace('<td>', '');
@@ -2991,7 +2990,7 @@ if (prefs[13] && dlp == '/family.php') {
 			newtd.textContent = 'Ranks:';
 			newtd2.setAttribute("class","profilerow");
 
-			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td class="bold">'+response["gf"]+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response["cd"]+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response["brug"]+'</td></tr><tr><td>Chief:</td><td class="bold">'+response["chief"]+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response["lc"]+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response["assa"]+'</td></tr><tr><td colspan="2"><hr></td></tr><tr><td>Total points:</td><td class="bold">'+response["pts"]+'</td></tr></table>';
+			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td class="bold">'+response["gf"]+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response["cd"]+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response["brug"]+'</td></tr><tr><td>Chief:</td><td class="bold">'+response["chief"]+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response["lc"]+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response["assa"]+'</td></tr><tr><td>Swindler:</td><td class="bold">'+response["swin"]+'</td></tr><tr><td colspan="2"><hr /></td></tr><tr><td>Total points:</td><td class="bold">'+response["pts"]+'</td></tr></table>';
 
 			newtr.appendChild(newtd);
 			newtr.appendChild(newtd2);
@@ -3114,18 +3113,18 @@ if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 
 	var tbl = '<table class="thinline" width="600" rules="none" align="center">';
 	tbl +='<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
-	tbl +='<br>';
+	tbl +='<br />';
 	tbl +='<tr><td align="right" width="25%">'+lang.calc[0]+'</td>';
 	tbl +='<td align="center" width="25%">';
-	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'get'+func2+'*0.85'+func3+'">';
+	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'get'+func2+'*0.85'+func3+'" />';
 	tbl += '</td><td align="right" width="25%">'+lang.calc[1]+'</td><td align="center" id="get" width="25%">$0</td></tr>';
 	tbl +='<tr><td align="right" width="25%">'+lang.calc[2]+'</td>';
 	tbl +='<td align="center" width="25l%">';
-	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'give'+func2+'/0.85'+func3+'">';
+	tbl += '<input name="amount" type="text" value="" onKeyUp="'+func1+'give'+func2+'/0.85'+func3+'" />';
 	tbl += '</td><td align="right" width="25%">'+lang.calc[3]+'</td><td align="center" id="give" width="25%">$0</td></tr>';
-	tbl +='<br>';
+	tbl +='<br />';
 	tbl += '</table>';
-	$X('//table').innerHTML += '<br>'+tbl;
+	$X('//table').innerHTML += '<br />'+tbl;
 
 	if(prefs[5]){
 		var inputs = $x('//input[@name="amount"] | //input[@name="amounttpob"]');
@@ -3541,7 +3540,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var profit = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[3]/td[2]').innerHTML;
 			var protnum = getID('jsprogbar_div_protection_'+id).innerHTML; // the actual % of protection
 			var prot = $X('//*[@id="jsprogbar_protection_'+id+'"]/table/tbody/tr/td').innerHTML;
-			prot = prot.replace('<div id="jsprogbar_div_protection_'+id+'" style="font-size: smaller; height: 15px; overflow: hidden; text-align: center; position: absolute; width: 100px; color: rgb(255, 255, 255);">'+protnum+'</div>', '<div id="jsprogbar_div_protection_'+id+'" style="text-align:center; position:absolute; width:100px;"><font color="#000">'+protnum+'%</font></div>');
+			prot = prot.replace('<div id="jsprogbar_div_protection_0" style="font-size: smaller; font-weight: normal; height: 15px; vertical-align: middle; overflow: hidden; text-align: center; position: absolute; width: 100px;color: #FFFFFF;">90</div>', '<div id="jsprogbar_div_protection_'+id+'" style="text-align:center; position:absolute; width:100px;"><font color="#000">'+protnum+'%</font></div>');
 			var rpform = '';
 			var rex = new RegExp('\\(([\\w\\s]+)\\)');
 			var rpfam = owner.match(rex);
@@ -3611,11 +3610,12 @@ if (prefs[29]) {
 		if (/class=\"Normal\"/.test(db.innerHTML)) {
 			$x('//a[contains(@href, "decision=1")]')[0].focus();
 		}
+
 		if (!/input/.test(db.innerHTML) && !/table/.test(db.innerHTML)) {
 			if (db.innerHTML.match(lang.race[0])) {
 				db.innerHTML = db.innerHTML;
 			} else {
-				db.innerHTML = db.innerHTML + '<br><a href="/BeO/webroot/index.php?module=Mail">><u>Inbox</u><</a>';
+				db.innerHTML = db.innerHTML + '<br /><a href="/BeO/webroot/index.php?module=Mail">><u>Inbox</u><</a>';
 			}
 		}
 	}
@@ -3640,7 +3640,7 @@ if (prefs[27] && (dls.indexOf('?module=Bloodbank&action=') != -1 || dls.indexOf(
 		//setup costs row
 		table = $X('/html/body//table/tbody/tr[2]/td/table');
 		prices = $x('//td[@align="center"]'); //4,5,6,7
-		tr = '<tr><td> <font size="2"> <b> &nbsp;Total Costs </b></font></td><td align="center"><font size="2" id="A"></font></td><td align="center"><font size="2" id="B"></font></td><td align="center"><font size="2" id="AB"></font></td><td align="center"><font size="2" id="O"></font></td></tr>';
+		tr = '<tr><td><font size="2"><b> &nbsp;Total Costs </b></font></td><td align="center"><font size="2" id="A"></font></td><td align="center"><font size="2" id="B"></font></td><td align="center"><font size="2" id="AB"></font></td><td align="center"><font size="2" id="O"></font></td></tr>';
 		table.innerHTML = table.innerHTML + tr;
 
 		function getType(num) {
@@ -3791,7 +3791,7 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 			if (sets.obay[0].match($I(xpath).split('<br>')[0])) {
 				var price = $X(xpath).innerHTML.split('<br>')[3].replace(/[^0-9.]/g, '');
 				var bullets = $X(xpath2).innerHTML.replace(/[^0-9.]/g, '');
-				$I(xpath2, $I(xpath2) + '<br><b>$' + Math.round(price / bullets) + ' per bullet</b>');
+				$I(xpath2, $I(xpath2) + '<br /><b>$' + Math.round(price / bullets) + ' per bullet</b>');
 				$x('//input')[1].select();
 			}
 		}
@@ -4382,7 +4382,7 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 }
 
 //---------------- BulletTracker ----------------
-if (dlp == '/bullets2.php' && prefs[33] && db.innerHTML.search(/table/i) != -1) {
+if (dlp == '/bullets2.php' && prefs[33]) {
 	var btbullets = getValue('btbullets', 0);
 	var btmoney = getValue('btmoney', 0);
 	if (db.innerHTML.indexOf(lang.bullettracker[0]) != -1) {
@@ -4890,6 +4890,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 		lexHour = getValue('lexHour', -1);
 	}
 
+
 	//--Assemble functions
 
 	function fillBRC(n, b, mode) { //actually filling the forms
@@ -5379,7 +5380,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			div.appendChild(wrap1);
 
 			wrap2 = cEL('span');
-			wrap2.innerHTML = '<br>';
+			wrap2.innerHTML = '<br />';
 			a2 = cEL('a');
 			a2.innerHTML = (H ? lang.smuggling[8]+'(9)' : lang.smuggling[8]);
 			a2.id = 'a2';
@@ -5396,7 +5397,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			div.appendChild(wrap2);
 
 			wrap3 = cEL('span');
-			wrap3.innerHTML = '<br>';
+			wrap3.innerHTML = '<br />';
 			a3 = cEL('a');
 			a3.innerHTML = (H ? lang.smuggling[10]+'(0)' : lang.smuggling[10]);
 			a3.id = 'a3';
@@ -5414,7 +5415,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 			div.appendChild(wrap3);
 
 			wrap4 = cEL('span');
-			wrap4.innerHTML = '<br>';
+			wrap4.innerHTML = '<br />';
 			a4 = cEL('a');
 			a4.innerHTML = (H ? lang.smuggling[12]+'(-)' : lang.smuggling[12]);
 			a4.id = 'a4';
@@ -5536,9 +5537,9 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 				bn_xp = '//form/table/tbody/tr[1]/td';
 				str = $I(bn_xp);
 
-				str += '<hr><a accessKey="[" id="do_n" title="'+lang.smuggling[14]+'" onFocus="this.blur()" href="#">' + lang.smuggling[2] + ' ([)</a>';
+				str += '<hr /><a accessKey="[" id="do_n" title="'+lang.smuggling[14]+'" onFocus="this.blur()" href="#">' + lang.smuggling[2] + ' ([)</a>';
 				str += ' - <a accessKey="]" id="do_b" title="'+lang.smuggling[15]+'" onFocus="this.blur()" href="#">' + lang.smuggling[1] + ' (])</a>';
-				str += ' - <a accessKey="=" id="do_sell" title="'+lang.smuggling[16]+'" onFocus="this.blur()" href="#">' + lang.smuggling[5] + ' (=)</a><br>';
+				str += ' - <a accessKey="=" id="do_sell" title="'+lang.smuggling[16]+'" onFocus="this.blur()" href="#">' + lang.smuggling[5] + ' (=)</a><br />';
 
 				$I(bn_xp, str);
 
@@ -5814,21 +5815,21 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]
 	$X('//td').setAttribute('height', '90%'); //new primary cell heigth
 	var logo = $Cut('//td[@width="280"]', 1); //replace the logo
 	logo.style.textAlign = 'center';
-	logo.innerHTML = logo.innerHTML + '<br><br><br><br><br><hr color="#666" size="1"><br>';
+	logo.innerHTML = logo.innerHTML + '<br /><br /><br /><br /><br /><hr color="#666" size="1" /><br />';
 	var tr = cEL('tr');
 	tr.appendChild(logo);
 	$X('/html/body/table//table/tbody/tr').parentNode.insertBefore(tr, $X('/html/body/table//table/tbody/tr'));
 
 	var tr2 = cEL('tr'); //add spacing
 	var filler = logo.cloneNode(0);
-	filler.innerHTML = '<br><hr color="#666" size="1"><br><br><br><br><br><br><br><br><br>';
+	filler.innerHTML = '<br /><hr color="#666" size="1" /><br /><br /><br /><br /><br /><br /><br /><br /><br />';
 	tr2.appendChild(filler);
 	$X('/html/body/table//table/tbody/tr').parentNode.insertBefore(tr2, $X('/html/body/table//table/tbody/tr').nextSibling.nextSibling);
 
 	var footer = $X('//tr[@height="100"]'); //add footer
 	footer.setAttribute('height', '60');
 	footer.childNodes[1].style.paddingTop = '4px';
-	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2011 - Omerta Game Ltd. | &copy; 2007-2011 - Omerta Beyond<br><br><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? 'http://89.149.221.178/~fingon/?v=' + (sets.version == '_dm' ? '2' : '9') : EdoUrl) + '" target="_blank">' + lang.login[2] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
+	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2011 - Omerta Game Ltd. | &copy; 2007-2011 - Omerta Beyond<br /><br /><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? 'http://89.149.221.178/~fingon/?v=' + (sets.version == '_dm' ? '2' : '9') : EdoUrl) + '" target="_blank">' + lang.login[2] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
 
 	var input = [$X('//input[@name="email"]'), $X('//input[@name="pass"]'), $X('//input[@type="submit"]')]; //add focus effects and styling
 	input.forEach(function ($n) {
