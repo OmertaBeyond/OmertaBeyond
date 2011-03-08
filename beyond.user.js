@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			06-03-2011
+// @date			08-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -145,8 +145,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 29;
-const SCRIPT_SUBVERSION = 29;
+const SCRIPT_VERSION_BUILD = 30;
+const SCRIPT_SUBVERSION = 30;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -265,7 +265,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([6, 22, 12, 14, 30, 19, 20, 18]);
 
 	addCat(lang.preftitles[5]); //Fingons / Edo
-	addPrefItems([2]);
+	addPrefItems([2, 38]);
 
 	addCat(lang.preftitles[6]); //misc
 	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36, 37]);
@@ -1573,118 +1573,123 @@ if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
 
 }
 
-if(prefs[2] && dlp == '/info.php'){
-	function addNews(){
-		//sort Omerta's news
-		var oNews = $x('//div[@id="news"]');
-		var oUrl=[];
-		var oArticles=[];
-		var oDay=[];
-		var oMonth=[];
-		for(i=0;i<oNews.length;i++){
-			oUrl.push(oNews[i].getElementsByTagName('a')[0].href);
-			oArticles.push(oNews[i].getElementsByTagName('a')[0].innerHTML);
-			oDay.push(parseInt(oArticles[i].slice(0,oArticles[i].indexOf('-')),10));
-			oMonth.push(parseInt(oArticles[i].slice(oArticles[i].indexOf('-')+1,oArticles[i].indexOf('<')).replace(/^0/,''),10));
-		}
-
-		var news=[];
-		var url = (sets.version == '_com') ? OBnUrl : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
-		for(var o=0,f=0;(o+f)<=4;1){//loop dates
-			var nextmonth=0;
-			if((oDay[o]<fDay[f] && oMonth[o]<=fMonth[f]) || (oDay[o]>fDay[f] && oMonth[o]<fMonth[f]) || (oMonth[o]>fMonth[f] && fMonth!=1)){//check dates
-				if(sets.version == '_com'){//ob
-					news.push([url+fUrl[f],fArticles[f].replace(/ /,' <br>')]);
-				} else {//edo
-					news.push([url+fUrl[f],fDay[f]+'-'+(fMonth[f].toString().length==1?'0'+fMonth[f]:fMonth[f])+ ' <br />' + fArticles[f]]);
-				}
-				f++;//next fingon item
-			} else {
-				news.push([oUrl[o],oArticles[o]]);
-				o++;//next omerta item
+if(dlp == '/info.php'){
+	if(prefs[2]) {
+		function addNews(){
+			//sort Omerta's news
+			var oNews = $x('//div[@id="news"]');
+			var oUrl=[];
+			var oArticles=[];
+			var oDay=[];
+			var oMonth=[];
+			for(i=0;i<oNews.length;i++){
+				oUrl.push(oNews[i].getElementsByTagName('a')[0].href);
+				oArticles.push(oNews[i].getElementsByTagName('a')[0].innerHTML);
+				oDay.push(parseInt(oArticles[i].slice(0,oArticles[i].indexOf('-')),10));
+				oMonth.push(parseInt(oArticles[i].slice(oArticles[i].indexOf('-')+1,oArticles[i].indexOf('<')).replace(/^0/,''),10));
 			}
-		}
-		for(i=0;i<oNews.length;i++){//add to page
-			var item = oNews[i].getElementsByTagName('a')[0];
-			item.href = news[i][0];
-			item.setAttribute('style', 'font-size:11px !important;');//manuall override to make sure it keeps font-size
-			if(item.href.search('barafranca')==-1) {
-				item.parentNode.parentNode.setAttribute('style', 'background:url(\''+GM_getResourceURL('favoriteIco')+'\') no-repeat 90% 20%;');
-				item.setAttribute('target', 'blank');
-			}
-			if(news[i][1].search(lang.login[2])!=-1 && sets.version=='_nl'){
-				item.setAttribute('target', 'main');
-			}
-			item.innerHTML = news[i][1];
-			oNews[i].style.height = item.offsetHeight;
-		}
-		//We have better news
-		var times = $X('//a[contains(@href,"mag.php")]');
-		times.href = sets.version=='_com' ? OBnUrl : sets.version=='_dm' ? OBnUrl : EdoUrl;
-		times.style.fontSize = '11px';
-		times.innerHTML = 'OBNews';
-	}
-	//prep arrays
-	var fUrl=[];
-	var fArticles=[];
-	var fDay=[];
-	var fMonth=[];
 
-	if(sets.version=='_com'){//grab news from obnews rss feed
-		GM_xmlhttpRequest({
-			method: 'GET',
-			url: 'http://news.omertabeyond.com/rss.php',
-			onload: function(resp){
-				var parser = new DOMParser();
-				var dom = parser.parseFromString(resp.responseText, 'application/xml');
-
-				item = dom.getElementsByTagName('item');
-				for(i=-1; ++i<item.length-1;){//loop news items
-					fUrl.push(dom.getElementsByTagName('link')[i+2].textContent.substr(-4).replace(/[^0-9]/g,''));//grab url
-					fArticles.push(dom.getElementsByTagName('title')[i+2].textContent);//grab article
-					if(/\d?\d-\d?\d/.test(fArticles[i])){//check for a date
-						fDay.push(parseInt(/\d?\d-/.exec(fArticles[i])[0],10));//parse date from title
-						fMonth.push(parseInt(/-\d?\d/.exec(fArticles[i])[0].replace('-', ''),10));
-						fArticles[i] = fArticles[i].slice(fArticles[i].indexOf(') ')+2);
-					} else {//no date, ignore it
-						fUrl[i]='';
-						fArticles[i]='';
-						fDay[i]='';
-						fMonth[i]='';
+			var news=[];
+			var url = (sets.version == '_com') ? OBnUrl : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
+			for(var o=0,f=0;(o+f)<=4;1){//loop dates
+				var nextmonth=0;
+				if((oDay[o]<fDay[f] && oMonth[o]<=fMonth[f]) || (oDay[o]>fDay[f] && oMonth[o]<fMonth[f]) || (oMonth[o]>fMonth[f] && fMonth!=1)){//check dates
+					if(sets.version == '_com'){//ob
+						news.push([url+fUrl[f],fArticles[f].replace(/ /,' <br>')]);
+					} else {//edo
+						news.push([url+fUrl[f],fDay[f]+'-'+(fMonth[f].toString().length==1?'0'+fMonth[f]:fMonth[f])+ ' <br />' + fArticles[f]]);
 					}
+					f++;//next fingon item
+				} else {
+					news.push([oUrl[o],oArticles[o]]);
+					o++;//next omerta item
 				}
-				for(i=item.length-1; --i>=0;){//reverse loop so we maintain array indexes
-					if(fArticles[i] == ''){//it's ingore, so remove it from the array
-						fArticles.splice(i,1);
-						fUrl.splice(i,1);
-						fDay.splice(i,1);
-						fMonth.splice(i,1);
-					}
-				}
-				addNews();//we got the news, now add it
 			}
-		});
-	}
-	if(sets.version=='_nl'){//get news from Edo mainpage
-		GM_xmlhttpRequest({
-			method: 'GET',
-			url: 'http://www.edo-nieuws.nl/news.php',
-			onload: function(resp){//news
-				var html = resp.responseText;
-				var news = html.split('<a name=\'news_');
+			for(i=0;i<oNews.length;i++){//add to page
+				var item = oNews[i].getElementsByTagName('a')[0];
+				item.href = news[i][0];
+				item.setAttribute('style', 'font-size:11px !important;');//manuall override to make sure it keeps font-size
+				if(item.href.search('barafranca')==-1) {
+					item.parentNode.parentNode.setAttribute('style', 'background:url(\''+GM_getResourceURL('favoriteIco')+'\') no-repeat 90% 20%;');
+					item.setAttribute('target', 'blank');
+				}
+				if(news[i][1].search(lang.login[2])!=-1 && sets.version=='_nl'){
+					item.setAttribute('target', 'main');
+				}
+				item.innerHTML = news[i][1];
+				oNews[i].style.height = item.offsetHeight;
+			}
+			//We have better news
+			var times = $X('//a[contains(@href,"mag.php")]');
+			times.href = sets.version=='_com' ? OBnUrl : sets.version=='_dm' ? OBnUrl : EdoUrl;
+			times.style.fontSize = '11px';
+			times.innerHTML = 'OBNews';
+		}
+		//prep arrays
+		var fUrl=[];
+		var fArticles=[];
+		var fDay=[];
+		var fMonth=[];
 
-				for(i=0;i<5;i++){
-					var	n = news[(i+1)];
-					fUrl.push(n.slice(0,n.indexOf('\' id')));
-					fArticles.push(n.slice(n.indexOf('/a>')+3,n.indexOf('</b>')));
-					n = n.slice(n.indexOf('Geplaatst door'),n.indexOf('<img src="themes/Tweaked-Blue/images/border/news/readmore.gif" />'));
-					n = n.slice(n.indexOf('</a>')+8,n.indexOf('-20'));
-					fDay.push(parseInt(n.slice(n.indexOf('>')+1,n.indexOf('-')),10));
-					fMonth.push(parseInt(n.slice(n.indexOf('-')+1,n.indexOf('-')+3),10));
+		if(sets.version=='_com'){//grab news from obnews rss feed
+			GM_xmlhttpRequest({
+				method: 'GET',
+				url: 'http://news.omertabeyond.com/rss.php',
+				onload: function(resp){
+					var parser = new DOMParser();
+					var dom = parser.parseFromString(resp.responseText, 'application/xml');
+
+					item = dom.getElementsByTagName('item');
+					for(i=-1; ++i<item.length-1;){//loop news items
+						fUrl.push(dom.getElementsByTagName('link')[i+2].textContent.substr(-4).replace(/[^0-9]/g,''));//grab url
+						fArticles.push(dom.getElementsByTagName('title')[i+2].textContent);//grab article
+						if(/\d?\d-\d?\d/.test(fArticles[i])){//check for a date
+							fDay.push(parseInt(/\d?\d-/.exec(fArticles[i])[0],10));//parse date from title
+							fMonth.push(parseInt(/-\d?\d/.exec(fArticles[i])[0].replace('-', ''),10));
+							fArticles[i] = fArticles[i].slice(fArticles[i].indexOf(') ')+2);
+						} else {//no date, ignore it
+							fUrl[i]='';
+							fArticles[i]='';
+							fDay[i]='';
+							fMonth[i]='';
+						}
+					}
+					for(i=item.length-1; --i>=0;){//reverse loop so we maintain array indexes
+						if(fArticles[i] == ''){//it's ingore, so remove it from the array
+							fArticles.splice(i,1);
+							fUrl.splice(i,1);
+							fDay.splice(i,1);
+							fMonth.splice(i,1);
+						}
+					}
+					addNews();//we got the news, now add it
 				}
-				addNews();
-			}
-		});
+			});
+		}
+		if(sets.version=='_nl'){//get news from Edo mainpage
+			GM_xmlhttpRequest({
+				method: 'GET',
+				url: 'http://www.edo-nieuws.nl/news.php',
+				onload: function(resp){//news
+					var html = resp.responseText;
+					var news = html.split('<a name=\'news_');
+
+					for(i=0;i<5;i++){
+						var	n = news[(i+1)];
+						fUrl.push(n.slice(0,n.indexOf('\' id')));
+						fArticles.push(n.slice(n.indexOf('/a>')+3,n.indexOf('</b>')));
+						n = n.slice(n.indexOf('Geplaatst door'),n.indexOf('<img src="themes/Tweaked-Blue/images/border/news/readmore.gif" />'));
+						n = n.slice(n.indexOf('</a>')+8,n.indexOf('-20'));
+						fDay.push(parseInt(n.slice(n.indexOf('>')+1,n.indexOf('-')),10));
+						fMonth.push(parseInt(n.slice(n.indexOf('-')+1,n.indexOf('-')+3),10));
+					}
+					addNews();
+				}
+			});
+		}
+		if(prefs[38]) { //remove Facebook API from news frame
+			$del('//iframe');
+		}
 	}
 }
 
@@ -2774,12 +2779,11 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 		});
 	}
 }
-
 //---------------- Family page ----------------
 if (prefs[13] && dlp == '/family.php') {
 	//Add to busting list
 	addtojhl = cEL('span'); //not an anchor, will mess up grabbing tops etc..
-	addtojhl.innerHTML = lang.jhl[24];
+	addtojhl.innerHTML = '<br />'+lang.jhl[24];
 	addtojhl.id = 'addlink';
 	addtojhl.setAttribute('class','red');
 	addtojhl.addEventListener('mouseover', function() { this.style.cursor = 'pointer'; }, true);
@@ -2822,6 +2826,11 @@ if (prefs[13] && dlp == '/family.php') {
 		}
 	}, true);
 	$X('//td[@class="profilerow"]').appendChild(addtojhl);
+
+	//style family info table a bit
+	$x('//td[@class="subtableheader"]').forEach(function($n) {
+		$n.setAttribute('style', 'padding-left: 4px; text-align: left;');
+	});
 
 	//get tops
 	var anchor = $x('//table//tr[1]//table[@height="100%"][1]//a');
@@ -2979,18 +2988,19 @@ if (prefs[13] && dlp == '/family.php') {
 
 	GM_xmlhttpRequest({
 		method: 'GET',
-		url: SCRIPT_LINK+'?p=stats&w=hr&v='+sets.version.replace('_','')+'&'+url,
+		url: SCRIPT_LINK+'?p=stats&w=hr&v='+sets.version.replace('_', '')+'&'+url,
 		onload: function(xhr) {
 			var response = JSON.parse(xhr.responseText);
-			var newtd = document.createElement("td");
-			var newtd2 = document.createElement("td");
-			var newtr = document.createElement("tr");
+			var newtd = document.createElement('td');
+			var newtd2 = document.createElement('td');
+			var newtr = document.createElement('tr');
 
-			newtd.setAttribute("class","subtableheader");
+			newtd.setAttribute('class', 'subtableheader');
+			newtd.setAttribute('style', 'padding-left: 4px; text-align: left;');
 			newtd.textContent = 'Ranks:';
-			newtd2.setAttribute("class","profilerow");
+			newtd2.setAttribute('class', 'profilerow');
 
-			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td class="bold">'+response["gf"]+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response["cd"]+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response["brug"]+'</td></tr><tr><td>Chief:</td><td class="bold">'+response["chief"]+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response["lc"]+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response["assa"]+'</td></tr><tr><td>Swindler:</td><td class="bold">'+response["swin"]+'</td></tr><tr><td colspan="2"><hr /></td></tr><tr><td>Total points:</td><td class="bold">'+response["pts"]+'</td></tr></table>';
+			newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td class="bold">'+response['gf']+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response['cd']+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response['brug']+'</td></tr><tr><td>Chief:</td><td class="bold">'+response['chief']+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response['lc']+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response['assa']+'</td></tr><tr><td>Swindler:</td><td class="bold">'+response['swin']+'</td></tr><tr><td colspan="2"><hr /></td></tr><tr><td>Total points:</td><td class="bold">'+response['pts']+'</td></tr></table>';
 
 			newtr.appendChild(newtd);
 			newtr.appendChild(newtd2);
@@ -3002,19 +3012,53 @@ if (prefs[13] && dlp == '/family.php') {
 		url: SCRIPT_LINK+'?p=stats&w=famdeaths&v='+sets.version.replace('_','')+'&'+url,
 		onload: function(xhr) {
 			var responsed = JSON.parse(xhr.responseText);
-			var newtable = document.createElement("table");
-			newtable.setAttribute("class","thinline");
-			newtable.setAttribute("width","100%");
-			newtable.setAttribute("cellspacing","0");
-			newtable.setAttribute("cellpadding","2");
-			newtable.setAttribute("rules","none");
+			var newtable = document.createElement('table');
+			newtable.setAttribute('class', 'thinline');
+			newtable.setAttribute('width', '100%');
+			newtable.setAttribute('cellspacing', '0');
+			newtable.setAttribute('cellpadding', '2');
+			newtable.setAttribute('rules', 'none');
 
 			var dtable = '<tr><td colspan="100%" class=tableheader>Last family deaths</td></tr> <tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left">Name</td><td class="bold" align="center">Rank</td><td class="bold" align="center">Time</td><td class="bold" align="right">Ago</td></tr>';
 			for (i = -1; ++i < responsed.length;) {
-				dtable += '<tr><td><a href="user.php?name='+responsed[i]["Name"]+'">'+responsed[i]["Name"]+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+responsed[i]["Name"]+'">'+responsed[i]["Rank"]+'</td><td align="center">'+responsed[i]["Date"]+'</td><td align="right">'+responsed[i]["Agod"]+'d '+responsed[i]["Agoh"]+'h '+responsed[i]["Agom"]+'m</td></tr>';
+				dtable += '<tr><td><a href="user.php?name='+responsed[i]['Name']+'">'+responsed[i]['Name']+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+responsed[i]['Name']+'">'+responsed[i]['Rank']+'</td><td align="center">'+responsed[i]['Date']+'</td><td align="right">'+responsed[i]['Agod']+'d '+responsed[i]['Agoh']+'h '+responsed[i]['Agom']+'m</td></tr>';
 			}
 			newtable.innerHTML = dtable;
 			maintable2.appendChild(newtable);
+		}
+	});
+
+	//Add Family position and Worth
+	var famname = $I('//td[@class="profilerow"]').split(' ')[0].slice(5);
+	GM_xmlhttpRequest({ //grab data from stats API
+		method: 'GET',
+		url: 'http://'+dlh+'/BeO/webroot/index.php?module=API&action=statistics',
+		onload: function(resp){
+			var parser = new DOMParser();
+			var xml = parser.parseFromString(resp.responseText, 'application/xml');
+
+			var fams = xml.getElementsByTagName('stats')[0].getElementsByTagName('families')[0].children;
+			for(i = -1; ++i<fams.length; ) { //loop all fams
+				if(famname == fams[i].getElementsByTagName('name')[0].textContent) {
+					var fampos = i+1;
+					var famworth = fams[i].getElementsByTagName('worth')[0].textContent;
+
+					var posrow = cEL('tr');
+					var tdL = cEL('td');
+					tdL.innerHTML = lang.fampage[4] + ':';
+					tdL.setAttribute('class', 'subtableheader');
+					tdL.setAttribute('style', 'padding-left:4px; text-align:left;');
+					posrow.appendChild(tdL);
+
+					var tdR = cEL('td');
+					tdR.innerHTML = '#' + fampos + ' - ' + lang.fampage[5] + ': ' + famworth;
+					tdR.setAttribute('class', 'profilerow');
+					posrow.appendChild(tdR);
+
+					$X('//td[@class="subtableheader"]').parentNode.parentNode.insertBefore(posrow, $X('//td[@class="subtableheader"]').parentNode.nextSibling);
+					i = fams.length; //stop the loop!
+				}
+			}
 		}
 	});
 }
@@ -5727,6 +5771,8 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 				}
 				if ($X('//input[@name="ver"]')) {
 					$X('//input[@name="ver"]').focus();
+				} else {
+					$X('//input[@type="submit"]').focus();
 				}
 			}, true);
 		}

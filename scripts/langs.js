@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.26
+	Version: 1.10.0.30
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -54,7 +54,8 @@ var langs = {
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
-			'Automaticaly check for updates'//37 - MISC
+			'Automaticaly check for updates',//37 - MISC
+			'Remove Facebook API from news frame'//38 - NEWS
 		],
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
@@ -94,9 +95,10 @@ var langs = {
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals',//36
-			'Automaticaly check for updates'//37
+			'Automaticaly check for updates',//37
+			'You might not even have a Facebook account! Or you mjust might consider it as spam. Get rid of that thing with activating this preference.'//38
 		],
-		maxprefs: 38, // 1 + last pref #
+		maxprefs: 39, // 1 + last pref #
 		preftitles: [
 			'Crimes/Car Nicks',//0
 			'Smuggling and Booze/Narc Prices',//1
@@ -431,7 +433,7 @@ var langs = {
 			'Name: ',
 			'Type'
 		],
-		fampage: ['Members:', 'member', 'objectowner', 'spotowner'],
+		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
 	},
 	en: {
@@ -475,7 +477,8 @@ var langs = {
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
-			'Automaticaly check for updates'//37 - MISC
+			'Automaticaly check for updates',//37 - MISC
+			'Remove Facebook API from news frame'//38 - NEWS
 		],
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
@@ -515,9 +518,10 @@ var langs = {
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals',//36
-			'Automaticaly check for updates'//37
+			'Automaticaly check for updates',//37
+			'You might not even have a Facebook account! Or you mjust might consider it as spam. Get rid of that thing with activating this preference.'//38
 		],
-		maxprefs: 38, // 1 + last pref #
+		maxprefs: 39, // 1 + last pref #
 		preftitles: [
 			'Crimes/Car Nicks',//0
 			'Smuggling and Booze/Narc Prices',//1
@@ -852,7 +856,7 @@ var langs = {
 			'Name: ',
 			'Type'
 		],
-		fampage: ['Members:', 'member', 'objectowner', 'spotowner'],
+		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
 	},
 	dm: {
@@ -896,7 +900,8 @@ var langs = {
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
-			'Automaticaly check for updates'//37 - MISC
+			'Automaticaly check for updates',//37 - MISC
+			'Remove Facebook API from news frame'//38 - NEWS
 		],
 		prefsTitle: [ //describe the options
 			'Disable the "go for it" button until the image code entered is the correct length',//0
@@ -936,9 +941,10 @@ var langs = {
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals',//36
-			'Automaticaly check for updates'//37 - MISC
+			'Automaticaly check for updates',//37 - MISC
+			'You might not even have a Facebook account! Or you mjust might consider it as spam. Get rid of that thing with activating this preference.'//38
 		],
-		maxprefs: 38, // 1 + last pref #
+		maxprefs: 39, // 1 + last pref #
 		preftitles: [
 			'Crimes/Car Nicks',//0
 			'Smuggling and Booze/Narc Prices',//1
@@ -1274,7 +1280,7 @@ var langs = {
 			'Name: ',
 			'Type'
 		],
-		fampage: ['Members:', 'member', 'objectowner', 'spotowner'],
+		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
 	},
 	nl: {
@@ -1318,7 +1324,8 @@ var langs = {
 			'Ruim de Spot Overvallen pagina op',//34 - UI Extras
 			'Laat misdaad- en autojatstats zien op status pagina',//35 - CRIMES/CARS
 			'Voeg Lijfwachten Overzicht toe op BG\'s pagina',//36 - UI EXTRAS
-			'Automaticaly check for updates'//37 - MISC
+			'Automaticaly check for updates',//37 - MISC
+			'Remove Facebook API from news frame'//38 - NEWS
 		],
 		prefsTitle: [ //describe the options
 			'Je kan de "Ga ervoor" knop niet gebruiken voor je 3 tekens hebt ingevuld',//0
@@ -1358,9 +1365,10 @@ var langs = {
 			'Krijg een goed overzicht van de spots zodat je makkelijker je doel kunt kiezen',//34
 			'Laat het aantal misdaaden zien die succesvol waren en het total aantal auto\'s die je gestolen hebt, plus de totale winst van beide',//35
 			'Een mooi overzicht van al je lijfwachten en hun getrainde levels, inclusief het totale aantal',//36
-			'Automaticaly check for updates'//37 - MISC
+			'Automatisch checken voor nieuwe versies van Omerta Beyond.',//37
+			'Misschien heb je wel geen Facebook account. Of misschien vindt je het gewoon spam. Verlos je van de Facebook API  door deze voorkeur aan te zetten.'//38
 		],
-		maxprefs: 38,
+		maxprefs: 39,
 		preftitles: [
 			'Misdaden/Auto stelen',//0
 			'Smokkelen en Drank/Drugs Prijzen',//1
@@ -1703,7 +1711,7 @@ var langs = {
 			'Name: ',
 			'Type'
 		],
-		fampage: ['Gebruikers:', 'gebruiker', 'objecteigenaren', 'handelobjecteigenaren'],
+		fampage: ['Gebruikers:', 'gebruiker', 'objecteigenaren', 'handelobjecteigenaren', 'Positie', 'Waarde'],
 		ffv: 'Je FireFox versie is ouder dan onze eisen. Beyond zal niet goed werken todat je update naar een nieuwere versie. Minimale vereiste versie:'
 	}
 };
