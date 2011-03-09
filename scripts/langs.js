@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.30
+	Version: 1.10.0.31
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -154,7 +154,7 @@ var langs = {
 			'Customize Hotkeys',
 			'Reset menu'
 		],
-		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
+		login: ['Register', 'OBnews'],
 		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
@@ -577,7 +577,7 @@ var langs = {
 			'Customize Hotkeys',
 			'Reset menu'
 		],
-		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
+		login: ['Register', 'OBnews'],
 		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
@@ -1000,7 +1000,7 @@ var langs = {
 			'Customize Hotkeys',
 			'Reset menu'
 		],
-		login: ['Register', 'http://www.fingon.be', 'Fingon\'s'],
+		login: ['Register', 'OBnews'],
 		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
@@ -1424,7 +1424,7 @@ var langs = {
 			'Pas sneltoetsen aan',
 			'Reset menu'
 		],
-		login: ['Registreren', 'http://www.edo-nieuws.nl', 'Edo-nieuws'],
+		login: ['Registreren', 'Edo-nieuws'],
 		status: ['none', 'Geen', 'geslaagd', 'Geld van misdaden', 'misdaad', 'Waarde alle gestolen auto\'s', 'auto', 'Rente', 'in', 'Nu!'],
 		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],
 		failedBullets: [

@@ -46,7 +46,6 @@
 // @include			http://barafranca.nl/*
 // @include			http://www.barafranca.gen.tr/*
 // @include			http://barafranca.gen.tr/*
-// @include			http://89.149.221.178/~fingon/beyond.php*
 // @exclude			http://gamewiki.barafranca.com/*
 // @exclude			http://ircwiki.barafranca.com/*
 // @exclude			http://*barafranca.*/front-mafia-list.php*
@@ -145,8 +144,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 30;
-const SCRIPT_SUBVERSION = 30;
+const SCRIPT_VERSION_BUILD = 31;
+const SCRIPT_SUBVERSION = 31;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -264,7 +263,7 @@ if (dlp == '/prefs.php') {
 	addCat(lang.preftitles[4]); //Clean up
 	addPrefItems([6, 22, 12, 14, 30, 19, 20, 18]);
 
-	addCat(lang.preftitles[5]); //Fingons / Edo
+	addCat(lang.preftitles[5]); //OBnews / Edo
 	addPrefItems([2, 38]);
 
 	addCat(lang.preftitles[6]); //misc
@@ -1556,22 +1555,21 @@ if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
 }
 
 //---------------- OB/Edo News ----------------
-if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
-	$x('//tr').forEach(function ($n) {
-		$n.style.backgroundColor = getValue('tableBg', '#F0F0F0');
-	});
-	$x('//td[@background="images/topic.gif"]').forEach(function ($n) {
-		$n.setAttribute('background', 'http://www.barafranca.com/static/images/game/generic/headershine.png');
-		$n.setAttribute('style', 'background-color:' + getValue('titleBg', '#F0F0F0') + '; height:23px; color:white;');
-	});
-	db.style.backgroundColor = getValue('bodyBg', '#B0B0B0');
-	db.style.color = getValue('fontClr', '#000');
-
-	var goToFin = $XLast('//b');
-	goToFin.style.textAlign = 'center';
-	goToFin.innerHTML = '<a style="color:#EEE !important; font-weight:bold;" href="http://news.omertabeyond.com' + dls + '" target="_blank">Click here to go to the actual news post</a>';
-
-}
+//if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
+//	$x('//tr').forEach(function ($n) {
+//		$n.style.backgroundColor = getValue('tableBg', '#F0F0F0');
+//	});
+//	$x('//td[@background="images/topic.gif"]').forEach(function ($n) {
+//		$n.setAttribute('background', 'http://www.barafranca.com/static/images/game/generic/headershine.png');
+//		$n.setAttribute('style', 'background-color:' + getValue('titleBg', '#F0F0F0') + '; height:23px; color:white;');
+//	});
+//	db.style.backgroundColor = getValue('bodyBg', '#B0B0B0');
+//	db.style.color = getValue('fontClr', '#000');
+//
+//	var goToFin = $XLast('//b');
+//	goToFin.style.textAlign = 'center';
+//	goToFin.innerHTML = '<a style="color:#EEE !important; font-weight:bold;" href="http://news.omertabeyond.com' + dls + '" target="_blank">Click here to go to the actual news post</a>';
+//}
 
 if(dlp == '/info.php'){
 	if(prefs[2]) {
@@ -1599,7 +1597,7 @@ if(dlp == '/info.php'){
 					} else {//edo
 						news.push([url+fUrl[f],fDay[f]+'-'+(fMonth[f].toString().length==1?'0'+fMonth[f]:fMonth[f])+ ' <br />' + fArticles[f]]);
 					}
-					f++;//next fingon item
+					f++;//next OBnews item
 				} else {
 					news.push([oUrl[o],oArticles[o]]);
 					o++;//next omerta item
@@ -2054,7 +2052,29 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes&action=docrime') {
 		setValue('crimes', crimeTracker);
 	}
 }
-
+//---------------- Lackey Messages ----------------
+if (dls.indexOf('action=showMsg') != -1) {
+	var crimeTracker = getValue('crimes', 0);
+	var crimemoney = getValue('crimemoney', 0);
+	var carTracker = getValue('cars', 0);
+	var carmoney = getValue('carmoney', 0);
+	var msgTyp = $X('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr/td/b').textContent;
+	var msgText = '/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[5]/td';
+	arr = $X(msgText).innerHTML.split(' ');	
+	var Lcrime = new RegExp('Lackey Crime');
+	if (Lcrime.test(msgTyp)) {
+		crimeTracker += parseInt(arr[38]);
+//		setValue('crimes', crimeTracker);
+		var crmoney = arr[83].replace(/,/g, '').replace('$', '');
+		crimemoney += parseInt(crmoney);
+//		setValue('crimemoney', crimemoney);
+	}
+	var Lcar = new RegExp('Lackey Car');
+	if (Lcar.test(msgTyp)) {
+		carTracker += parseInt(arr[29]);
+//		setValue('cars', carTracker);
+	}
+}
 //---------------- Cars Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 	if (db.innerHTML.search(/table/i) > -1 && prefs[8]) { //if Car Nick AF is enabled
@@ -2140,6 +2160,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		tbody.lastChild.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.setAttribute('name', 'FL');
 
 		var status = $X('//span[@id="status"]').innerHTML;
+		var inFam = $X('//span[@id="family"]').innerHTML;
 		var alive = (status.indexOf(lang.profile[3])==-1);//alive/dead
 
 		//DEAD or AKILLED ?
@@ -2259,13 +2280,9 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 					links += '<td width="20%">';
 					links += '<a class="red" href="kill.php?search='+nick+'" onClick="">Hire Detectives</a><br />';//dets link
 					links += '</td>';
-					if(parseInt(getPow('bninfo',4,-1),10)>2){//check for top3 position
+					if(parseInt(getPow('bninfo',4,-1),10)>2 && inFam == 'None'){//check for top3 position and if person is not in family
 						links += '<td width="20%">';
-						if (sets.version == '_dm') {
-							links += '<a class="red" href="/BeO/webroot/index.php?module=Family&who='+nick+'">Invite to Family</a><br />';//family link
-						} else {
-							links += '<a class="red" href="/controlpanel.php?who='+nick+'">Invite to Family</a> <br />';//family link
-						}
+						links += '<a class="red" href="/BeO/webroot/index.php?module=Family&who='+nick+'">Invite to Family</a><br />';//family link
 						links += '</td>';
 					}
 					links += '</tr></tbody></table>';
@@ -3064,7 +3081,7 @@ if (prefs[13] && dlp == '/family.php') {
 }
 
 //---------------- Manage Users (top3 only) ----------------
-if (dls.indexOf('module=Family')!=-1 || urlsearch == '/controlpanel.php' + dls) {
+if (dls.indexOf('module=Family')!=-1) {
 	//invite from profile
 	$X('//input[@name="invite"]').value = GetParam('who');
 	$X('//input[@name="invite"]/parent::*/input[last()]').focus();
@@ -3820,7 +3837,6 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 
 	if (dls.indexOf('specific') != -1) { //add focus and check on every page
 		if (document.body.innerHTML.indexOf(sets.obay[1]) != -1) {
-
 			if (sets.version == '_dm') {
 				var xpathtr = '';
 				var xpath2tr = '[2]';
@@ -3828,7 +3844,6 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 				var xpathtr = '[3]';
 				var xpath2tr = '[4]';
 			}
-
 			var xpath = '/html/body//center/table/tbody/tr'+xpathtr+'/td[3]';
 			var xpath2 = '/html/body//center/table/tbody/tr'+xpath2tr+'/td';
 
@@ -4186,17 +4201,19 @@ if (urlsearch == '/capocp.php' + dls) {
 }
 
 //------------- link names at CP log --------
-if (dls.indexOf('module=Family')!=-1 || dlp == '/controlpanel.php') {
+if (dls.indexOf('module=Family')!=-1) {
 	var logs = '//td[1]/table[@class="color2" and position()=1]//td[2]';
 	$x(logs).forEach(function ($n) {
 		if ($n.textContent != '') {
 			var len = $n.innerHTML.trim().split(' ').length - 1;
 			var who = $n.innerHTML.trim().split(' ');
 			if (who[0].match(/[A-Z]/g)) {
-				who[0] = '<a href="/user.php?nick="' + who[0] + '"><b>' + who[0] + '</b></a>';
+				who[0] = '<a href="/user.php?nick=' + who[0] + '"><b>' + who[0] + '</b></a>';
 			}
 			if (who[len].match(/[A-Z]/g)) {
-				who[len] = '<a href="/user.php?nick=' + who[len].match(/\w+/g)[0] + '><b>' + who[len] + '</b></a>';
+				if(who[len] != 'Object(s)') {
+					who[len] = '<a href="/user.php?nick=' + who[len].match(/\w+/g)[0] + '><b>' + who[len] + '</b></a>';
+				}
 			}
 			$n.innerHTML = who.join(' ');
 		}
@@ -4303,7 +4320,9 @@ if (dlp == '/familylog.php') {
 				who[0] = '<a href="/user.php?nick=' + who[0] + '"><b>' + who[0] + '</b></a>';
 			}
 			if (who[len].match(/[A-Z]/g)) {
-				who[len] = '<a href="/user.php?nick=' + who[len].match(/\D+/g)[0].replace('.', '') + '"><b>' + who[len] + '</b></a>';
+				if(who[len] != 'Object(s)') {
+					who[len] = '<a href="/user.php?nick=' + who[len].match(/\D+/g)[0].replace('.', '') + '"><b>' + who[len] + '</b></a>';
+				}
 			}
 			$n.innerHTML = who.join(' ');
 		}
@@ -5875,7 +5894,7 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]
 	var footer = $X('//tr[@height="100"]'); //add footer
 	footer.setAttribute('height', '60');
 	footer.childNodes[1].style.paddingTop = '4px';
-	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2011 - Omerta Game Ltd. | &copy; 2007-2011 - Omerta Beyond<br /><br /><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? 'http://89.149.221.178/~fingon/?v=' + (sets.version == '_dm' ? '2' : '9') : EdoUrl) + '" target="_blank">' + lang.login[2] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
+	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2011 - Omerta Game Ltd. | &copy; 2007-2011 - Omerta Beyond<br /><br /><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? 'http://news.omertabeyond.com' : EdoUrl) + '" target="_blank">' + lang.login[1] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
 
 	var input = [$X('//input[@name="email"]'), $X('//input[@name="pass"]'), $X('//input[@type="submit"]')]; //add focus effects and styling
 	input.forEach(function ($n) {
