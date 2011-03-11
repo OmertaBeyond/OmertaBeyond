@@ -3617,7 +3617,6 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var owndiv = cEL('div');
 			owndiv.id = 'spot_extra_'+id+'';
 			owndiv.innerHTML = $X('//div[@id="spot_extra_'+id+'"]').innerHTML;
-			unsafeWindow.console.log(owndiv);
 			owndiv.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0'));
 			c.appendChild(owndiv);
 			c.appendChild(cEL('br'));
