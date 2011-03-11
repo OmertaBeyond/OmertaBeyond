@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.31
+	Version: 1.10.0.32
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -304,7 +304,7 @@ var langs = {
 			'Price per bullet:',
 			'You need to wait another'
 		],
-		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
+		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -419,19 +419,20 @@ var langs = {
 			'Under',
 			'Above',
 			'Go',
-			'Skip Heist cars',
+			'Skip Heist cars',//5
 			'Skip OC cars',
 			'Skip Trucks',
 			'Skip MOC cars',
 			'Skip 0% cars',
-			'All in safehouse',
+			'All in safehouse',//10
 			'Choose a Name',
 			'Choose a City',
 			'City: ',
 			'Keep selected when selecting a new group',
-			'Select group from current page',
+			'Select group from current page',//15
 			'Name: ',
-			'Type'
+			'Type',
+			'Total car value of this page:'
 		],
 		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
@@ -727,7 +728,7 @@ var langs = {
 			'Price per bullet:',
 			'You need to wait another'
 		],
-		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
+		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -854,7 +855,8 @@ var langs = {
 			'Keep selected when selecting a new group',
 			'Select group from current page',
 			'Name: ',
-			'Type'
+			'Type',
+			'Total car value of this page:'
 		],
 		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
@@ -1151,7 +1153,7 @@ var langs = {
 			'Price per bullet:',
 			'You need to wait another'
 		],
-		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
+		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -1278,7 +1280,8 @@ var langs = {
 			'Keep selected when selecting a new group',
 			'Select group from current page',
 			'Name: ',
-			'Type'
+			'Type',
+			'Total car value of this page:'
 		],
 		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
@@ -1583,7 +1586,7 @@ var langs = {
 			'Prijs per kogel:',
 			'Je moet nog'
 		],
-		crimetracker: ['Succes, je hebt', 'Succes je hebt \\$ (\\d+) verdiend.'],
+		crimetracker: ['Succes, je hebt', 'Succes je hebt \\$ (\\d+) verdiend.', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
 			'<b>nu</b>',
 			'Nu!',
@@ -1708,8 +1711,9 @@ var langs = {
 			'Stad: ',
 			'Hou geselecteerd wanneer je een nieuwe groep kiest',
 			'Selecteer groep op huidige pagina',
-			'Name: ',
-			'Type'
+			'Naam: ',
+			'Type',
+			'Totale waarde van de auto\'s op deze pagina:'
 		],
 		fampage: ['Gebruikers:', 'gebruiker', 'objecteigenaren', 'handelobjecteigenaren', 'Positie', 'Waarde'],
 		ffv: 'Je FireFox versie is ouder dan onze eisen. Beyond zal niet goed werken todat je update naar een nieuwere versie. Minimale vereiste versie:'

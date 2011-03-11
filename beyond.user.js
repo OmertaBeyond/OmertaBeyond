@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			08-03-2011
+// @date			11-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -144,8 +144,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 31;
-const SCRIPT_SUBVERSION = 31;
+const SCRIPT_VERSION_BUILD = 32;
+const SCRIPT_SUBVERSION = 32;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -538,7 +538,6 @@ if(dlp == '/marquee.php'){
 					link.innerHTML = priceStr;
 					return link;
 				}
-
 				var span, priceandtime, link, city, owncity;
 				var span = cEL('span');
 				var priceandtime = cEL('span');
@@ -556,7 +555,6 @@ if(dlp == '/marquee.php'){
 
 				var link = cEL('a');
 				link.href = PricesLink;
-
 				link.target = 'main';
 				link.innerHTML = lang.marquee[1];
 				link.style.color = '#FFF';
@@ -578,10 +576,8 @@ if(dlp == '/marquee.php'){
 				window.onload = setTimeout(function(){ window.location.reload(); }, 60000);
 			}
 		});
-
 	}
 }
-
 //---------------- Menu and submenus ----------------
 if (dlp == '/menu.php') {
 	//beyond menu descriptions
@@ -987,7 +983,6 @@ if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/
 								setValue('family',fam);
 								setPow('bninfo',4,role);//save
 							}
-
 							var d = new Date();//set check date
 							setValue('brcDate', d.getHours());
 						}
@@ -996,7 +991,6 @@ if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/
 			}
 		});
 	}
-
 
 	//grab Lex level once a day
 	if(getValue('lexDay', -1) != d.getDay()) {
@@ -1238,7 +1232,6 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 		setValue('lexDay', d.getDay());
 		setValue('lexHour', d.getHours());
 	}
-
 	function bgspage() {
 		var path = '//div[@class="otable widetable"][1]/center/table';
 		var a = $x(path).length; //amount of bg's you own
@@ -1271,7 +1264,6 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 			} else { //special doesn't exist for this bg
 				bgsspec[y] = 0;
 			}
-
 			//calcing total costs of the bg
 			//http://gamewiki.barafranca.com/index.php?title=Bodyguards_NL#De_bodyguards
 			if (bgsname[y] == 'Ike') {
@@ -1309,26 +1301,12 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 				stdef = 10;
 				startc = 10000;
 			}
-			if (bgsname[y] == 'Rob') {
-				attplvl = 2;
-				defplvl = 4;
-				statt = 0;
-				stdef = 20;
-				startc = 35000000;
-			}
 			if (bgsname[y] == 'Vic') {
 				attplvl = 8;
 				defplvl = 3;
 				statt = 20;
 				stdef = 0;
 				startc = 250000;
-			}
-			if (bgsname[y] == 'Mia') {
-				attplvl = 5;
-				defplvl = 3;
-				statt = 20;
-				stdef = 15;
-				startc = 35000000;
 			}
 			c += startc;
 			att = ((bgsatt[y] - statt) / attplvl);
@@ -1424,7 +1402,6 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 					}
 				}
 			}
-
 			bgscost[y] = c;
 			totatt += bgsatt[y];
 			totdef += bgsdef[y];
@@ -1471,7 +1448,6 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 			db.insertBefore(c, $X('//div[@class="otable widetable"]'));
 		}
 	}
-
 	//eventListeners
 	if (dls.indexOf('?module=Shop') != -1 || (dls.indexOf('?module=Bodyguards&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) { //via Shop
 		getID('smsdivcontainer').addEventListener('DOMNodeInserted', function (event) { //wait for DOM
@@ -1495,7 +1471,6 @@ if (((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.i
 		grabLex();
 	}
 }
-
 //---------------- External pages theme matching ----------------
 if (dlp == '/contact.php' || dlp == '/faq.php' || dlp == '/prices.php' || dlp == '/html/poll/poll.php') {
 	$X('//body').setAttribute('style', 'background-color: ' + getValue('bodyBg', '#B0B0B0'));
@@ -1644,7 +1619,6 @@ if(dlp == '/info.php'){
 						if(/\d?\d-\d?\d/.test(fArticles[i])){//check for a date
 							fDay.push(parseInt(/\d?\d-/.exec(fArticles[i])[0],10));//parse date from title
 							fMonth.push(parseInt(/-\d?\d/.exec(fArticles[i])[0].replace('-', ''),10));
-							fArticles[i] = fArticles[i].slice(fArticles[i].indexOf(') ')+2);
 						} else {//no date, ignore it
 							fUrl[i]='';
 							fArticles[i]='';
@@ -2029,7 +2003,7 @@ if (prefs[11]) {
 if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
 		$x('//input[@type="radio"]')[4].checked = true;
-	} else if (prefs[10]) {
+	} else if ($X('html/body').textContent.search('Closed') == -1 && prefs[10]) {
 		refreshIn('/BeO/webroot/index.php?module=Crimes');
 	}
 	if ($X('//input[@type="text"]')) {
@@ -2042,7 +2016,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 if (urlsearch == '/BeO/webroot/index.php?module=Crimes&action=docrime') {
 	var crimeTracker = getValue('crimes', 0);
 	var crimemoney = getValue('crimemoney', 0);
-	if (db.innerHTML.indexOf(lang.crimetracker[0]) != -1) {
+	if (db.textContent.indexOf(lang.crimetracker[0]) != -1) {
 		var rex1 = new RegExp(lang.crimetracker[1]);
 		var str1 = db.innerHTML.replace(/,/g, '');
 		var r1 = str1.match(rex1);
@@ -2061,18 +2035,21 @@ if (dls.indexOf('action=showMsg') != -1) {
 	var msgTyp = $X('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr/td/b').textContent;
 	var msgText = '/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[5]/td';
 	arr = $X(msgText).innerHTML.split(' ');	
-	var Lcrime = new RegExp('Lackey Crime');
+	var Lcrime = new RegExp(lang.crimetracker[3]);
 	if (Lcrime.test(msgTyp)) {
-		crimeTracker += parseInt(arr[38]);
-//		setValue('crimes', crimeTracker);
-		var crmoney = arr[83].replace(/,/g, '').replace('$', '');
+		var no = (arr[29]=='sent')?arr[38]:arr[29];
+		crimeTracker += parseInt(no);
+		setValue('crimes', crimeTracker);
+		var am = (arr[64]=='of')?arr[83]:arr[64];
+		var crmoney = am.replace(/,/g, '').replace('$', '');
 		crimemoney += parseInt(crmoney);
-//		setValue('crimemoney', crimemoney);
+		setValue('crimemoney', crimemoney);
 	}
-	var Lcar = new RegExp('Lackey Car');
+	var Lcar = new RegExp(lang.crimetracker[2]);
 	if (Lcar.test(msgTyp)) {
-		carTracker += parseInt(arr[29]);
-//		setValue('cars', carTracker);
+		var no = (arr[29]=='sent')?arr[38]:arr[29];
+		carTracker += parseInt(no);
+		setValue('cars', carTracker);
 	}
 }
 //---------------- Cars Page ----------------
@@ -2082,7 +2059,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 			p.push($i('//form//td[3]', i).replace(/\D|/g, ''));
 		}
 		$x('//input')[(p.indexOf(p.max() + '') + 1)].checked = true; //select radio by %
-	} else if (prefs[10]) {
+	} else if ($X('html/body').textContent.search('Closed') == -1 && prefs[10]) {
 		refreshIn('/BeO/webroot/index.php?module=Cars');
 	}
 	if ($X('//input[@type="text"]')) {
@@ -2532,11 +2509,14 @@ if(dlp == '/garage.php'){
 			indexTd.innerHTML = lang.garage[17];
 			$X('/html/body//form/center/table/tbody/tr').insertBefore(indexTd, $X('/html/body//form/center/table/tbody/tr/td[2]'));
 
+			var totVal = 0;
 			for(i=2;i<rows-2;i++){ //loop rows
 				var y = '//html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
 				var car = $X(y).href.match(/\d*$/)[0];
 				var carType = '';
 				var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
+				var carVal = parseInt($X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td[4]').innerHTML.replace(',', '').replace('$', '')); //get value
+				totVal += carVal;
 				types.forEach(function($n){ //loop car through types
 					if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
 						carType = titles[$n[0]]; //set car type
@@ -2556,7 +2536,13 @@ if(dlp == '/garage.php'){
 		var head = $X('//h2');
 		var cars = head.textContent.match(/\d+/g)[2];
 		if(cars>0){
-			head.textContent = head.textContent + ' '+lang.garage[0]+' ' + cars*12;
+			head.textContent = head.textContent+' | '+lang.garage[0]+' '+cars*12;
+		}
+
+		//add amount of money
+		var head = $X('//h2');
+		if(rows>2){
+			head.textContent = head.textContent+' | '+lang.garage[18]+' $'+commafy(totVal);
 		}
 
 		var xpath = $X('/html/body//form//center/table');//add menu
@@ -2635,7 +2621,7 @@ if(dlp == '/garage.php'){
 			selectN.appendChild(option);
 		});
 
-		var cities_td = $x('//tr[@class="thinline"]//td[6]');
+		var cities_td = (prefs[24])?$x('//tr[@class="thinline"]//td[6]'):$x('//tr[@class="thinline"]//td[5]');
 		var cities = [];
 		cities_td.forEach(function($n){ //grab cities on the current page
 			var carCity = $n.innerHTML;
@@ -2643,6 +2629,13 @@ if(dlp == '/garage.php'){
 				cities.push(carCity);
 			}
 		});
+
+		var keep = cEL('input');
+		keep.setAttribute('type', 'checkbox');
+		keep.id = 'keep';
+		var keepSpan = cEL('span');
+		keepSpan.innerHTML = lang.garage[14];
+
 		var selectC = cEL('select');
 		selectC.id = 'selectC';
 		selectC.addEventListener('change', function(e){
@@ -2650,7 +2643,7 @@ if(dlp == '/garage.php'){
 				if(!getID('keep').checked) {
 					$n.getElementsByTagName('input')[1].checked = false;
 				}
-				if($n.getElementsByTagName('td')[5].innerHTML == e.target.value){
+				if($n.getElementsByTagName('td')[4].innerHTML == e.target.value){
 					$n.getElementsByTagName('input')[1].checked = true;
 				}
 			});
@@ -2667,12 +2660,6 @@ if(dlp == '/garage.php'){
 		var citySpan = cEL('span');
 		citySpan.style.width = '80px';
 		citySpan.innerHTML = lang.garage[13]+'&nbsp;&nbsp;&nbsp;';
-
-		var keep = cEL('input');
-		keep.setAttribute('type', 'checkbox');
-		keep.id = 'keep';
-		var keepSpan = cEL('span');
-		keepSpan.innerHTML = lang.garage[14];
 
 		var gTd = cEL('td'); //group select
         gTd.setAttribute('align', 'center');
@@ -3132,7 +3119,7 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 		newTr = cEL('tr');
 			newTd = cEL('td');
 				list = '<table width="100%">';
-				list += '<tr><td></td><td><b>Capo</b></td><td><b>CapoMoney</b></td><td><b>to CD</b></td><td><b>to GF</b></td></tr>';
+				list += '<tr><td></td><td><b>Capo</b></td><td><b>CapoMoney</b></td><td><b>to GF</b></td></tr>';
 				for(i=0;i<nick.length;i++){//loop all capo's
 					n = i+2;
 					member = $x('count(//table['+n+']//tr[@valign="top"]//td/a)');//members
@@ -3143,9 +3130,7 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 					CM = CM.replace(/[a-zA-Z]| |\s/g, '');
 					list += CM.replace('$', '$ ') + '</td><td>';
 					CM = CM.replace(/[^0-9]/g,'');
-					var cmCoeficient = (sets.version == '_dm') ? 2 : 1;
-					list += ((5000000 * cmCoeficient) - CM)>0 ? '$ ' + commafy(((5000000 * cmCoeficient) - CM)) + '</td><td>' : '<b>X</b></td><td>';//CD
-					list += ((7500000 * cmCoeficient) - CM)>0 ? '$ ' + commafy(((7500000 * cmCoeficient) - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
+					list += (10000000 - CM)>0 ? '$ ' + commafy((10000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
 					$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
 				}
 				list += '</table>';
