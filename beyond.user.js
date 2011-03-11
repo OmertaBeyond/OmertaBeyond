@@ -3613,7 +3613,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		div2.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
 		div2.innerHTML = '<table class="thinline" style="width:630px"><tr><td colspan="2" class="tableheader">'+lang.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+lang.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+lang.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
 		var c = cEL('center');
-		if(db.innerHTML.search('id="spot_extra_6"')==-1){
+		if(db.innerHTML.search('id="spot_extra_6"')!=-1){
 			var owndiv = cEL('div');
 			owndiv.id = 'spot_extra_6';
 			owndiv.innerHTML = $X('//div[@id="spot_extra_6"]').innerHTML;
