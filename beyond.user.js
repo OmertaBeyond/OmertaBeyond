@@ -1026,12 +1026,13 @@ if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/
 	}
 }
 
-if (urlsearch == '/BeO/webroot/index.php?module=Travel&action=TravelNow') { //Get city when traveling
+if (dls.indexOf('?module=Travel&action=TravelNow') != -1) { //Get city when traveling
 	if (db.innerHTML.search('<table') != -1) {
 		var city = 0; //initialize to default for anything else
 		var text = $X('//font').textContent;
 		text = text.split(' ');
 		text = text[(text.length - 1)];
+			unsafeWindow.console.log(text)
 		var citys = ['Detroit', 'Chicago', 'Palermo', 'New', 'Las', 'Philadelphia', 'Baltimore', 'Corleone'];
 		for (i = 0; i < citys.length; i++) {
 			if (citys[i] == text) {
@@ -1039,6 +1040,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Travel&action=TravelNow') { //Ge
 			}
 		}
 		if (city) {
+			unsafeWindow.console.log(city)
 			setPow('bninfo', 2, city); //if traveled, save new city
 		}
 	}
@@ -3290,11 +3292,15 @@ if (prefs[26]) {
 
 //---------------- Raidpage ----------------
 if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1) && prefs[34]) {
-
 	if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@id, "spot_")]').length / 3; // get total amount of spots
 		var city = $x('//b')[0].textContent;
-
+		if(db.innerHTML.search('id="spot_extra_6"')==-1){
+			var owndiv = cEL('div');
+			owndiv.id = 'setprotection';
+			owndiv.innerHTML = $X('//div[@id="spot_extra_6"]');
+			db.appendChild(owndiv);
+		}
 		function whatspot(city, type) {
 			var cords;
 			if (city == 'Detroit') {
@@ -3586,7 +3592,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var profit = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[3]/td[2]').innerHTML;
 			var protnum = getID('jsprogbar_div_protection_'+id).innerHTML; // the actual % of protection
 			var prot = $X('//*[@id="jsprogbar_protection_'+id+'"]/table/tbody/tr/td').innerHTML;
-			prot = prot.replace('<div id="jsprogbar_div_protection_0" style="font-size: smaller; font-weight: normal; height: 15px; vertical-align: middle; overflow: hidden; text-align: center; position: absolute; width: 100px;color: #FFFFFF;">90</div>', '<div id="jsprogbar_div_protection_'+id+'" style="text-align:center; position:absolute; width:100px;"><font color="#000">'+protnum+'%</font></div>');
+			prot = prot.replace('<div id="jsprogbar_div_protection_'+id+'" style="font-size: smaller; font-weight: normal; height: 15px; vertical-align: middle; overflow: hidden; text-align: center; position: absolute; width: 100px; color: rgb(255, 255, 255);">'+protnum+'</div>', '<div id="jsprogbar_div_protection_'+id+'" style="text-align:center; position:absolute; width:100px;"><font color="#000">'+protnum+'%</font></div>');
 			var rpform = '';
 			var rex = new RegExp('\\(([\\w\\s]+)\\)');
 			var rpfam = owner.match(rex);
