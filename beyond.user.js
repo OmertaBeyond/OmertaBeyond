@@ -3295,15 +3295,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 	if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@id, "spot_")]').length / 3; // get total amount of spots
 		var city = $x('//b')[0].textContent;
-		
-		if(db.innerHTML.search('id="spot_extra_6"')!=-1){
-			var owndiv = cEL('div');
-			owndiv.id = 'setprotection';
-			owndiv.innerHTML = $X('//div[@id="spot_extra_6"]');
-			owndiv.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0'));
-			c.appendChild(owndiv);
-		}
-		
+
 		function whatspot(city, type) {
 			var cords;
 			if (city == 'Detroit') {
@@ -3616,12 +3608,21 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		}
 		divdump += '</table>';
 		div.innerHTML = divdump;
-		db.innerHTML = '';
 
 		var div2 = cEL('div2'); // Div with forms
 		div2.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
 		div2.innerHTML = '<table class="thinline" style="width:630px"><tr><td colspan="2" class="tableheader">'+lang.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+lang.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+lang.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
 		var c = cEL('center');
+		if(db.innerHTML.search('id="spot_extra_6"')==-1){
+			var owndiv = cEL('div');
+			owndiv.id = 'spot_extra_6';
+			owndiv.innerHTML = $X('//div[@id="spot_extra_6"]').innerHTML;
+			unsafeWindow.console.log(owndiv);
+			owndiv.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0'));
+			c.appendChild(owndiv);
+			c.appendChild(cEL('br'));
+		}
+		db.innerHTML = '';
 		c.appendChild(div2);
 		c.appendChild(cEL('br'));
 		c.appendChild(div);
