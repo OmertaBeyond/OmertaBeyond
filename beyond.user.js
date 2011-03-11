@@ -3295,12 +3295,6 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 	if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@id, "spot_")]').length / 3; // get total amount of spots
 		var city = $x('//b')[0].textContent;
-		if(db.innerHTML.search('id="spot_extra_6"')==-1){
-			var owndiv = cEL('div');
-			owndiv.id = 'setprotection';
-			owndiv.innerHTML = $X('//div[@id="spot_extra_6"]');
-			db.appendChild(owndiv);
-		}
 		function whatspot(city, type) {
 			var cords;
 			if (city == 'Detroit') {
@@ -3622,8 +3616,15 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		c.appendChild(div2);
 		c.appendChild(cEL('br'));
 		c.appendChild(div);
+		if(db.innerHTML.search('id="spot_extra_6"')!=-1){
+			var owndiv = cEL('div');
+			owndiv.id = 'setprotection';
+			owndiv.innerHTML = $X('//div[@id="spot_extra_6"]');
+			owndiv.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0'));
+			c.appendChild(owndiv);
+		}
 		db.appendChild(c);
-
+		
 		//regrap all values (for AFing sake)
 		for (y = 0; y <= am; y+=1) {
 			if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
