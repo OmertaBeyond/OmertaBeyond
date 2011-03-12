@@ -3048,7 +3048,6 @@ if (prefs[13] && dlp == '/family.php') {
 				if(famname == fams[i].getElementsByTagName('name')[0].textContent) {
 					var fampos = i+1;
 					var famworth = fams[i].getElementsByTagName('worth')[0].textContent;
-
 					var posrow = cEL('tr');
 					var tdL = cEL('td');
 					tdL.innerHTML = lang.fampage[4] + ':';
@@ -3556,6 +3555,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		var divdump = '<table class="thinline" style="width:630px" cellpadding="0"><tr class="tableheader"><td>&nbsp;</td><td>'+lang.raidpage[3]+'</td><td>'+lang.raidpage[4]+'</td><td>'+lang.raidpage[5]+'</td><td>'+lang.raidpage[6]+'</td><td>'+lang.raidpage[7]+'</td><td>'+lang.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="7"></td></tr>';
 
 		var user = getValue('nick', '');
+		ownerid = [];
 		var ownfam = getValue('family', '');
 		for (var y = 0; y < am; y+=1) {
 			var id = $x('//*[@id="map"]/div[contains(@id, "spot_")]')[y].id; // = 'spot_*'
@@ -3606,28 +3606,21 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			}
 			//parsing everything
 			divdump += '<tr style="height: 22px;"><td style="padding-left:5px">'+cords+'</td><td>'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px; border-radius:3px;"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
-		if (user == owner.split(' ')[0]){
-			var owndiv = cEL('div');
-			owndiv.id = 'spot_extra_'+id+'';
-			owndiv.innerHTML = $X('//div[@id="spot_extra_'+id+'"]').innerHTML;
-			owndiv.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+'; border:1px solid black; width:630px;');
+			if(owner.split(' ')[0] == user) { ownerid.push(id); }
 		}
-		else {
-			var owndiv = cEL('div');
-			owndiv.innerHTML = 'u dont own a spot';
-		}
-		}
-
 		divdump += '</table>';
 		div.innerHTML = divdump;
 
 		var div2 = cEL('div2'); // Div with forms
 		div2.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
-		div2.innerHTML = '<table class="thinline" style="width:630px"><tr><td colspan="2" class="tableheader">'+lang.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+lang.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+lang.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
+		if (ownerid[0] != null){
+			div2.innerHTML = $X('//div[@id="spot_extra_'+id+'"]').innerHTML;
+		} else {
+			div2.innerHTML = '<table class="thinline" style="width:630px"><tr><td colspan="2" class="tableheader">'+lang.raidpage[10]+'</td></tr><tr><td colspan="2" height="1" bgcolor="black"></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right">'+lang.raidpage[8]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; border-radius:5px; padding-left:4px" id="raidpagebullets" type="text" name="bullets" size="3" value="200" /></td></tr><tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'"><td style="text-align:right;">'+lang.raidpage[9]+'</td><td style="padding-left:40px"><input style="-moz-border-radius:5px; border-radius:5px; padding-left:4px" id="raidpagedriver" type="text" name="driver" /></td></tr></table>';
+		}
 		var c = cEL('center');
 		db.innerHTML = '';
 		
-		c.appendChild(owndiv);
 		c.appendChild(cEL('br'));
 		c.appendChild(div2);
 		c.appendChild(cEL('br'));
