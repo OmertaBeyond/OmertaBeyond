@@ -1,37 +1,37 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			11-03-2011
+// @date			12-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
 // @author			Rix <rix@omertabeyond.com>
 // @author			MrWhite <mrwhite@omertabeyond.com>
 // @license			GNU General Public License v3
-// @namespace			v3.omertabeyond.com
-// @homepageURL			http://www.omertabeyond.com/
-// @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
+// @namespace		v3.omertabeyond.com
+// @homepageURL		http://www.omertabeyond.com/
+// @description		Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
-// @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
+// @screenshot		http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
-// @resource	css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
-// @resource	trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
-// @resource	colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
-// @resource	comLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-com.png
-// @resource	dmLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-dm.png
-// @resource	nlLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-nl.png
-// @resource	buttonMenu	http://omertabeyond.googlecode.com/svn/trunk/images/menu.png
-// @resource	buttonKey	http://omertabeyond.googlecode.com/svn/trunk/images/key.png
-// @resource	buttonReset	http://omertabeyond.googlecode.com/svn/trunk/images/reset.png
-// @resource	favoriteIco	http://omertabeyond.googlecode.com/svn/trunk/images/favicon.png
-// @resource	updateIco	http://omertabeyond.googlecode.com/svn/trunk/images/updateicon.png
-// @resource	brcGear		http://omertabeyond.googlecode.com/svn/trunk/images/brcgear.png
-// @resource	deleteIcon	http://omertabeyond.googlecode.com/svn/trunk/images/deleteicon.png
-// @resource	reply		http://omertabeyond.googlecode.com/svn/trunk/images/reply.png
-// @resource	loading		http://omertabeyond.googlecode.com/svn/trunk/images/loading.png
-// @resource	nickreader	http://omertabeyond.googlecode.com/svn/trunk/images/magnifier.png
+// @resource		css			http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
+// @resource		trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
+// @resource		colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
+// @resource		comLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-com.png
+// @resource		dmLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-dm.png
+// @resource		nlLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-nl.png
+// @resource		buttonMenu	http://omertabeyond.googlecode.com/svn/trunk/images/menu.png
+// @resource		buttonKey	http://omertabeyond.googlecode.com/svn/trunk/images/key.png
+// @resource		buttonReset	http://omertabeyond.googlecode.com/svn/trunk/images/reset.png
+// @resource		favoriteIco	http://omertabeyond.googlecode.com/svn/trunk/images/favicon.png
+// @resource		updateIco	http://omertabeyond.googlecode.com/svn/trunk/images/updateicon.png
+// @resource		brcGear		http://omertabeyond.googlecode.com/svn/trunk/images/brcgear.png
+// @resource		deleteIcon	http://omertabeyond.googlecode.com/svn/trunk/images/deleteicon.png
+// @resource		reply		http://omertabeyond.googlecode.com/svn/trunk/images/reply.png
+// @resource		loading		http://omertabeyond.googlecode.com/svn/trunk/images/loading.png
+// @resource		nickreader	http://omertabeyond.googlecode.com/svn/trunk/images/magnifier.png
 // @include			http://gm.omertabeyond.com/*.php*
 // @include			http://www.omertabeyond.com/html/poll/poll.php*
 // @include			http://www.omerta3.com/*
@@ -144,8 +144,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 32;
-const SCRIPT_SUBVERSION = 32;
+const SCRIPT_VERSION_BUILD = 33;
+const SCRIPT_SUBVERSION = 33;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -3549,7 +3549,6 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			}
 			return cords;
 		}
-
 		var div = cEL('div'); // the main div
 		div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; font-family:Tahoma,Verdana');
 		var divdump = '<table class="thinline" style="width:630px" cellpadding="0"><tr class="tableheader"><td>&nbsp;</td><td>'+lang.raidpage[3]+'</td><td>'+lang.raidpage[4]+'</td><td>'+lang.raidpage[5]+'</td><td>'+lang.raidpage[6]+'</td><td>'+lang.raidpage[7]+'</td><td>'+lang.raidpage[11]+'</td></tr><tr><td height="2" bgcolor="black" colspan="7"></td></tr>';
@@ -3592,14 +3591,13 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var rpfam = owner.match(rex);
 			if (ownfam != lang.status[1]) {
 				if (rpfam != null) { // owned by player
-					if (rpfam[1] != stripHTML(ownfam)) { // not own fam
+					if (rpfam[1] != stripHTML(ownfam) && time == lang.raidpage[1]) { // not own fam
 						rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px; border-radius:5px;" type="submit" value="Go!" /></form>';
-					} else {
-						time = '';
-						//profit = $x('//td')[(((u * 14) + 5) - tdskipnum)].innerHTML; // reload profit cuz it's of
 					}
-				} else {
+				} else if (rpfam == null && time == lang.raidpage[1]) {
 					rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px; border-radius:5px;" type="submit" value="Go!" /></form>';
+				} else {
+					rpform = '';
 				}
 			}
 			//parsing everything

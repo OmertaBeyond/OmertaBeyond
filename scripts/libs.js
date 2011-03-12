@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.10.0.31
+	Version: 1.10.0.33
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -472,7 +472,6 @@ function OBUpdate(cb) {
 		}
 	});
 }
-
 Array.prototype.sum = function () {
 	for (i = 0, sum = 0; i < this.length; sum += this[i++]);
 	return sum;

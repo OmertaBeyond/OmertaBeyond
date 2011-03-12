@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.32
+	Version: 1.10.0.33
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -311,27 +311,27 @@ var langs = {
 			'Spot',
 			'Type',
 			'Owner',
-			'Profit left',
+			'Profit left',//5
 			'Protection',
 			'Next raid',
 			'Bullets',
 			'Driver',
-			'Information',
+			'Information',//10
 			'Invite',
 			'Local Mob',
 			'Car Lot (Thunderbolt)',
 			'Car Lot (Avus)',
-			'Car Lot (Spyder)',
+			'Car Lot (Spyder)',//15
 			'Whiskey Stills',
 			'Farm (Marijuana)',
 			'Farm (Beer)',
 			'Docks (Heroin)',
-			'Docks (Cognac)',
+			'Docks (Cognac)',//20
 			'Factory',
 			'Scrapyard',
 			'Bar',
 			'Restaurant',
-			'Army Surplus Store',
+			'Army Surplus Store',//25
 			'Lawyers Office'
 		],
 		lastontime: [
