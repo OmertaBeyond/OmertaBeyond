@@ -3606,16 +3606,18 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			}
 			//parsing everything
 			divdump += '<tr style="height: 22px;"><td style="padding-left:5px">'+cords+'</td><td>'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px; border-radius:3px;"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
-			if(db.innerHTML.search('id="spot_extra_'+id+'"')!=-1 && owner.split(' ')[0] == user){
-				var owndiv = cEL('div');
-				owndiv.id = 'spot_extra_'+id+'';
-				owndiv.innerHTML = $X('//div[@id="spot_extra_'+id+'"]').innerHTML;
-				owndiv.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0'));
-			}
-			else {
-				var owndiv = cEL('div');
-			}
+		if(db.innerHTML.search('id="spot_extra_'+id+'"')!=-1){
+			var owndiv = cEL('div');
+			owndiv.id = 'spot_extra_'+id+'';
+			owndiv.innerHTML = $X('//div[@id="spot_extra_'+id+'"]').innerHTML;
+			owndiv.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+'; border:1px solid black; width:630px;');
 		}
+		else {
+			var owndiv = cEL('div');
+			owndiv.innerHTML = 'p0rn';
+		}
+		}
+
 		divdump += '</table>';
 		div.innerHTML = divdump;
 
