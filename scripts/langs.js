@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.33
+	Version: 1.10.0.34
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -155,7 +155,7 @@ var langs = {
 			'Reset menu'
 		],
 		login: ['Register', 'OBnews'],
-		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
+		status: ['none', 'None', 'successful', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -579,7 +579,7 @@ var langs = {
 			'Reset menu'
 		],
 		login: ['Register', 'OBnews'],
-		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
+		status: ['none', 'None', 'successful', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -1003,7 +1003,7 @@ var langs = {
 			'Reset menu'
 		],
 		login: ['Register', 'OBnews'],
-		status: ['none', 'None', 'succesfull', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
+		status: ['none', 'None', 'successful', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
 		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
 		failedBullets: [
 			'You may only buy 500 bullets.',

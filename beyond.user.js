@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			12-03-2011
+// @date			14-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -86,13 +86,12 @@ if (db.innerHTML.indexOf('clicklimit') != -1 && dlp != '/menu.php') {
 
 function whereToRun(hostname) {
 	switch (hostname || window.location.hostname) {
-		case 'www.barafranca.com':
-		case 'barafranca.com':
 		case 'www.omerta3.com':
 		case 'omerta3.com':
+		case 'www.barafranca.com':
+		case 'barafranca.com':
 		case 'www.barafranca.us':
 		case 'barafranca.us':
-		case '89.149.221.178':
 			return 'com';
 			break;
 		case 'deathmatch.barafranca.com':
@@ -144,8 +143,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 33;
-const SCRIPT_SUBVERSION = 33;
+const SCRIPT_VERSION_BUILD = 34;
+const SCRIPT_SUBVERSION = 34;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -154,7 +153,7 @@ var PrefsLink = SCRIPT_LINK + sets.prefslink;
 var PricesLink = SCRIPT_LINK + sets.priceslink;
 var ContactLink = SCRIPT_LINK + sets.contactlink;
 var PollLink = SITE_LINK + sets.polllink;
-const OBnUrl = 'http://news.omertabeyond.com/';
+const OBnUrl = 'http://news.omertabeyond.com';
 const EdoUrl = 'http://www.edo-nieuws.nl/news.php';
 var ff = navigator.userAgent.split('/')[3].split(' ')[0];
 const OB_v = SCRIPT_VERSION_MAJOR + '.' + SCRIPT_VERSION_MINOR + '.' + SCRIPT_VERSION_MAINTENANCE;
@@ -1532,22 +1531,6 @@ if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
 }
 
 //---------------- OB/Edo News ----------------
-//if (dlp == '/~fingon/beyond.php') { //apply ingame theme to fingon thingy
-//	$x('//tr').forEach(function ($n) {
-//		$n.style.backgroundColor = getValue('tableBg', '#F0F0F0');
-//	});
-//	$x('//td[@background="images/topic.gif"]').forEach(function ($n) {
-//		$n.setAttribute('background', 'http://www.barafranca.com/static/images/game/generic/headershine.png');
-//		$n.setAttribute('style', 'background-color:' + getValue('titleBg', '#F0F0F0') + '; height:23px; color:white;');
-//	});
-//	db.style.backgroundColor = getValue('bodyBg', '#B0B0B0');
-//	db.style.color = getValue('fontClr', '#000');
-//
-//	var goToFin = $XLast('//b');
-//	goToFin.style.textAlign = 'center';
-//	goToFin.innerHTML = '<a style="color:#EEE !important; font-weight:bold;" href="http://news.omertabeyond.com' + dls + '" target="_blank">Click here to go to the actual news post</a>';
-//}
-
 if(dlp == '/info.php'){
 	if(prefs[2]) {
 		function addNews(){
@@ -1583,7 +1566,7 @@ if(dlp == '/info.php'){
 			for(i=0;i<oNews.length;i++){//add to page
 				var item = oNews[i].getElementsByTagName('a')[0];
 				item.href = news[i][0];
-				item.setAttribute('style', 'font-size:11px !important;');//manuall override to make sure it keeps font-size
+				item.setAttribute('style', 'font-size:11px !important;');//manual override to make sure it keeps font-size
 				if(item.href.search('barafranca')==-1) {
 					item.parentNode.parentNode.setAttribute('style', 'background:url(\''+GM_getResourceURL('favoriteIco')+'\') no-repeat 90% 20%;');
 					item.setAttribute('target', 'blank');
@@ -1596,7 +1579,7 @@ if(dlp == '/info.php'){
 			}
 			//We have better news
 			var times = $X('//a[contains(@href,"mag.php")]');
-			times.href = sets.version=='_com' ? OBnUrl : sets.version=='_dm' ? OBnUrl : EdoUrl;
+			times.href = sets.version=='_com' ? OBnUrl : EdoUrl;
 			times.style.fontSize = '11px';
 			times.innerHTML = 'OBNews';
 		}
@@ -1609,7 +1592,7 @@ if(dlp == '/info.php'){
 		if(sets.version=='_com'){//grab news from obnews rss feed
 			GM_xmlhttpRequest({
 				method: 'GET',
-				url: 'http://news.omertabeyond.com/rss.php',
+				url: OBnUrl + '/rss.php',
 				onload: function(resp){
 					var parser = new DOMParser();
 					var dom = parser.parseFromString(resp.responseText, 'application/xml');
@@ -4219,7 +4202,7 @@ if (dlp == '/kill.php') {
 				if (arr[2] == lang.linkify[9]) {
 					arr[3] = '<a href="user.php?nick=' + arr[3].replace(/(<b>|<\/b>)/g, '') + '">' + arr[3] + '</a>'; //check if we found the bastard
 				} else {
-					var index = ((sets.version=='_com')?5:6); //version dependency
+					var index = ((sets.version=='_nl')?6:5); //version dependency
 					arr[index] = '<a href="user.php?nick=' + arr[index].replace(/(<b>|<\/b>)/g, '') + '">' + arr[index] + '</a>';
 				}
 				$n.innerHTML = arr.join(' ');
@@ -5882,7 +5865,7 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]
 	var footer = $X('//tr[@height="100"]'); //add footer
 	footer.setAttribute('height', '60');
 	footer.childNodes[1].style.paddingTop = '4px';
-	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2011 - Omerta Game Ltd. | &copy; 2007-2011 - Omerta Beyond<br /><br /><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? 'http://news.omertabeyond.com' : EdoUrl) + '" target="_blank">' + lang.login[1] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
+	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2011 - Omerta Game Ltd. | &copy; 2007-2011 - Omerta Beyond<br /><br /><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? OBnUrl : EdoUrl) + '" target="_blank">' + lang.login[1] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
 
 	var input = [$X('//input[@name="email"]'), $X('//input[@name="pass"]'), $X('//input[@type="submit"]')]; //add focus effects and styling
 	input.forEach(function ($n) {

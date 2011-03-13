@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Variables depending on version
 
-	Version: 1.10.0.31
+	Version: 1.10.0.34
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -13,152 +13,6 @@
 
 // Get language vars
 var settings = {
-	tr: {
-		version: '_tr',
-		prefslink: '/prefs.php?v=tr',
-		priceslink: '/prices.php?v=tr',
-		contactlink: '/contact.php?v=tr',
-		polllink: '/html/poll/poll.php?v=tr',
-		statslink: '',
-		status: ['none', 'None'],
-		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
-		failedBullets: [
-			'You may only buy 500 bullets.',
-			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
-			'This factory doesn\'t have that many bullets.<br><br>The price of bullets may also have changed RIGHT NOW, please try again.3',
-			'You cant buy a negative amount of bullets',
-			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
-			'You don\'t have enough cash to make this deal.'
-		],
-		garage: 'Type',
-		race: 'You\'re still tired from your last race',
-		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
-		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
-		driver: [
-			'Rookie',
-			'Co-Driver',
-			'Driver',
-			'Advanced Driver',
-			'Master Driver',
-			'Chauffeur',
-			'Advanced Chauffeur',
-			'Master Chauffeur',
-			'Racing Driver',
-			'Race Supremo',
-			'Champion'
-		],
-		friends: 'Friends:',
-		bank: 'You cannot transfer less than 100 dollars',
-		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets', 'bullets'],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
-		linkify: [
-			'Route 66 heist',
-			'Organised Crime',
-			'Mega Organized Crime',
-			'Target not found',
-			'Carrace invite',
-			'Target found',
-			'Kill success',
-			'Witness statement',
-			'Condolences',
-			'found',
-			'Ticket update',
-			'Crashed Message',
-			'Invitation',
-			'Raid Notification',
-			'Married',
-			'Wedding Gift',
-			'Wedding'
-		],
-		NR: {
-			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
-			positions: 'Don of,Capo of:,Sottocapo of:,Consiglieri of:',
-			objects: 'Blackjack:,Roulette:,Bulletfactory:,Numbers Game:,Slotmachine:,Punto Banco:,Bookmaker office:',
-			properties: 'User:,Rank:,Honor points:,Status,Wealth',
-			error: 'Could not load page.'
-		},
-		BR: [
-			'Best Run Calculator',
-			'City',
-			'Booze',
-			'Narc',
-			'Profit',
-			'You are in ',
-			'You can\'t fly to ',
-			'You won\'t make any profit in ',
-			'Auto-Fill',
-			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
-			'NOW'
-		],
-		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
-		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
-		scratcher: [
-			'<b>Congratulations!</b>',
-			'bullets<br>They have been added to your account!<br>',
-			'won (\\d+) bullets',
-			'<br>It has been added to your account!<br>',
-			'You have won \\$ (\\d+)',
-			'<b>Start scratching</b>',
-			'Scratcher',
-			'Scratched:',
-			'Money spent:',
-			'Money won:',
-			'Profit:',
-			'Millions:',
-			'Bullets won:',
-			'Price per bullet:',
-			'Turn off',
-			'Turn on',
-			'Reset stats',
-			'Stats have been reset!'
-		],
-		bullettracker: [
-			'Success, you bought',
-			'Success you bought (\\d+) bullets for \\$ (\\d+)',
-			'BulletTracker',
-			'Bullets bought:',
-			'Money spent:',
-			'Price per bullet:'
-		],
-		raidpage: [
-			'<b>now</b>',
-			'Now!',
-			'Spot',
-			'Type',
-			'Owner',
-			'Profit left',
-			'Protection',
-			'Next raid',
-			'Bullets',
-			'Driver',
-			'Information',
-			'Invite',
-			'Local Mob'
-		],
-		lastontime: [
-			'Alive',
-			'Last on:',
-			'ago'
-		],
-		pokertracker: [
-			'Poker Tracker',
-			'You have joined the game.',
-			'You have called the current bet.',
-			'You have raised the bet.',
-			'Games played: ',
-			'Games won: ',
-			'Money spent: ',
-			'Money won: ',
-			'Profit: ',
-			'You have checked the current bet.',
-			'You have started a new game.'
-		],
-		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
-		killpage: 'All cities',
-		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
-	},
 	en: {
 		version: '_com',
 		prefslink: '/prefs.php?v=com',
@@ -603,5 +457,151 @@ var settings = {
 		killpage: 'Alle steden',
 		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?'],
 		busttracker: ['Je hebt deze gangster uit de gevangenis gebroken.', 'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken']
+	},
+	tr: {
+		version: '_tr',
+		prefslink: '/prefs.php?v=tr',
+		priceslink: '/prices.php?v=tr',
+		contactlink: '/contact.php?v=tr',
+		polllink: '/html/poll/poll.php?v=tr',
+		statslink: '',
+		status: ['none', 'None'],
+		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
+		failedBullets: [
+			'You may only buy 500 bullets.',
+			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
+			'This factory doesn\'t have that many bullets.<br><br>The price of bullets may also have changed RIGHT NOW, please try again.3',
+			'You cant buy a negative amount of bullets',
+			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
+			'You don\'t have enough cash to make this deal.'
+		],
+		garage: 'Type',
+		race: 'You\'re still tired from your last race',
+		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
+		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
+		driver: [
+			'Rookie',
+			'Co-Driver',
+			'Driver',
+			'Advanced Driver',
+			'Master Driver',
+			'Chauffeur',
+			'Advanced Chauffeur',
+			'Master Chauffeur',
+			'Racing Driver',
+			'Race Supremo',
+			'Champion'
+		],
+		friends: 'Friends:',
+		bank: 'You cannot transfer less than 100 dollars',
+		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
+		obay: ['Pack of bullets', 'bullets'],
+		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
+		linkify: [
+			'Route 66 heist',
+			'Organised Crime',
+			'Mega Organized Crime',
+			'Target not found',
+			'Carrace invite',
+			'Target found',
+			'Kill success',
+			'Witness statement',
+			'Condolences',
+			'found',
+			'Ticket update',
+			'Crashed Message',
+			'Invitation',
+			'Raid Notification',
+			'Married',
+			'Wedding Gift',
+			'Wedding'
+		],
+		NR: {
+			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
+			positions: 'Don of,Capo of:,Sottocapo of:,Consiglieri of:',
+			objects: 'Blackjack:,Roulette:,Bulletfactory:,Numbers Game:,Slotmachine:,Punto Banco:,Bookmaker office:',
+			properties: 'User:,Rank:,Honor points:,Status,Wealth',
+			error: 'Could not load page.'
+		},
+		BR: [
+			'Best Run Calculator',
+			'City',
+			'Booze',
+			'Narc',
+			'Profit',
+			'You are in ',
+			'You can\'t fly to ',
+			'You won\'t make any profit in ',
+			'Auto-Fill',
+			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
+			'NOW'
+		],
+		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
+		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		scratcher: [
+			'<b>Congratulations!</b>',
+			'bullets<br>They have been added to your account!<br>',
+			'won (\\d+) bullets',
+			'<br>It has been added to your account!<br>',
+			'You have won \\$ (\\d+)',
+			'<b>Start scratching</b>',
+			'Scratcher',
+			'Scratched:',
+			'Money spent:',
+			'Money won:',
+			'Profit:',
+			'Millions:',
+			'Bullets won:',
+			'Price per bullet:',
+			'Turn off',
+			'Turn on',
+			'Reset stats',
+			'Stats have been reset!'
+		],
+		bullettracker: [
+			'Success, you bought',
+			'Success you bought (\\d+) bullets for \\$ (\\d+)',
+			'BulletTracker',
+			'Bullets bought:',
+			'Money spent:',
+			'Price per bullet:'
+		],
+		raidpage: [
+			'<b>now</b>',
+			'Now!',
+			'Spot',
+			'Type',
+			'Owner',
+			'Profit left',
+			'Protection',
+			'Next raid',
+			'Bullets',
+			'Driver',
+			'Information',
+			'Invite',
+			'Local Mob'
+		],
+		lastontime: [
+			'Alive',
+			'Last on:',
+			'ago'
+		],
+		pokertracker: [
+			'Poker Tracker',
+			'You have joined the game.',
+			'You have called the current bet.',
+			'You have raised the bet.',
+			'Games played: ',
+			'Games won: ',
+			'Money spent: ',
+			'Money won: ',
+			'Profit: ',
+			'You have checked the current bet.',
+			'You have started a new game.'
+		],
+		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
+		killpage: 'All cities',
+		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
+		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
 	}
 };
