@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			14-03-2011
+// @date			15-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -26,6 +26,7 @@
 // @resource		buttonKey	http://omertabeyond.googlecode.com/svn/trunk/images/key.png
 // @resource		buttonReset	http://omertabeyond.googlecode.com/svn/trunk/images/reset.png
 // @resource		favoriteIco	http://omertabeyond.googlecode.com/svn/trunk/images/favicon.png
+// @resource		edoIco		http://omertabeyond.googlecode.com/svn/trunk/images/edo.png
 // @resource		updateIco	http://omertabeyond.googlecode.com/svn/trunk/images/updateicon.png
 // @resource		brcGear		http://omertabeyond.googlecode.com/svn/trunk/images/brcgear.png
 // @resource		deleteIcon	http://omertabeyond.googlecode.com/svn/trunk/images/deleteicon.png
@@ -143,8 +144,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 34;
-const SCRIPT_SUBVERSION = 34;
+const SCRIPT_VERSION_BUILD = 35;
+const SCRIPT_SUBVERSION = 35;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -153,7 +154,7 @@ var PrefsLink = SCRIPT_LINK + sets.prefslink;
 var PricesLink = SCRIPT_LINK + sets.priceslink;
 var ContactLink = SCRIPT_LINK + sets.contactlink;
 var PollLink = SITE_LINK + sets.polllink;
-const OBnUrl = 'http://news.omertabeyond.com';
+const OBnUrl = 'http://news.omertabeyond.com/';
 const EdoUrl = 'http://www.edo-nieuws.nl/news.php';
 var ff = navigator.userAgent.split('/')[3].split(' ')[0];
 const OB_v = SCRIPT_VERSION_MAJOR + '.' + SCRIPT_VERSION_MINOR + '.' + SCRIPT_VERSION_MAINTENANCE;
@@ -1568,7 +1569,13 @@ if(dlp == '/info.php'){
 				item.href = news[i][0];
 				item.setAttribute('style', 'font-size:11px !important;');//manual override to make sure it keeps font-size
 				if(item.href.search('barafranca')==-1) {
-					item.parentNode.parentNode.setAttribute('style', 'background:url(\''+GM_getResourceURL('favoriteIco')+'\') no-repeat 90% 20%;');
+					var newsIcon;
+					if(sets.version == '_com') {
+						newsIcon = GM_getResourceURL('favoriteIco');
+					} else {
+						newsIcon = GM_getResourceURL('edoIco');
+					}
+					item.parentNode.parentNode.setAttribute('style', 'background:url(\''+newsIcon+'\') no-repeat 90% 20%;');
 					item.setAttribute('target', 'blank');
 				}
 				if(news[i][1].search(lang.login[2])!=-1 && sets.version=='_nl'){
@@ -1626,7 +1633,7 @@ if(dlp == '/info.php'){
 		if(sets.version=='_nl'){//get news from Edo mainpage
 			GM_xmlhttpRequest({
 				method: 'GET',
-				url: 'http://www.edo-nieuws.nl/news.php',
+				url: EdoUrl,
 				onload: function(resp){//news
 					var html = resp.responseText;
 					var news = html.split('<a name=\'news_');
