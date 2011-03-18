@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			15-03-2011
+// @date			18-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -144,8 +144,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 35;
-const SCRIPT_SUBVERSION = 35;
+const SCRIPT_VERSION_BUILD = 36;
+const SCRIPT_SUBVERSION = 36;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1032,7 +1032,6 @@ if (dls.indexOf('?module=Travel&action=TravelNow') != -1) { //Get city when trav
 		var text = $X('//font').textContent;
 		text = text.split(' ');
 		text = text[(text.length - 1)];
-			unsafeWindow.console.log(text)
 		var citys = ['Detroit', 'Chicago', 'Palermo', 'New', 'Las', 'Philadelphia', 'Baltimore', 'Corleone'];
 		for (i = 0; i < citys.length; i++) {
 			if (citys[i] == text) {
@@ -1040,7 +1039,6 @@ if (dls.indexOf('?module=Travel&action=TravelNow') != -1) { //Get city when trav
 			}
 		}
 		if (city) {
-			unsafeWindow.console.log(city)
 			setPow('bninfo', 2, city); //if traveled, save new city
 		}
 	}
@@ -2026,13 +2024,13 @@ if (dls.indexOf('action=showMsg') != -1) {
 	var carmoney = getValue('carmoney', 0);
 	var msgTyp = $X('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr/td/b').textContent;
 	var msgText = '/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[5]/td';
-	arr = $X(msgText).innerHTML.split(' ');	
+	arr = $X(msgText).innerHTML.split(' ');
 	var Lcrime = new RegExp(lang.crimetracker[3]);
 	if (Lcrime.test(msgTyp)) {
 		var no = (arr[29]=='sent')?arr[38]:arr[29];
 		crimeTracker += parseInt(no);
 		setValue('crimes', crimeTracker);
-		var am = (arr[64]=='of')?arr[83]:arr[64];
+		var am = (arr[55]=='reducing')?arr[65]:(arr[55]=='jail')?arr[46]:arr[37];
 		var crmoney = am.replace(/,/g, '').replace('$', '');
 		crimemoney += parseInt(crmoney);
 		setValue('crimemoney', crimemoney);
@@ -2523,14 +2521,12 @@ if(dlp == '/garage.php'){
 				carRow.insertBefore(typeTd, carRow.childNodes[3]);
 			}
 		}
-
 		//add amount of bullets
 		var head = $X('//h2');
 		var cars = head.textContent.match(/\d+/g)[2];
 		if(cars>0){
 			head.textContent = head.textContent+' | '+lang.garage[0]+' '+cars*12;
 		}
-
 		//add amount of money
 		var head = $X('//h2');
 		if(rows>2){
@@ -3281,10 +3277,10 @@ if (prefs[26]) {
 
 //---------------- Raidpage ----------------
 if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1) && prefs[34]) {
-	if (db.innerHTML.indexOf('url(&quot;/static/images/cities/maps') != -1) {
+	if (db.innerHTML.indexOf('/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@id, "spot_")]').length / 3; // get total amount of spots
 		var city = $x('//b')[0].textContent;
-
+		
 		function whatspot(city, type) {
 			var cords;
 			if (city == 'Detroit') {
@@ -3571,6 +3567,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 					time = lang.raidpage[1];
 				}
 			}
+
 			// making bars look good (white -> themetextcolor, adding % sign, some margin stuff)
 			var profit = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[3]/td[2]').innerHTML;
 			var protnum = getID('jsprogbar_div_protection_'+id).innerHTML; // the actual % of protection
@@ -4424,16 +4421,23 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 
 //---------------- BulletTracker ----------------
 if (dlp == '/bullets2.php' && prefs[33]) {
+	var d = new Date()
+	var btdate = getValue('btdate', 0);
+	if(d.getDate()>btdate){ setValue('bttoday', 0); }
 	var btbullets = getValue('btbullets', 0);
+	var bttoday = getValue('bttoday', 0);
 	var btmoney = getValue('btmoney', 0);
 	if (db.innerHTML.indexOf(lang.bullettracker[0]) != -1) {
 		var rex = new RegExp(lang.bullettracker[1]);
 		var str = db.innerHTML.replace(/,/g, '');
 		var r = str.match(rex);
-		btbullets += parseInt(r[1]);
-		btmoney += parseInt(r[2]);
+		btbullets += parseInt(r[1], 10);
+		bttoday += parseInt(r[1], 10);
+		btmoney += parseInt(r[2], 10);
 		setValue('btbullets', btbullets);
+		setValue('bttoday', bttoday);
 		setValue('btmoney', btmoney);
+		setValue('btdate', d.getDate());
 	}
 	if (btbullets == 0) {
 		btdolpbul = 0;
@@ -4443,7 +4447,7 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 	var div = cEL('div');
 	div.id = 'btracker';
 	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; border-radius:5px; padding:4px');
-	div.innerHTML = '<center><b>'+lang.bullettracker[2]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="btstats">'+lang.bullettracker[3]+' <font style="float:right"><b>'+commafy(btbullets)+'</b></font><br />'+lang.bullettracker[4]+' <font style="float:right"><b>$'+commafy(btmoney)+'</b></font><br />'+lang.bullettracker[5]+' <font style="float:right"><b>$'+commafy(btdolpbul)+'</b></font></div><br />&nbsp;<div id="resetbt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px; border-radius:5px;" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px" /></div>';
+	div.innerHTML = '<center><b>'+lang.bullettracker[2]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="btstats">'+lang.bullettracker[3]+' <font style="float:right"><b>'+commafy(btbullets)+'</b></font><br />'+lang.bullettracker[7]+' <font style="float:right"><b>'+commafy(bttoday)+'</b></font><br />'+lang.bullettracker[4]+' <font style="float:right"><b>$'+commafy(btmoney)+'</b></font><br />'+lang.bullettracker[5]+' <font style="float:right"><b>$'+commafy(btdolpbul)+'</b></font></div><br />&nbsp;<div id="resetbt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px; border-radius:5px;" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px" /></div>';
 	db.appendChild(div);
 
 	getID('resetbt').addEventListener('click', function() {
@@ -5849,6 +5853,29 @@ if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak inne
 		n = key[(GetParam('n'))];
 		b = key[(GetParam('b'))];
 		fillBRC(n, b); //we know what we want, now fill it in!
+	}
+}
+//------------------ Quick lookup ------------------
+if (dlp.indexOf('user.php') != -1 && dls.indexOf('page=user') != -1) {
+	if($X('/html/body').textContent.search(lang.lookup[0]) != -1){
+		var input = GetParam('nick');
+		GM_xmlhttpRequest({ //grab data from xml
+			method: 'GET',
+			url: 'http://rix.omertabeyond.com/obxml/quicklookup.xml.php?v='+sets.version.replace('_', '')+'&input='+input,
+			onload: function(resp){
+				var parser = new DOMParser();
+				var xml = parser.parseFromString(resp.responseText, 'application/xml');
+				var total = xml.getElementsByTagName('totalresults')[0].textContent;
+				db.innerHTML = $X('/html/body').textContent;
+				db.innerHTML += ': '+input;
+				db.innerHTML += '<br />'+lang.lookup[1]+'<br />';
+				for(var i=0;i<total;i++){
+					var results = xml.getElementsByTagName('name')[i].textContent;
+					db.innerHTML += '<br /><a href="'+dlp+'?nick='+results+'">'+results+'</a>';
+				}
+				nickReader();
+			}
+		});
 	}
 }
 //---------------- Clean login page ----------------

@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.35
+	Version: 1.10.0.36
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -302,7 +302,8 @@ var langs = {
 			'Bullets bought:',
 			'Money spent:',
 			'Price per bullet:',
-			'You need to wait another'
+			'You need to wait another',
+			'Bought today:'
 		],
 		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
@@ -435,7 +436,8 @@ var langs = {
 			'Total car value of this page:'
 		],
 		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
-		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
+		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:',
+		lookup: ['This user does not exist','Maybe this is what you were looking for:']
 	},
 	en: {
 		prefsname: 'Preferences',
@@ -726,7 +728,8 @@ var langs = {
 			'Bullets bought:',
 			'Money spent:',
 			'Price per bullet:',
-			'You need to wait another'
+			'You need to wait another',
+			'Bought today:'
 		],
 		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
@@ -859,7 +862,8 @@ var langs = {
 			'Total car value of this page:'
 		],
 		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
-		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
+		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:',
+		lookup: ['This user does not exist','Maybe this is what you were looking for:']
 	},
 	dm: {
 		prefsname: 'Preferences',
@@ -1151,7 +1155,8 @@ var langs = {
 			'Bullets bought:',
 			'Money spent:',
 			'Price per bullet:',
-			'You need to wait another'
+			'You need to wait another',
+			'Bought today:'
 		],
 		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
@@ -1284,7 +1289,8 @@ var langs = {
 			'Total car value of this page:'
 		],
 		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
-		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:'
+		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:',
+		lookup: ['This user does not exist','Maybe this is what you were looking for:']
 	},
 	nl: {
 		prefsname: 'Voorkeuren',
@@ -1584,7 +1590,8 @@ var langs = {
 			'Gekochtte kogels:',
 			'Geld uitgegeven:',
 			'Prijs per kogel:',
-			'Je moet nog'
+			'Je moet nog',
+			'Vandaag gekocht:'
 		],
 		crimetracker: ['Succes, je hebt', 'Succes je hebt \\$ (\\d+) verdiend.', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
@@ -1716,6 +1723,7 @@ var langs = {
 			'Totale waarde van de auto\'s op deze pagina:'
 		],
 		fampage: ['Gebruikers:', 'gebruiker', 'objecteigenaren', 'handelobjecteigenaren', 'Positie', 'Waarde'],
-		ffv: 'Je FireFox versie is ouder dan onze eisen. Beyond zal niet goed werken todat je update naar een nieuwere versie. Minimale vereiste versie:'
+		ffv: 'Je FireFox versie is ouder dan onze eisen. Beyond zal niet goed werken todat je update naar een nieuwere versie. Minimale vereiste versie:',
+		lookup: ['Deze gangster bestaat niet','Misschien zocht je een van deze:']
 	}
 };
