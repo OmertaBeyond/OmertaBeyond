@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			21-03-2011
+// @date			22-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -144,8 +144,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 37;
-const SCRIPT_SUBVERSION = 37;
+const SCRIPT_VERSION_BUILD = 38;
+const SCRIPT_SUBVERSION = 38;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1530,8 +1530,9 @@ if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
 }
 if(dls.search('fail') != -1){
 	var fail = GetParam('fail');
-	var html = db.innerHTML;
-	db.innerHTML = fail+'<br />'+html;
+	var span = cEL('span');
+	span.innerHTML = '<b>'+fail+'</b><br />';
+	db.firstChild.insertBefore(span, $X('//table[@class="thinline"]'));
 }
 
 //---------------- OB/Edo News ----------------
@@ -3122,7 +3123,7 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 					CM = CM.replace(/[a-zA-Z]| |\s/g, '');
 					list += CM.replace('$', '$ ') + '</td><td>';
 					CM = CM.replace(/[^0-9]/g,'');
-					list += (10000000 - CM)>0 ? '$ ' + commafy((10000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
+					list += (15000000 - CM)>0 ? '$ ' + commafy((15000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
 					$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
 				}
 				list += '</table>';
@@ -4113,8 +4114,23 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 }
 
-//---------- refresh button @ poker -----------
+//---------- refresh/all-in button @ poker -----------
 if (dls.search('module=Poker') != -1) {
+	var goall = 0;
+	var money = $X('//td[@class="tableitem"]/b').innerHTML.replace(',', '').replace('$', '').replace(',', '');
+	var allin = cEL('span');
+	allin.innerHTML = 'All In';
+	allin.setAttribute('style', 'color:#404040;font-family:Verdana,Tahoma;font-size:x-small;background-color:#CFCFCF;border-width:1px;border-style:none solid solid none;padding:3px 16px 0px 16px;cursor:pointer;');
+	allin.addEventListener('click', function(){
+		$X('//input[@name="raiseby"]').value = money;
+		goall = confirm('Are you sure you wanna go All-In with $'+commafy(money)+'?');
+	}, true);
+	if(goall) {
+		$X('//input[@name="raise"]').click();
+	}
+	if($X('//input[@name="raiseby"]')){
+		$X('//center/form/table/tbody/tr[5]/td/table/tbody/tr/td[3]').appendChild(allin);
+	}
 	var refresh = $X('//span/a[contains(@href, "BeO/webroot/index.php?module=Poker&action=")]');
 	refresh.innerHTML = refresh.innerHTML + '(=)';
 	var refresh2 = refresh.cloneNode(1);
