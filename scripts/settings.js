@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Variables depending on version
 
-	Version: 1.10.0.35
+	Version: 1.10.0.39
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -50,7 +50,7 @@ var settings = {
 		friends: 'Friends:',
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets', 'bullets'],
+		obay: ['Pack of bullets', 'bullets', 'Bet'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
@@ -196,7 +196,7 @@ var settings = {
 		friends: 'Friends:',
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets', 'bullets'],
+		obay: ['Pack of bullets', 'bullets', 'Bet'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
@@ -342,7 +342,7 @@ var settings = {
 		friends: 'Vrienden:',
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
 		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Beide'],
-		obay: ['Pak met kogels', 'kogels'],
+		obay: ['Pak met kogels', 'kogels', 'Bied'],
 		inbox: [
 			'Mededeling',
 			'(Admin bericht)',
@@ -495,7 +495,7 @@ var settings = {
 		friends: 'Friends:',
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets', 'bullets'],
+		obay: ['Pack of bullets', 'bullets', 'Bet'],
 		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
 		linkify: [
 			'Route 66 heist',
