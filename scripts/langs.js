@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.39
+	Version: 1.10.0.40
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -438,7 +438,14 @@ var langs = {
 		],
 		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:',
-		lookup: ['This user does not exist','Maybe this is what you were looking for:']
+		lookup: [
+			'This user does not exist',
+			'Maybe this is what you were looking for:',
+			'Sorry, we also couldn\'t find any alternatives.',
+			'This will give too many results. Try to be more specific.',
+			'Total results:',
+			'Showing first 50 results'
+		]
 	},
 	dm: {
 		prefsname: 'Preferences',
@@ -866,7 +873,14 @@ var langs = {
 		],
 		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:',
-		lookup: ['This user does not exist','Maybe this is what you were looking for:']
+		lookup: [
+			'This user does not exist',
+			'Maybe this is what you were looking for:',
+			'Sorry, we also couldn\'t find any alternatives.',
+			'This will give too many results. Try to be more specific.',
+			'Total results:',
+			'Showing first 50 results'
+		]
 	},
 	nl: {
 		prefsname: 'Voorkeuren',
@@ -1142,6 +1156,8 @@ var langs = {
 			'<b>Gefeliciteerd!</b>',
 			'Kogels<br>Ze zijn toegevoegd aan jouw account!<br>',
 			'gewonnen (\\d+) Kogels',
+
+
 			'<br>Het is toegevoegd aan je account!<br>',
 			'Je hebt gewonnen \\$ (\\d+)',
 			'<b>Start met krassen!</b>',
@@ -1301,7 +1317,14 @@ var langs = {
 		],
 		fampage: ['Gebruikers:', 'gebruiker', 'objecteigenaren', 'handelobjecteigenaren', 'Positie', 'Waarde'],
 		ffv: 'Je FireFox versie is ouder dan onze eisen. Beyond zal niet goed werken todat je update naar een nieuwere versie. Minimale vereiste versie:',
-		lookup: ['Deze gangster bestaat niet','Misschien zocht je een van deze:']
+		lookup: [
+			'Deze gangster bestaat niet',
+			'Misschien zocht je een van deze:',
+			'Sorry, we kunnen ook geen alternatieven vinden.',
+			'Dit geeft teveel resultaten. Probeer specifieker te zijn.',
+			'Totaal aantal resultaten',
+			'Laat de eerste 50 resultaten zien.'
+		]
 	},
 	tr: {
 		prefsname: 'Preferences',
@@ -1728,6 +1751,13 @@ var langs = {
 		],
 		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:',
-		lookup: ['This user does not exist','Maybe this is what you were looking for:']
+		lookup: [
+			'This user does not exist',
+			'Maybe this is what you were looking for:',
+			'Sorry, we also couldn\'t find any alternatives.',
+			'This will give too many results. Try to be more specific.',
+			'Total results:',
+			'Showing first 50 results'
+		]
 	}
 };
