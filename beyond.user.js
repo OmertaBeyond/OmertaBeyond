@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			26-03-2011
+// @date			30-03-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -144,8 +144,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 40;
-const SCRIPT_SUBVERSION = 40;
+const SCRIPT_VERSION_BUILD = 41;
+const SCRIPT_SUBVERSION = 41;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -943,7 +943,6 @@ function bnUpdate(current){
 }
 
 if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/pic.php' && dlp != '/mid.php' && dlp != '/right.php' && dlp != '/main.php') {
-
 	var d = new Date();//check once every hour for new info
 	if( getValue('nick', '')=='' || getValue('bninfo', -1)==-1 || getValue('brcDate', -1) != d.getHours()){
 		GM_xmlhttpRequest({
@@ -1033,7 +1032,7 @@ if (dls.indexOf('?module=Travel&action=TravelNow') != -1) { //Get city when trav
 		var text = $X('//font').textContent;
 		text = text.split(' ');
 		text = text[(text.length - 1)];
-		var citys = ['Detroit', 'Chicago', 'Palermo', 'New', 'Las', 'Philadelphia', 'Baltimore', 'Corleone'];
+		var citys = ['Detroit', 'Chicago', 'Palermo', 'York', 'Vegas', 'Philadelphia', 'Baltimore', 'Corleone'];
 		for (i = 0; i < citys.length; i++) {
 			if (citys[i] == text) {
 				city = (i + 4);
@@ -1047,7 +1046,7 @@ if (dls.indexOf('?module=Travel&action=TravelNow') != -1) { //Get city when trav
 
 //---------------- My Account / Statuspage ----------------
 if (dls == '?module=Launchpad') {
-	var carTracker, crimeTracker, crimemoney, pad, x, famXP, x2, x3, planeXP, handgunXP, tommygunXP, bguardsXP, jailBustXP, bustTracker, carnicks, cartxt, capo, interest, banktleft;
+	var carTracker, crimeTracker, crimemoney, carmoney, interest, bankleft, pad, x, famXP, x2, x3, planeXP, handgunXP, tommygunXP, bguardsXP, jailBustXP, bustTracker, carnicks, cartxt, crimes, crimetxt, isCapo, capo;
 	carTracker = getValue('cars', 0);
 	crimeTracker = getValue('crimes', 0);
 	crimemoney = getValue('crimemoney', 0);
@@ -1168,10 +1167,9 @@ if (dls == '?module=Launchpad') {
 				crimetr.appendChild(crimetdr);
 				$x('//table[@class="thinline"]')[4].appendChild(crimetr);
 			}
-
-			$x('//a[contains(@href,"shoptabs=9")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
-			$x('//a[contains(@href,"shoptabs=9")]')[0].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
-			$X('//a[contains(@href,"shoptabs=8")]').setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//healthbar
+			
+			$x('//a[contains(@href,"shoptabs=7")]')[0].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
+			$x('//a[contains(@href,"shoptabs=7")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
 			$X(bguardsXP).innerHTML = '<a href="/BeO/webroot/index.php?module=Bodyguards&action=">'+$X(bguardsXP).innerHTML+'</a>';
 			if ($X(planeXP) && lang.status[0].match($X(planeXP).textContent)) {
 				$I(planeXP, '<a href="/BeO/webroot/index.php?module=Shop&action=display_section&id=7"><b>'+ $X(planeXP).textContent +'</b></a>');
@@ -1461,15 +1459,14 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 						grabLex();
 
 						var foo = cEL('div'); //create hardcoded fix so we run code only once
-						foo.innerHTML = 'onceonly';
-						foo.style.visibility = 'hidden';
+						foo.id = 'onceonly';
 						getID('smsdivcontainer').appendChild(foo);
 					}
 				}, true);
 			}
 		}, false);
 	}
-	if (dls.indexOf('?module=Bodyguards') != -1 && dls.indexOf('?module=Bodyguards&action=') != -1) { //via stand-alone
+	if (dls.indexOf('?module=Bodyguards') != -1 && dls.indexOf('?module=Bodyguards&action=') == -1) { //via stand-alone
 		if(prefs[36]){
 			bgspage();
 		}
@@ -2093,7 +2090,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 		setValue('carmoney', carmoney);
 		var color = getValue('titleBg', '#3F505F');
 		var div = cEL('div');
-		div.setAttribute('style', 'position:fixed; right:10px; top:10px; width: 115px !important; height:35px !important; text-align:center; background-color:' + color + ' !important;');
+		div.setAttribute('style', 'position:fixed; right:10px; top:10px; width: 115px !important; height:50px !important; text-align:center; background-color:' + color + ' !important;');
 		div.innerHTML ='Shipping Auto-focus';
 		var sel = cEL('select');
  		var drop = '';
@@ -2250,15 +2247,18 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		var other = $X('/html/body//center/table/tbody/tr/td/i').textContent;
 		var checkHistory = $X('//td[@class="tableheader"]/i').textContent
 		var color = getValue('titleBg', '#3F505F');
-		$x('//td[@class="tableheader"]')[0].innerHTML = (prefs[15] && !self)?$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a> | <a href="" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:500px;top:60px;background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Actions</a>':$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a>';
+		var Y = ($X('//font[@color="red"]'))?'60px':'34px';
+		var chars = nick.length;
+		var X = (chars<=12 && chars>10)?'465px':(chars<=10 && chars>8)?'471px':(chars<=8 && chars>6)?'477px':(chars<=6 && chars>4)?'483px':(chars<=4 && chars>2)?'489px':'497px';
+		$x('//td[@class="tableheader"]')[0].innerHTML = (prefs[15] && !self)?$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a> | <a href="" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Actions</a>':$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a>';
 		var actions = cEL('div');
 		actions.id = 'actions';
 		actions.setAttribute('style', 'visibility:hidden;');
 		actions.setAttribute('onmouseout', 'document.getElementById(\'actions\').setAttribute(\'style\', \'visibility:hidden;\');');
-		actions.innerHTML = '<a href="BeO/webroot/index.php?module=Heist&action=&who='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:500px;top:60px;background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Heist</a><br />';
-		actions.innerHTML += '<a href="BeO/webroot/index.php?module=Spots&action=&driver='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:500px;top:60px;background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Raid</a><br />';
-		actions.innerHTML += '<a href="javascript:if(confirm(\'Are you sure you want to make '+nick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+nick+'\';" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:500px;top:60px;background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Set Mentor</a><br />';
-		actions.innerHTML += '<a href="kill.php?search='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:500px;top:60px;background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Hire Detectives</a><br />';
+		actions.innerHTML = '<a href="BeO/webroot/index.php?module=Heist&action=&who='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Heist</a><br />';
+		actions.innerHTML += '<a href="BeO/webroot/index.php?module=Spots&action=&driver='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Raid</a><br />';
+		actions.innerHTML += '<a href="javascript:if(confirm(\'Are you sure you want to make '+nick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+nick+'\';" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Set Mentor</a><br />';
+		actions.innerHTML += '<a href="kill.php?search='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Hire Detectives</a><br />';
 		if(prefs[3]){
 			var names = getValue('bust','')
 			var add = 1;
@@ -2268,12 +2268,12 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 				if(length == 0){ setValue('jailint',6); length=6; } //check for missing jailint
 				var who = nick.toUpperCase();
 				for(var i=0;i<length;i++) if(names[i]==who) add = 0;
-				var text = (add == 1)?'Add to ':'Remove from ';
 			}
-			actions.innerHTML += '<a href="' + dlp + '?nick='+nick+'&jh='+add+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:500px;top:60px;background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">'+text+'busting list</a><br />';
+			var text = (add == 1)?'Add to ':'Remove from ';
+			actions.innerHTML += '<a href="' + dlp + '?nick='+nick+'&jh='+add+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">'+text+'busting list</a><br />';
 		}
 		if(parseInt(getPow('bninfo',4,-1),10)>2 && inFam == 'None'){//check for top3 position and if person is not in family
-			actions.innerHTML += '<a href="/BeO/webroot/index.php?module=Family&who='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:500px;top:60px;background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Invite to Family</a>';
+			actions.innerHTML += '<a href="/BeO/webroot/index.php?module=Family&who='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Invite to Family</a>';
 		}
 		db.appendChild(actions);
 			
@@ -2293,7 +2293,6 @@ if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
 	add = GetPost('jh');
 	if (add == 1) {
 		length = getValue('jailint', 0);
-
 		names = getValue('bust', '');
 		cols = getValue('colours');
 		pris = getValue('priority');
@@ -2479,12 +2478,13 @@ if(dlp == '/garage.php'){
 			$X('/html/body//form/center/table/tbody/tr').insertBefore(indexTd, $X('/html/body//form/center/table/tbody/tr/td[2]'));
 
 			var totVal = 0;
-			for(i=2;i<rows-2;i++){ //loop rows
+			for(var i=2;i<rows-2;i++){ //loop rows
 				var y = '//html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
 				var car = $X(y).href.match(/\d*$/)[0];
 				var carType = '';
 				var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
 				var carVal = parseInt($X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td[4]').innerHTML.replace(',', '').replace('$', '')); //get value
+				carRow.setAttribute('onclick', 'var check = document.getElementsByName(\'carid['+(i-2)+']\')[0]; if (check.checked==true){ check.checked=false; } else { check.checked=true; };');
 				totVal += carVal;
 				types.forEach(function($n){ //loop car through types
 					if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
@@ -2743,9 +2743,9 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 
 //---------------- look it's me ----------------
 if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dls.indexOf('global_stats') != -1) {
-	nick = getValue('nick', '');
+	var nick = getValue('nick', '');
 	if (nick !== '') {
-		names = $x('//a');
+		var names = $x('//a');
 		names.forEach(function ($n) {
 			if ($n.textContent == nick || $n.textContent == nick + '+') {
 				$n.innerHTML = '<span class="green">' + $n.innerHTML + '</span>';
@@ -2755,52 +2755,101 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 }
 //---------------- Family page ----------------
 if (prefs[13] && dlp == '/family.php') {
-	//Add to busting list
-	addtojhl = cEL('span'); //not an anchor, will mess up grabbing tops etc..
-	addtojhl.innerHTML = '<br />'+lang.jhl[24];
-	addtojhl.id = 'addlink';
-	addtojhl.setAttribute('class', 'red');
-	addtojhl.addEventListener('mouseover', function() { this.style.cursor = 'pointer'; }, true);
-	addtojhl.addEventListener('mouseout', function() { this.style.cursor = 'default'; }, true);
-	addtojhl.addEventListener('click', function(){
-		length = getValue('jailint', 0);
-		names = getValue('bust', '');
-		cols = getValue('colours');
-		pris = getValue('priority');
-		who = $X('//td[@class="profilerow"]').textContent;
-		who = who.substr(0,who.indexOf(' ')).replace(/[^a-zA-Z]/g, '');
-		nick = who.toUpperCase();
-		if (length == 0) { //check for missing jailint
-			setValue('jailint', 6);
-			length = 6;
-		}
-		if (!names) { //check for missing data
-			names = ',,,,,,';
-			cols = ',,,,,,';
-			pris = ',,,,,,';
-		}
-		names = names.split(','); //load stored data
-		cols = cols.split(',');
-		pris = pris.split(',');
-		i = -1;
-		while (names[++i] && names[i] != nick); //find first open spot
-		if (names[i] != nick) {
-			if (i == length) { //extend jailint if neccesary
-				setValue('jailint', ++length);
+	var length = getValue('jailint', 0);
+	var names = getValue('bust', '');
+	var cols = getValue('colours');
+	var pris = getValue('priority');
+	var who = $X('//td[@class="profilerow"]').textContent;
+	who = who.substr(0,who.indexOf(' ')).replace(/[^a-zA-Z]/g, '');
+	var nick = who.toUpperCase();
+	var add = 1;
+	if(names){
+		var names = names.split(',');
+		if(length == 0){ setValue('jailint',6); length=6; } //check for missing jailint
+		for(var i=0;i<length;i++) if(names[i]==nick) var add = 0;
+	}
+	if (add == 1) {
+		//Add to busting list
+		var addtojhl = cEL('span'); //not an anchor, will mess up grabbing tops etc..
+		addtojhl.innerHTML = lang.jhl[24];
+		addtojhl.id = 'addlink';
+		addtojhl.setAttribute('class', 'red');
+		addtojhl.addEventListener('mouseover', function() { this.style.cursor = 'pointer'; }, true);
+		addtojhl.addEventListener('mouseout', function() { this.style.cursor = 'default'; }, true);
+		addtojhl.addEventListener('click', function(){
+			var addlength = getValue('jailint', 0);
+			var addnames = getValue('bust', '');
+			var addcols = getValue('colours');
+			var addpris = getValue('priority');
+			if (length == 0) { //check for missing jailint
+				setValue('jailint', 6);
+				addlength = 6;
 			}
-			names[i] = nick; //insert new data into arrays
-			cols[i] = getValue('defcol', '33FF66');
-			pris[i] = getValue('defpri', 5);
-			setValue('bust', names.join(',')); //join and save values
-			setValue('colours', cols.join(','));
-			setValue('priority', pris.join(','));
-			alert(who+' '+lang.jhl[20]);
-		} else {
-			alert('Oops! '+who+' '+lang.jhl[22]);
-		}
-	}, true);
-	$X('//td[@class="profilerow"]').appendChild(addtojhl);
-
+			if (!addnames) { //check for missing data
+				addnames = ',,,,,,';
+				addcols = ',,,,,,';
+				addpris = ',,,,,,';
+			}
+			addnames = addnames.split(','); //load stored data
+			addcols = addcols.split(',');
+			addpris = addpris.split(',');
+			var i = -1;
+			while (addnames[++i] && addnames[i] != nick); //find first open spot
+			if (addnames[i] != nick) {
+				if (i == addlength) { //extend jailint if neccesary
+					setValue('jailint', ++addlength);
+				}
+				addnames[i] = nick; //insert new data into arrays
+				addcols[i] = getValue('defcol', '33FF66');
+				addpris[i] = getValue('defpri', 5);
+				setValue('bust', addnames.join(',')); //join and save values
+				setValue('colours', addcols.join(','));
+				setValue('priority', addpris.join(','));
+				alert(who+' '+lang.jhl[20]);
+				window.location.reload();
+			} else {
+				alert('Oops! '+who+' '+lang.jhl[22]);
+			}
+		}, true);
+		$X('//td[@class="profilerow"]').appendChild(addtojhl);
+	} else if (add == 0) {
+		//Remove from busting list
+		var remofjhl = cEL('span'); //not an anchor, will mess up grabbing tops etc..
+		remofjhl.innerHTML = lang.jhl[21];
+		remofjhl.id = 'dellink';
+		remofjhl.setAttribute('class', 'red');
+		remofjhl.addEventListener('mouseover', function() { this.style.cursor = 'pointer'; }, true);
+		remofjhl.addEventListener('mouseout', function() { this.style.cursor = 'default'; }, true);
+		remofjhl.addEventListener('click', function(){
+			var remlength = getValue('jailint', 0);
+			var remnames = getValue('bust', '');
+			var remcols = getValue('colours');
+			var rempris = getValue('priority');
+			if (remlength == 0) { //check for missing jailint
+				setValue('jailint', 6);
+				remlength = 6;
+			}
+			remnames = remnames.split(','); //load stored data
+			remcols = remcols.split(',');
+			rempris = rempris.split(',');
+			var i = -1;
+			while (remnames[++i] && remnames[i] != nick && i < remlength); //find user
+			if (remnames[i] == nick) {
+				remnames[i] = ''; //remove user and data
+				remcols[i] = '';
+				rempris[i] = '';
+				setValue('bust', remnames.join(',')); //join and save values
+				setValue('colours', remcols.join(','));
+				setValue('priority', rempris.join(','));
+				alert(who + ' '+lang.jhl[23]);
+				window.location.reload();
+			} else {
+				alert(nick);
+			}
+		}, true);
+		$X('//td[@class="profilerow"]').appendChild(remofjhl);
+	}
+	
 	//style family info table a bit
 	$x('//td[@class="subtableheader"]').forEach(function($n) {
 		$n.setAttribute('style', 'padding-left: 4px; text-align: left;');
@@ -2912,7 +2961,7 @@ if (prefs[13] && dlp == '/family.php') {
 	});
 
 	//add legend to members table
-	memTable = $x('//table[@class="thinline"]')[6].getElementsByTagName('tr');
+	var memTable = $x('//table[@class="thinline"]')[6].getElementsByTagName('tr');
 	memTable[0].innerHTML = '<td class="tableheader" style="text-align:left !important">&nbsp;'+lang.fampage[0]+'</td><td class="tableheader" style="font-weight:normal !important; text-align:right !important;"><span><sup>(<u>capo/top3</u>) - (online > <span class="blue">'+lang.fampage[1]+'</span> | <span class="green">'+lang.fampage[2]+'</span> | <span class="purple">'+lang.fampage[3]+'</span> | <span class="orange">capo</span> | <span class="red">top3</span>)</sup></span>&nbsp;</td>';
 
 	for (i = 0; ++i < memTable.length;) {//cosmetical fix for colspan
@@ -2920,18 +2969,18 @@ if (prefs[13] && dlp == '/family.php') {
 	}
 
 	//add % online
-	membersL = $X('//table//table//tr['+(nTop+8)+']/td');
-	membersR = $X('//table//table//tr['+(nTop+8)+']/td[2]');
-	mem = parseInt(membersR.textContent, 10);
+	var membersL = $X('//table//table//tr['+(nTop+8)+']/td');
+	var membersR = $X('//table//table//tr['+(nTop+8)+']/td[2]');
+	var mem = parseInt(membersR.textContent, 10);
 	membersR.innerHTML = Math.round(aOnline.length / mem * 100) + '% ('+aOnline.length + ' / ' + membersR.textContent + ' )';
 	membersL.innerHTML = membersL.textContent.replace(':', '') + ' Online:';
 
 	//add # space left
-	HQ = $X('//table//table//tr['+(nTop+10)+']/td[2]');
+	var HQ = $X('//table//table//tr['+(nTop+10)+']/td[2]');
 	HQ.innerHTML = HQ.textContent + ' (' + (parseInt(HQ.textContent, 10)-mem) + ' open )';
 
 	//calc CD/GF promos
-	promo = $x('//table[@class="thinline"]//td[@class="tableitem"]//table//tr');
+	var promo = $x('//table[@class="thinline"]//td[@class="tableitem"]//table//tr');
 
 	var chiefP = promo[2].getElementsByTagName('td')[7].textContent.replace(/\D/g, '');
 	var brugP = promo[3].textContent.replace(/\D/g, '');
@@ -2945,103 +2994,68 @@ if (prefs[13] && dlp == '/family.php') {
 
 	promo[3].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
 
-	// add HR
-	var famid, famIdFromImg;
+	// add HR, Deaths and Worth
 	var famid = dls.split("=")[1];
 	var famIdFromImg = $X('//img[contains(@src, "family_image.php")]').src.match(/\d+/g)[0];
-
-	if(famid === famIdFromImg) {
-		var url = 'id='+famid;
-	} else {
-		var url = 'ing='+famname;
-	}
+	var url = (famid === famIdFromImg) ? 'id='+famid : 'ing='+famname;
 	var famname = $x('//td[@class="profilerow"]')[0].textContent.split(" ")[0].trim().toLowerCase();
 	var maintable = $x('//table[@class="thinline"]/tbody')[0];
 	var maintable2 = $x('//table/tbody/tr[1]/td')[2];
-	var newtr = document.createElement("tr");
 
 	GM_xmlhttpRequest({
 		method: 'GET',
-		url: SCRIPT_LINK+'?p=stats&w=hr&v='+sets.version.replace('_', '')+'&'+url,
+		url: SCRIPT_LINK+'?p=stats&w=fampage&v='+sets.version.replace('_', '')+'&'+url,
 		onload: function(xhr) {
 			if(xhr.responseText.indexOf('Undefined variable:') == -1) {
 				var response = JSON.parse(xhr.responseText);
-				var newtd = document.createElement('td');
-				var newtd2 = document.createElement('td');
-				var newtr = document.createElement('tr');
-	
+				var newtd = cEL('td');
+				var newtd2 = cEL('td');
+				var newtr = cEL('tr');
+				//highranks
 				newtd.setAttribute('class', 'subtableheader');
 				newtd.setAttribute('style', 'padding-left: 4px; text-align: left;');
 				newtd.textContent = 'Ranks:';
 				newtd2.setAttribute('class', 'profilerow');
-	
-				newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td class="bold">'+response['gf']+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response['cd']+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response['brug']+'</td></tr><tr><td>Chief:</td><td class="bold">'+response['chief']+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response['lc']+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response['assa']+'</td></tr><tr><td>Swindler:</td><td class="bold">'+response['swin']+'</td></tr><tr><td colspan="2"><hr /></td></tr><tr><td>Total points:</td><td class="bold">'+response['pts']+'</td></tr></table>';
-	
+				newtd2.innerHTML = '<table width="100%"> <tr><td>Godfather/First Lady:</td><td class="bold">'+response['hr']['gf']+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response['hr']['cd']+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response['hr']['brug']+'</td></tr><tr><td>Chief:</td><td class="bold">'+response['hr']['chief']+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response['hr']['lc']+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response['hr']['assa']+'</td></tr><tr><td>Swindler:</td><td class="bold">'+response['hr']['swin']+'</td></tr><tr><td colspan="2"><hr /></td></tr><tr><td>Total points:</td><td class="bold">'+response['hr']['pts']+'</td></tr></table>';
 				newtr.appendChild(newtd);
 				newtr.appendChild(newtd2);
 				maintable.appendChild(newtr);
-			}
-		}
-	});
-	GM_xmlhttpRequest({
-		method: 'GET',
-		url: SCRIPT_LINK+'?p=stats&w=famdeaths&v='+sets.version.replace('_','')+'&'+url,
-		onload: function(xhr) {
-			if(xhr.responseText.indexOf('Undefined variable:') == -1) {
-			var responsed = JSON.parse(xhr.responseText);
-			var newtable = document.createElement('table');
+				//deaths				
+				var newtable = cEL('table');
 				newtable.setAttribute('class', 'thinline');
 				newtable.setAttribute('width', '100%');
 				newtable.setAttribute('cellspacing', '0');
 				newtable.setAttribute('cellpadding', '2');
 				newtable.setAttribute('rules', 'none');
-	
 				var dtable = '<tr><td colspan="100%" class=tableheader>Last family deaths</td></tr> <tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left">Name</td><td class="bold" align="center">Rank</td><td class="bold" align="center">Time</td><td class="bold" align="right">Ago</td></tr>';
-				for (i = -1; ++i < responsed.length;) {
-					dtable += '<tr><td><a href="user.php?name='+responsed[i]['Name']+'">'+responsed[i]['Name']+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+responsed[i]['Name']+'">'+responsed[i]['Rank']+'</td><td align="center">'+responsed[i]['Date']+'</td><td align="right">'+responsed[i]['Agod']+'d '+responsed[i]['Agoh']+'h '+responsed[i]['Agom']+'m</td></tr>';
+				if(response['deaths']){
+					for (i = -1; ++i < response['deaths'].length;) {
+						var extra = (response['deaths'][i]['Akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['BF'] == 1)?'(<b>BF</b>)':'';
+						dtable += '<tr><td>'+extra+' <a href="user.php?name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Name']+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Rank']+'</td><td align="center">'+response['deaths'][i]['Date']+'</td><td align="right">'+response['deaths'][i]['Agod']+'d '+response['deaths'][i]['Agoh']+'h '+response['deaths'][i]['Agom']+'m</td></tr>';
+					}
+				} else {
+					dtable += '<tr><td colspan="4" class="red" align="center">No deaths yet!</td></tr>';
 				}
 				newtable.innerHTML = dtable;
 				var br = cEL('br');
 				maintable2.appendChild(br);
 				maintable2.appendChild(newtable);
-			}
-		}
-	});
-
-	//Add Family position and Worth
-	var famname = $I('//td[@class="profilerow"]').split(' ')[0].slice(5);
-	GM_xmlhttpRequest({ //grab data from stats API
-		method: 'GET',
-		url: 'http://'+dlh+'/BeO/webroot/index.php?module=API&action=statistics',
-		onload: function(resp){
-			var parser = new DOMParser();
-			var xml = parser.parseFromString(resp.responseText, 'application/xml');
-
-			var fams = xml.getElementsByTagName('stats')[0].getElementsByTagName('families')[0].children;
-			for(i = -1; ++i<fams.length; ) { //loop all fams
-				if(famname == fams[i].getElementsByTagName('name')[0].textContent) {
-					var fampos = i+1;
-					var famworth = fams[i].getElementsByTagName('worth')[0].textContent;
-					var posrow = cEL('tr');
-					var tdL = cEL('td');
-					tdL.innerHTML = lang.fampage[4] + ':';
-					tdL.setAttribute('class', 'subtableheader');
-					tdL.setAttribute('style', 'padding-left:4px; text-align:left;');
-					posrow.appendChild(tdL);
-
-					var tdR = cEL('td');
-					tdR.innerHTML = '#' + fampos + ' - ' + lang.fampage[5] + ': ' + famworth;
-					tdR.setAttribute('class', 'profilerow');
-					posrow.appendChild(tdR);
-
-					$X('//td[@class="subtableheader"]').parentNode.parentNode.insertBefore(posrow, $X('//td[@class="subtableheader"]').parentNode.nextSibling);
-					i = fams.length; //stop the loop!
-				}
+				//position and worth
+				var posrow = cEL('tr');
+				var tdL = cEL('td');
+				tdL.innerHTML = lang.fampage[4] + ':';
+				tdL.setAttribute('class', 'subtableheader');
+				tdL.setAttribute('style', 'padding-left:4px; text-align:left;');
+				posrow.appendChild(tdL);
+				var tdR = cEL('td');
+				tdR.innerHTML = '#' + response['pos'] + ' - ' + lang.fampage[5] + ': ' + response['worth'];
+				tdR.setAttribute('class', 'profilerow');
+				posrow.appendChild(tdR);
+				$X('//td[@class="subtableheader"]').parentNode.parentNode.insertBefore(posrow, $X('//td[@class="subtableheader"]').parentNode.nextSibling);
 			}
 		}
 	});
 }
-
 //---------------- Manage Users (top3 only) ----------------
 if (dls.indexOf('module=Family')!=-1) {
 	if(GetParam('who')){//invite from profile
@@ -3050,33 +3064,26 @@ if (dls.indexOf('module=Family')!=-1) {
 	}
 	// Add promo calculation for CD/GF/FL.
 	var promo = $x('//table[@class="color2"][2]//td//table//tr');
-
-	var chiefP = promo[5].getElementsByTagName('td')[1].textContent.replace(/\D/g, '');
 	var brugP = promo[6].textContent.replace(/\D/g, '');
-	if (brugP != '0' && chiefP !='0') {
-		var percentage = ((brugP-chiefP)/chiefP);
-	} else {
-		var percentage = 0;
-	}
-	var cdP = (parseInt((brugP*percentage), 10)+parseInt(brugP, 10));
-	var gfP = (parseInt((cdP*percentage), 10)+parseInt(cdP, 10));
-
-	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td></tr><tr><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
+	var perc =(brugP != '0') ? $x('//table[@class="color2"][2]/tbody/tr[9]/td/form/input')[1].value : 0;
+	var cdP = ((parseInt((brugP/100),10)*perc)+parseInt(brugP));
+	var gfP = ((parseInt((cdP/100),10)*perc)+parseInt(cdP));
+	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><br /><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
 
 }
 if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 
 //--Add Capo Money list + calc
-	txt = $x('//td[@class="tableitem"]');//CapoMoney txt
-	nick = $x('//td[@class="tableheader"]/b');//Capo's
+	var txt = $x('//td[@class="tableitem"]');//CapoMoney txt
+	var nick = $x('//td[@class="tableheader"]/b');//Capo's
 	nick.splice(0, 1);//remove first table (not a capo table)
-	table = $X('//table');//select first table
-	input = $X('//input[@value="Promote"]');//select first input
-	a = '//table[';
-	b = ']//tr/td[@class="tableheader"]/b';
+	var table = $X('//table');//select first table
+	var input = $X('//input[@value="Promote"]');//select first input
+	var a = '//table[';
+	var b = ']//tr/td[@class="tableheader"]/b';
 
 	//setup new table
-	newTable = cEL('table');
+	var newTable = cEL('table');
 	newTable.setAttribute('cellspacing', '0');
 	newTable.setAttribute('cellpadding', '3');
 	newTable.setAttribute('bordercolor', 'black');
@@ -3086,23 +3093,23 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 	newTable.setAttribute('width', '600');
 	newTable.setAttribute('rules', 'none');
 	//clone header from existing table
-		headTr = table.getElementsByTagName('tr')[0].cloneNode(1);
-		headTr.getElementsByTagName('td')[0].innerHTML = '<b>Capomoney\'s</b>';
-		blackTr = table.getElementsByTagName('tr')[1].cloneNode(1);
+	var headTr = table.getElementsByTagName('tr')[0].cloneNode(1);
+	headTr.getElementsByTagName('td')[0].innerHTML = '<b>Capomoney\'s</b>';
+	var blackTr = table.getElementsByTagName('tr')[1].cloneNode(1);
 	newTable.appendChild(headTr);
 	newTable.appendChild(blackTr);
 	//add CM list | switch to !DOM :D
-		newTr = cEL('tr');
-			newTd = cEL('td');
-				list = '<table width="100%">';
+		var newTr = cEL('tr');
+			var newTd = cEL('td');
+				var list = '<table width="100%">';
 				list += '<tr><td></td><td><b>Capo</b></td><td><b>CapoMoney</b></td><td><b>to GF</b></td></tr>';
 				for(i=0;i<nick.length;i++){//loop all capo's
-					n = i+2;
-					member = $x('count(//table['+n+']//tr[@valign="top"]//td/a)');//members
-					name = nick[i].textContent.slice(nick[i].textContent.indexOf(' '),nick[i].textContent.lastIndexOf(' (')).replace(/\s/,'');
+					var n = i+2;
+					var member = $x('count(//table['+n+']//tr[@valign="top"]//td/a)');//members
+					var name = nick[i].textContent.slice(nick[i].textContent.indexOf(' '),nick[i].textContent.lastIndexOf(' (')).replace(/\s/,'');
 					list += '<tr><td><a href="#'+name+'">&darr;</a></td><td><a href="http://'+dlh+'/user.php?nick='+name+'">'+name+'</a>('+member+')';
 					list += '</td><td>';
-					CM = txt[i].innerHTML.slice(0,txt[i].innerHTML.indexOf('<'));
+					var CM = txt[i].innerHTML.slice(0,txt[i].innerHTML.indexOf('<'));
 					CM = CM.replace(/[a-zA-Z]| |\s/g, '');
 					list += CM.replace('$', '$ ') + '</td><td>';
 					CM = CM.replace(/[^0-9]/g,'');
@@ -3119,10 +3126,9 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 }
 if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 	//Shortcut to send
-	bank = $x('//table[@class="thinline"]//td[@class="tableheader"]/b');
-	name = bank[3].textContent.slice(bank[3].textContent.indexOf(' '), bank[3].textContent.lastIndexOf(':')).replace(/\s/, '');
-	bank[2].innerHTML += '&nbsp;<a href="#'+name+'">&darr;</a>';
-	bank[3].innerHTML += '&nbsp;<a name="'+name+'"><a href="#">&uarr;</a>';
+	var bank = $x('//table[@class="thinline"]//td[@class="tableheader"]/b');
+	bank[2].innerHTML += '&nbsp;<a href="#sent">&darr;</a>';
+	bank[3].innerHTML += '&nbsp;<a name="sent"><a href="#">&uarr;</a>';
 	//Calculators
 	var func1  = 'javascript: var amt=this.value.replace(/\\D/g,\'\'); if(amt){ get = document.getElementById(\'';//put ID here
 	var func2 = '\'); if(get){ tmp = \'\'+Math.round(amt';//put factor here
@@ -3190,9 +3196,9 @@ if (prefs[26]) {
 		if (/action=go/.test(db.innerHTML)) {
 			$x('//input')[10].focus();
 		}
-		if (/action=cancel/.test(db.innerHTML)) {
-			$X('//a').focus();
-		}
+//		if (/action=cancel/.test(db.innerHTML)) {
+//			$X('//a').focus();
+//		}
 		if (/carid/.test(db.innerHTML)) {
 			$x('//input')[1].focus();
 		}
@@ -4211,9 +4217,11 @@ if (dls.indexOf('module=Family')!=-1) {
 				who[0] = '<a href="/user.php?nick=' + who[0] + '"><b>' + who[0] + '</b></a>';
 			}
 			if (who[len].match(/[A-Z]/g)) {
-				if(who[len] != 'Object(s)') {
-					if(who[len] != 'Unlocked') {
-						who[len] = '<a href="/user.php?nick=' + who[len].match(/\w+/g)[0] + '"><b>' + who[len] + '</b></a>';
+				if(who[len] != 'Capo(s)') {
+					if(who[len] != 'Object(s)') {
+						if(who[len] != 'Unlocked') {
+							who[len] = '<a href="/user.php?nick=' + who[len].match(/\w+/g)[0] + '"><b>' + who[len] + '</b></a>';
+						}
 					}
 				}
 			}
@@ -4322,9 +4330,11 @@ if (dlp == '/familylog.php') {
 				who[0] = '<a href="/user.php?nick=' + who[0] + '"><b>' + who[0] + '</b></a>';
 			}
 			if (who[len].match(/[A-Z]/g)) {
-				if(who[len] != 'Object(s)') {
-					if(who[len] != 'Unlocked') {
-						who[len] = '<a href="/user.php?nick=' + who[len].match(/\D+/g)[0].replace('.', '') + '"><b>' + who[len] + '</b></a>';
+				if(who[len] != 'Capo(s)') {
+					if(who[len] != 'Object(s)') {
+						if(who[len] != 'Unlocked') {
+							who[len] = '<a href="/user.php?nick=' + who[len].match(/\D+/g)[0].replace('.', '') + '"><b>' + who[len] + '</b></a>';
+						}
 					}
 				}
 			}

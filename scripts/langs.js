@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.40
+	Version: 1.10.0.41
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -119,22 +119,22 @@ var langs = {
 			'Color',
 			'Priority',
 			'More',
-			'Less',
+			'Less',//5
 			'Save!',
 			'Swines, Beggars \'n Fools who don\'t deserve my busting',
 			'Adding via profiles',
 			'Jailpage Settings',
-			'Default Priority',
+			'Default Priority',//10
 			'Default Color',
 			'Maximum length highlight list',
 			'Buy out Hotkey when in jail',
 			'Friend List Priority',
-			'Family Priority',
+			'Family Priority',//15
 			'If someone in jail is higher than one of the settings he/she will be highlighted with the color of the lowest priority number</span><br />The default priority number for friends is: <b>3</b> and for family is: <b>9</b><br />The default priority and color are used when automatically adding users to list<br />The lowest and default priority for anyone in jail is <b>10</b>',
 			'Go up',
 			'Go down',
 			'Random',
-			'added to jail highlighter using default color and priority',
+			'added to jail highlighter using default color and priority',//20
 			'Remove from busting list',
 			'is already in your busting list!',
 			'is removed from the busting list',
