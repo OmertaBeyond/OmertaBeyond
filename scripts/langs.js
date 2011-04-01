@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.41
+	Version: 1.10.0.42
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -436,7 +436,23 @@ var langs = {
 			'Type',
 			'Total car value of this page:'
 		],
-		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
+		fampage: [
+			'Members:',
+			'member',
+			'objectowner',
+			'spotowner',
+			'Position',
+			'Worth',//5
+			'Last family deaths',
+			'Last family changes',
+			'Name',
+			'Rank',
+			'Date',//10
+			'Ago',
+			'Change',
+			'No deaths yet!',
+			'No changes yet!'
+		],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:',
 		lookup: [
 			'This user does not exist',
@@ -871,7 +887,23 @@ var langs = {
 			'Type',
 			'Total car value of this page:'
 		],
-		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
+		fampage: [
+			'Members:',
+			'member',
+			'objectowner',
+			'spotowner',
+			'Position',
+			'Worth',//5
+			'Last family deaths',
+			'Last family changes',
+			'Name',
+			'Rank',
+			'Date',//10
+			'Ago',
+			'Change',
+			'No deaths yet!',
+			'No changes yet!'
+		],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:',
 		lookup: [
 			'This user does not exist',
@@ -1315,7 +1347,23 @@ var langs = {
 			'Type',
 			'Totale waarde van de auto\'s op deze pagina:'
 		],
-		fampage: ['Gebruikers:', 'gebruiker', 'objecteigenaren', 'handelobjecteigenaren', 'Positie', 'Waarde'],
+		fampage: [
+			'Gebruikers:',
+			'gebruiker',
+			'objecteigenaren',
+			'handelobjecteigenaren',
+			'Positie',
+			'Waarde',//5
+			'Laatste familie doden',
+			'Laatste familie veranderingen',
+			'Naam',
+			'Rank',
+			'Datum',//10
+			'Geleden',
+			'Verandering',
+			'Nog geen doden!',
+			'Nog geen veranderingen!'
+		],
 		ffv: 'Je FireFox versie is ouder dan onze eisen. Beyond zal niet goed werken todat je update naar een nieuwere versie. Minimale vereiste versie:',
 		lookup: [
 			'Deze gangster bestaat niet',
@@ -1749,7 +1797,23 @@ var langs = {
 			'Type',
 			'Total car value of this page:'
 		],
-		fampage: ['Members:', 'member', 'objectowner', 'spotowner', 'Position', 'Worth'],
+		fampage: [
+			'Members:',
+			'member',
+			'objectowner',
+			'spotowner',
+			'Position',
+			'Worth',//5
+			'Last family deaths',
+			'Last family changes',
+			'Name',
+			'Rank',
+			'Date',//10
+			'Ago',
+			'Change',
+			'No deaths yet!',
+			'No changes yet!'
+		],
 		ffv: 'Your FireFox version is older then our requirements. Beyond will not work properly untill you update to the newest version. Minimal required version:',
 		lookup: [
 			'This user does not exist',

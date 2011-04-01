@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			30-03-2011
+// @date			01-04-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -144,8 +144,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 41;
-const SCRIPT_SUBVERSION = 41;
+const SCRIPT_VERSION_BUILD = 42;
+const SCRIPT_SUBVERSION = 42;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1182,7 +1182,7 @@ if (dls == '?module=Launchpad') {
 			}
 		}
 		if (tab == '/profile.php' && prefs[14]) {//remove kill passwords
-			for (i=5;i>1;i--) {
+			for (i=9;i>1;i--) {
 				$Del('//div[@id="smsdivcontainer"]//center/table/tbody/tr[5]');
 			}
 		}
@@ -1191,15 +1191,14 @@ if (dls == '?module=Launchpad') {
 
 	//grab ajax event
 	getID('smsdivcontainer').addEventListener('DOMNodeInserted', function (event) {
-		var trigger = '<b>Status</b>';
-		if (event.target.innerHTML.search(trigger) != -1) {
+		if (event.target.innerHTML.search('<b>Status</b>') != -1 || event.target.innerHTML.search('<b>Your profile </b>') != -1) {
 			runCode(selectedTab());//we found html in the Node => run the code
 		}
 	}, false );
 
 	//Try and grab info on page load
 	var attempt = setInterval(function() {//using setInterval to enable use of setValue which fails in eventListener above
-		if($X('//a[contains(@href, "/BeO/webroot/index.php?module=Bloodbank&action=")]')){//if page contains health bar
+		if($X('//a[contains(@href, "/BeO/webroot/index.php?module=Crimes")]')){//if page contains crime timer
 			clearInterval(attempt);
 			bnUpdate(1);//call update function
 		}
@@ -1216,6 +1215,7 @@ if (dls == '?module=Launchpad') {
 
 //---------------- Bodyguards -----------------------------------
 if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.indexOf('&action=obay_details') == -1){
+	var color = getValue('tableBg', '#F0F0F0');
 	function grabLex() { //grab Lex level for BRC
 		var found = 0;
 		$x('//h2').forEach(function($n) { //loop <h2>
@@ -1412,7 +1412,7 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 				var showspec = '&nbsp;' //just leave it blank in that case
 			}
 			//<table cellpadding="0" cellspacing="0"><tr><td>
-			trdump += '<tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'">';
+			trdump += '<tr style="background-color:'+color+'">';
 			trdump += '<td style="text-align:center;">'+bgsname[y]+'</td>';
 			trdump += '<td style="text-align:center;"><a href="http://'+dlh+'/obay.php?action=tosell&type=14&id='+bgsid[y]+'">'+bgsid[y]+'</td>';
 			trdump += '<td style="text-align:center;">'+bgslvl[y]+'</td>';
@@ -1423,7 +1423,7 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 			trdump += '</tr>';
 		}
 		trdump += '<tr><td colspan="7" height="1" bgcolor="black"></td></tr>';
-		trdump += '<tr style="background-color:'+getValue('tableBg', '#F0F0F0')+'">';
+		trdump += '<tr style="background-color:'+color+'">';
 		trdump += '<td style="text-align:center;">'+lang.bgov[8]+':</td>';
 		trdump += '<td style="text-align:center;">&nbsp;</td>';
 		trdump += '<td style="text-align:center;">'+rounding(totlvls / 50)+'% '+lang.bgov[11]+'</td>';
@@ -1436,14 +1436,15 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 		var div = cEL('div');
 		var c = cEL('center');
 		var br = cEL('br');
-		div.setAttribute('style', 'background-color:'+getValue('tableBg', '#F0F0F0')+', border:1px solid black; color:#FFF');
+		div.setAttribute('style', 'background-color:'+color+', border:1px solid black; color:#FFF');
+		div.id = 'bgov';
 		div.innerHTML = '<table class="thinline" style="width:620px"><tr><td class="tableheader">'+lang.bgov[1]+'</td><td class="tableheader">'+lang.bgov[2]+'</td><td class="tableheader">'+lang.bgov[3]+'</td><td class="tableheader">'+lang.bgov[4]+'</td><td class="tableheader">'+lang.bgov[5]+'</td><td class="tableheader">'+lang.bgov[6]+'</td><td class="tableheader">'+lang.bgov[7]+'</td></tr><tr><td colspan="7" height="1" bgcolor="black"></td></tr>'+trdump+'<table>';
 		c.appendChild(div);
 		c.appendChild(br);
-		if (dls.indexOf('?module=Shop') != -1 || (dls.indexOf('?module=Bodyguards&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) {
+		if ((dls.indexOf('?module=Shop') != -1 && db.innerHTML.search('/static/images/game/bodyguards/lee') != -1) || (dls.indexOf('?module=Bodyguards&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) {
 			$X('//div[@id="smsdivcontainer"]').insertBefore(c, $X('//div[@class="otable widetable"]'));
 		}
-		if (dls.indexOf('?module=Bodyguards') != -1 && dls.indexOf('?module=Bodyguards&action=') == -1) {
+		if (dls.indexOf('?module=Bodyguards') != -1 || dls.indexOf('?module=Bodyguards&action=') != -1) {
 			db.insertBefore(c, $X('//div[@class="otable widetable"]'));
 		}
 	}
@@ -1466,7 +1467,7 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 			}
 		}, false);
 	}
-	if (dls.indexOf('?module=Bodyguards') != -1 && dls.indexOf('?module=Bodyguards&action=') == -1) { //via stand-alone
+	if (dls.indexOf('?module=Bodyguards') != -1 || dls.indexOf('?module=Bodyguards&action=') != -1) { //via stand-alone
 		if(prefs[36]){
 			bgspage();
 		}
@@ -1657,9 +1658,9 @@ if(dlp == '/info.php'){
 				}
 			});
 		}
-		if(prefs[38]) { //remove Facebook API from news frame
-			$del('//iframe');
-		}
+	}
+	if(prefs[38]) { //remove Facebook API from news frame
+		$del('//iframe');
 	}
 }
 
@@ -2126,7 +2127,7 @@ if (dlp == '/mid.php') {
 	bgXp = x2 + '[4]/td[5]';
 	boXp = x2 + '[3]/td[5]';
 	if ($X(healthXpBar)) {
-		setValue('missingHealth', '100' - getTXT(healthXpBar).replace('%', ''));
+		setValue('missingHealth', 100 - getTXT(healthXpBar).replace('%', ''));
 		$I(cashXp, '<a href="/bank.php" target="main"><b>C</b>ash:</a>');
 		$I(bulletXp, '<a href="/bullets2.php" target="main"><b>B</b>ullets:</a>');
 		$I(rpXp, '<a href="BeO/webroot/index.php?module=Launchpad" target="main"><b>R</b>ank progress:</a>');
@@ -2253,8 +2254,8 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		$x('//td[@class="tableheader"]')[0].innerHTML = (prefs[15] && !self)?$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a> | <a href="" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Actions</a>':$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a>';
 		var actions = cEL('div');
 		actions.id = 'actions';
-		actions.setAttribute('style', 'visibility:hidden;');
-		actions.setAttribute('onmouseout', 'document.getElementById(\'actions\').setAttribute(\'style\', \'visibility:hidden;\');');
+		actions.setAttribute('style', 'display:none;');
+		actions.setAttribute('onmouseout', 'document.getElementById(\'actions\').setAttribute(\'style\', \'display:none;\');');
 		actions.innerHTML = '<a href="BeO/webroot/index.php?module=Heist&action=&who='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Heist</a><br />';
 		actions.innerHTML += '<a href="BeO/webroot/index.php?module=Spots&action=&driver='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Raid</a><br />';
 		actions.innerHTML += '<a href="javascript:if(confirm(\'Are you sure you want to make '+nick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+nick+'\';" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Set Mentor</a><br />';
@@ -2484,7 +2485,8 @@ if(dlp == '/garage.php'){
 				var carType = '';
 				var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
 				var carVal = parseInt($X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td[4]').innerHTML.replace(',', '').replace('$', '')); //get value
-				carRow.setAttribute('onclick', 'var check = document.getElementsByName(\'carid['+(i-2)+']\')[0]; if (check.checked==true){ check.checked=false; } else { check.checked=true; };');
+				carRow.setAttribute('onclick', 'var check = document.getElementsByName(\'carid['+(i-2)+']\')[0]; if(check.checked==true){check.checked=false;}else{check.checked=true;}');
+				$X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td[6]/input[2]').setAttribute('onclick', 'if(this.checked==true){this.checked=false;}else{this.checked=true;}');
 				totVal += carVal;
 				types.forEach(function($n){ //loop car through types
 					if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
@@ -3027,19 +3029,38 @@ if (prefs[13] && dlp == '/family.php') {
 				newtable.setAttribute('cellspacing', '0');
 				newtable.setAttribute('cellpadding', '2');
 				newtable.setAttribute('rules', 'none');
-				var dtable = '<tr><td colspan="100%" class=tableheader>Last family deaths</td></tr> <tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left">Name</td><td class="bold" align="center">Rank</td><td class="bold" align="center">Time</td><td class="bold" align="right">Ago</td></tr>';
+				var dtable = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[6]+'</td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left">'+lang.fampage[8]+'</td><td class="bold" align="center">'+lang.fampage[9]+'</td><td class="bold" align="center">'+lang.fampage[10]+'</td><td class="bold" align="right">'+lang.fampage[11]+'</td></tr>';
 				if(response['deaths']){
 					for (i = -1; ++i < response['deaths'].length;) {
 						var extra = (response['deaths'][i]['Akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['BF'] == 1)?'(<b>BF</b>)':'';
-						dtable += '<tr><td>'+extra+' <a href="user.php?name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Name']+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Rank']+'</td><td align="center">'+response['deaths'][i]['Date']+'</td><td align="right">'+response['deaths'][i]['Agod']+'d '+response['deaths'][i]['Agoh']+'h '+response['deaths'][i]['Agom']+'m</td></tr>';
+						dtable += '<tr><td>'+extra+' <a href="user.php?name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Name']+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Rank']+'</a></td><td align="center">'+response['deaths'][i]['Date']+'</td><td align="right">'+response['deaths'][i]['Agod']+'d '+response['deaths'][i]['Agoh']+'h '+response['deaths'][i]['Agom']+'m</td></tr>';
 					}
 				} else {
-					dtable += '<tr><td colspan="4" class="red" align="center">No deaths yet!</td></tr>';
+					dtable += '<tr><td colspan="4" class="red" align="center">'+lang.fampage[13]+'</td></tr>';
 				}
 				newtable.innerHTML = dtable;
 				var br = cEL('br');
 				maintable2.appendChild(br);
 				maintable2.appendChild(newtable);
+				//family changes				
+				var changetable = cEL('table');
+				changetable.setAttribute('class', 'thinline');
+				changetable.setAttribute('width', '100%');
+				changetable.setAttribute('cellspacing', '0');
+				changetable.setAttribute('cellpadding', '2');
+				changetable.setAttribute('rules', 'none');
+				var dtable = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[7]+'</td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left" width="25%">'+lang.fampage[10]+'</td><td class="bold" align="center">'+lang.fampage[12]+'</td></tr>';
+				if(response['changes']){
+					for (i = -1; ++i < response['changes'].length;) {
+						dtable += '<tr><td align="left" width="25%">'+response['changes'][i]['date']+'</td><td align="center">'+response['changes'][i]['text']+'</td></tr>';
+					}
+				} else {
+					dtable += '<tr><td colspan="2" class="red" align="center">'+lang.fampage[14]+'</td></tr>';
+				}
+				changetable.innerHTML = dtable;
+				var br = cEL('br');
+				maintable2.appendChild(br);
+				maintable2.appendChild(changetable);
 				//position and worth
 				var posrow = cEL('tr');
 				var tdL = cEL('td');
@@ -3072,7 +3093,6 @@ if (dls.indexOf('module=Family')!=-1) {
 
 }
 if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
-
 //--Add Capo Money list + calc
 	var txt = $x('//td[@class="tableitem"]');//CapoMoney txt
 	var nick = $x('//td[@class="tableheader"]/b');//Capo's
@@ -3164,7 +3184,6 @@ if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 		});
 	}
 }
-
 //---------------- Group Crimes AF ----------------
 if (prefs[26]) {
 	//Accept link AF
@@ -3177,7 +3196,6 @@ if (prefs[26]) {
 			}
 		}
 	}
-
 	//Heist AF
 	if ((/\bHeist\b/).test(dls)) {
 		if (/gun/.test(db.innerHTML) && /carid/.test(db.innerHTML) == false) {
@@ -3196,11 +3214,14 @@ if (prefs[26]) {
 		if (/action=go/.test(db.innerHTML)) {
 			$x('//input')[10].focus();
 		}
-//		if (/action=cancel/.test(db.innerHTML)) {
-//			$X('//a').focus();
-//		}
-		if (/carid/.test(db.innerHTML)) {
+		if (/action=cancel/.test(db.innerHTML) && /action=go/.test(db.innerHTML) == false  && /action=setcar/.test(db.innerHTML) == false) {
+			$X('//a').focus();
+		}
+		if (/action=setcar/.test(db.innerHTML)) {
 			$x('//input')[1].focus();
+		}
+		if (/result:/.test(db.innerHTML)) {
+			$X('//a').focus();
 		}
 	}
 	//OC AF
@@ -3269,7 +3290,6 @@ if (prefs[26]) {
 		}
 	}
 }
-
 //---------------- Raidpage ----------------
 if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('driver') != -1) && prefs[34]) {
 	if (db.innerHTML.indexOf('/static/images/cities/maps') != -1) {
@@ -4098,7 +4118,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 }
 
-//---------- refresh/all-in button @ poker -----------
+//---------- refresh/all-in button/hide full @ poker -----------
 if (dls.search('module=Poker') != -1) {
 	var goall = 0;
 	var money = $X('//td[@class="tableitem"]/b').innerHTML.replace(',', '').replace('$', '').replace(',', '');
@@ -4127,7 +4147,35 @@ if (dls.search('module=Poker') != -1) {
 	} else {
 		$X('//center').insertBefore(span, $X('//table[@class="thinline"]'));
 	}
-	
+	//hide full
+//	var hidefull = getValue('hidefull', 0);
+//	function hideFull() {
+//		if(hidefull == '0') {
+//			setValue('hidefull', 1);
+//		} else {
+//			setValue('hidefull', 0);
+//		}
+//	}
+//	var span = cEL('span');
+//	span.innerHTML = '<label for="cb">Hide full games</label>';
+//	var input = cEL('input');
+//	input.setAttribute('type', 'checkbox');
+//	input.id = 'cb';
+//	if(hidefull == '1') {
+//		input.setAttribute('checked', 'checked');
+//	}
+//	input.addEventListener('click', function() { hideFull(); }, true);
+//	span.appendChild(input);
+//	$X('//td[@class="tableitem"]').appendChild(span);
+//	if(hidefull == '1') {
+//		var rows = $x('//tr').length; //get number of rows
+//		for(var i=5;i<rows-14;i++){ //loop rows
+//			var Row = $X('/html/body//center/table[1]/tbody/tr[@align="center"]['+i+']'); //get the specific row
+//			if(Row.innerHTML.search('<input type="submit"') == -1) {
+//				$Del('/html/body//center/table[1]/tbody/tr['+i+']');
+//			}
+//		}
+//	}
 	//add m/k usage in amount boxes
 	if (prefs[5]) {
 		var inputs = $x('//input[@name="ante"] | //input[@name="buy_in"] | //input[@name="max_raise"] | //input[@name="raiseby"]');
@@ -5956,7 +6004,7 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]
 }
 
 //---------------- NickReader ----------------
-if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php'){//if nickreader is on
+if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' && dlp != '/menu.php' && dlp != '/info.php'){//if nickreader is on
 	var nickReaderIcon = GM_getResourceURL('nickreader');
 	function parseGrab(html, url){
 		var body = html.slice(html.indexOf('</head>')+7);//don't need <head>
