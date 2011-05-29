@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.42
+	Version: 1.10.0.44
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit

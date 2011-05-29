@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			05-04-2011
+// @date			29-05-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 43;
-const SCRIPT_SUBVERSION = 43;
+const SCRIPT_VERSION_BUILD = 44;
+const SCRIPT_SUBVERSION = 44;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -196,6 +196,22 @@ var querys = [
 	'defpri',
 	'defcol'
 ];
+
+//---------------- Bmsg Example ----------------
+if (['/','/game.php','/banner.php','/info.php','/menu.php','/mid.php','/left.php','/pic.php','/right.php','/marquee.php'].indexOf(dlp) == -1) {
+	db.addEventListener('click', function() {
+		var id = 'msg';
+		var type = 'info'; //leave at info for now
+		var title = 'Death';
+		var text = '<br>Sbanks haz dies<br><br>'
+
+		var msg = new Bmsg();
+		msg.Bmsg(id, type, title, text);
+		msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+
+	//	msg.add();
+	}, false);
+}
 
 //---------------- int->str bninfo compatibility ----------------
 txt = getValue('bninfo', '');
@@ -666,7 +682,7 @@ if (dlp == '/menu.php') {
 			buttons[j]--;
 		}
 	}
-	
+
 	var xp_tr, xp_a, href, a, link, but, content; //pref vars
 	if (!dls) { //normal menu
 		var removed = 0;
@@ -1151,7 +1167,7 @@ if (dls == '?module=Launchpad') {
 				cartr.innerHTML = '<td><b>'+lang.status[5]+'</b></td><td>$ '+commafy(carmoney)+' ($'+commafy(caravg)+'/'+lang.status[6]+')</td>';
 				$x('//table[@class="thinline"]')[4].appendChild(cartr);
 			}
-			
+
 			$x('//a[contains(@href,"shoptabs=7")]')[0].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
 			$x('//a[contains(@href,"shoptabs=7")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
 			$X(bguardsXP).innerHTML = '<a href="/BeO/webroot/index.php?module=Bodyguards&action=">'+$X(bguardsXP).innerHTML+'</a>';
@@ -1441,7 +1457,7 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 						var foo = cEL('div'); //create hardcoded fix so we run code only once
 						foo.id = 'onceonly';
 						getID('smsdivcontainer').appendChild(foo);
-						
+
 						if(prefs[36]){
 							bgspage();
 						}
@@ -2261,7 +2277,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 			actions.innerHTML += '<a href="/BeO/webroot/index.php?module=Family&who='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Invite to Family</a>';
 		}
 		db.appendChild(actions);
-			
+
 		if (alive) { //Add interesting stuff here
 			if (!self) { //additions useless for self
 				$X('//span[@id="hp"]').innerHTML = '<a href="/honorpoints.php?who='+nick+'" class="red">'+$X('//span[@id="hp"]').innerHTML+'</a>'; //Send HP's
@@ -2508,7 +2524,7 @@ if(dlp == '/garage.php'){
 		sTable.id = 'selectTable';
 		sTable.setAttribute('style', 'border:0px; width:100%;');
 		sTable.setAttribute('cellspacing', '0');
-		
+
 		var sTr = cEL('tr');
 		sTr.id = 'selectRow';
 		
@@ -2525,7 +2541,7 @@ if(dlp == '/garage.php'){
 		' &nbsp; <input type="button" onclick="javascript:document.location.href = \'garage.php?max=\' + document.getElementById(\'max\').value + \'&select=\' + document.getElementById(\'X\').value + \'&truck=\' + (document.getElementById(\'truck\').checked ? \'1\' : \'0\') + \'&ob_oc=\' + (document.getElementById(\'oc\').checked ? \'1\' : \'0\') + \'&ob_moc=\' + (document.getElementById(\'moc\').checked ? \'1\' : \'0\') + \'&ob_heist=\' + (document.getElementById(\'heist\').checked ? \'1\' : \'0\') + \'&nodam=\' + (document.getElementById(\'nodam\').checked ? \'1\' : \'0\') + ' + (GetPost('page')=='' ? '\'' : '\'&page=' + GetPost('page')) + '\';" value="'+lang.garage[4]+'" name="action" />' +
 		'<table style="padding-top:10px; position:relative; right:7px;"><tr>'+string+'id="heist">'+lang.garage[5]+'</label></td>'+string+'id="oc">'+lang.garage[6]+'</label></td>'+'</tr><tr>'+string+
 		'id="truck" />'+lang.garage[7]+'</label></td>'+string+'id="moc" />'+lang.garage[8]+'</label></td>'+'</tr><tr>'+string+'id="nodam" />'+lang.garage[9]+'</label></td><td>&nbsp;</td>'+'</tr></table>';
-		
+
 		sTr.appendChild(sTd);
 		sTable.appendChild(sTr);
 		xpath.parentNode.insertBefore(sTable, xpath.nextSibling);
@@ -2837,7 +2853,7 @@ if (prefs[13] && dlp == '/family.php') {
 		}, true);
 		$X('//td[@class="profilerow"]').appendChild(remofjhl);
 	}
-	
+
 	//style family info table a bit
 	$x('//td[@class="subtableheader"]').forEach(function($n) {
 		$n.setAttribute('style', 'padding-left: 4px; text-align: left;');
@@ -3001,7 +3017,7 @@ if (prefs[13] && dlp == '/family.php') {
 				hrtr.innerHTML = '<td class="subtableheader" style="padding-left: 4px; text-align: left;">Ranks:</td>';
 				hrtr.innerHTML += '<td class="profilerow"><table width="100%"><tr><td>Godfather/First Lady:</td><td class="bold">'+response['hr']['gf']+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response['hr']['cd']+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response['hr']['brug']+'</td></tr><tr><td>Chief:</td><td class="bold">'+response['hr']['chief']+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response['hr']['lc']+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response['hr']['assa']+'</td></tr><tr><td>Swindler:</td><td class="bold">'+response['hr']['swin']+'</td></tr><tr><td colspan="2"><hr /></td></tr><tr><td>Total points:</td><td class="bold">'+response['hr']['pts']+'</td></tr></table></td>';
 				maintable.appendChild(hrtr);
-				//deaths				
+				//deaths
 				var deathtable = cEL('table');
 				deathtable.setAttribute('class', 'thinline');
 				deathtable.setAttribute('width', '100%');
@@ -3020,7 +3036,7 @@ if (prefs[13] && dlp == '/family.php') {
 				var br = cEL('br');
 				maintable2.appendChild(br);
 				maintable2.appendChild(deathtable);
-				//family changes				
+				//family changes
 				var changetable = cEL('table');
 				changetable.setAttribute('class', 'thinline');
 				changetable.setAttribute('width', '100%');
@@ -3697,7 +3713,7 @@ if (dls.indexOf('action=outbox') != -1 || dls.indexOf('iParty=1') != -1){
 
 if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != -1) {
 	var id = $X('//a[contains(@href,"delMsg")]').href.split('?')[1].match(/\d+/g);
-	var ids = getValue('msgids', ''); 
+	var ids = getValue('msgids', '');
 	ids = ids.split(','); //load stored data
 	var len = ids.length;
 	for(i = 0;i<len;i++){
@@ -3714,7 +3730,7 @@ if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != 
 	// keycode == 37 /BeO/webroot/index.php?module=Mail&action=delMsg&iId='+id[0]+'&iParty=2
 	var titleRow = $X('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[1]/td');
 	titleRow.innerHTML = titleRow.innerHTML+"<div style='float:right;padding-top:2px;'><img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId="+prev+"\"' src='"+GM_getResourceURL('prevIcon')+"' title='Previous' style='"+noprev+"cursor:pointer;' />&nbsp;<img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId="+next+"\"' src='"+GM_getResourceURL('nextIcon')+"' title='Next' style='"+nonext+"cursor:pointer;' /></div>";
-	
+
 	if ($X('//a[contains(@href,"/family.php?join=yes")]')) {
 		$X('//a[contains(@href,"/family.php?join=yes")]').removeAttribute('target');
 	}
@@ -4317,9 +4333,9 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Lackeys') != -1){
 						var foo = cEL('div'); //create hardcoded fix so we run code only once
 						foo.id = 'onceonly';
 						getID('smsdivcontainer').appendChild(foo);
-						
+
 						ltracker();
-						
+
 						getID('resetL').addEventListener('click', function() {
 							getID('resetL').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
 							getID('lstats').innerHTML = 'Total spent:<font style="float:right"><b>0</b></font><br />Crimes:<font style="float:right"><b>0 (0%)</b></font><br />Cars:<font style="float:right"><b>0 (0%)</b></font><br />Busts: <font style="float:right"><b>0 (0%)</b></font><br />Booze: <font style="float:right"><b>0 (0%)</b></font><br />Narcs: <font style="float:right"><b>0 (0%)</b></font>';
@@ -4821,8 +4837,177 @@ if (dlp == '/vfo.php') { //vote for omerta
 		}
 	}
 }
-//---------------- Best Run Calculator ----------------	
-if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
+
+
+// TSP trigger variable
+var editmode = 0;
+
+if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editmode ==1) {
+/*
+	//init
+	Grab prefs
+	Grab rank/plane/fatigue/city/lex/fampos/b/n
+	Grab prices
+
+	//calc
+	Profits of Best Current Carry Run
+	Profits for Best Run (x-check with CRC)
+
+	//apply
+	$$-mode: buy booze only after narcs
+	rp-mode: only buy when get RP, AF sell AFTER buy.
+	cd-mode: AF buy AND sell
+	remember failed attempts
+
+	//UI
+	smart link/hotkeys - click-to-switch
+
+*/
+	if(dlp == '/smuggling.php') {
+		//Grab vital information
+		var cash = $I('//td').split('$')[1].split('<')[0].replace(/\D/g, ''); // Header stuff
+		var maxB = $X('//span').getAttribute('value');
+		var maxN = $X('//span[2]').getAttribute('value');
+		var head = $I('//h3');
+		var TrpBm = getID('counter_booze_minutes_value')?getID('counter_booze_minutes_value').innerHTML:0; // Timers
+		var TrpBs = getID('counter_booze_seconds_value')?getID('counter_booze_seconds_value').innerHTML:0;
+		var TrpNm = getID('counter_drugs_minutes_value')?getID('counter_drugs_minutes_value').innerHTML:0;
+		var TrpNs = getID('counter_drugs_seconds_value')?getID('counter_drugs_seconds_value').innerHTML:0;
+		var names = []; $x('//table[@width="100%"]//table[@width="100%"]//tr//td[1][not(@class)][not(@bgcolor)]').forEach(function($n){if($n.innerHTML.indexOf('input')==-1){names.push($n.innerHTML.replace(/\W/g,''));}});
+		var pricesHere = []; $x('//table[@width="100%"]//tr//td[4][not(@class)]').forEach(function($n){pricesHere.push($n.innerHTML.replace(/\W/g,''));});
+		var lexPricesHere=0; if($X('//table[@width="100%"]//tr//td[5][not(@class)]')){lexPricesHere=[];$x('//table[@width="100%"]//tr//td[5][not(@class)]').forEach(function($n){lexPricesHere.push($n.innerHTML.replace(/\W/g,''));});}
+		var carryHere = []; $x('//table[@width="100%"]//tr//td[3][not(@class)]').forEach(function($n){carryHere.push($n.innerHTML.replace(/\W/g,''));});
+		var imgcode = getID('imgcode')?getID('imgcode').src:0;
+
+		//Cleaning up..
+		$Del('//table');
+		$Del('//h3');
+
+		//Build Tidy Smuggling page
+		var form = $X('//form'); // This is our working area
+		var header = cEL('div'); // Assemble header
+		header.id = 'TS_header';
+		header.style.backgroundColor = getValue('tableBg', '#F0F0F0');
+		header.innerHTML = '' +
+			'<div style="background-color:' + getValue('titleBg', '#F0F0F0')+ ';">' + head + '</div>' +
+			'<div id="TS_UI" style="background-color:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 60) + ';">' +
+				'<table cellspacing="0" cellpadding="0" style="width:100%;border:0px;">' +
+					'<tr>' +
+						'<td>' + // action buttons
+							'<img src="http://www.omertabeyond.com/pre/Dopedog/drink.png" />' +
+							'<img src="http://www.omertabeyond.com/pre/Dopedog/pill.png" />' +
+							'<img src="http://www.omertabeyond.com/pre/Dopedog/coins.png" />' +
+							'<img src="http://www.omertabeyond.com/pre/Dopedog/cancel.png" />' +
+							'<div class="TS_spacer" style="top:-9px;display:inline;"></div>' +
+						'</td>' +
+						'<td>' + //numbers
+							'<span id="TS_cash">$ ' + commafy(cash) + '</span><br>' +
+							'<span id="TS_carry">' + maxB + ' / ' + maxN + '</span>'+
+						'</td>' +
+						'<td style="text-align:right;">' + // BRC buttons
+							'<div class="TS_divButton" style="margin-right:10px;">RP</div>' +
+							'<div class="TS_divButton">CD</div>' +
+							'<div class="TS_divButton">BR</div>' +
+							'<div class="TS_spacer" style="top:4px;float:right;">&nbsp;</div>' +
+						'</td>' +
+					'</tr>' +
+				'</table>' +
+			'</div>' +
+			'<div style="background-color:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 110) + ';">'+
+				'<img src="' + GM_getResourceURL('brcGear') + '" />'+ // City prices
+			'</div>' + // B/N prices table
+			'<img src="http://www.omertabeyond.com/pre/Dopedog/table.png" />'; // BRC settings
+		form.appendChild(header);
+
+		var dealer = cEL('div'); // Assemble dealer
+		dealer.setAttribute('style', 'margin-top:20px;background-color:' + getValue('tableBg', '#F0F0F0') + ';width:90%; border:1px solid #000; border-radius:5px; vertical-align:bottom;line-height:20px;');
+		var html = '' +
+			'<div style="background:#ddd;border-radius:5px;">' +
+				'<table cellspacing="0" cellpadding="0" border="0" width="100%">' +
+					'<tr style="height:23px;background: url(\'/static/images/game/generic/headershine.png\') repeat-x scroll 0 0 ' + getValue('titleBg', '#F0F0F0')+ ';color:#ddd;font-weight:bold;">' + // Dealer header
+						'<td style="border-bottom:2px solid #000;padding-left:6px;">' +
+							'Booze&nbsp;' +
+						'</td>' +
+						'<td colspan="4" style="text-align:left;border-bottom:2px solid #000;padding-left:18px;background:url(\'http://www.omertabeyond.com/pre/Dopedog/clock.png\') no-repeat scroll left center;">' +
+							'13:02&nbsp;' +
+						'</td>' +
+						'<td style="border-bottom:2px solid #000;padding-left:6px;">' +
+							'Narcotics&nbsp;' +
+						'</td>' +
+						'<td colspan="4" style="text-align:left;border-bottom:2px solid #000;padding-left:18px;background:url(\'http://www.omertabeyond.com/pre/Dopedog/clock.png\') no-repeat scroll left center;">' +
+							'13:02&nbsp;' +
+						'</td>' +
+					'</tr>';
+		for (i=0;i<7;i++) { // Assemble dealer rows
+			html += '<tr style="height:25px;background:#fff;">' +
+						'<td style="padding-left:6px;width:120px;">' + names[i] + '</td>' +
+						'<td>' +
+							'<input style="width:41px;height:20px;border-top-left-radius:5px;border-bottom-left-radius:5px;text-align:right;padding-right:3px;color:#000;background:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 110) + ';border:1px solid #000;border-left:1px solid #000;border-right:0px; border-bottom:1px solid #555;" type="text" />' +
+							'<div style="cursor:pointer;display:inline-table;width:17px;height:17px;vertical-align:top;background:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 70) + ';border:1px solid #000;border-left:2px solid #333;border-right:2px solid #000;border-bottom:1px solid #000;border-top-right-radius:5px;border-bottom-right-radius:5px;color:#444;text-align:center;padding-top:1px;line-height:14px;">&#8226;</div>' +
+						'</td>' +
+						'<td style="text-align:right;">' + carryHere[i] + '</td>' +
+						'<td style="width:80px;">&nbsp;</td>' +
+						'<td style="text-align:right;padding-right:10px;width:55px;">' +
+							'<div style="float:left;">$</div>' + commafy(pricesHere[i]) +
+						'</td>' +
+						'<td style="border-left:1px solid #000; padding-left:5px;width:120px;">' + names[i+7] + '</td>' +
+						'<td>' +
+							'<input style="width:41px;height:20px;text-align:right;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-right:3px;color:#000;background:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 110) + ';border:1px solid #000;border-left:1px solid #000;border-right:0px; border-bottom:1px solid #555;" type="text" />' +
+							'<div style="cursor:pointer;display:inline-table;width:17px;height:17px;vertical-align:top;background:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 70) + ';border:1px solid #000;border-left:2px solid #333;border-right:2px solid #000;border-bottom:1px solid #000;border-top-right-radius:5px;border-bottom-right-radius:5px;color:#444;text-align:center;padding-top:1px;line-height:14px;">&#8226;</div>' +
+						'</td>'+
+						'<td style="text-align:right;">' + carryHere[i+7] + '</td>' +
+						'<td style="width:80px;">&nbsp;</td>' +
+						'<td style="text-align:right;padding-right:10px;width:55px;">' +
+							'<div style="float:left;">$</div>' + commafy(pricesHere[i+7]) +
+						'</td>' +
+					'</tr>';
+		}
+	//	imgcode =1;
+		dealer.innerHTML = html + // buy/sell buttons
+					'<tr style="height:24px;background:#ddd;">' +
+						'<td style="border-top:1px solid #000;">&nbsp;</td>' +
+						'<td style="border-top:1px solid #000;padding-top:6px;padding-bottom:6px;">' +
+							'<button value="Sell" style="cursor:pointer;height:20px;width:61px;border:1px solid #000;border-left:1px solid #555;border-right:2px solid #000;border-top:1px solid #555; background:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 70) + ';border-radius:5px;">Sell</button>' +
+						'</td>' +
+						'<td colspan="3" style="border-top:1px solid #000;">&nbsp;</td>' +
+						'<td style="border-top:1px solid #000;">&nbsp;</td>' +
+						'<td colspan="1" style="border-top:1px solid #000;">' +
+							'<button value="Sell" style="cursor:pointer;height:20px;width:61px;border:1px solid #000;border-left:1px solid #555;border-right:2px solid #000;border-top:1px solid #555; background:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 70) + ';border-radius:5px;">Sell</button>' +
+						'</td>' +
+						'<td colspan="3" style="border-top:1px solid #000;">&nbsp;</td>' +
+					'</tr>' +
+				'</table>' +
+				'<table cellspacing="0" cellpadding="0" style="width:100%;border:0px;border-top:1px solid #000;background-color:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 110) + ';">' + // img code + status box
+					'<tr>' +
+						'<td style="padding:20px;text-align:center;width:50%;vertical-align:top;">' +
+							(imgcode ? '<img style="border:1px solid #000; border-radius:5px;" src="' + imgcode + '" />' : '') +
+						'</td>' +
+						'<td style="padding:20px;text-align:center;width:50%;vertical-align:top;">' +
+							'<div style="display:inline-table;border:1px solid #000;width:300px;height:110px;padding-left:5px;background:#fff;border-radius:5px;line-height:15px;text-align:left;">' +
+								'<span>- You are tired<br>- Low Cash<br>- Best Run Mode: Buy B - Buy N</span>' +
+							'</div><br>' +
+							'<input type="text" ' + (!imgcode?' disabled="true" style="background:#aaa !important;':'style="') + 'margin-top:18px;width:200px;height:23position:relative;top:0px;border-top:1px solid #000;border-left:1px solid #000;border-right:0px solid #000;border-bottom:1px solid #555;border-top-left-radius:5px;border-bottom-left-radius:5px;color:#111;background:url(\'http://www.omertabeyond.com/pre/Dopedog/keyboard.png\') no-repeat scroll 175px 1px #fff;padding:4px;" />' +
+							'<input style="height:29px;width:105px;border:3px solid #000;border-left:3px solid #555;border-top:3px solid #555; background:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 70) + ';border-radius:5px;color:#000;cursor:pointer;" type="submit" value="Go for it" />' +
+						'</td>' +
+					'</tr>' +
+				'</table>' +
+			'</div>' +
+			'<div style="background:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 110) + ';border-bottom-left-radius:5px;border-bottom-right-radius:5px;height:5px;">&nbsp;</div>';
+		form.appendChild(dealer);
+	}
+/*
+	setValue('bodyBg', getActualHex($X('//body'), 'background-color'));
+	setValue('titleBg' ,getActualHex($X('//a[@class="selected"]'), 'background-color'));
+	var dummy = cEL('table'); dummy.id = 'dummyT'; dummy.setAttribute('class', 'thinline'); db.appendChild(dummy);
+	setValue('tableBg', getActualHex($X('//table[@id="dummyT"]'), 'background-color'));
+	$Del('//table[@id="dummyT"]');
+	setValue('fontClr', getActualHex($X('//body'), 'color'));
+*/
+}
+
+
+//---------------- Best Run Calculator ----------------
+if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php')) {
 	//variable soup :D
 	var pp, sp, tp, bninfo, values, carry_n, carry_b, n_amount, b_amount, selling_n, fail_n, boxes, narc, booze, city, plane, fam;
 	var smugCity, nCityprofit, bCityprofit, border, table, tr, td, mOver, mOut, bestNarc, bestBooze, d, lex, lexHour, lexDay;
@@ -5631,7 +5816,7 @@ if (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php') {
 }
 
 //---------------- Smuggling ----------------
-if (prefs[28] && dlp == '/smuggling.php') { //mainly add AF links and tweak innerHTML, other functions taken over by BRC
+if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF links and tweak innerHTML, other functions taken over by BRC
 	//get input fields
 	inputs = $x('//input');
 	bn_xp = '//form/table/tbody/tr[1]/td';
@@ -5788,7 +5973,7 @@ if (dlp.indexOf('user.php') != -1 && dls.indexOf('page=user') != -1) {
 				}
 				else if(total!='0'){
 					db.innerHTML += (total<=50)?'<br />'+lang.lookup[1]+'<br />':'<br />'+lang.lookup[1]+'<br />'+lang.lookup[4]+' '+total+' '+lang.lookup[5]+'<br />';
-					for(var i=0;i<50;i++){							
+					for(var i=0;i<50;i++){
 						var results = xml.getElementsByTagName('name')[i].textContent;
 						db.innerHTML += '<br /><a href="'+dlp+'?nick='+results+'">'+results+'</a>';
 					}

@@ -4,7 +4,7 @@
 	Changing these values are at your own risk. If you make bug changes or bugfixes,
 	please inform us too so we can make any changes if we think are necesary.
 
-	Version: 1.10.0.41
+	Version: 1.10.0.44
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -192,3 +192,152 @@ color:#FF00FF !important
 .bold {
 font-weight: bold;
 }
+
+/* Tidy Smuggling Page */
+#TS_header {
+width:90%;
+border:1px solid #000;
+border-radius:5px;
+line-height:20px;
+font-weight:bold;
+color:#ddd;
+}
+#TS_header > div:nth-child(1) {
+background:url('/static/images/game/generic/headershine.png') repeat-x scroll 0 0;
+padding-bottom:3px;border-bottom:2px solid #000;
+}
+#TS_header > div:nth-child(3) {
+border-bottom:1px solid #000;
+border-bottom-right-radius:5px;
+border-bottom-left-radius:5px;
+}
+#TS_header > img, #TS_header > div > img {
+padding:3px;
+cursor:pointer;
+}
+#TS_UI {
+height:50px;
+border-bottom:1px solid #000;
+color:#000;
+}
+#TS_UI * td {
+width:33%;
+padding:5px;
+vertical-align:top;
+}
+#TS_UI * td:nth-child(2) {
+padding-top:5px;
+text-align:center;
+line-height:20px;
+color:#222;
+font-weight:bold;
+}
+#TS_UI * img {
+margin-left:10px;
+padding:9px;
+border:3px solid #000;
+border-top:3px solid #555;
+border-left:3px solid #555;
+border-radius:5px;
+background:#fff;
+cursor:pointer;
+}
+.TS_spacer {
+position:relative;
+margin-left:13px;
+margin-bottom:1px;
+border:1px solid #ddd;
+width:0px;
+font-size:25px;
+}
+.TS_divButton {
+float:right;
+font-weight:bold;
+margin-left:10px;
+padding:10px;
+padding-left:8px;
+padding-right:8px;
+border:3px solid #000;
+border-top:3px solid #555;
+border-left:3px solid #555;
+border-radius:5px;
+background:#fff;
+cursor:pointer;
+}
+
+
+		/* @Beyond Message */
+			.bm_shade {
+				position:fixed;
+				top:0px;
+				left:0px;
+				height:100%;
+				width:100%;
+				background-color:#222;
+				opacity:.00;
+				z-index:1;
+			}
+			.bm {
+				position:fixed;
+				font-family:Verdana,Tahoma;
+				font-size:12px;
+				width:300px;
+				line-height:18px;
+				background-color:#333;
+				color:#DDD;
+				z-index:2;
+				-moz-border-radius:3px
+			}
+			.bm_title {
+				text-align:center;
+				font-weight:bold;
+				padding-top:1px;
+				color:#000;
+				height:18px;
+				-moz-border-radius-topLeft:3px;
+				-moz-border-radius-topRight:3px;
+				border:1px solid #000
+			}
+			.bm_warn .bm_body {
+				background:url('http://dump.omertabeyond.com/images/104error.png') 28px 28px no-repeat;
+			}
+			.bm_info .bm_body {
+				background:url('http://www.omertabeyond.com/pre/sbanks/skull3.png') 28px 28px repeat-y;
+				font-size:10px;
+			}
+			.bm_info > div:nth-child(1) {
+				background-color:darkred !important;
+			}
+			.bm_body {
+				padding-left:70px;
+				padding-top:10px;
+				padding-right:10px;
+				min-height:70px;
+				-moz-border-radius-bottomLeft:3px;
+				-moz-border-radius-bottomRight:3px;
+				border:1px solid #000
+			}
+
+			.bm_buttons {
+				position:absolute;
+				right:10px;
+				bottom:10px;
+			}
+			.bm button {
+				float:right;
+				margin-right:10px;
+				border:1px solid #BBB;
+				background:#000;
+				-moz-border-radius:3px;
+				color:#DDD;
+				height:20px;
+				width:55px;
+			}
+			.bm button:hover {
+				color:#fff;
+				border:1px solid #fff;
+				background-color:#111;
+			}
+			button::-moz-focus-inner,input::-moz-focus-inner{
+				border: none
+			}
