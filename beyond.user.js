@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 44;
-const SCRIPT_SUBVERSION = 44;
+const SCRIPT_VERSION_BUILD = 45;
+const SCRIPT_SUBVERSION = 45;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -6042,8 +6042,7 @@ if (dlp.indexOf('user.php') != -1 && dls.indexOf('page=user') != -1) {
 				var parser = new DOMParser();
 				var xml = parser.parseFromString(resp.responseText, 'application/xml');
 				var total = xml.getElementsByTagName('totalresults')[0].textContent;
-					db.innerHTML = getTXT('/html/body');
-					db.innerHTML += ': '+input;
+					db.innerHTML = 'This user does not exist: '+input;
 				if(input.length<3){
 					db.innerHTML += '<br />'+lang.lookup[3];
 				}
