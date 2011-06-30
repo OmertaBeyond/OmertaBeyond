@@ -421,6 +421,15 @@ function hOne() {
 	}
 }
 
+function sec2time(sec) {
+	var hr = Math.floor(sec / 3600);
+	var min = (sec - (hr * 3600))/60;
+	while (min.length < 2) {min = '0' + min;}
+	min = (min)?min+'m':'';
+	hr = (hr)?hr+'h ':'';
+	return hr + min;
+}
+
 function OBUpdate(cb) {
 	GM_xmlhttpRequest({
 		method: "GET",

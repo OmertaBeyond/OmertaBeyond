@@ -199,18 +199,52 @@ var querys = [
 
 //---------------- Bmsg Example ----------------
 if (['/','/game.php','/banner.php','/info.php','/menu.php','/mid.php','/left.php','/pic.php','/right.php','/marquee.php'].indexOf(dlp) == -1) {
-	db.addEventListener('click', function() {
-		var id = 'msg';
-		var type = 'info'; //leave at info for now
-		var title = 'Death';
-		var text = '<br>Sbanks haz dies<br><br>'
-
-		var msg = new Bmsg();
-		msg.Bmsg(id, type, title, text);
-		msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
-
-	//	msg.add();
-	}, false);
+	GM_xmlhttpRequest({
+		method: 'GET',
+		url: SCRIPT_LINK+'/index.php?p=bmsg&v='+sets.version.replace('_',''),
+		onload: function(xhr) {
+			var response = JSON.parse(xhr.responseText);
+			var lastbmsg = getValue('lastbmsg', 0);
+			var len = response["deaths"].length;
+			if (lastbmsg < response["deaths"][0]["ts"]) {
+				var extra = (response['deaths'][0]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][0]['bf'] == 1)?'(<b>BF</b>)':'';
+				var id = 'msg';
+				var type = 'info'; //leave at info for now
+				var title = 'Death';
+				var d =  new Date(response['deaths'][0]['ts']*1000);
+				var time = d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+				var extra = (response['deaths'][0]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][0]['bf'] == 1)?'(<b>BF</b>)':'';
+				var fam = (response['deaths'][0]['fam'] == '')?'':'('+response['deaths'][0]['fam']+')';
+				var text = '<br />'+time+' '+extra+' <a href="user.php?name='+response['deaths'][0]['name']+'">'+response['deaths'][0]['name']+'</a> '+response['deaths'][0]['rank_text']+' '+fam+'<br />';
+		
+				var msg = new Bmsg();
+				msg.Bmsg(id, type, title, text);
+				msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+		
+				msg.add();
+				setValue('lastbmsg', response["deaths"][0]["ts"]);
+			} else if (lastbmsg < response["deaths"][len-1]["ts"]) {
+				var id = 'msg';
+				var type = 'info'; //leave at info for now
+				var title = 'Death';
+				var text = '<br />';
+				for (var i=0;i<response["deaths"].length;i++) {
+					var d =  new Date(response['deaths'][i]['ts']*1000);
+					var time = d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+					var extra = (response['deaths'][i]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['bf'] == 1)?'(<b>BF</b>)':'';
+					var fam = (response['deaths'][i]['fam'] == '')?'(None)':'('+response['deaths'][i]['fam']+')';
+					text += time+' '+extra+' <a href="user.php?name='+response['deaths'][i]['name']+'">'+response['deaths'][i]['name']+'</a> '+response['deaths'][i]['rank_text']+' '+fam+'<br />';
+				}
+		
+				var msg = new Bmsg();
+				msg.Bmsg(id, type, title, text);
+				//msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+		
+				msg.add();
+				setValue('lastbmsg', response["deaths"][0]["ts"]);
+			}
+		}
+	});
 }
 
 //---------------- int->str bninfo compatibility ----------------
@@ -423,7 +457,6 @@ if (dlp == '/game.php') { //just once on login
 			alert(lang.ffv+' '+minFFVersion);
 		}
 	}
-
 	// Check for update
 	if (prefs[37]) {
 		var time = new Date().getTime();
@@ -598,21 +631,16 @@ if(dlp == '/marquee.php'){
 }
 //---------------- Menu and submenus ----------------
 if (dlp == '/menu.php') {
-	//remove third party hotkey leftovers
-  	db.innerHTML = db.innerHTML.replace(/(| )\[\w\]/ig,'').replace(/accesskey=\"\w\"/,'');
-	//beyond menu descriptions
-	var descr = [lang.prefsname].concat(lang.menuitem);
-	//beyond menu links
-	var qlinks = [PrefsLink +'&ob='+OB, PollLink, ContactLink, SCRIPT_LINK + '/?p=faq', PricesLink, sets.statslink];
-	//beyond menu titles
-	var qtitle = lang.menutitle;
+  	db.innerHTML = db.innerHTML.replace(/(| )\[\w\]/ig,'').replace(/accesskey=\"\w\"/,''); //remove third party hotkey leftovers
+	var descr = [lang.prefsname].concat(lang.menuitem); //beyond menu descriptions
+	var qlinks = [PrefsLink +'&ob='+OB, PollLink, ContactLink, SCRIPT_LINK + '/?p=faq', PricesLink, sets.statslink]; //beyond menu links
+	var qtitle = lang.menutitle; //beyond menu titles
 
 	if(sets.version=='_tr'){ // no point in having stats links for .tr being that we don't log that at all
 		descr.pop();
 		qlinks.pop();
 		qtitle.pop();
 	}
-
 	//--add additional submenus
 	function appMenu(x) {
 		innerHTML += '</tbody></table></div></td></tr></tbody>';
@@ -1265,48 +1293,12 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 			}
 			//calcing total costs of the bg
 			//http://gamewiki.barafranca.com/index.php?title=Bodyguards_NL#De_bodyguards
-			if (bgsname[y] == 'Ike') {
-				attplvl = 4;
-				defplvl = 7;
-				statt = 10;
-				stdef = 25;
-				startc = 50000;
-			}
-			if (bgsname[y] == 'Joe') {
-				attplvl = 3;
-				defplvl = 6;
-				statt = 0;
-				stdef = 25;
-				startc = 50000;
-			}
-			if (bgsname[y] == 'Lee') {
-				attplvl = 1;
-				defplvl = 10;
-				statt = 0;
-				stdef = 50;
-				startc = 100000;
-			}
-			if (bgsname[y] == 'Lex') {
-				attplvl = 2;
-				defplvl = 5;
-				statt = 0;
-				stdef = 10;
-				startc = 1000000;
-			}
-			if (bgsname[y] == 'Ray') {
-				attplvl = 1;
-				defplvl = 5;
-				statt = 0;
-				stdef = 10;
-				startc = 10000;
-			}
-			if (bgsname[y] == 'Vic') {
-				attplvl = 8;
-				defplvl = 3;
-				statt = 20;
-				stdef = 0;
-				startc = 250000;
-			}
+			attplvl = (bgsname[y] == 'Ike')?4:(bgsname[y] == 'Joe')?3:(bgsname[y] == 'Lee')?1:(bgsname[y] == 'Lex')?2:(bgsname[y] == 'Ray')?1:(bgsname[y] == 'Vic')?8:0;
+			defplvl = (bgsname[y] == 'Ike')?7:(bgsname[y] == 'Joe')?6:(bgsname[y] == 'Lee')?10:(bgsname[y] == 'Lex')?5:(bgsname[y] == 'Ray')?5:(bgsname[y] == 'Vic')?3:0;
+			statt = (bgsname[y] == 'Ike')?10:(bgsname[y] == 'Joe')?0:(bgsname[y] == 'Lee')?0:(bgsname[y] == 'Lex')?0:(bgsname[y] == 'Ray')?0:(bgsname[y] == 'Vic')?20:0;
+			stdef = (bgsname[y] == 'Ike')?25:(bgsname[y] == 'Joe')?25:(bgsname[y] == 'Lee')?50:(bgsname[y] == 'Lex')?10:(bgsname[y] == 'Ray')?10:(bgsname[y] == 'Vic')?0:0;
+			startc = (bgsname[y] == 'Ike')?50000:(bgsname[y] == 'Joe')?50000:(bgsname[y] == 'Lee')?100000:(bgsname[y] == 'Lex')?1000000:(bgsname[y] == 'Ray')?10000:(bgsname[y] == 'Vic')?250000:0;
+
 			c += startc;
 			att = ((bgsatt[y] - statt) / attplvl);
 			def = ((bgsdef[y] - stdef) / defplvl);
@@ -2002,7 +1994,7 @@ if (prefs[11]) {
 if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
 		$x('//input[@type="radio"]')[4].checked = true;
-	} else if (getTXT('html/body').search('Closed') == -1 && prefs[10]) {
+	} else if (getTXT('html/body').search('Your lackeys are working for you ') == -1 && prefs[10]) {
 		refreshIn('/BeO/webroot/index.php?module=Crimes');
 	}
 	if ($X('//input[@type="text"]')) {
@@ -2058,7 +2050,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 			p.push($i('//form//td[3]', i).replace(/\D|/g, ''));
 		}
 		$x('//input')[(p.indexOf(p.max() + '') + 1)].checked = true; //select radio by %
-	} else if (getTXT('html/body').search('Closed') == -1 && prefs[10]) {
+	} else if (getTXT('html/body').search('Your lackeys are working for you') == -1 && prefs[10]) {
 		refreshIn('/BeO/webroot/index.php?module=Cars');
 	}
 	if ($X('//input[@type="text"]')) {
@@ -2076,15 +2068,19 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 	var worth = db.innerHTML.match(/\[\$(.*)\]/);
 	var carTracker = getValue('cars', 0);
 	var carmoney = getValue('carmoney', 0);
-	var city = getValue('ship', 0);
+	var shipcity = getValue('ship', 0);
 	if (worth != null) {
+		var carid = $x('//input')[1].value;
+		var city = getPow('bninfo', 2, -1);
+		var fam = getPow('bninfo', 4, -1);
+		var carcity = city-4;
 		var worth2 = parseInt(worth[1].replace(',', '').trim(), 10);
 		if (worth2 >= 5000) {
 			$X('//input[@type="submit"]').focus();
 		} else {
 			$x('//input[@type="submit"]')[1].focus();
 		}
-		$X('//input[@value="'+city+'"]').checked = true;
+		$X('//input[@value="'+shipcity+'"]').checked = true;
 		++carTracker;
 		setValue('cars', carTracker);
 		carmoney += parseInt(worth2);
@@ -2097,13 +2093,21 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
  		var drop = '';
  		var selected = '';
  		for(var i=0;i<8;i++){
-			if(i==city){ selected = ' selected="selected"'; } else { selected = ''; }
+			if(i==shipcity){ selected = ' selected="selected"'; } else { selected = ''; }
  			drop += '<option value="'+i+'"'+selected+'>'+lang.cities[i]+'</option>';
  		}
 		sel.innerHTML=drop;
 		sel.addEventListener('change', function() { setCity(this.value); }, true);
 		div.appendChild(sel);
 		db.appendChild(div);
+		if(fam > 0){
+			$x('//form')[0].parentNode.removeChild($x('//form')[0]);  
+			var crushform = cEL('form');
+			crushform.setAttribute('method', 'post');
+			crushform.setAttribute('action', '/garage.php');
+			crushform.innerHTML = '<form id="cars" method="post" action="/garage.php"><input type="hidden" name="cityin" value="6"><input type="hidden" name="carcity" value="'+carcity+'"><input type="hidden" value="'+carid+'" name="carid[0]" /><input type="hidden" name="carsafe[0]" value="0" /><input type="submit" name="crush" value="Crush" onclick="return confirm(\'Do you want to crush this car?\')" /> | <input type="submit" name="sell" value="Sell" onclick="return confirm(\'Do you want to sell this car?\')" /></form>';
+			$X('//center').insertBefore(crushform, $X('//form')[1]);
+		}
 	}
 }
 
@@ -2433,7 +2437,7 @@ if (dlp == '/bank.php') {
 	dummy.setAttribute('rules', 'none');
 	dummy.innerHTML = tbl;
 	$x('//td[@width="33%"]')[2].appendChild(dummy);
-
+	
 	function blockAlpha(event) {
 		if (event.keyCode == 75) {
 			$n.value = $n.value + '000';
@@ -3043,10 +3047,10 @@ if (prefs[13] && dlp == '/family.php') {
 				changetable.setAttribute('cellspacing', '0');
 				changetable.setAttribute('cellpadding', '2');
 				changetable.setAttribute('rules', 'none');
-				changetable.innerHTML = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[7]+'</td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left" width="20%">'+lang.fampage[10]+'</td><td class="bold" align="center">'+lang.fampage[12]+'</td></tr>';
+				changetable.innerHTML = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[7]+'</td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left" width="28%">'+lang.fampage[10]+'</td><td class="bold" align="left">'+lang.fampage[12]+'</td></tr>';
 				if(response['changes']){
 					for (i = -1; ++i < response['changes'].length;) {
-						changetable.innerHTML += '<tr><td align="left" width="20%" valign="top">'+response['changes'][i]['date']+'</td><td align="center">'+response['changes'][i]['text']+'</td></tr>';
+						changetable.innerHTML += '<tr><td align="left" width="28%" valign="top">'+response['changes'][i]['date']+'</td><td align="left">'+response['changes'][i]['text']+'</td></tr>';
 					}
 				} else {
 					changetable.innerHTML += '<tr><td colspan="2" class="red" align="center">'+lang.fampage[14]+'</td></tr>';
@@ -3119,7 +3123,7 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 					CM = CM.replace(/[a-zA-Z]| |\s/g, '');
 					list += CM.replace('$', '$ ') + '</td><td>';
 					CM = CM.replace(/[^0-9]/g,'');
-					list += (15000000 - CM)>0 ? '$ ' + commafy((15000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
+					list += (7500000 - CM)>0 ? '$ ' + commafy((7500000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
 					$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
 				}
 				list += '</table>';
@@ -3718,8 +3722,8 @@ if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != 
 	var len = ids.length;
 	for(i = 0;i<len;i++){
 		if (ids[i] == id[0]) {
-			var nonext = (i==0)?'display:none; ':'';
-			var noprev = (i==len-1)?'display:none; ':'';
+			var nonext = (i==0)?'visibility:hidden; ':'';
+			var noprev = (i==len-1)?'visibility:hidden; ':'';
 			var next = ids[i-1];
 			var prev = ids[i+1];
 		}
@@ -4315,7 +4319,7 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Lackeys') != -1){
 		lboperc = isNaN(lboperc) ? 0 : lboperc;
 		var div = cEL('div');
 		div.id = 'lracker';
-		div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:220px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; border-radius:5px; padding:4px');
+		div.setAttribute('style', 'position:fixed; top:20px; right:20px; width:220px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; border-radius:5px; padding:4px');
 		div.innerHTML = '<center><b>Lackey Credit Tracker</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="lstats">Total spent:<font style="float:right"><b>'+lspent+'</b></font><br />Crimes:<font style="float:right"><b>'+lcspent+' ('+lcperc+'%)</b></font><br />Cars:<font style="float:right"><b>'+lcnspent+' ('+lcnperc+'%)</b></font><br />Busts: <font style="float:right"><b>'+lbospent+' ('+lboperc+'%)</b></font><br />Booze: <font style="float:right"><b>'+lbspent+' ('+lbperc+'%)</b></font><br />Narcs: <font style="float:right"><b>'+lnspent+' ('+lnperc+'%)</b></font></div><br />&nbsp;<div id="resetL" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px; border-radius:5px;" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
 
 		if ((dls.indexOf('?module=Shop') != -1 && db.innerHTML.search('/static/images/game/lackeys/spats') != -1) || (dls.indexOf('?module=Lackeys&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) {
@@ -4323,6 +4327,82 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Lackeys') != -1){
 		}
 		if (dls.indexOf('?module=Lackeys') != -1 || dls.indexOf('?module=Lackeys&action=') != -1) { //via stand-alone
 			db.insertBefore(div, $X('//div[@class="otable widetable"]'));
+		}
+		if($X('//div[@id="error"]')){
+			var oldc = getValue('oldcred', 0);
+			var newc = $X('//div[@class="otable widetable"][2]/[@class="oheader"]').innerHTML.split(' ')[2].replace('(', '');
+			var spent = oldc-newc;
+			lspent += spent;
+			setValue('oldcred', newc);
+			setValue('lspent', lspent);
+		}
+		if(!$X('//div[@id="error"]')){
+		//add ETA
+		var numrows = $x('//div[2]/table').length;
+		var a = cEL('TextNode');
+		a.setAttribute('style', 'color:red;');
+		var a1 = cEL('TextNode');
+		a1.setAttribute('style', 'color:red;');
+		var d = new Date();
+		for(var i=1;i<numrows+1;i++) {
+			if ($X('//div[@class="otable widetable"][1]/table['+i+']/tbody/tr/td[2]/table/tbody/tr/td').innerHTML.search('Lackey Role: GTA') != -1) {
+				var creds = getTXT('//div[2]/table['+i+']/tbody/tr/td[2]/table/tbody/tr[2]/td').split(' ')[2];
+				var secs = parseInt(((creds*300)*1000), 10);
+				d.setTime(+d.getTime()+secs);
+				a.innerHTML = 'ETA: '+d.toUTCString();
+				$X('//div[@class="otable widetable"][1]/table['+i+']/tbody/tr/td[2]/table/tbody/tr/td').appendChild(a);
+			}
+			if ($X('//div[2]/table['+i+']/tbody/tr/td[2]/table/tbody/tr/td').innerHTML.search('Lackey Role: Crimes') != -1) {
+				var creds = getTXT('//div[2]/table['+i+']/tbody/tr/td[2]/table/tbody/tr[2]/td').split(' ')[2];
+				var secs = parseInt(((creds*90)*1000), 10);
+				d.setTime(+d.getTime()+secs);
+				a1.innerHTML = 'ETA: '+d.toUTCString();
+				$X('//div[2]/table['+i+']/tbody/tr/td[2]/table/tbody/tr/td').appendChild(a1);
+			}
+			if(i!=3){
+				if ($X('//div[@class="otable widetable"][1]/table['+i+']/tbody/tr/td[4]/table/tbody/tr/td').innerHTML.search('Lackey Role: GTA') != -1) {
+					var creds = getTXT('//div[2]/table['+i+']/tbody/tr/td[4]/table/tbody/tr[2]/td').split(' ')[2];
+					var secs = parseInt(((creds*300)*1000), 10);
+					d.setTime(+d.getTime()+secs);
+					a.innerHTML = 'ETA: '+d.toUTCString();
+					$X('//div[@class="otable widetable"][1]/table['+i+']/tbody/tr/td[4]/table/tbody/tr/td').appendChild(a);
+				}
+				if ($X('//div[2]/table['+i+']/tbody/tr/td[4]/table/tbody/tr/td').innerHTML.search('Lackey Role: Crimes') != -1) {
+					var creds = getTXT('//div[2]/table['+i+']/tbody/tr/td[4]/table/tbody/tr[2]/td').split(' ')[2];
+					var secs = parseInt(((creds*90)*1000), 10);
+					d.setTime(+d.getTime()+secs);
+					a1.innerHTML = 'ETA: '+d.toUTCString();
+					$X('//div[2]/table['+i+']/tbody/tr/td[4]/table/tbody/tr/td').appendChild(a1);
+				}
+			}
+		}
+		//add Times
+		if ($X('//div[@class="otable widetable"][2]/table[1]/tbody/tr/td[4]/table/tbody/tr/td').innerHTML.search('Lackey Role: GTA') != -1 && $X('//div[@class="otable widetable"][2]/table[1]/tbody/tr/td[4]/table/tbody/tr[2]/td').innerHTML.search('Already Running GTA for you. ') == -1) {
+			var loptions = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[4]/table/tbody/tr[2]/td/form/select/option').length;
+			for(var i = 0;i<loptions;i++) {
+				var d = new Date();
+				var val = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[4]/table/tbody/tr[2]/td/form/select/option')[i].value;
+				var time = sec2time(parseInt((val*300), 10));
+				var secs = parseInt(((val*300)*1000), 10);
+				d.setTime(+d.getTime()+secs);
+				var min = (d.getUTCMinutes()<10)?'0'+d.getUTCMinutes():d.getUTCMinutes();
+				var loption = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[4]/table/tbody/tr[2]/td/form/select/option')[i];
+				loption.textContent = time+' ('+d.getUTCHours()+':'+min+'OT) '+loption.textContent;
+			}
+		}
+		if ($X('//div[@class="otable widetable"][2]/table[1]/tbody/tr/td[2]/table/tbody/tr/td').innerHTML.search('Lackey Role: Crimes') != -1 && $X('//div[@class="otable widetable"][2]/table[1]/tbody/tr/td[4]/table/tbody/tr[2]/td').innerHTML.search('Already Running Crimes for you. ') == -1) {
+			var loptions = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[2]/table/tbody/tr[2]/td/form/select/option').length;
+			for(var i = 0;i<loptions;i++) {
+				var d = new Date();
+				var val = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[2]/table/tbody/tr[2]/td/form/select/option')[i].value;
+				var time = sec2time(parseInt((val*90), 10));
+				var secs = parseInt(((val*90)*1000), 10);
+				d.setTime(+d.getTime()+secs);
+				var umin = (d.getUTCMinutes()<10)?'0'+d.getUTCMinutes():d.getUTCMinutes();
+				var loption = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[2]/table/tbody/tr[2]/td/form/select/option')[i];
+				loption.textContent = time+' ('+d.getUTCHours()+':'+umin+'OT) '+loption.textContent;
+			}
+		}
 		}
 	}
 	if (dls.indexOf('?module=Shop') != -1 || (dls.indexOf('?module=Lackeys&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) { //via Shop
@@ -4760,7 +4840,6 @@ if (dlp == '/vfo.php') { //vote for omerta
 	});
 
 	$x('//td[@class="tableheader"]')[0].innerHTML = '<a href="#" class="orange" title="'+lang.oneclick[10]+'">' + $x('//td[@class="tableheader"]')[0].textContent + '</a>';
-
 	$x('//td[@class="tableheader"]/a')[0].addEventListener('click', function () {
 		$x('//*[@name="forticket"]').forEach(function ($n) {
 			GM_openInTab($n);
@@ -5348,7 +5427,6 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 			table.appendChild(lexRow);
 		}
 
-
 		//add table page
 		if (pp) { //Duplicate page style and format
 			c = $X('//center[2]');
@@ -5617,7 +5695,6 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				}
 				if (div.getAttribute('mode') == -1) { //mode 1 - visible
 					div.setAttribute('mode', 0); //mode 0 - moving
-
 					setTimeout(function () {
 						s.right = '-65';
 						s.top = '-60';
@@ -5672,8 +5749,6 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				$X('//a[@id="a2"]').href = 'javascript:document.getElementById("brc1").click();';
 				$X('//a[@id="a3"]').href = 'javascript:document.getElementById("brc2").click();';
 				$X('//a[@id="a4"]').href = 'javascript:document.getElementById("brc3").click();';
-
-
 
 				var getInfo = $I('//div[@id="info"]');
 				getInfo = getInfo.split('*');
@@ -5831,6 +5906,7 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 
 	xpb = '//form/table/tbody/tr[2]/td/table/tbody/tr[';
 	xpn = '//form/table/tbody/tr[2]/td[2]/table/tbody/tr[';
+	
 
 	for (i = 0; i <= 15; i++) { //add click to fill stuff and hotkeys
 		if (i < 7) { //booze
