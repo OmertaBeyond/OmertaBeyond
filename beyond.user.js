@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			29-05-2011
+// @date			18-07-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -385,7 +385,7 @@ if (dlp == '/prefs.php') {
 			string += '<td><img src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
 			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall" /></td><td>&nbsp;</td></tr>';
 		}
-		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> ';
+		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> ';
 		if(jailint > "1") {
 			string += ' <button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>';
 		} else {
@@ -397,7 +397,7 @@ if (dlp == '/prefs.php') {
 			if(nobust[i] == null){ nobust[i] = ""; }
 			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td colspan="5"><img height="16" width="16" style="cursor:pointer;" onclick="getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 		}
-		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button>';
+		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button>';
 		if(nbint > "1") {
 			string += ' <button type="button" class="button" onclick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>';
 		} else {
