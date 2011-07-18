@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 45;
-const SCRIPT_SUBVERSION = 45;
+const SCRIPT_VERSION_BUILD = 46;
+const SCRIPT_SUBVERSION = 46;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -270,18 +270,18 @@ if (dlp == '/prefs.php') {
 	var prefstr = lang.prefs;
 	var prefsTitle = lang.prefsTitle;
 
-	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + OB + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <a href="#" name="updater" ><img src="'+GM_getResourceURL('updateIco')+'" border="0" title="'+lang.prefsPage[0]+'" alt="'+lang.prefsPage[0]+'" /></a></td></tr>';
+	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + OB + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <img src="'+GM_getResourceURL('updateIco')+'" id="updater" title="'+lang.prefsPage[0]+'" style="cursor:pointer;" alt="'+lang.prefsPage[0]+'" width="16" height="16" /></td></tr>';
 
 	function addCat(title) { //pref category
 		toggleStr = 'var node = this; while(node.nextSibling.innerHTML.search(/<input/)!=-1){ var node = node.nextSibling; var show = ((node.style.display == \'none\') ? \'\' : \'none\'); node.style.display = show; };'; //js to toggle hiding prefs for category
-		string += '<tr style="height: 25px;" id="cat" class="tr" onClick="javascript:' + toggleStr + '"><td colspan="4" class="td"><b>&nbsp; &rarr; <u>';
+		string += '<tr style="height: 25px;cursor:pointer;" class="tr" onclick="javascript:' + toggleStr + '"><td colspan="4" class="td"><b>&nbsp; &rarr; <span style="text-decoration:underline;">';
 		string += title;
-		string += '</u></b></td></tr>';
+		string += '</span></b></td></tr>';
 	}
 
 	function addPrefItems(list) { //indices of prefs to list... order matters!
 		for (i = -1; ++i < list.length;) { //loop through given prefs for category
-			string += '<tr style="height: 25px; display:none;" class="tr"><td width=25 class="td">'; //start pref row
+			string += '<tr style="height: 25px; display:none;" class="tr"><td style="width:25px;" class="td">'; //start pref row
 			string += '<input type="checkbox" id="check' + list[i] + '" name="check_list" /></td>'; //checkbox
 			string += '<td class="td"' + (((i + 1) == list.length) ? ' colspan="3"' : '');
 			string += '><span title="' + prefsTitle[list[i]] + '" style="cursor:pointer" onclick="javascript:node = this.parentNode.previousSibling.childNodes[0];node.checked = (node.checked ? 0 : 1)">';
@@ -289,7 +289,7 @@ if (dlp == '/prefs.php') {
 			if (i == list.length) {
 				string += '</tr>'; //end pref row
 			} else {
-				string += '<td width="25" class="td"><input type="checkbox" id="check' + list[i] + '" name="check_list" /></td>'; //checkbox
+				string += '<td style="width:25px;" class="td"><input type="checkbox" id="check' + list[i] + '" name="check_list" /></td>'; //checkbox
 				string += '<td class="td">';
 				string += '<span title="' + prefsTitle[list[i]] + '" style="cursor:pointer" onclick="javascript:node = this.parentNode.previousSibling.childNodes[0];node.checked = (node.checked ? 0 : 1)">';
 				string += prefstr[list[i]] + '</span></td></tr>';
@@ -321,8 +321,8 @@ if (dlp == '/prefs.php') {
 	addCat(lang.preftitles[6]); //misc
 	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36, 37]);
 
-	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="button" onClick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
-	string += '&nbsp;<button type="button" name="#" class="button" onClick="';
+	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="button" onclick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
+	string += '&nbsp;<button type="button" name="#" class="button" onclick="';
 
 	var nick = getValue('nick','');
 
@@ -359,7 +359,7 @@ if (dlp == '/prefs.php') {
 		var defpri = getValue('defpri',5);
 		var defcol = getValue('defcol','33FF66');
 
-		var savestring = '<button type="button" class="button" name="#" onClick="location.href = \''+PrefsLink+'&maxHL=\' + document.getElementById(\'maxHL\').value + \'&buyout=\' + document.getElementById(\'buyout\').value + \'&FL_prior=\' + document.getElementById(\'FL_prior\').value + \'&Fam_prior=\' + document.getElementById(\'Fam_prior\').value + \'&defpri=\' + document.getElementById(\'defpri\').value + \'&defcol=\' + document.getElementById(\'defcol\').value + \'&bust=\'';
+		var savestring = '<button type="button" class="button" name="#" onclick="location.href = \''+PrefsLink+'&maxHL=\' + document.getElementById(\'maxHL\').value + \'&buyout=\' + document.getElementById(\'buyout\').value + \'&FL_prior=\' + document.getElementById(\'FL_prior\').value + \'&Fam_prior=\' + document.getElementById(\'Fam_prior\').value + \'&defpri=\' + document.getElementById(\'defpri\').value + \'&defcol=\' + document.getElementById(\'defcol\').value + \'&bust=\'';
 		fam_list = col_list = pri_list = nb_list = '';
 
 		for(i=-1;++i<jailint;){
@@ -374,38 +374,42 @@ if (dlp == '/prefs.php') {
 		savestring += '">'+lang.jhl[6]+'</button>';
 
 		var string = '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td width="210" class="td"><b>'+lang.jhl[1]+'</b></td><td width="75" class="td"><b>'+lang.jhl[2]+'</b></td><td width="76" class="td">&nbsp;</td><td width="50" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td style="width:210px;" class="td"><b>'+lang.jhl[1]+'</b></td><td style="width:75px;" class="td"><b>'+lang.jhl[2]+'</b></td><td style="width:76px;" class="td">&nbsp;</td><td style="width:50px;" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
 		for(i=-1;++i<jailint;){
 			if(family[i] == null) { family[i] = ""; }
 			if(colour[i] == null) { colour[i] = ""; }
 			if(priority[i] == null) { priority[i] = ""; }
 			if(!colour[i]) { colour[i] = "CCCCCC"; }
-			string += '<tr height="25" class="tr"><td>&nbsp;</td><td><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="family' + i + '" value="' + family[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
+			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td><img height="16" width="16" style="cursor:pointer;" onclick="getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="family' + i + '" value="' + family[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 			string += '<td><input id="colour'+i+'" value="'+colour[i]+'" type="text" name="color'+(i+1)+'" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:75px;" /></td>';
-			string += '<td><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
+			string += '<td><img src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
 			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall" /></td><td>&nbsp;</td></tr>';
 		}
+		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> ';
 		if(jailint > "1") {
-			string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
+			string += ' <button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>';
 		} else {
-			string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> &nbsp;-&nbsp;'+savestring+'</td></tr>';
+			string += ' ';
 		}
+		string += '&nbsp;-&nbsp;'+savestring+'</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
 		for(i=-1;++i<nbint;){
 			if(nobust[i] == null){ nobust[i] = ""; }
-			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td colspan="5"><img height="20" onmouseover="style.cursor=\'pointer\'" onClick="javascript:getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
+			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td colspan="5"><img height="16" width="16" style="cursor:pointer;" onclick="getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
 		}
+		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button>';
 		if(nbint > "1") {
-			string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> <button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>&nbsp;-&nbsp;'+savestring+'</td></tr>';
+			string += ' <button type="button" class="button" onclick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>';
 		} else {
-			string += '<tr class="tr" style="height: 25px;" align="center"><td colspan="6" class="td" style="border-bottom-width:2px;"><button type="button" class="button" onClick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button> &nbsp;-&nbsp;'+savestring+'</td></tr>';
+			string += ' ';
 		}
-		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2"><center><b>'+lang.jhl[8]+'</b></center><td class="td" colspan="2"><center><b>'+lang.jhl[9]+'</b></center></td><td class="td">&nbsp;</td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" align="right">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" align="right">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td width="10"><img src="'+GM_getResourceURL("colorpicker")+'" border="0" onmouseover="this.style.cursor=\'pointer\';" onmouseout="this.style.cursor=\'default\';" onClick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" align="right" width="100">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onBlur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="4" align="right">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onBlur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr class="tr" height="25" align="center"><td colspan="6" class="td">'+savestring+'</td></tr>';
+		string += '&nbsp;-&nbsp;'+savestring+'</td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[8]+'</b><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[9]+'</b></td><td class="td">&nbsp;</td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" style="text-align:right;">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" style="-moz-border-radius:5px; border-radius:5px; padding-left:3px; background:none repeat scroll 0 0 #CCC; border:1px solid #000; font-family:tahoma;font-size:10px;width:70px;" /></td><td><img src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" style="width:100px;text-align:right;">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onblur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onblur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onblur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="6" class="td" style="text-align:center;">'+savestring+'</td></tr>';
 		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div id="credits">'+lang.jhl[16]+'</div></td></tr>';
 
 		getID('tablejail').innerHTML = string;
@@ -436,7 +440,7 @@ if (dlp == '/prefs.php') {
 				$s.paddingLeft = '3px';
 			}
 			if ($N == "BUTTON") {
-				$n.setAttribute('onmouseover', 'this.style.cursor = "pointer";');
+				$n.style.cursor = 'pointer';
 			}
 		}
 	});
@@ -445,8 +449,7 @@ if (dlp == '/prefs.php') {
 	});
 
 	// Check for update
-	var updater = $X('//a[@name="updater"]');
-	updater.addEventListener('click', function(){ OBUpdate(true); }, true);
+	getID('updater').addEventListener('click', function(){ OBUpdate(true); }, true);
 }
 
 //------------------- some needed stuff -------------
@@ -1548,7 +1551,7 @@ if(dlp == '/info.php'){
 			}
 
 			var news=[];
-			var url = (sets.version == '_com') ? OBnUrl : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
+			var url = (sets.version == '_com') ? OBnUrl+'beyond/' : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
 			for(var o=0,f=0;(o+f)<=4;1){//loop dates
 				var nextmonth=0;
 				if((oDay[o]<fDay[f] && oMonth[o]<=fMonth[f]) || (oDay[o]>fDay[f] && oMonth[o]<fMonth[f])){//check dates
@@ -1575,9 +1578,9 @@ if(dlp == '/info.php'){
 						newsIcon = GM_getResourceURL('edoIco');
 					}
 					item.parentNode.parentNode.setAttribute('style', 'background:url(\''+newsIcon+'\') no-repeat 90% 20%;');
-					item.setAttribute('target', 'blank');
+					//item.setAttribute('target', 'blank');
 				}
-				if(news[i][1].search(lang.login[2])!=-1 && sets.version=='_nl'){
+				if(news[i][1].search(lang.login[2])!=-1){
 					item.setAttribute('target', 'main');
 				}
 				item.innerHTML = news[i][1];
@@ -1628,6 +1631,10 @@ if(dlp == '/info.php'){
 					addNews();//we got the news, now add it
 				}
 			});
+			
+			// add GC&MR link
+			$X('//*[@id="newsmore"]/p').innerHTML = '<a class="menuLink" href="http://news.omertabeyond.com/beyond/gcmr" onmousedown="return false;" style="text-align:left;width:*;padding-right:0px;display:inline-block;" target="main">GC&MR</a>' + $X('//*[@id="newsmore"]/p').innerHTML;
+			$X('//*[@id="newsmore"]/p/a[2]').setAttribute('style', 'text-align:right;width:50%;padding-left:0px;display:inline-block;');
 		}
 		if(sets.version=='_nl'){//get news from Edo mainpage
 			GM_xmlhttpRequest({
@@ -3028,11 +3035,11 @@ if (prefs[13] && dlp == '/family.php') {
 				deathtable.setAttribute('cellspacing', '0');
 				deathtable.setAttribute('cellpadding', '2');
 				deathtable.setAttribute('rules', 'none');
-				deathtable.innerHTML = '<tr><td colspan="100%" class="tableheader">'+lang.fampage[6]+'</td></tr><tr><td colspan="100%" bgcolor="black" height="1"></td></tr><tr><td class="bold" align="left">'+lang.fampage[8]+'</td><td class="bold" align="center">'+lang.fampage[9]+'</td><td class="bold" align="center">'+lang.fampage[10]+'</td><td class="bold" align="right">'+lang.fampage[11]+'</td></tr>';
+				deathtable.innerHTML = '<tr><td colspan="100%" class="tableheader">'+lang.fampage[6]+'</td></tr><tr><td colspan="100%" bgcolor="black" height="1"></td></tr><tr><td class="bold" align="left">'+lang.fampage[8]+'</td><td class="bold" align="center">'+lang.fampage[9]+'</td><td class="bold" align="center">'+lang.fampage[10]+'</td><td class="bold" style="text-align:right;">'+lang.fampage[11]+'</td></tr>';
 				if(response['deaths']){
 					for (i = -1; ++i < response['deaths'].length;) {
 						var extra = (response['deaths'][i]['Akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['BF'] == 1)?'(<b>BF</b>)':'';
-						deathtable.innerHTML += '<tr><td>'+extra+' <a href="user.php?name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Name']+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Rank']+'</a></td><td align="center">'+response['deaths'][i]['Date']+'</td><td align="right">'+response['deaths'][i]['Agod']+'d '+response['deaths'][i]['Agoh']+'h '+response['deaths'][i]['Agom']+'m</td></tr>';
+						deathtable.innerHTML += '<tr><td>'+extra+' <a href="user.php?name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Name']+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Rank']+'</a></td><td align="center">'+response['deaths'][i]['Date']+'</td><td style="text-align:right;">'+response['deaths'][i]['Agod']+'d '+response['deaths'][i]['Agoh']+'h '+response['deaths'][i]['Agom']+'m</td></tr>';
 					}
 				} else {
 					deathtable.innerHTML += '<tr><td colspan="4" class="red" align="center">'+lang.fampage[13]+'</td></tr>';
@@ -4927,6 +4934,7 @@ if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editm
 	Grab prefs
 	Grab rank/plane/fatigue/city/lex/fampos/b/n
 	Grab prices
+
 
 	//calc
 	Profits of Best Current Carry Run
