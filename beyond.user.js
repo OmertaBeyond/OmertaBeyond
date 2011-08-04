@@ -146,8 +146,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 46;
-const SCRIPT_SUBVERSION = 46;
+const SCRIPT_VERSION_BUILD = 47;
+const SCRIPT_SUBVERSION = 47;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -198,59 +198,68 @@ var querys = [
 ];
 
 //---------------- Bmsg Example ----------------
-if (['/','/game.php','/banner.php','/info.php','/menu.php','/mid.php','/left.php','/pic.php','/right.php','/marquee.php'].indexOf(dlp) == -1) {
-	GM_xmlhttpRequest({
-		method: 'GET',
-		url: SCRIPT_LINK+'/index.php?p=bmsg&v='+sets.version.replace('_',''),
-		onload: function(xhr) {
-			var response = JSON.parse(xhr.responseText);
-			var lastbmsg = getValue('lastbmsg', 0);
-			var len = response["deaths"].length;
-			if (lastbmsg < response["deaths"][0]["ts"]) {
-				var extra = (response['deaths'][0]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][0]['bf'] == 1)?'(<b>BF</b>)':'';
-				var id = 'msg';
-				var type = 'info'; //leave at info for now
-				var title = 'Death';
-				var d =  new Date(response['deaths'][0]['ts']*1000);
-				var time = d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
-				var extra = (response['deaths'][0]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][0]['bf'] == 1)?'(<b>BF</b>)':'';
-				var fam = (response['deaths'][0]['fam'] == '')?'':'('+response['deaths'][0]['fam']+')';
-				var text = '<br />'+time+' '+extra+' <a href="user.php?name='+response['deaths'][0]['name']+'">'+response['deaths'][0]['name']+'</a> '+response['deaths'][0]['rank_text']+' '+fam+'<br />';
-		
-				var msg = new Bmsg();
-				msg.Bmsg(id, type, title, text);
-				msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
-		
-				msg.add();
-				setValue('lastbmsg', response["deaths"][0]["ts"]);
-			} else if (lastbmsg < response["deaths"][len-1]["ts"]) {
-				var id = 'msg';
-				var type = 'info'; //leave at info for now
-				var title = 'Death';
-				var text = '<br />';
-				for (var i=0;i<response["deaths"].length;i++) {
-					var d =  new Date(response['deaths'][i]['ts']*1000);
+var bmsgon = 0;
+if(bmsgon == 1) {
+	function CheckBmsg() {
+		GM_xmlhttpRequest({
+			method: 'GET',
+			url: SCRIPT_LINK+'/index.php?p=bmsg&v='+sets.version.replace('_',''),
+			onload: function(xhr) {
+				var response = JSON.parse(xhr.responseText);
+				var lastbmsg = getValue('lastbmsg', 0);
+				var len = response["deaths"].length;
+				if (lastbmsg < response["deaths"][0]["ts"]) {
+					var extra = (response['deaths'][0]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][0]['bf'] == 1)?'(<b>BF</b>)':'';
+					var id = 'msg';
+					var type = 'info'; //leave at info for now
+					var title = 'Death';
+					var d =  new Date(response['deaths'][0]['ts']*1000);
 					var time = d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
-					var extra = (response['deaths'][i]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['bf'] == 1)?'(<b>BF</b>)':'';
-					var fam = (response['deaths'][i]['fam'] == '')?'(None)':'('+response['deaths'][i]['fam']+')';
-					text += time+' '+extra+' <a href="user.php?name='+response['deaths'][i]['name']+'">'+response['deaths'][i]['name']+'</a> '+response['deaths'][i]['rank_text']+' '+fam+'<br />';
+					var extra = (response['deaths'][0]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][0]['bf'] == 1)?'(<b>BF</b>)':'';
+					var fam = (response['deaths'][0]['fam'] == '')?'':'('+response['deaths'][0]['fam']+')';
+					var text = '<br />'+time+' '+extra+' <a href="user.php?name='+response['deaths'][0]['name']+'">'+response['deaths'][0]['name']+'</a> '+response['deaths'][0]['rank_text']+' '+fam+'<br />';
+			
+					var msg = new Bmsg();
+					msg.Bmsg(id, type, title, text);
+					msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+			
+					msg.add();
+					setValue('lastbmsg', response["deaths"][0]["ts"]);
+				} else if (lastbmsg < response["deaths"][len-1]["ts"]) {
+					var id = 'msg';
+					var type = 'info'; //leave at info for now
+					var title = 'Death';
+					var text = '<br />';
+					for (var i=0;i<response["deaths"].length;i++) {
+						var d =  new Date(response['deaths'][i]['ts']*1000);
+						var time = d.getDate()+'-'+d.getMonth()+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+						var extra = (response['deaths'][i]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['bf'] == 1)?'(<b>BF</b>)':'';
+						var fam = (response['deaths'][i]['fam'] == '')?'(None)':'('+response['deaths'][i]['fam']+')';
+						text += time+' '+extra+' <a href="user.php?name='+response['deaths'][i]['name']+'">'+response['deaths'][i]['name']+'</a> '+response['deaths'][i]['rank_text']+' '+fam+'<br />';
+					}
+	
+					var msg = new Bmsg();
+					msg.Bmsg(id, type, title, text);
+					//msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+			
+					msg.add();
+					setValue('lastbmsg', response["deaths"][0]["ts"]);
+				} else {
+					var msg = new Bmsg();
+					msg.Bmsg('msg', 'info', 'MrWhite is cool', 'no new death');
+					//msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+			
+					msg.add();
 				}
-		
-				var msg = new Bmsg();
-				msg.Bmsg(id, type, title, text);
-				//msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
-		
-				msg.add();
-				setValue('lastbmsg', response["deaths"][0]["ts"]);
 			}
-		}
-	});
+		});
+	//	setTimeout(CheckBmsg(), 3000);
+	}
 }
-
 //---------------- int->str bninfo compatibility ----------------
 txt = getValue('bninfo', '');
 if (typeof txt == 'number') {
-	setValue('bninfo', '' + txt);
+	setValue('bninfo', txt);
 	setValue('bncounter', 0);
 }
 
@@ -350,7 +359,7 @@ if (dlp == '/prefs.php') {
 		var priority = getValue('priority', '').split(",");
 		var nobust = getValue('nobust', '').split(",");
 		var nbint = getValue('nbint', 3);
-		var jailint = getValue('jailint', 4);
+		var jailint = getValue('jailint', 6);
 		var maxHL = getValue('maxHL', 5);
 		var hotkeys = getValue('rawkeyprefs','');
 		var buyout = getValue('buyout','/');
@@ -467,6 +476,7 @@ if (dlp == '/game.php') { //just once on login
 			OBUpdate(false);
 		}
 	}
+	CheckBmsg();
 }
 
 //---------------- Remove Third-party Hotkeys ----------------
@@ -1682,6 +1692,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		oldShow.parentNode.replaceChild(newShow,oldShow); //replace old with new
 		newShow.setAttribute('id', 'show');
 		newShow.getElementsByTagName('input')[0].style.visibility = 'hidden'; //make show-row radio invisible, as it isn't needed there
+
 		buyout.setAttribute('accessKey', '0');
 		buyout.firstChild.innerHTML+=' [0]';
 		buyout.parentNode.setAttribute('style', 'width: 100px;'); //set a fixed width to prevent glitching of td widths
@@ -1811,7 +1822,11 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 		//No priorities? Pick a random player
 		if (prior == 10 && inJail.length > lowlifes) {
 			//i = (Math.ceil(Math.random()*(inJail.length-lowlifes))-1); //old
-			i = rand(0, (inJail.length-lowlifes)); //new
+			if(inJail.length-lowlifes>1) {
+				i = rand(0, (inJail.length-lowlifes)); //new
+			} else {
+				i = 0;
+			}
 			if (inJail.length > 4 && (i+3) > inJail.length) {
 				i = i-3;
 			}
@@ -1877,7 +1892,7 @@ if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
 			}
 
 		//Add arrow key controls
-		window.addEventListener('keypress', function(e){
+		window.addEventListener('keydown', function(e){
 			var key = e.keyCode;
 			if(key==39 && inJail.length > 1){ //right, select random
 				function pickRandom() {
@@ -2166,22 +2181,24 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		var status = $X('//span[@id="status"]').innerHTML;
 		var inFam = $X('//span[@id="family"]').innerHTML;
 		var alive = (status.indexOf(lang.profile[3])==-1);//alive/dead
+		var unick = $X('//span[@id="username"]').innerHTML;
 
 		//DEAD or AKILLED ?
 		if(!alive){
+			var rankings = '<a href="http://www.barafranca.com/BeO/webroot/index.php?module=Rankings&nick='+unick+'">View Rankings</a>';
 			if($X('//img').parentNode.nodeName != 'A'){
 				var akill = '<span style="color:red; font-weight:bold;"> (Akill) </span>';
 				status += akill;
 			}
 			GM_xmlhttpRequest({
 				method: 'GET',
-				url: SCRIPT_LINK+'?p=stats&w=deaths&v='+sets.version.replace('_','')+'&ing='+$X('//span[@id=\'username\']').innerHTML,
+				url: SCRIPT_LINK+'?p=stats&w=deaths&v='+sets.version.replace('_','')+'&ing='+unick,
 				onload: function(xhr) {
 					var response = JSON.parse(xhr.responseText);
 					if (response["DiedAt"] === null) {
 						$X('//span[@id="status"]').innerHTML = status + ' | Death date is not known';
 					} else {
-						$X('//span[@id="status"]').innerHTML = status + ' | Died at '+response["Date"]+' OT ('+response["Agod"]+'d '+response["Agoh"]+'h '+response["Agom"]+'m ago)';
+						$X('//span[@id="status"]').innerHTML = status + ' | '+rankings+' | Died at '+response["Date"]+' OT ('+response["Agod"]+'d '+response["Agoh"]+'h '+response["Agom"]+'m ago)';
 					}
 				}
 			});
@@ -2190,7 +2207,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		if (status == lang.lastontime[0]) { // show last online time on profile
 			GM_xmlhttpRequest({
 				method: 'GET',
-				url: SCRIPT_LINK+'?p=stats&w=laston&v='+sets.version.replace('_','')+'&ing='+$X('//span[@id=\'username\']').innerHTML,
+				url: SCRIPT_LINK+'?p=stats&w=laston&v='+sets.version.replace('_','')+'&ing='+unick,
 				onload: function (resp) {
 					var response = JSON.parse(resp.responseText);
 					if (response["LastOn"] === 0) { // 1970, thus not seen by logger
@@ -2251,23 +2268,22 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 			}
 		}
 
-		var nick = getTXT('/html/body//center/table/tbody/tr[3]/td[2]/a');
 		var self = (getTXT('/html/body//center/table/tbody/tr[3]/td[2]/a').toUpperCase() == getValue('nick').toUpperCase());//self/other
 		var other = getTXT('/html/body//center/table/tbody/tr/td/i');
 		var checkHistory = getTXT('//td[@class="tableheader"]/i');
 		var color = getValue('titleBg', '#3F505F');
 		var Y = ($X('//font[@color="red"]'))?'60px':'34px';
-		var chars = nick.length;
+		var chars = unick.length;
 		var X = (chars<=12 && chars>10)?'465px':(chars<=10 && chars>8)?'471px':(chars<=8 && chars>6)?'477px':(chars<=6 && chars>4)?'483px':(chars<=4 && chars>2)?'489px':'497px';
-		$x('//td[@class="tableheader"]')[0].innerHTML = (prefs[15] && !self)?$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a> | <a href="" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Actions</a>':$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a>';
+		$x('//td[@class="tableheader"]')[0].innerHTML = (prefs[15] && !self && alive)?$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a> | <a href="" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Actions</a>':$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a>';
 		var actions = cEL('div');
 		actions.id = 'actions';
 		actions.setAttribute('style', 'display:none;');
 		actions.setAttribute('onmouseout', 'document.getElementById(\'actions\').setAttribute(\'style\', \'display:none;\');');
-		actions.innerHTML = '<a href="BeO/webroot/index.php?module=Heist&action=&who='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Heist</a><br />';
-		actions.innerHTML += '<a href="BeO/webroot/index.php?module=Spots&action=&driver='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Raid</a><br />';
-		actions.innerHTML += '<a href="javascript:if(confirm(\'Are you sure you want to make '+nick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+nick+'\';" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Set Mentor</a><br />';
-		actions.innerHTML += '<a href="kill.php?search='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Hire Detectives</a><br />';
+		actions.innerHTML = '<a href="BeO/webroot/index.php?module=Heist&action=&who='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Heist</a><br />';
+		actions.innerHTML += '<a href="BeO/webroot/index.php?module=Spots&action=&driver='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Raid</a><br />';
+		actions.innerHTML += '<a href="javascript:if(confirm(\'Are you sure you want to make '+unick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+unick+'\';" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Set Mentor</a><br />';
+		actions.innerHTML += '<a href="kill.php?search='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Hire Detectives</a><br />';
 		if(prefs[3]){
 			var names = getValue('bust','')
 			var add = 1;
@@ -2275,20 +2291,20 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 				names = names.split(',')
 				var length = getValue('jailint',0)
 				if(length == 0){ setValue('jailint',6); length=6; } //check for missing jailint
-				var who = nick.toUpperCase();
+				var who = unick.toUpperCase();
 				for(var i=0;i<length;i++) if(names[i]==who) add = 0;
 			}
 			var text = (add == 1)?'Add to ':'Remove from ';
-			actions.innerHTML += '<a href="' + dlp + '?nick='+nick+'&jh='+add+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">'+text+'busting list</a><br />';
+			actions.innerHTML += '<a href="' + dlp + '?nick='+unick+'&jh='+add+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">'+text+'busting list</a><br />';
 		}
 		if(parseInt(getPow('bninfo',4,-1),10)>2 && inFam == 'None'){//check for top3 position and if person is not in family
-			actions.innerHTML += '<a href="/BeO/webroot/index.php?module=Family&who='+nick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Invite to Family</a>';
+			actions.innerHTML += '<a href="/BeO/webroot/index.php?module=Family&who='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Invite to Family</a>';
 		}
 		db.appendChild(actions);
 
-		if (alive) { //Add interesting stuff here
+		if (alive) {	
 			if (!self) { //additions useless for self
-				$X('//span[@id="hp"]').innerHTML = '<a href="/honorpoints.php?who='+nick+'" class="red">'+$X('//span[@id="hp"]').innerHTML+'</a>'; //Send HP's
+				$X('//span[@id="hp"]').innerHTML = '<a href="/honorpoints.php?who='+unick+'" class="red">'+$X('//span[@id="hp"]').innerHTML+'</a>'; //Send HP's
 			} else {//Linkify self hp's
 				HPxp = $X('/html/body//center/table/tbody/tr[5]/td[2]');
 				HPxp.innerHTML = '<a href="/honorpoints.php"><span style="color:red"><i>'+HPxp.innerHTML+'</i></span></a>';
@@ -2556,17 +2572,6 @@ if(dlp == '/garage.php'){
 
 		//add select All in SH button
 		var all = $X('//input[@type="button"]');
-		var allShButton = all.cloneNode(0);
-		allShButton.value = lang.garage[10];
-		allShButton.removeAttribute('onclick');
-		allShButton.addEventListener('click', function(){
-			$x('//table[@class="thinline"]//tr[@class="thinline"]').forEach(function($n){
-				if($n.lastChild.previousSibling.textContent.replace(/[^A-Z]/ig,'').search('INSAFEHOUSE')!=-1){
-					$n.getElementsByTagName('input')[1].checked = true;
-				}
-			});
-		}, true);
-		all.parentNode.insertBefore(allShButton, all.nextSibling);
 
 		var text = cEL('TextNode');
 		text.innerHTML = ' | ';
@@ -2699,6 +2704,30 @@ if(dlp == '/garage.php'){
 				}
 			}
 		}
+		
+		wrap = cEL('div');
+		wrap.id = 'footerwrap';
+		footer = cEL('div');
+		footer.id = 'footer';
+		footer.align = 'center';
+		footer.setAttribute('style', 'position:fixed; bottom:-40px; left:10%; width:80%; border:1px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
+		footer.setAttribute('class', 'otable');
+		html = '<table class="thinline" cellspacing=0 cellpadding=2 rules="none" width="100%">';
+		html += $x('//tr')[rows-1].innerHTML;
+		html += '<table';
+		footer.innerHTML = html;
+		wrap.appendChild(footer);
+		$X('//form').parentNode.insertBefore(wrap, $X('//form').nextSibling);
+		
+		window.addEventListener('scroll', function(){
+			var max = document.body.scrollHeight - document.body.clientHeight; // bottom
+			var curr = document.body.scrollTop;
+			if (curr == max) {
+				getID('footer').style.display = 'none';
+			} else {
+				getID('footer').style.display = 'block';
+			}
+		}, true);
 	}
 	setTimeout(function(){ garageCrusher(); }, 1000); //minimal delay in attempt to fix breaking up of html with slow connections
 }
@@ -3009,8 +3038,8 @@ if (prefs[13] && dlp == '/family.php') {
 	// add HR, Deaths and Worth
 	var famid = dls.split("=")[1];
 	var famIdFromImg = $X('//img[contains(@src, "family_image.php")]').src.match(/\d+/g)[0];
-	var url = (famid === famIdFromImg) ? 'id='+famid : 'ing='+famname;
 	var famname = $x('//td[@class="profilerow"]')[0].textContent.split(" ")[0].trim().toLowerCase();
+	var url = (famid === famIdFromImg) ? 'id='+famid : 'ing='+famname;
 	var maintable = $x('//table[@class="thinline"]/tbody')[0];
 	var maintable2 = $x('//table/tbody/tr[1]/td')[2];
 
@@ -3270,13 +3299,6 @@ if (prefs[26]) {
 	}
 	//Spot raid
 	if ((/Spots/).test(dls)) {
-		$x('//input[@name="bullets"]').forEach(function ($n) {
-			$n.value = 200;
-			$n.setAttribute('value', 200);
-			$n.addEventListener('change', function () {
-				$n.setAttribute('value', $n.value);
-			}, true);
-		});
 		if (/driver/.test(dls)) {
 			$x('//input[@name="driver"]').forEach(function ($n) {
 				$n.value = GetParam('driver');
@@ -3390,7 +3412,9 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		c.appendChild(cEL('br'));
 		c.appendChild(div);
 		db.appendChild(c);
-		
+
+		$x('//input')[1].focus();
+
 		//regrap all values (for AFing sake)
 		for (y = 0; y <= am; y+=1) {
 			if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
@@ -3732,10 +3756,23 @@ if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != 
 			var prev = ids[i+1];
 		}
 	}
-	// keycode == 38 /BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId='+next
-	// keycode == 40 /BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId='+prev
-	// keycode == 39 /BeO/webroot/index.php?module=Mail&action=sendMsg&iReply='+id[0]
-	// keycode == 37 /BeO/webroot/index.php?module=Mail&action=delMsg&iId='+id[0]+'&iParty=2
+	
+	window.addEventListener('keydown', function(e){
+		var key = e.keyCode;
+		if(key==39){ //right, reply
+			window.location = '/BeO/webroot/index.php?module=Mail&action=sendMsg&iReply='+id[0];
+		}
+		if(key==38) { //up, select previous
+			window.location = '/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId='+next;
+		}
+		if(key==40) { //down, select next
+			window.location = '/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId='+prev;
+		}
+		if(key==37) { //down, select next
+			window.location = '/BeO/webroot/index.php?module=Mail&action=delMsg&iId='+id[0]+'&iParty=2';
+		}
+	}, true);
+
 	var titleRow = $X('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[1]/td');
 	titleRow.innerHTML = titleRow.innerHTML+"<div style='float:right;padding-top:2px;'><img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId="+prev+"\"' src='"+GM_getResourceURL('prevIcon')+"' title='Previous' style='"+noprev+"cursor:pointer;' />&nbsp;<img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId="+next+"\"' src='"+GM_getResourceURL('nextIcon')+"' title='Next' style='"+nonext+"cursor:pointer;' /></div>";
 
@@ -3815,6 +3852,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 		arr[arr.length - 1] = '<a href="/obay.php?action=tosell&type=10" title="'+lang.msg[1]+'"><b>' + arr[arr.length - 1] + '</b></a>';
 		setArr(3 + (sets.version == '_nl' ? 4 : 0));
 		setArr(5 + (sets.version == '_nl' ? 4 : 0));
+
 		$I(msgTxt, arr.join(' '));
 	}
 	//if msg was crush msg
@@ -4923,6 +4961,7 @@ if (dlp == '/vfo.php') { //vote for omerta
 
 
 // TSP trigger variable
+
 var editmode = 0;
 
 if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editmode ==1) {

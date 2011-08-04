@@ -4,7 +4,7 @@
 	Changing these values are at your own risk. If you make bug changes or bugfixes,
 	please inform us too so we can make any changes if we think are necesary.
 
-	Version: 1.10.0.44
+	Version: 1.10.0.47
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -288,11 +288,18 @@ cursor:pointer;
 				z-index:2;
 				-moz-border-radius:3px
 			}
+			.bm a {
+				color:#DDD;
+			}
+			.bm a:hover {
+				color:#DDD;
+				text-decoration:underline;
+			}
 			.bm_title {
 				text-align:center;
 				font-weight:bold;
 				padding-top:1px;
-				color:#000;
+				color:#DDD;
 				height:18px;
 				-moz-border-radius-topLeft:3px;
 				-moz-border-radius-topRight:3px;
