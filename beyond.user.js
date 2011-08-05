@@ -394,7 +394,7 @@ if (dlp == '/prefs.php') {
 			string += '<td><img class="picker_icon" src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
 			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall" /></td><td>&nbsp;</td></tr>';
 		}
-		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="7" class="td"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)+1) + '\'">'+lang.jhl[4]+'</button> ';
+		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="7" class="td"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint='+(parseInt(jailint, 10)+1)+'\'">'+lang.jhl[4]+'</button> ';
 		if(jailint > "1") {
 			string += ' <button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>';
 		} else {
@@ -2339,8 +2339,7 @@ if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
 		while (names[++i] && names[i] != nick); //find first open spot
 		if (names[i] != nick) {
 			if (i == length) { //extend jailint if neccesary
-
-				setValue('jailint', ++length);
+				setValue('jailint', parseInt(++length, 10));
 			}
 			names[i] = nick; //insert new data into arrays
 			cols[i] = getValue('defcol', '33FF66');
@@ -2712,12 +2711,13 @@ if(dlp == '/garage.php'){
 		footer.align = 'center';
 		footer.setAttribute('style', 'position:fixed; bottom:-40px; left:10%; width:80%; border:1px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
 		footer.setAttribute('class', 'otable');
-		html = '<table class="thinline" cellspacing=0 cellpadding=2 rules="none" width="100%">';
+		html = '';
+		html += '<table class="thinline" cellspacing=0 cellpadding=2 rules="none" width="100%">';
 		html += $x('//tr')[rows-1].innerHTML;
-		html += '<table';
+		html += '</table>';
 		footer.innerHTML = html;
 		wrap.appendChild(footer);
-		$X('//form').parentNode.insertBefore(wrap, $X('//form').nextSibling);
+		$X('//center').parentNode.insertBefore(wrap, $X('//center').nextSibling);
 		
 		window.addEventListener('scroll', function(){
 			var max = document.body.scrollHeight - document.body.clientHeight; // bottom
@@ -2728,6 +2728,8 @@ if(dlp == '/garage.php'){
 				getID('footer').style.display = 'block';
 			}
 		}, true);
+		var footercity = parseInt(city, 10)+8;
+		$x('//input[@name="shipcity"]')[footercity].checked = true;
 	}
 	setTimeout(function(){ garageCrusher(); }, 1000); //minimal delay in attempt to fix breaking up of html with slow connections
 }
@@ -2838,7 +2840,7 @@ if (prefs[13] && dlp == '/family.php') {
 			while (addnames[++i] && addnames[i] != nick); //find first open spot
 			if (addnames[i] != nick) {
 				if (i == addlength) { //extend jailint if neccesary
-					setValue('jailint', ++addlength);
+					setValue('jailint', parseInt(++addlength, 10));
 				}
 				addnames[i] = nick; //insert new data into arrays
 				addcols[i] = getValue('defcol', '33FF66');
