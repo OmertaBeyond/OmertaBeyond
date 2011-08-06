@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			18-07-2011
+// @date			05-08-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -123,19 +123,20 @@ function whereToRun(hostname) {
 }
 
 var lang, sets, whoami;
-if (whereToRun() == 'com') {
+var whereToRun = whereToRun();
+if (whereToRun == 'com' || whereToRun == undefined) {
 	lang = langs.en;
 	sets = settings.en;
 	whoami = GM_getValue('nick_com', '');
-} else if (whereToRun() == 'dm') {
+} else if (whereToRun == 'dm') {
 	lang = langs.dm;
 	sets = settings.dm;
 	whoami = GM_getValue('nick_dm', '');
-} else if (whereToRun() == 'nl') {
+} else if (whereToRun == 'nl') {
 	lang = langs.nl;
 	sets = settings.nl;
 	whoami = GM_getValue('nick_nl', '');
-} else if (whereToRun() == 'tr') {
+} else if (whereToRun == 'tr') {
 	lang = langs.tr;
 	sets = settings.tr;
 	whoami = GM_getValue('nick_tr', '');
@@ -146,8 +147,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 47;
-const SCRIPT_SUBVERSION = 47;
+const SCRIPT_VERSION_BUILD = 48;
+const SCRIPT_SUBVERSION = 48;
 var minFFVersion = '3.6';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -476,7 +477,7 @@ if (dlp == '/game.php') { //just once on login
 			OBUpdate(false);
 		}
 	}
-	CheckBmsg();
+	//CheckBmsg();
 }
 
 //---------------- Remove Third-party Hotkeys ----------------
@@ -921,7 +922,16 @@ if (dlp == '/jail.php' || dlp == '/iminjail.php' || (dlp == '/kill.php' && dls !
 				}
 				setTimeout(enable, 1);
 			}, true);
+			
 		}
+		
+		// add focus on text field again after reloading image
+		if ($X('//a[@onclick="reloadImageCode();"]') != null) {
+			$X('//a[@onclick="reloadImageCode();"]').addEventListener('click', function () {
+				node.focus();
+			}, true);
+		}
+		
 		node.setAttribute('maxLength', '3');
 		node.setAttribute('onkeypress', 'javascript:var lettercode=event.charCode;var symcode = event.keyCode;return (lettercode>=48 && lettercode<=57 || lettercode>=65 && lettercode<=90 || lettercode>=97 && lettercode<=122 || symcode>=37 && symcode<=40 || symcode==8 || symcode==9 || symcode==13 || symcode==46 || symcode==116)? true : false;');
 	}
@@ -1958,14 +1968,6 @@ if (dlp == '/iminjail.php' && db.innerHTML.indexOf(lang.busttracker[2]) != -1) {
 	setValue('bustouts', (busttracker + 1));
 }
 if (dlp == '/iminjail.php' && db.innerHTML.indexOf('/static/images/game/generic/criminal.jpg') != -1) {
-	if ($X('//img[@id="imgcode"]')) { // ADD autofocus if captcha is missing
-		$X('//input[@name="ver"]').focus();
-	} else {
-		if ($x('//input')[2] != null) {
-			$x('//input')[2].focus();
-		}
-	}
-
 	if (prefs[3]) { //add buy out hotkey
 		$X('//input').id = 'button';
 		var click = cEL('a'); //add dummy link to tie accessKey to
@@ -3951,7 +3953,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 }
 
-//---------- refresh/all-in button/hide full @ poker -----------
+//---------- All poker thingies (except tracker) -----------
 if (dls.search('module=Poker') != -1) {
 	//allin
 	var goall = 0;
@@ -3966,7 +3968,7 @@ if (dls.search('module=Poker') != -1) {
 			$X('//input[@name="raise"]').click();
 		}
 	}, true);
-	if($X('//input[@name="raiseby"]')){
+	if ($X('//input[@name="raiseby"]')) {
 		$X('//center/form/table/tbody/tr[5]/td/table/tbody/tr/td[3]').appendChild(allin);
 	}
 	//refresh
@@ -3977,16 +3979,22 @@ if (dls.search('module=Poker') != -1) {
 	var span = cEL('span');
 	span.setAttribute('style', 'background-color:#8fcbfc;border-width:1px;border-style:none solid solid none');
 	span.appendChild(refresh2);
-	if(db.textContent.search('Poker') != -1){
+	if (db.textContent.search('Poker') != -1){
 		$X('//center').insertBefore(span, $X('//form'));
 	} else {
 		$X('//center').insertBefore(span, $X('//table[@class="thinline"]'));
 	}
+	//poker tracker
+	if ($X('//input[@name="leave"]') != null) {
+		$X('//input[@name="leave"]').addEventListener('click', function() {
+			setValue('ptchecked', false);
+		}, true);
+	}
 	//hide full
-	if(db.innerHTML.search('Running Games') != -1) {
+	if (db.innerHTML.search('Running Games') != -1) {
 		var hidefull = getValue('hidefull', 0);
 		function hideFull() {
-			if(hidefull == '0') {
+			if (hidefull == '0') {
 				setValue('hidefull', 1);
 			} else {
 				setValue('hidefull', 0);
@@ -3997,17 +4005,17 @@ if (dls.search('module=Poker') != -1) {
 		var input = cEL('input');
 		input.setAttribute('type', 'checkbox');
 		input.id = 'cb';
-		if(hidefull == '1') {
+		if (hidefull == '1') {
 			input.setAttribute('checked', 'checked');
 		}
 		input.addEventListener('click', function() { hideFull(); }, true);
 		span.appendChild(input);
 		$X('//td[@class="tableitem"]').appendChild(span);
-		if(hidefull == '1') {
+		if (hidefull == '1') {
 			var rows = $x('//tr[@align="center"]').length; //get number of rows
-			for(var i=rows+3;i>4;i--){ //loop rows
+			for (var i=rows+3;i>4;i--) { //loop rows
 				var Row = $X('/html/body//center/table[1]/tbody/tr['+i+']'); //get the specific row
-				if(Row.innerHTML.indexOf('X') != -1) {
+				if (Row.innerHTML.indexOf('X') != -1) {
 					$Del('/html/body//center/table[1]/tbody/tr['+i+']');
 				}
 			}
@@ -4019,6 +4027,67 @@ if (dls.search('module=Poker') != -1) {
 		inputs.forEach(function ($n) {
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 		});
+	}
+	
+	// add easy selecting cards for swapping
+	if ($X('//input[@name="c0"]') != null) { // user must check cards
+
+		var cards = $x('//tbody/tr[2]/td/img');
+		var y = 0;
+		for (x in cards) { // loop through cards
+			if (y <= 4) {
+				if (cards[x].getAttribute('src').indexOf('closed.gif') == -1) { // it's one of our cards
+					cards[x].setAttribute('style', 'cursor:pointer');
+					$x('//td//tbody/tr[2]/td')[x].setAttribute('style', 'padding-top:7px;padding-bottom:7px;');
+					$x('//td//tbody/tr[2]/td')[x].setAttribute('id', 'card_td_'+y);
+					cards[x].setAttribute('onclick', 'var cb=document.getElementsByName(\'c'+y+'\')[0];if(cb.checked){cb.checked=false;document.getElementById(\'card_td_'+y+'\').style.backgroundColor=\'green\';}else{cb.checked=true;document.getElementById(\'card_td_'+y+'\').style.backgroundColor=\'#009966\';}');
+					++y;
+				}
+			}
+		}
+
+		// Add style switchers on checkboxes
+		getELNAME('c0')[0].addEventListener('click', function() {
+			var cb = $X('//input[@name="c0"]');
+			if (cb.checked) {
+				getID('card_td_0').style.backgroundColor='#009966';
+			} else {
+				getID('card_td_0').style.backgroundColor='green';
+			}
+		}, true);
+		getELNAME('c1')[0].addEventListener('click', function() {
+			var cb = $X('//input[@name="c1"]');
+			if (cb.checked) {
+				getID('card_td_1').style.backgroundColor='#009966';
+			} else {
+				getID('card_td_1').style.backgroundColor='green';
+			}
+		}, true);
+		getELNAME('c2')[0].addEventListener('click', function() {
+			var cb = $X('//input[@name="c2"]');
+			if (cb.checked) {
+				getID('card_td_2').style.backgroundColor='#009966';
+			} else {
+				getID('card_td_2').style.backgroundColor='green';
+			}
+		}, true);
+		getELNAME('c3')[0].addEventListener('click', function() {
+			var cb = $X('//input[@name="c3"]');
+			if (cb.checked) {
+				getID('card_td_3').style.backgroundColor='#009966';
+			} else {
+				getID('card_td_3').style.backgroundColor='green';
+			}
+		}, true);
+		getELNAME('c4')[0].addEventListener('click', function() {
+			var cb = $X('//input[@name="c4"]');
+			if (cb.checked) {
+				getID('card_td_4').style.backgroundColor='#009966';
+			} else {
+				getID('card_td_4').style.backgroundColor='green';
+			}
+		}, true);
+		
 	}
 }
 
@@ -4336,6 +4405,7 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 		getID('resetscratcher').innerHTML = '&nbsp;<b style="line-height:16px">'+lang.scratcher[17]+'<b>&nbsp;';
 		getID('statsscratcher').innerHTML = lang.scratcher[7]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[8]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[9]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[10]+' <font style="float:right"><b>$0</b></font><br />'+lang.scratcher[11]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[12]+' <font style="float:right"><b>0</b></font><br />'+lang.scratcher[13]+' <font style="float:right"><b>$0</b></font>';
 		setValue('monin', 0);
+
 		setValue('mils', 0);
 		setValue('bullets', 0);
 		setValue('scratches', 0);
@@ -4529,6 +4599,7 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 	var ptmwon = getValue('ptmwon', 0);
 	var ptoldbet = getValue('ptoldbet', 0);
 	var ptself = getValue('nick', '');
+	var ptchecked = getValue('ptchecked', false);
 	var str = db.innerHTML.replace(/,/g, '');
 	if (db.innerHTML.indexOf('<img src="/static/images/game/casino/cards') != -1) {//game active
 		if (db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[1]) != -1) {// game started
@@ -4568,12 +4639,13 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 			setValue('ptoldbet', 0);
 			var rex = new RegExp('<tr align="center"><td>(\\w+)</td><td>(.*)</td><td>\\$(\\d+)</td></tr>');
 			var r = str.match(rex);
-			if (r[1] == ptself) { // we won?
+			if (r[1] == ptself && !ptchecked) { // we won and haven't checked prices yet?
 				var pttype = r[2];
 				ptgwon += 1;
 				ptmwon += parseInt(r[3], 10);
 				setValue('ptgwon', ptgwon);
 				setValue('ptmwon', ptmwon);
+				setValue('ptchecked', true);
 			}
 		}
 	}
@@ -6106,34 +6178,38 @@ if (dlp.indexOf('user.php') != -1 && dls.indexOf('page=user') != -1) {
 		});
 	}
 }
-//---------------- Clean login page ----------------
-if ((dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') && prefs[20]) {
-	$Del('/html/body/table/tbody/tr[2]'); //rough cleansing!
-	$Del('//tr/td/table//table/tbody/tr[2]'); //yellow links
-	$X('//td').setAttribute('height', '90%'); //new primary cell heigth
-	var logo = $Cut('//td[@width="280"]', 1); //replace the logo
-	logo.style.textAlign = 'center';
-	logo.innerHTML = logo.innerHTML + '<br /><br /><br /><br /><br /><hr color="#666" size="1" /><br />';
-	var tr = cEL('tr');
-	tr.appendChild(logo);
-	$X('/html/body/table//table/tbody/tr').parentNode.insertBefore(tr, $X('/html/body/table//table/tbody/tr'));
+//---------------- Login page ----------------
+if (dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') { // login page
+	if (prefs[20]) { // clean login page pref
+		$Del('/html/body/table/tbody/tr[2]'); //rough cleansing!
+		$Del('//tr/td/table//table/tbody/tr[2]'); //yellow links
+		$X('//td').setAttribute('height', '90%'); //new primary cell heigth
+		var logo = $Cut('//td[@width="280"]', 1); //replace the logo
+		logo.style.textAlign = 'center';
+		logo.innerHTML = logo.innerHTML + '<br /><br /><br /><br /><br /><hr color="#666" size="1" /><br />';
+		var tr = cEL('tr');
+		tr.appendChild(logo);
+		$X('/html/body/table//table/tbody/tr').parentNode.insertBefore(tr, $X('/html/body/table//table/tbody/tr'));
 
-	var tr2 = cEL('tr'); //add spacing
-	var filler = logo.cloneNode(0);
-	filler.innerHTML = '<br /><hr color="#666" size="1" /><br /><br /><br /><br /><br /><br /><br /><br /><br />';
-	tr2.appendChild(filler);
-	$X('/html/body/table//table/tbody/tr').parentNode.insertBefore(tr2, $X('/html/body/table//table/tbody/tr').nextSibling.nextSibling);
+		var tr2 = cEL('tr'); //add spacing
+		var filler = logo.cloneNode(0);
+		filler.innerHTML = '<br /><hr color="#666" size="1" /><br /><br /><br /><br /><br /><br /><br /><br /><br />';
+		tr2.appendChild(filler);
+		$X('/html/body/table//table/tbody/tr').parentNode.insertBefore(tr2, $X('/html/body/table//table/tbody/tr').nextSibling.nextSibling);
 
-	var footer = $X('//tr[@height="100"]'); //add footer
-	footer.setAttribute('height', '60');
-	footer.childNodes[1].style.paddingTop = '4px';
-	footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2011 - Omerta Game Ltd. | &copy; 2007-2011 - Omerta Beyond<br /><br /><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? OBnUrl : EdoUrl) + '" target="_blank">' + lang.login[1] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
+		var footer = $X('//tr[@height="100"]'); //add footer
+		footer.setAttribute('height', '60');
+		footer.childNodes[1].style.paddingTop = '4px';
+		footer.childNodes[1].childNodes[1].innerHTML = '&copy; 2004-2011 - Omerta Game Ltd. | &copy; 2007-2011 - Omerta Beyond<br /><br /><a href="http://www.omertabeyond.com" target="_blank">Omerta Beyond</a> | <a href="' + PrefsLink + '" target="_blank">' + lang.prefsname + '</a> | <a href="' + (sets.version == '_dm' || sets.version == '_com' ? OBnUrl : EdoUrl) + '" target="_blank">' + lang.login[1] + '</a> | <a href="/game-register.php">' + lang.login[0] + '</a>';
 
-	var input = [$X('//input[@name="email"]'), $X('//input[@name="pass"]'), $X('//input[@type="submit"]')]; //add focus effects and styling
-	input.forEach(function ($n) {
-		$n.setAttribute('class', 'loginHL');
-	});
-	if (input[0].value == 'Email') { //auto-focus
+		var input = [$X('//input[@name="email"]'), $X('//input[@name="pass"]'), $X('//input[@type="submit"]')]; //add focus effects and styling
+		input.forEach(function ($n) {
+			$n.setAttribute('class', 'loginHL');
+		});
+	} else {
+		var input = [$X('//input[@name="email"]'), $X('//input[@name="pass"]'), $X('//input[@type="submit"]')];
+	}
+	if (input[0].value == 'Email') { //auto-focus (both clean login and normal login page)
 		input[0].focus();
 	} else if (input[1].value == '') {
 		input[1].focus();
@@ -6346,7 +6422,7 @@ if (dlp != '/game.php' && dlp != '/banner.php' && dlp != '/pic.php' && dlp != '/
 }
 
 //---------------- Title changer + Beyond Favicon Replacer ----------------
-if ((dlp == '/' || dlp == '/index.php' || dlp == '/game.php' || dlp == 'game-login.php') && lh.indexOf('beyond') == -1) {
+if ((dlp == '/' || dlp == '/index.php' || dlp == '/game.php' || dlp == '/game-login.php') && lh.indexOf('beyond') == -1) {
 	window.addEventListener('load', function () {
 		setTimeout(function () {
 			setIcon(GM_getResourceURL('favoriteIco'));
