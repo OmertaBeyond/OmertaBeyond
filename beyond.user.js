@@ -35,6 +35,7 @@
 // @resource		nickreader	http://omertabeyond.googlecode.com/svn/trunk/images/magnifier.png
 // @resource		nextIcon	http://omertabeyond.googlecode.com/svn/trunk/images/next.png
 // @resource		prevIcon	http://omertabeyond.googlecode.com/svn/trunk/images/prev.png
+// @resource		check	http://omertabeyond.googlecode.com/svn/trunk/images/check.png
 // @include			http://gm.omertabeyond.com/*.php*
 // @include			http://www.omertabeyond.com/html/poll/poll.php*
 // @include			http://www.omerta3.com/*
@@ -183,12 +184,6 @@ var prefs = prefsArray(getValue('prefs', '0'), maxbit); //compatibility with old
 var querys = [
 	'nick',
 	'OB',
-	'bust',
-	'nobust',
-	'colours',
-	'jailint',
-	'nbint',
-	'priority',
 	'FL_prior',
 	'Fam_prior',
 	'maxHL',
@@ -354,7 +349,126 @@ if (dlp == '/prefs.php') {
 		}
 	}
 
-	if(prefs[3]){//JHL stuff
+	if (prefs[3]) {//JHL stuff
+	
+	
+		//	string += '<button id="save_nojhl_button" type="button" class="button">'+lang.jhl[6]+'</button>';
+		//string += '<img id="save_nojhl_img" height="16" width="16" src="" style="margin-left:3px;visibility:hidden;" alt="" />';
+		function jhl_save(mode) {
+			getID('save_'+mode+'_img').setAttribute('src', GM_getResourceURL('loading'));
+			getID('save_'+mode+'_img').setAttribute('alt', 'Wait');
+			getID('save_'+mode+'_img').style.opacity = '1';
+			getID('save_'+mode+'_button').style.textDecoration = 'line-through';
+			getID('save_'+mode+'_button').style.cursor = 'default';
+			if (mode == 'jhl') {
+			}
+			if (mode == 'nojhl') {
+			}
+			if (mode == 'jhlprefs') {
+			}
+			getID('save_'+mode+'_img').setAttribute('src', GM_getResourceURL('check'));
+			getID('save_'+mode+'_img').setAttribute('alt', 'Done');
+			getID('save_'+mode+'_button').style.textDecoration = 'none';
+			getID('save_'+mode+'_button').style.cursor = 'pointer';
+		}
+	
+		var string = '';
+	
+		// JAIL HL SAVING V2.0
+		
+		string += '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td style="width:210px;" class="td"><b>'+lang.jhl[1]+'</b></td><td style="width:75px;" class="td"><b>'+lang.jhl[2]+'</b></td><td style="width:76px;" class="td">&nbsp;</td><td style="width:50px;" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
+		
+		var busts = getValue('bust', '').split(',');
+		var x, info, nick, prio, color;
+		var y = 0;
+		var a = busts.length;
+		
+		function AddBust(y, nick, color, prio) {
+			string += '<tr id="jhl_tr_'+y+'" style="height:25px;" class="tr">';
+			string += '	<td>&nbsp;</td>';
+			string += '	<td>';
+			string += '		<img id="jhl_d_'+y+'" class="del_icon" height="16" width="16" style="cursor:pointer;" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getElementById(\'jhl_a_'+y+'\').value=\'\';getElementById(\'jhl_b_'+y+'\').value=\'\';getElementById(\'jhl_c_'+y+'\').value=\'\';}else{getElementById(\'jhl_tr_'+y+'\').parentNode.removeChild(getElementById(\'jhl_tr_'+y+'\'));}" />';
+			string += '		<input id="jhl_a_'+y+'" value="'+nick.replace('%20', ' ').replace('%26', '&')+'" type="text" name="jhl_nick" class="inputbig" onkeyup="AddBust('+y+');" />';
+			string += '	</td>';
+			string += '	<td><input id="jhl_b_'+y+'" value="'+color+'" type="text" name="jhl_color" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td>';
+			string += '	<td><img id="jhl_e_'+y+'" class="picker_icon" src="'+GM_getResourceURL('colorpicker')+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'jhl_b_'+y+'\').color.showPicker()" alt="Pick color" /></td>';
+			string += '	<td><input id="jhl_c_'+y+'" value="'+prio+'" type="text" name="jhl_prio" class="inputsmall" /></td>';
+			string += '	<td>&nbsp;</td>';
+			string += '</tr>';
+		}
+		
+		for (x = 0; x < a; ++x) {
+			info = busts[x].split('|');
+			if (info[0] != '') {
+				++y;
+				nick = info[0];
+				if (info[1] == null) { info[1] = ''; }
+				if (info[2] == null || info[2] == '') { info[2] = 'CCCCCC'; }
+				prio = info[1];
+				color = info[2];
+				AddBust(y, nick, color, prio);
+			}
+		}
+		AddBust((y + 1), '', 'CCCCCC', ''); // add empty one for new rows
+
+
+		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="7" class="td">save button</td></tr>';
+
+		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
+		
+		var nobusts = getValue('nobust', '').split(',');
+		y = 0;
+		a = nobusts.length;
+		
+		function AddNoBust(y, nick) {
+			string += '<tr id="nojhl_tr_'+y+'" style="height: 25px;" class="tr">';
+			string += '	<td>&nbsp;</td>';
+			string += '	<td colspan="5">';
+			string += '		<img id="nojhl_b_'+y+'" class="del_icon" height="16" width="16" style="cursor:pointer;" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getElementById(\'nojhl_a_'+y+'\').value=\'\';}else{getElementById(\'nojhl_tr_'+y+'\').parentNode.removeChild(getElementById(\'nojhl_tr_'+y+'\'));}" />';
+			string += '		<input id="nojhl_a_'+y+'" value="'+nick.replace('%20', ' ').replace('%26', '&')+'" type="text" name="nojhl_nick" class="inputbig" />';
+			string += '	</td>';
+			string += '</tr>';
+		}
+		
+		for (x = 0; x < a; ++x) {
+			if (nobusts[x] != '') {
+				++y;
+				AddNoBust(y, nobusts[x]);
+			}
+		}
+		AddNoBust((y + 1), ''); // add empty one for new rows
+		
+		
+		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="7" class="td">';
+		string += '<button id="save_nojhl_button" type="button" class="button">'+lang.jhl[6]+'</button>';
+		string += '<img id="save_nojhl_img" height="16" width="16" src="'+GM_getResourceURL('loading')+'" style="margin-left:3px;opacity:0;" alt="" />';
+		string += '</td></tr>';
+		
+		
+		// default options
+		
+		var maxHL = getValue('maxHL', 5);
+		var hotkeys = getValue('rawkeyprefs', '');
+		var buyout = getValue('buyout', '/');
+		var FL_prior = getValue('FL_prior', 3);
+		var Fam_prior = getValue('Fam_prior', 9);
+		var defpri = getValue('defpri', 5);
+		var defcol = getValue('defcol', '33FF66');
+	
+		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[8]+'</b><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[9]+'</b></td><td class="td">&nbsp;</td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" style="text-align:right;">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td><td><img class="picker_icon" src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" style="width:100px;text-align:right;">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onblur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onblur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onblur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="6" class="td" style="text-align:center;">button goes here</td></tr>';
+		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div class="credits">'+lang.jhl[16]+'</div></td></tr>';
+		
+		
+		
+		
+		// OLD WAY
+	
 		var family = getValue('bust', '').split(",");
 		var colour = getValue('colours', '').split(",");
 		var priority = getValue('priority', '').split(",");
@@ -383,7 +497,7 @@ if (dlp == '/prefs.php') {
 		savestring += fam_list + " + '&colours='" + col_list + " + '&priority='" + pri_list + " + '&nobust='" + nb_list;
 		savestring += '">'+lang.jhl[6]+'</button>';
 
-		var string = '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
+		string += '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td style="width:210px;" class="td"><b>'+lang.jhl[1]+'</b></td><td style="width:75px;" class="td"><b>'+lang.jhl[2]+'</b></td><td style="width:76px;" class="td">&nbsp;</td><td style="width:50px;" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
 		for(i=-1;++i<jailint;){
 			if(family[i] == null) { family[i] = ""; }
@@ -423,6 +537,8 @@ if (dlp == '/prefs.php') {
 		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div class="credits">'+lang.jhl[16]+'</div></td></tr>';
 
 		getID('tablejail').innerHTML = string;
+		
+		getID('save_nojhl_button').addEventListener('click', function(){ jhl_save('nojhl'); }, true);
 	}
 
 	//style coolness
@@ -445,10 +561,6 @@ if (dlp == '/prefs.php') {
 			$s.MozBorderRadiusTopright = '7.5px';
 		}
 		if ($N == "DIV" || $N == "INPUT" || $N == "BUTTON") {
-			$s.MozBorderRadius = '5px';
-			if ($N == "INPUT") {
-				$s.paddingLeft = '3px';
-			}
 			if ($N == "BUTTON") {
 				$n.style.cursor = 'pointer';
 			}
