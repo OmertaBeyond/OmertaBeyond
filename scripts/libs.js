@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.10.0.44
+	Version: 1.10.0.48
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -446,38 +446,38 @@ function OBUpdate(cb) {
 			obv_avail = obv_major + '.' + obv_minor + '.' + obv_maintenance + '.' + obv_build;
 
 			if (SCRIPT_VERSION_MAJOR < obv_major) {
-				if (confirm("There's an major update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail)) {
+				if (confirm("There is a major update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail)) {
 					GM_openInTab(ob_url);
 				}
 			} else if (SCRIPT_VERSION_MAJOR == obv_major) {
 				GM_log("[Omerta Beyond Updater] Same major version ... lets check minor version");
 				if (SCRIPT_VERSION_MINOR < obv_minor) {
-					if (confirm("There's an minor update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail)) {
+					if (confirm("There is a minor update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail)) {
 						GM_openInTab(ob_url);
 					}
 				} else if (SCRIPT_VERSION_MINOR == obv_minor) {
 					GM_log("[Omerta Beyond Updater] Same minor version ... lets check maintenance version");
 					if (SCRIPT_VERSION_MAINTENANCE < obv_maintenance) {
-						if (confirm("There's an maintenance update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail)) {
+						if (confirm("There is a maintenance update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail)) {
 							GM_openInTab(ob_url);
 						}
 					} else if (SCRIPT_VERSION_MAINTENANCE == obv_maintenance) {
 						GM_log("[Omerta Beyond Updater] Same maintenance version ... lets check build version");
 						if (SCRIPT_VERSION_BUILD < obv_build) {
-							if (confirm("There's an revision update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail)) {
+							if (confirm("There is a revision update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail)) {
 								GM_openInTab(ob_url);
 							}
 						} else if (SCRIPT_VERSION_BUILD == obv_build) {
-							alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
+							alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail);
 						}
 					} else if (SCRIPT_VERSION_MAINTENANCE > obv_maintenance && cb) {
-						alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
+						alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail);
 					}
 				} else if (SCRIPT_VERSION_MINOR > obv_minor && cb) {
-					alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
+					alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail);
 				}
 			} else if (cb) {
-				alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
+				alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail);
 			}
 		}
 	});

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			05-08-2011
+// @date			08-08-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -184,13 +184,7 @@ var prefs = prefsArray(getValue('prefs', '0'), maxbit); //compatibility with old
 var querys = [
 	'nick',
 	'OB',
-	'FL_prior',
-	'Fam_prior',
-	'maxHL',
-	'buyout',
-	'colour',
-	'defpri',
-	'defcol'
+	'colour'
 ];
 
 //---------------- Bmsg Example ----------------
@@ -338,7 +332,7 @@ if (dlp == '/prefs.php') {
 
 	string += grabPrefs;//grab all current checked values and send to url
 	string += '">'+lang.prefsPage[2]+' '+lang.prefsname+'</button></td></tr>';
-
+	
 	getID('toptable').innerHTML = string;
 
 	for (i = -1; ++i < maxbit;) {
@@ -350,10 +344,7 @@ if (dlp == '/prefs.php') {
 	}
 
 	if (prefs[3]) {//JHL stuff
-	
-	
-		//	string += '<button id="save_nojhl_button" type="button" class="button">'+lang.jhl[6]+'</button>';
-		//string += '<img id="save_nojhl_img" height="16" width="16" src="" style="margin-left:3px;visibility:hidden;" alt="" />';
+		
 		function jhl_save(mode) {
 			getID('save_'+mode+'_img').setAttribute('src', GM_getResourceURL('loading'));
 			getID('save_'+mode+'_img').setAttribute('alt', 'Wait');
@@ -361,21 +352,47 @@ if (dlp == '/prefs.php') {
 			getID('save_'+mode+'_button').style.textDecoration = 'line-through';
 			getID('save_'+mode+'_button').style.cursor = 'default';
 			if (mode == 'jhl') {
+				var busts = '';
+				var a = getELNAME('jhl_nick').length;
+				var x;
+				for (x = 0; x < a; ++x) {
+					if (getELNAME('jhl_nick')[x].value != '') {
+						busts += ',';
+						busts += getELNAME('jhl_nick')[x].value.substr(0, 1).toUpperCase()+getELNAME('jhl_nick')[x].value.substr(1).toLowerCase();
+						busts += '|'+getELNAME('jhl_prio')[x].value;
+						busts += '|'+getELNAME('jhl_color')[x].value;
+					}
+				}
+				setValue('bust', busts.substr(1));
 			}
 			if (mode == 'nojhl') {
+				var nobusts = '';
+				var a = getELNAME('nojhl_nick').length;
+				var x;
+				for (x = 0; x < a; ++x) {
+					if (getELNAME('nojhl_nick')[x].value != '') {
+						nobusts += ','+getELNAME('nojhl_nick')[x].value.substr(0, 1).toUpperCase()+getELNAME('nojhl_nick')[x].value.substr(1).toLowerCase();
+					}
+				}
+				setValue('nobust', nobusts.substr(1));
 			}
 			if (mode == 'jhlprefs') {
+				setValue('defpri', getID('defpri').value);
+				setValue('defcol', getID('defcol').value);
+				setValue('FL_prior', getID('FL_prior').value);
+				setValue('Fam_prior', getID('Fam_prior').value);
+				setValue('buyout', getID('buyout').value);
+				setValue('maxHL', getID('maxHL').value);
 			}
 			getID('save_'+mode+'_img').setAttribute('src', GM_getResourceURL('check'));
 			getID('save_'+mode+'_img').setAttribute('alt', 'Done');
 			getID('save_'+mode+'_button').style.textDecoration = 'none';
 			getID('save_'+mode+'_button').style.cursor = 'pointer';
+			setTimeout('opacity(\''+mode+'\')', 500);
 		}
-	
+
 		var string = '';
 	
-		// JAIL HL SAVING V2.0
-		
 		string += '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td style="width:210px;" class="td"><b>'+lang.jhl[1]+'</b></td><td style="width:75px;" class="td"><b>'+lang.jhl[2]+'</b></td><td style="width:76px;" class="td">&nbsp;</td><td style="width:50px;" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
 		
@@ -388,11 +405,11 @@ if (dlp == '/prefs.php') {
 			string += '<tr id="jhl_tr_'+y+'" style="height:25px;" class="tr">';
 			string += '	<td>&nbsp;</td>';
 			string += '	<td>';
-			string += '		<img id="jhl_d_'+y+'" class="del_icon" height="16" width="16" style="cursor:pointer;" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getElementById(\'jhl_a_'+y+'\').value=\'\';getElementById(\'jhl_b_'+y+'\').value=\'\';getElementById(\'jhl_c_'+y+'\').value=\'\';}else{getElementById(\'jhl_tr_'+y+'\').parentNode.removeChild(getElementById(\'jhl_tr_'+y+'\'));}" />';
+			string += '		<img id="jhl_d_'+y+'" class="del_icon" height="16" width="16" style="cursor:pointer;" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getID(\'jhl_a_'+y+'\').value=\'\';getID(\'jhl_b_'+y+'\').value=\'CCCCCC\';getID(\'jhl_b_'+y+'\').style.backgroundColor=\'#CCCCCC\';getID(\'jhl_c_'+y+'\').value=\'\';}else{getID(\'jhl_tr_'+y+'\').parentNode.removeChild(getID(\'jhl_tr_'+y+'\'));}" />';
 			string += '		<input id="jhl_a_'+y+'" value="'+nick.replace('%20', ' ').replace('%26', '&')+'" type="text" name="jhl_nick" class="inputbig" onkeyup="AddBust('+y+');" />';
 			string += '	</td>';
 			string += '	<td><input id="jhl_b_'+y+'" value="'+color+'" type="text" name="jhl_color" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td>';
-			string += '	<td><img id="jhl_e_'+y+'" class="picker_icon" src="'+GM_getResourceURL('colorpicker')+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'jhl_b_'+y+'\').color.showPicker()" alt="Pick color" /></td>';
+			string += '	<td><img id="jhl_e_'+y+'" class="picker_icon" src="'+GM_getResourceURL('colorpicker')+'" height="14" width="14" style="cursor:pointer;" onclick="getID(\'jhl_b_'+y+'\').color.showPicker()" alt="Pick color" /></td>';
 			string += '	<td><input id="jhl_c_'+y+'" value="'+prio+'" type="text" name="jhl_prio" class="inputsmall" /></td>';
 			string += '	<td>&nbsp;</td>';
 			string += '</tr>';
@@ -402,18 +419,18 @@ if (dlp == '/prefs.php') {
 			info = busts[x].split('|');
 			if (info[0] != '') {
 				++y;
-				nick = info[0];
 				if (info[1] == null) { info[1] = ''; }
 				if (info[2] == null || info[2] == '') { info[2] = 'CCCCCC'; }
-				prio = info[1];
-				color = info[2];
-				AddBust(y, nick, color, prio);
+				AddBust(y, info[0], info[2], info[1]);
 			}
 		}
 		AddBust((y + 1), '', 'CCCCCC', ''); // add empty one for new rows
 
-
-		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="7" class="td">save button</td></tr>';
+		// save button for normal busts
+		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td">';
+		string += '<button id="save_jhl_button" type="button" class="button">'+lang.jhl[6]+'</button>';
+		string += '<img id="save_jhl_img" height="16" width="16" src="'+GM_getResourceURL('loading')+'" style="margin-left:3px;opacity:0;" alt="" />';
+		string += '</td></tr>';
 
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
 		
@@ -425,8 +442,8 @@ if (dlp == '/prefs.php') {
 			string += '<tr id="nojhl_tr_'+y+'" style="height: 25px;" class="tr">';
 			string += '	<td>&nbsp;</td>';
 			string += '	<td colspan="5">';
-			string += '		<img id="nojhl_b_'+y+'" class="del_icon" height="16" width="16" style="cursor:pointer;" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getElementById(\'nojhl_a_'+y+'\').value=\'\';}else{getElementById(\'nojhl_tr_'+y+'\').parentNode.removeChild(getElementById(\'nojhl_tr_'+y+'\'));}" />';
-			string += '		<input id="nojhl_a_'+y+'" value="'+nick.replace('%20', ' ').replace('%26', '&')+'" type="text" name="nojhl_nick" class="inputbig" />';
+			string += '		<img id="nojhl_b_'+y+'" class="del_icon" height="16" width="16" style="cursor:pointer;" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getID(\'nojhl_a_'+y+'\').value=\'\';}else{getID(\'nojhl_tr_'+y+'\').parentNode.removeChild(getID(\'nojhl_tr_'+y+'\'));}" />';
+			string += '		<input id="nojhl_a_'+y+'" value="'+nick.replace('%20', ' ').replace('%26', '&')+'" type="text" name="nojhl_nick" class="inputbig" onkeyup="AddNoBust('+y+');" />';
 			string += '	</td>';
 			string += '</tr>';
 		}
@@ -439,106 +456,31 @@ if (dlp == '/prefs.php') {
 		}
 		AddNoBust((y + 1), ''); // add empty one for new rows
 		
-		
-		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="7" class="td">';
+		// save button for no busts
+		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td">';
 		string += '<button id="save_nojhl_button" type="button" class="button">'+lang.jhl[6]+'</button>';
 		string += '<img id="save_nojhl_img" height="16" width="16" src="'+GM_getResourceURL('loading')+'" style="margin-left:3px;opacity:0;" alt="" />';
 		string += '</td></tr>';
 		
 		
-		// default options
-		
-		var maxHL = getValue('maxHL', 5);
-		var hotkeys = getValue('rawkeyprefs', '');
-		var buyout = getValue('buyout', '/');
-		var FL_prior = getValue('FL_prior', 3);
-		var Fam_prior = getValue('Fam_prior', 9);
-		var defpri = getValue('defpri', 5);
-		var defcol = getValue('defcol', '33FF66');
-	
+		// general options
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[8]+'</b><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[9]+'</b></td><td class="td">&nbsp;</td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" style="text-align:right;">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td><td><img class="picker_icon" src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" style="width:100px;text-align:right;">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onblur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onblur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onblur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="6" class="td" style="text-align:center;">button goes here</td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[10]+': <input id="defpri" value="'+getValue('defpri', 5)+'" type="text" class="inputmiddle" onblur="if(this.value>9||this.value<1){this.value='+getValue('defpri', 5)+';}" /></td><td colspan="2" style="text-align:right;">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="'+getValue('FL_prior', 3)+'" type="text" onblur="if(this.value>9||this.value<1){this.value='+getValue('FL_prior', 3)+';}" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[11]+': <input id="defcol" value="'+getValue('defcol', '33FF66')+'" type="text" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td><td><img class="picker_icon" src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="getID(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" style="width:100px;text-align:right;">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="'+getValue('Fam_prior', 9)+'" type="text" onblur="if(this.value>9||this.value<1){this.value='+getValue('Fam_prior', 9)+';}" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="'+getValue('maxHL', 5)+'" type="text" onblur="if(this.value>5){this.value=5;}" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="'+getValue('buyout', '/')+'" type="text" onblur="var h=\''+getValue('rawkeyprefs', '')+'\';if(h.indexOf(this.value)!=-1){this.value=\''+getValue('buyout', '/')+'\';}" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="6" class="td" style="text-align:center;">';
+		string += '<button id="save_jhlprefs_button" type="button" class="button">'+lang.jhl[6]+'</button>';
+		string += '<img id="save_jhlprefs_img" height="16" width="16" src="'+GM_getResourceURL('loading')+'" style="margin-left:3px;opacity:0;" alt="" />';
+		string += '</td></tr>';
 		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div class="credits">'+lang.jhl[16]+'</div></td></tr>';
-		
-		
-		
-		
-		// OLD WAY
-	
-		var family = getValue('bust', '').split(",");
-		var colour = getValue('colours', '').split(",");
-		var priority = getValue('priority', '').split(",");
-		var nobust = getValue('nobust', '').split(",");
-		var nbint = getValue('nbint', 3);
-		var jailint = getValue('jailint', 6);
-		var maxHL = getValue('maxHL', 5);
-		var hotkeys = getValue('rawkeyprefs','');
-		var buyout = getValue('buyout','/');
-		var FL_prior = getValue('FL_prior',3);
-		var Fam_prior = getValue('Fam_prior',9);
-		var defpri = getValue('defpri',5);
-		var defcol = getValue('defcol','33FF66');
 
-		var savestring = '<button type="button" class="button" name="#" onclick="location.href = \''+PrefsLink+'&maxHL=\' + document.getElementById(\'maxHL\').value + \'&buyout=\' + document.getElementById(\'buyout\').value + \'&FL_prior=\' + document.getElementById(\'FL_prior\').value + \'&Fam_prior=\' + document.getElementById(\'Fam_prior\').value + \'&defpri=\' + document.getElementById(\'defpri\').value + \'&defcol=\' + document.getElementById(\'defcol\').value + \'&bust=\'';
-		fam_list = col_list = pri_list = nb_list = '';
-
-		for(i=-1;++i<jailint;){
-			fam_list += " + document.getElementById('family" +i+ "').value.toUpperCase() + ','";
-			col_list += " + document.getElementById('colour" +i+ "').value.replace('#', '') + ','";
-			pri_list += " + document.getElementById('priority" +i+ "').value + ','";
-		}
-		for(i=-1;++i<nbint;){
-			nb_list += " + document.getElementById('nobust" +i+ "').value.replace('&','%26').toUpperCase() + ','";
-		}
-		savestring += fam_list + " + '&colours='" + col_list + " + '&priority='" + pri_list + " + '&nobust='" + nb_list;
-		savestring += '">'+lang.jhl[6]+'</button>';
-
-		string += '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td style="width:210px;" class="td"><b>'+lang.jhl[1]+'</b></td><td style="width:75px;" class="td"><b>'+lang.jhl[2]+'</b></td><td style="width:76px;" class="td">&nbsp;</td><td style="width:50px;" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
-		for(i=-1;++i<jailint;){
-			if(family[i] == null) { family[i] = ""; }
-			if(colour[i] == null) { colour[i] = ""; }
-			if(priority[i] == null) { priority[i] = ""; }
-			if(!colour[i]) { colour[i] = "CCCCCC"; }
-			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td><img class="del_icon" height="16" width="16" style="cursor:pointer;" onclick="getElementById(\'family'+i+'\').value=\'\';getElementById(\'colour'+i+'\').value=\'\';getElementById(\'priority'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="family' + i + '" value="' + family[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
-			string += '<td><input id="colour'+i+'" value="'+colour[i]+'" type="text" name="color'+(i+1)+'" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td>';
-			string += '<td><img class="picker_icon" src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'colour'+i+'\').color.showPicker()" alt="Pick color" /></td>';
-			string += '<td><input id="priority'+i+'" value="'+priority[i]+'" type="text" name="#" class="inputsmall" /></td><td>&nbsp;</td></tr>';
-		}
-		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="7" class="td"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint='+(parseInt(jailint, 10)+1)+'\'">'+lang.jhl[4]+'</button> ';
-		if(jailint > "1") {
-			string += ' <button type="button" class="button" onclick="location.href = \''+PrefsLink+'&jailint=' + (parseInt(jailint)-1) + '\'">'+lang.jhl[5]+'</button>';
-		} else {
-			string += ' ';
-		}
-		string += '&nbsp;-&nbsp;'+savestring+'</td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
-		for(i=-1;++i<nbint;){
-			if(nobust[i] == null){ nobust[i] = ""; }
-			string += '<tr style="height: 25px;" class="tr"><td>&nbsp;</td><td colspan="5"><img class="del_icon" height="16" width="16" style="cursor:pointer;" onclick="getElementById(\'nobust'+i+'\').value=\'\';" src="'+GM_getResourceURL("trash")+'" alt="Delete" /><input id="nobust' + i + '" value="' + nobust[i].replace('%20', ' ').replace('%26', '&') + '" type="text" name="#" class="inputbig" /></td>';
-		}
-		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td"><button type="button" class="button" onclick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)+1) + '\'">'+lang.jhl[4]+'</button>';
-		if(nbint > "1") {
-			string += ' <button type="button" class="button" onclick="location.href = \''+PrefsLink+'&nbint=' + (parseInt(nbint)-1) + '\'">'+lang.jhl[5]+'</button>';
-		} else {
-			string += ' ';
-		}
-		string += '&nbsp;-&nbsp;'+savestring+'</td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[8]+'</b><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[9]+'</b></td><td class="td">&nbsp;</td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[10]+': <input id="defpri" value="' + defpri + '" type="text" name="defpri" class="inputmiddle" /></td><td colspan="2" style="text-align:right;">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="' + FL_prior + '" type="text" onBlur="if(this.value > 9 || this.value < 1) this.value = 3;" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[11]+': <input id="defcol" value="' + defcol + '" type="text" name="defcol" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td><td><img class="picker_icon" src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="document.getElementById(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" style="width:100px;text-align:right;">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="' + Fam_prior + '" type="text" onblur="if(this.value > 9 || this.value < 1) this.value = 9;" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="' + maxHL + '" type="text" onblur="if(this.value > 5) this.value = 5;" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="' + buyout + '" type="text" onblur="var h = \''+hotkeys+'\'; if(h.indexOf(this.value) != -1) this.value = \'\';" name="#" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="6" class="td" style="text-align:center;">'+savestring+'</td></tr>';
-		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div class="credits">'+lang.jhl[16]+'</div></td></tr>';
 
 		getID('tablejail').innerHTML = string;
 		
+		getID('save_jhl_button').addEventListener('click', function(){ jhl_save('jhl'); }, true);
 		getID('save_nojhl_button').addEventListener('click', function(){ jhl_save('nojhl'); }, true);
+		getID('save_jhlprefs_button').addEventListener('click', function(){ jhl_save('jhlprefs'); }, true);
 	}
 
 	//style coolness
@@ -1787,18 +1729,48 @@ if(dlp == '/info.php'){
 			});
 		}
 	}
-	if(prefs[38]) { //remove Facebook API from news frame
+	if (prefs[38]) { //remove Facebook API from news frame
 		$del('//iframe');
 	}
 }
 
 //---------------- Jail Highlighter and Jail autoform ----------------
-if(prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')){
+if (prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')) {
 	//Assemble prefs
-	var words = replaceLast(getValue('bust', ''), ',', '', 1).split(',');
-	var bgColors = replaceLast(getValue('colours', ''), ',', '', 1).split(',');
-	var prioritys = replaceLast(getValue('priority', ''), ',', '', 1).split(',');
-	var nobust = replaceLast(getValue('nobust', ''), ',', '', 1).split(',');
+	var names = getValue('bust', '').split(',');
+	var a = names.length;
+	var x;
+	var y = 0;
+	var words = [];
+	var bgColors = [];
+	var prioritys = [];
+	for (x = 0; x < a; ++x) {
+		if (names[x] != '') {
+			words[y] = names[x].split('|')[0].toUpperCase();
+			if (names[x].split('|')[1] == null) {
+				prioritys[y] = getValue('defprio');
+			} else {
+				prioritys[y] = parseInt(names[x].split('|')[1], 10);
+			}
+			if (names[x].split('|')[2] == null) {
+				bgColors[y] = '';
+			} else {
+				bgColors[y] = names[x].split('|')[2];
+			}
+			++y;
+		}
+	}
+	var names = getValue('nobust', '').split(',');
+	var a = names.length;
+	var y = 0;
+	var nobust = [];
+	for (x = 0; x < a; ++x) {
+		if (names[x] != '') {
+			nobust[y] = names[x].toUpperCase();
+		++y;
+		}
+	}
+
 	var maxHL = getValue('maxHL', 5);
 	var bustTrackerinfo = getValue('bustouts', 0);
 	var FL_prior = getValue('FL_prior', 3);
@@ -2197,6 +2169,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 	function setCity(id) {
 		setValue('ship', id);
+
 	}
 	var worth = db.innerHTML.match(/\[\$(.*)\]/);
 	var carTracker = getValue('cars', 0);
@@ -2286,8 +2259,8 @@ if (dlp == '/mid.php') {
 }
 
 //---------------- User Profile ----------------
-if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
-	if(db.innerHTML.search('table') != -1){
+if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
+	if (db.innerHTML.search('table') != -1) {
 		var tbody = $X('//tbody');
 		tbody.lastChild.previousSibling.previousSibling.previousSibling.setAttribute('name', 'forumPosts');
 		tbody.lastChild.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.setAttribute('name', 'FL');
@@ -2298,7 +2271,7 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		var unick = $X('//span[@id="username"]').innerHTML;
 
 		//DEAD or AKILLED ?
-		if(!alive){
+		if (!alive) {
 			var rankings = '<a href="http://www.barafranca.com/BeO/webroot/index.php?module=Rankings&nick='+unick+'">View Rankings</a>';
 			if($X('//img').parentNode.nodeName != 'A'){
 				var akill = '<span style="color:red; font-weight:bold;"> (Akill) </span>';
@@ -2398,23 +2371,53 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 		actions.innerHTML += '<a href="BeO/webroot/index.php?module=Spots&action=&driver='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Raid</a><br />';
 		actions.innerHTML += '<a href="javascript:if(confirm(\'Are you sure you want to make '+unick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+unick+'\';" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Set Mentor</a><br />';
 		actions.innerHTML += '<a href="kill.php?search='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Hire Detectives</a><br />';
-		if(prefs[3]){
-			var names = getValue('bust','')
-			var add = 1;
-			if(names){
-				names = names.split(',')
-				var length = getValue('jailint',0)
-				if(length == 0){ setValue('jailint',6); length=6; } //check for missing jailint
-				var who = unick.toUpperCase();
-				for(var i=0;i<length;i++) if(names[i]==who) add = 0;
+		
+		if (prefs[3]) {
+			var names = getValue('bust', '');
+			var jhl_add = 1;
+			if (names) {
+				names = names.split(',');
+				var a = names.length;
+				var x, info;
+				for (x = 0; x < a; ++x) {
+					if (names[x] != '' && names[x].split('|')[0] == unick) {
+						jhl_add = 0;
+						break;
+					}
+				}
 			}
-			var text = (add == 1)?'Add to ':'Remove from ';
-			actions.innerHTML += '<a href="' + dlp + '?nick='+unick+'&jh='+add+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">'+text+'busting list</a><br />';
+			var text = (jhl_add == 1)?'Add to ':'Remove from ';
+			actions.innerHTML += '<a href="#" id="jhl_link" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">'+text+'busting list</a><br />';
 		}
-		if(parseInt(getPow('bninfo',4,-1),10)>2 && inFam == 'None'){//check for top3 position and if person is not in family
+		if (parseInt(getPow('bninfo',4,-1),10) > 2 && inFam == 'None') {//check for top3 position and if person is not in family
 			actions.innerHTML += '<a href="/BeO/webroot/index.php?module=Family&who='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Invite to Family</a>';
 		}
 		db.appendChild(actions);
+		
+		if (prefs[3]) {
+			getID('jhl_link').addEventListener('click', function () {
+				if (jhl_add == 1) {
+					names = getValue('bust', '');
+					if (names == '') {
+						setValue('bust', unick+'|'+getValue('defpri', 5)+'|'+getValue('defcol', '33FF66'));
+					} else {
+						setValue('bust', names+','+unick+'|'+getValue('defpri', 5)+'|'+getValue('defcol', '33FF66'));
+					}
+					alert(unick+' '+lang.jhl[20]);
+				} else {
+					var a = names.length;
+					var x, info;
+					var str = '';
+					for (x = 0; x < a; ++x) {
+						if (names[x] != '' && names[x].split('|')[0] != unick) {
+							str += ','+names[x];
+						}
+					}
+					setValue('bust', str.substr(1));
+					alert(unick+' '+lang.jhl[23]);
+				}
+			}, false);
+		}
 
 		if (alive) {	
 			if (!self) { //additions useless for self
@@ -2424,66 +2427,6 @@ if(urlsearch == ('/user.php' + dls) && dls != '?editmode=true'){
 				HPxp.innerHTML = '<a href="/honorpoints.php"><span style="color:red"><i>'+HPxp.innerHTML+'</i></span></a>';
 			}
 		}
-	}
-}
-
-//---------------- Add user to jail highlighter by referral ----------------
-if (dlp == '/user.php' && dls.indexOf('&jh=') != -1) {
-	add = GetPost('jh');
-	if (add == 1) {
-		length = getValue('jailint', 0);
-		names = getValue('bust', '');
-		cols = getValue('colours');
-		pris = getValue('priority');
-		who = getTXT('/html/body//center/table/tbody/tr[3]/td[2]/a');
-		nick = who.toUpperCase();
-		if (length == 0) { //check for missing jailint
-			setValue('jailint', 6);
-			length = 6;
-		}
-		if (!names) { //check for missing data
-			names = ',,,,,,';
-			cols = ',,,,,,';
-			pris = ',,,,,,';
-		}
-		names = names.split(','); //load stored data
-		cols = cols.split(',');
-		pris = pris.split(',');
-		i = -1;
-		while (names[++i] && names[i] != nick); //find first open spot
-		if (names[i] != nick) {
-			if (i == length) { //extend jailint if neccesary
-				setValue('jailint', parseInt(++length, 10));
-			}
-			names[i] = nick; //insert new data into arrays
-			cols[i] = getValue('defcol', '33FF66');
-			pris[i] = getValue('defpri', 5);
-			setValue('bust', names.join(',')); //join and save values
-			setValue('colours', cols.join(','));
-			setValue('priority', pris.join(','));
-		} else {
-			alert('Oops! ' + who + ' '+lang.jhl[22]);
-		}
-	} else if (add == 0) {
-		length = getValue('jailint', 0)
-		if (length == 0) { //check for missing jailint
-			setValue('jailint', 6);
-			length = 6;
-		}
-		names = getValue('bust', '').split(','); //load data
-		cols = getValue('colours').split(',');
-		pris = getValue('priority').split(',');
-		who = getTXT('/html/body//center/table/tbody/tr[3]/td[2]/a');
-		nick = who.toUpperCase();
-		i = -1;
-		while (names[++i] && names[i] != nick && i < length); //find user
-		names[i] = ''; //remove user and data
-		cols[i] = '';
-		pris[i] = '';
-		setValue('bust', names.join(',')); //join and save values
-		setValue('colours', cols.join(','));
-		setValue('priority', pris.join(','));
-		alert(who + ' '+lang.jhl[23]);
 	}
 }
 
@@ -2911,310 +2854,275 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 	}
 }
 //---------------- Family page ----------------
-if (prefs[13] && dlp == '/family.php') {
-	var length = getValue('jailint', 0);
-	var names = getValue('bust', '');
-	var cols = getValue('colours');
-	var pris = getValue('priority');
-	var who = getTXT('//td[@class="profilerow"]');
-	who = who.substr(0,who.indexOf(' ')).replace(/[^a-zA-Z]/g, '');
-	var nick = who.toUpperCase();
-	var add = 1;
-	if(names){
-		var names = names.split(',');
-		if(length == 0){ setValue('jailint',6); length=6; } //check for missing jailint
-		for(var i=0;i<length;i++) if(names[i]==nick) var add = 0;
-	}
-	if (add == 1) {
-		//Add to busting list
-		var addtojhl = cEL('span'); //not an anchor, will mess up grabbing tops etc..
-		addtojhl.innerHTML = lang.jhl[24];
-		addtojhl.id = 'addlink';
-		addtojhl.setAttribute('class', 'red');
-		addtojhl.addEventListener('mouseover', function() { this.style.cursor = 'pointer'; }, true);
-		addtojhl.addEventListener('mouseout', function() { this.style.cursor = 'default'; }, true);
-		addtojhl.addEventListener('click', function(){
-			var addlength = getValue('jailint', 0);
-			var addnames = getValue('bust', '');
-			var addcols = getValue('colours');
-			var addpris = getValue('priority');
-			if (length == 0) { //check for missing jailint
-				setValue('jailint', 6);
-				addlength = 6;
-			}
-			if (!addnames) { //check for missing data
-				addnames = ',,,,,,';
-				addcols = ',,,,,,';
-				addpris = ',,,,,,';
-			}
-			addnames = addnames.split(','); //load stored data
-			addcols = addcols.split(',');
-			addpris = addpris.split(',');
-			var i = -1;
-			while (addnames[++i] && addnames[i] != nick); //find first open spot
-			if (addnames[i] != nick) {
-				if (i == addlength) { //extend jailint if neccesary
-					setValue('jailint', parseInt(++addlength, 10));
+if (dlp == '/family.php') {
+
+	if (prefs[3]) {
+	
+		var names = getValue('bust', '')
+		var jhl_add = 1;
+		var who = getTXT('//td[@class="profilerow"]');
+		who = who.substr(0, who.indexOf(' ')).replace(/[^a-zA-Z]/g, '');
+		if (names) {
+			names = names.split(',');
+			var a = names.length;
+			var x, info;
+			for (x = 0; x < a; ++x) {
+				if (names[x] != '' && names[x].split('|')[0] == who) {
+					jhl_add = 0;
+					break;
 				}
-				addnames[i] = nick; //insert new data into arrays
-				addcols[i] = getValue('defcol', '33FF66');
-				addpris[i] = getValue('defpri', 5);
-				setValue('bust', addnames.join(',')); //join and save values
-				setValue('colours', addcols.join(','));
-				setValue('priority', addpris.join(','));
+			}
+		}
+	
+		var jhl_link = cEL('span'); //not an anchor, will mess up grabbing tops etc..
+		jhl_link.setAttribute('id', 'jhl_link');
+		jhl_link.setAttribute('class', 'red');
+		jhl_link.setAttribute('style', 'cursor:pointer');
+		if (jhl_add == 1) {
+			//Add to busting list
+			jhl_link.innerHTML = lang.jhl[24];
+			jhl_link.addEventListener('click', function(){
+				names = getValue('bust', '');
+				if (names == '') {
+					setValue('bust', who+'|'+getValue('defpri', 5)+'|'+getValue('defcol', '33FF66'));
+				} else {
+					setValue('bust', names+','+who+'|'+getValue('defpri', 5)+'|'+getValue('defcol', '33FF66'));
+				}
 				alert(who+' '+lang.jhl[20]);
 				window.location.reload();
-			} else {
-				alert('Oops! '+who+' '+lang.jhl[22]);
-			}
-		}, true);
-		$X('//td[@class="profilerow"]').appendChild(addtojhl);
-	} else if (add == 0) {
-		//Remove from busting list
-		var remofjhl = cEL('span'); //not an anchor, will mess up grabbing tops etc..
-		remofjhl.innerHTML = lang.jhl[21];
-		remofjhl.id = 'dellink';
-		remofjhl.setAttribute('class', 'red');
-		remofjhl.addEventListener('mouseover', function() { this.style.cursor = 'pointer'; }, true);
-		remofjhl.addEventListener('mouseout', function() { this.style.cursor = 'default'; }, true);
-		remofjhl.addEventListener('click', function(){
-			var remlength = getValue('jailint', 0);
-			var remnames = getValue('bust', '');
-			var remcols = getValue('colours');
-			var rempris = getValue('priority');
-			if (remlength == 0) { //check for missing jailint
-				setValue('jailint', 6);
-				remlength = 6;
-			}
-			remnames = remnames.split(','); //load stored data
-			remcols = remcols.split(',');
-			rempris = rempris.split(',');
-			var i = -1;
-			while (remnames[++i] && remnames[i] != nick && i < remlength); //find user
-			if (remnames[i] == nick) {
-				remnames[i] = ''; //remove user and data
-				remcols[i] = '';
-				rempris[i] = '';
-				setValue('bust', remnames.join(',')); //join and save values
-				setValue('colours', remcols.join(','));
-				setValue('priority', rempris.join(','));
-				alert(who + ' '+lang.jhl[23]);
+			}, true);
+		} else {
+			//Remove from busting list
+			jhl_link.innerHTML = lang.jhl[21];
+			jhl_link.addEventListener('click', function(){
+				var a = names.length;
+				var x, info;
+				var str = '';
+				for (x = 0; x < a; ++x) {
+					if (names[x] != '' && names[x].split('|')[0] != who) {
+						str += ','+names[x];
+					}
+				}
+				setValue('bust', str.substr(1));
+				alert(who+' '+lang.jhl[23]);
 				window.location.reload();
-			} else {
-				alert(nick);
+			}, true);
+		}
+		$X('//td[@class="profilerow"]').appendChild(jhl_link);
+		
+	}
+	if (prefs[13]) {
+
+		//style family info table a bit
+		$x('//td[@class="subtableheader"]').forEach(function($n) {
+			$n.setAttribute('style', 'padding-left: 4px; text-align: left;');
+		});
+
+		//get tops
+		var anchor = $x('//table//tr[1]//table[@height="100%"][1]//a');
+		tops = [];
+		tops.push(anchor[0]);
+		if (anchor[1]) {
+			tops.push(anchor[1]);
+		}
+		if (anchor[2]) {
+			tops.push(anchor[2]);
+		}
+
+		nTop = tops.length;//# tops
+		SorC = (nTop == 3) ? 2 : /Consi/.test(getTXT('//table'));//Sotto or Consi
+
+		don = tops[0].textContent;
+		sot = (nTop > 1 && (nTop == 3 || SorC == 0)) ? tops.pop().textContent : null;
+		con = (nTop > 1 && (nTop == 3 || SorC == 1)) ? tops.pop().textContent : null;
+
+		//get capos
+		aCapos = [];
+		var lineup = $x('//tr[@valign="top"]//td[@class="subtableheader"]');
+		for (i = 0; i < lineup.length; i++) {
+			aCapos.push('#'+lineup[i].textContent+'#');
+		}
+		sCapos = aCapos.join();
+
+		//add capos list to top table
+		if (aCapos.length > 0) {//no need to add empty list
+			var target = $X('//table//table//tr['+(nTop+6)+']');
+			capoTr = target.cloneNode(1);//no need to make our own
+			capoTr.getElementsByTagName('td')[0].innerHTML = 'Capos:';
+
+			capos = '';
+			aCapos.forEach(function($n){ n = $n.replace(/#/g,''); capos += '<a href="user.php?nick='+n+'">'+ n +'</a>, '; });
+			capos = capos.replace(/, $/,'');//no last comma
+			capoTr.getElementsByTagName('td')[1].innerHTML = capos;
+			target.parentNode.insertBefore(capoTr,target);//insert list
+		} else {
+			nTop--;
+		}
+
+		//get objectowners
+		aOwners = [];
+		nObjects = $x('//table[@class="thinline"]')[2].getElementsByTagName('tr').length-4;
+		for (i = 0; i < nObjects; i++) {
+			td = $X('/html/body//center/table/tbody/tr[2]/td/table/tbody/tr['+(i+5)+']/td[3]');
+			owner = td.textContent;
+			aOwners.push('#'+owner+'#');//additional ## to prevent subtring recognision
+			td.innerHTML = '<a href="user.php?nick='+owner+'">'+owner+'</a>';//linkify
+		}
+		sOwners = aOwners.join();
+
+		//get spotowners
+		bOwners = [];
+		sObjects = $x('//table[@class="thinline"]')[3].getElementsByTagName('tr').length-5;
+		for (i = 0; i < sObjects; i++) {
+			std = $X('//center/table/tbody/tr[3]/td/table/tbody/tr['+(i+5)+']/td[2]');
+			sowner = std.textContent;
+			bOwners.push('#'+sowner+'#');//additional ## to prevent subtring recognision
+			std.innerHTML = '<a href="user.php?nick='+sowner+'">'+sowner+'</a>';//linkify
+		}
+		cOwners = bOwners.join();
+
+		//get onlines
+		aOnline = [];
+		$x('//a[@style="color: blue"]').forEach(function($n){aOnline.push('#'+$n.textContent+'#');});
+		sOnline = aOnline.join();
+
+		//mark VIP's and online's
+		me = getValue('nick','');
+		$x('//a[contains(@href,"user.php")]').forEach(function($n){
+			n = $n.textContent;//nick
+			color = 'blue';//default online color
+			vip = tPos = '';
+			if (n == don) { $n.innerHTML = '<u>'+n+'</u><small><sup>[D]</sup></small>'; color = 'red'; tPos='[D]'; }
+			if (n == sot) { $n.innerHTML = '<u>'+n+'</u><small><sup>[S]</sup></small>'; color = 'red'; tPos='[S]'; }
+			if (n == con) { $n.innerHTML = '<u>'+n+'</u><small><sup>[C]</sup></small>'; color = 'red'; tPos='[C]'; }
+
+			if (sCapos.search('#'+n+'#') !=- 1) {
+				$n.innerHTML = '<u>'+n+'</u><small><sup>(c)'+tPos+'</sup></small>';
+				color = (tPos?'red':'orange');
+				vip = '(c)'+tPos;
 			}
-		}, true);
-		$X('//td[@class="profilerow"]').appendChild(remofjhl);
-	}
-
-	//style family info table a bit
-	$x('//td[@class="subtableheader"]').forEach(function($n) {
-		$n.setAttribute('style', 'padding-left: 4px; text-align: left;');
-	});
-
-	//get tops
-	var anchor = $x('//table//tr[1]//table[@height="100%"][1]//a');
-	tops = [];
-	tops.push(anchor[0]);
-	if (anchor[1]) {
-		tops.push(anchor[1]);
-	}
-	if (anchor[2]) {
-		tops.push(anchor[2]);
-	}
-
-	nTop = tops.length;//# tops
-	SorC = (nTop == 3) ? 2 : /Consi/.test(getTXT('//table'));//Sotto or Consi
-
-	don = tops[0].textContent;
-	sot = (nTop > 1 && (nTop == 3 || SorC == 0)) ? tops.pop().textContent : null;
-	con = (nTop > 1 && (nTop == 3 || SorC == 1)) ? tops.pop().textContent : null;
-
-	//get capos
-	aCapos = [];
-	var lineup = $x('//tr[@valign="top"]//td[@class="subtableheader"]');
-	for (i = 0; i < lineup.length; i++) {
-		aCapos.push('#'+lineup[i].textContent+'#');
-	}
-	sCapos = aCapos.join();
-
-	//add capos list to top table
-	if (aCapos.length > 0) {//no need to add empty list
-		var target = $X('//table//table//tr['+(nTop+6)+']');
-		capoTr = target.cloneNode(1);//no need to make our own
-		capoTr.getElementsByTagName('td')[0].innerHTML = 'Capos:';
-
-		capos = '';
-		aCapos.forEach(function($n){ n = $n.replace(/#/g,''); capos += '<a href="user.php?nick='+n+'">'+ n +'</a>, '; });
-		capos = capos.replace(/, $/,'');//no last comma
-		capoTr.getElementsByTagName('td')[1].innerHTML = capos;
-		target.parentNode.insertBefore(capoTr,target);//insert list
-	} else {
-		nTop--;
-	}
-
-	//get objectowners
-	aOwners = [];
-	nObjects = $x('//table[@class="thinline"]')[2].getElementsByTagName('tr').length-4;
-	for (i = 0; i < nObjects; i++) {
-		td = $X('/html/body//center/table/tbody/tr[2]/td/table/tbody/tr['+(i+5)+']/td[3]');
-		owner = td.textContent;
-		aOwners.push('#'+owner+'#');//additional ## to prevent subtring recognision
-		td.innerHTML = '<a href="user.php?nick='+owner+'">'+owner+'</a>';//linkify
-	}
-	sOwners = aOwners.join();
-
-	//get spotowners
-	bOwners = [];
-	sObjects = $x('//table[@class="thinline"]')[3].getElementsByTagName('tr').length-5;
-	for (i = 0; i < sObjects; i++) {
-		std = $X('//center/table/tbody/tr[3]/td/table/tbody/tr['+(i+5)+']/td[2]');
-		sowner = std.textContent;
-		bOwners.push('#'+sowner+'#');//additional ## to prevent subtring recognision
-		std.innerHTML = '<a href="user.php?nick='+sowner+'">'+sowner+'</a>';//linkify
-	}
-	cOwners = bOwners.join();
-
-	//get onlines
-	aOnline = [];
-	$x('//a[@style="color: blue"]').forEach(function($n){aOnline.push('#'+$n.textContent+'#');});
-	sOnline = aOnline.join();
-
-	//mark VIP's and online's
-	me = getValue('nick','');
-	$x('//a[contains(@href,"user.php")]').forEach(function($n){
-		n = $n.textContent;//nick
-		color = 'blue';//default online color
-		vip = tPos = '';
-		if (n == don) { $n.innerHTML = '<u>'+n+'</u><small><sup>[D]</sup></small>'; color = 'red'; tPos='[D]'; }
-		if (n == sot) { $n.innerHTML = '<u>'+n+'</u><small><sup>[S]</sup></small>'; color = 'red'; tPos='[S]'; }
-		if (n == con) { $n.innerHTML = '<u>'+n+'</u><small><sup>[C]</sup></small>'; color = 'red'; tPos='[C]'; }
-
-		if (sCapos.search('#'+n+'#') !=- 1) {
-			$n.innerHTML = '<u>'+n+'</u><small><sup>(c)'+tPos+'</sup></small>';
-			color = (tPos?'red':'orange');
-			vip = '(c)'+tPos;
-		}
-		vip += tPos;
-		if (sOwners.search('#'+n+'#') !=- 1) {
-			$n.innerHTML = (vip!=''?'<u>':'')+n+(vip!=''?'</u>':'')+'<small><sup>(O)'+vip+'</sup></small>';
-			if (vip == '') {
-				color = 'green';
-			}
-		}
-		if (cOwners.search('#'+n+'#') !=- 1) {
-			$n.innerHTML = (vip!=''?'<u>':'')+n+(vip!=''?'</u>':'')+'<small><sup>(s)'+vip+'</sup></small>';
-			if (vip == '') {
-				color = 'purple';
-			}
-		}
-
-		if (sOnline.search('#'+n+'#') !=- 1) {
-			$n.setAttribute('class', color);
-		}
-		if (n == me) {
-			$n.innerHTML = '>'+$n.innerHTML+'<';
-		}
-	});
-
-	//add legend to members table
-	var memTable = $x('//table[@class="thinline"]')[6].getElementsByTagName('tr');
-	memTable[0].innerHTML = '<td class="tableheader" style="text-align:left !important">&nbsp;'+lang.fampage[0]+'</td><td class="tableheader" style="font-weight:normal !important; text-align:right !important;"><span><sup>(<u>capo/top3</u>) - (online > <span class="blue">'+lang.fampage[1]+'</span> | <span class="green">'+lang.fampage[2]+'</span> | <span class="purple">'+lang.fampage[3]+'</span> | <span class="orange">capo</span> | <span class="red">top3</span>)</sup></span>&nbsp;</td>';
-
-	for (i = 0; ++i < memTable.length;) {//cosmetical fix for colspan
-		memTable[i].getElementsByTagName('td')[0].setAttribute('colspan', '2');
-	}
-
-	//add % online
-	var membersL = $X('//table//table//tr['+(nTop+8)+']/td');
-	var membersR = $X('//table//table//tr['+(nTop+8)+']/td[2]');
-	var mem = parseInt(membersR.textContent, 10);
-	membersR.innerHTML = Math.round(aOnline.length / mem * 100) + '% ('+aOnline.length + ' / ' + membersR.textContent + ' )';
-	membersL.innerHTML = membersL.textContent.replace(':', '') + ' Online:';
-
-	//add # space left
-	var HQ = $X('//table//table//tr['+(nTop+10)+']/td[2]');
-	HQ.innerHTML = HQ.textContent + ' (' + (parseInt(HQ.textContent, 10)-mem) + ' open )';
-
-	//calc CD/GF promos
-	var promo = $x('//table[@class="thinline"]//td[@class="tableitem"]//table//tr');
-
-	var chiefP = promo[2].getElementsByTagName('td')[7].textContent.replace(/\D/g, '');
-	var brugP = promo[3].textContent.replace(/\D/g, '');
-	if (brugP != '0' && chiefP !='0') {
-		var percentage = ((brugP-chiefP)/chiefP);
-	} else {
-		var percentage = 0;
-	}
-	var cdP = (parseInt((brugP*percentage), 10)+parseInt(brugP, 10));
-	var gfP = (parseInt((cdP*percentage), 10)+parseInt(cdP, 10));
-
-	promo[3].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
-
-	// add HR, Deaths and Worth
-	var famid = dls.split("=")[1];
-	var famIdFromImg = $X('//img[contains(@src, "family_image.php")]').src.match(/\d+/g)[0];
-	var famname = $x('//td[@class="profilerow"]')[0].textContent.split(" ")[0].trim().toLowerCase();
-	var url = (famid === famIdFromImg) ? 'id='+famid : 'ing='+famname;
-	var maintable = $x('//table[@class="thinline"]/tbody')[0];
-	var maintable2 = $x('//table/tbody/tr[1]/td')[2];
-
-	GM_xmlhttpRequest({
-		method: 'GET',
-		url: SCRIPT_LINK+'?p=stats&w=fampage&v='+sets.version.replace('_', '')+'&'+url,
-		onload: function(xhr) {
-			if(xhr.responseText.indexOf('Undefined variable:') == -1) {
-				var response = JSON.parse(xhr.responseText);
-				//highranks
-				var hrtr = cEL('tr');
-				hrtr.innerHTML = '<td class="subtableheader" style="padding-left: 4px; text-align: left;">Ranks:</td>';
-				hrtr.innerHTML += '<td class="profilerow"><table width="100%"><tr><td>Godfather/First Lady:</td><td class="bold">'+response['hr']['gf']+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response['hr']['cd']+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response['hr']['brug']+'</td></tr><tr><td>Chief:</td><td class="bold">'+response['hr']['chief']+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response['hr']['lc']+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response['hr']['assa']+'</td></tr><tr><td>Swindler:</td><td class="bold">'+response['hr']['swin']+'</td></tr><tr><td colspan="2"><hr /></td></tr><tr><td>Total points:</td><td class="bold">'+response['hr']['pts']+'</td></tr></table></td>';
-				maintable.appendChild(hrtr);
-				//deaths
-				var deathtable = cEL('table');
-				deathtable.setAttribute('class', 'thinline');
-				deathtable.setAttribute('width', '100%');
-				deathtable.setAttribute('cellspacing', '0');
-				deathtable.setAttribute('cellpadding', '2');
-				deathtable.setAttribute('rules', 'none');
-				deathtable.innerHTML = '<tr><td colspan="100%" class="tableheader">'+lang.fampage[6]+'</td></tr><tr><td colspan="100%" bgcolor="black" height="1"></td></tr><tr><td class="bold" align="left">'+lang.fampage[8]+'</td><td class="bold" align="center">'+lang.fampage[9]+'</td><td class="bold" align="center">'+lang.fampage[10]+'</td><td class="bold" style="text-align:right;">'+lang.fampage[11]+'</td></tr>';
-				if(response['deaths']){
-					for (i = -1; ++i < response['deaths'].length;) {
-						var extra = (response['deaths'][i]['Akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['BF'] == 1)?'(<b>BF</b>)':'';
-						deathtable.innerHTML += '<tr><td>'+extra+' <a href="user.php?name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Name']+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Rank']+'</a></td><td align="center">'+response['deaths'][i]['Date']+'</td><td style="text-align:right;">'+response['deaths'][i]['Agod']+'d '+response['deaths'][i]['Agoh']+'h '+response['deaths'][i]['Agom']+'m</td></tr>';
-					}
-				} else {
-					deathtable.innerHTML += '<tr><td colspan="4" class="red" align="center">'+lang.fampage[13]+'</td></tr>';
+			vip += tPos;
+			if (sOwners.search('#'+n+'#') !=- 1) {
+				$n.innerHTML = (vip!=''?'<u>':'')+n+(vip!=''?'</u>':'')+'<small><sup>(O)'+vip+'</sup></small>';
+				if (vip == '') {
+					color = 'green';
 				}
-				var br = cEL('br');
-				maintable2.appendChild(br);
-				maintable2.appendChild(deathtable);
-				//family changes
-				var changetable = cEL('table');
-				changetable.setAttribute('class', 'thinline');
-				changetable.setAttribute('width', '100%');
-				changetable.setAttribute('cellspacing', '0');
-				changetable.setAttribute('cellpadding', '2');
-				changetable.setAttribute('rules', 'none');
-				changetable.innerHTML = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[7]+'</td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left" width="28%">'+lang.fampage[10]+'</td><td class="bold" align="left">'+lang.fampage[12]+'</td></tr>';
-				if(response['changes']){
-					for (i = -1; ++i < response['changes'].length;) {
-						changetable.innerHTML += '<tr><td align="left" width="28%" valign="top">'+response['changes'][i]['date']+'</td><td align="left">'+response['changes'][i]['text']+'</td></tr>';
-					}
-				} else {
-					changetable.innerHTML += '<tr><td colspan="2" class="red" align="center">'+lang.fampage[14]+'</td></tr>';
-				}
-				var br = cEL('br');
-				maintable2.appendChild(br);
-				maintable2.appendChild(changetable);
-				//position and worth
-				var posrow = cEL('tr');
-				posrow.innerHTML = '<td class="subtableheader" style="padding-left:4px; text-align:left;">'+lang.fampage[4]+':</td>';
-				posrow.innerHTML += '<td class="profilerow">#'+response['pos']+' - '+lang.fampage[5]+': '+response['worth']+'</td>';
-				$X('//td[@class="subtableheader"]').parentNode.parentNode.insertBefore(posrow, $X('//td[@class="subtableheader"]').parentNode.nextSibling);
 			}
+			if (cOwners.search('#'+n+'#') !=- 1) {
+				$n.innerHTML = (vip!=''?'<u>':'')+n+(vip!=''?'</u>':'')+'<small><sup>(s)'+vip+'</sup></small>';
+				if (vip == '') {
+					color = 'purple';
+				}
+			}
+
+			if (sOnline.search('#'+n+'#') !=- 1) {
+				$n.setAttribute('class', color);
+			}
+			if (n == me) {
+				$n.innerHTML = '>'+$n.innerHTML+'<';
+			}
+		});
+
+		//add legend to members table
+		var memTable = $x('//table[@class="thinline"]')[6].getElementsByTagName('tr');
+		memTable[0].innerHTML = '<td class="tableheader" style="text-align:left !important">&nbsp;'+lang.fampage[0]+'</td><td class="tableheader" style="font-weight:normal !important; text-align:right !important;"><span><sup>(<u>capo/top3</u>) - (online > <span class="blue">'+lang.fampage[1]+'</span> | <span class="green">'+lang.fampage[2]+'</span> | <span class="purple">'+lang.fampage[3]+'</span> | <span class="orange">capo</span> | <span class="red">top3</span>)</sup></span>&nbsp;</td>';
+
+		for (i = 0; ++i < memTable.length;) {//cosmetical fix for colspan
+			memTable[i].getElementsByTagName('td')[0].setAttribute('colspan', '2');
 		}
-	});
+
+		//add % online
+		var membersL = $X('//table//table//tr['+(nTop+8)+']/td');
+		var membersR = $X('//table//table//tr['+(nTop+8)+']/td[2]');
+		var mem = parseInt(membersR.textContent, 10);
+		membersR.innerHTML = Math.round(aOnline.length / mem * 100) + '% ('+aOnline.length + ' / ' + membersR.textContent + ' )';
+		membersL.innerHTML = membersL.textContent.replace(':', '') + ' Online:';
+
+		//add # space left
+		var HQ = $X('//table//table//tr['+(nTop+10)+']/td[2]');
+		HQ.innerHTML = HQ.textContent + ' (' + (parseInt(HQ.textContent, 10)-mem) + ' open )';
+
+		//calc CD/GF promos
+		var promo = $x('//table[@class="thinline"]//td[@class="tableitem"]//table//tr');
+
+		var chiefP = promo[2].getElementsByTagName('td')[7].textContent.replace(/\D/g, '');
+		var brugP = promo[3].textContent.replace(/\D/g, '');
+		if (brugP != '0' && chiefP !='0') {
+			var percentage = ((brugP-chiefP)/chiefP);
+		} else {
+			var percentage = 0;
+		}
+		var cdP = (parseInt((brugP*percentage), 10)+parseInt(brugP, 10));
+		var gfP = (parseInt((cdP*percentage), 10)+parseInt(cdP, 10));
+
+		promo[3].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
+
+		// add HR, Deaths and Worth
+		var famid = dls.split("=")[1];
+		var famIdFromImg = $X('//img[contains(@src, "family_image.php")]').src.match(/\d+/g)[0];
+		var famname = $x('//td[@class="profilerow"]')[0].textContent.split(" ")[0].trim().toLowerCase();
+		var url = (famid === famIdFromImg) ? 'id='+famid : 'ing='+famname;
+		var maintable = $x('//table[@class="thinline"]/tbody')[0];
+		var maintable2 = $x('//table/tbody/tr[1]/td')[2];
+
+		GM_xmlhttpRequest({
+			method: 'GET',
+			url: SCRIPT_LINK+'?p=stats&w=fampage&v='+sets.version.replace('_', '')+'&'+url,
+			onload: function(xhr) {
+				if(xhr.responseText.indexOf('Undefined variable:') == -1) {
+					var response = JSON.parse(xhr.responseText);
+					//highranks
+					var hrtr = cEL('tr');
+					hrtr.innerHTML = '<td class="subtableheader" style="padding-left: 4px; text-align: left;">Ranks:</td>';
+					hrtr.innerHTML += '<td class="profilerow"><table width="100%"><tr><td>Godfather/First Lady:</td><td class="bold">'+response['hr']['gf']+'</td></tr> <tr><td>Capodecina:</td><td class="bold">'+response['hr']['cd']+'</td></tr><tr><td>Bruglione:</td><td class="bold">'+response['hr']['brug']+'</td></tr><tr><td>Chief:</td><td class="bold">'+response['hr']['chief']+'</td></tr><tr><td>Local Chief:</td><td class="bold">'+response['hr']['lc']+'</td></tr><tr><td>Assassin:</td><td class="bold">'+response['hr']['assa']+'</td></tr><tr><td>Swindler:</td><td class="bold">'+response['hr']['swin']+'</td></tr><tr><td colspan="2"><hr /></td></tr><tr><td>Total points:</td><td class="bold">'+response['hr']['pts']+'</td></tr></table></td>';
+					maintable.appendChild(hrtr);
+					//deaths
+					var deathtable = cEL('table');
+					deathtable.setAttribute('class', 'thinline');
+					deathtable.setAttribute('width', '100%');
+					deathtable.setAttribute('cellspacing', '0');
+					deathtable.setAttribute('cellpadding', '2');
+					deathtable.setAttribute('rules', 'none');
+					deathtable.innerHTML = '<tr><td colspan="100%" class="tableheader">'+lang.fampage[6]+'</td></tr><tr><td colspan="100%" bgcolor="black" height="1"></td></tr><tr><td class="bold" align="left">'+lang.fampage[8]+'</td><td class="bold" align="center">'+lang.fampage[9]+'</td><td class="bold" align="center">'+lang.fampage[10]+'</td><td class="bold" style="text-align:right;">'+lang.fampage[11]+'</td></tr>';
+					if(response['deaths']){
+						for (i = -1; ++i < response['deaths'].length;) {
+							var extra = (response['deaths'][i]['Akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['BF'] == 1)?'(<b>BF</b>)':'';
+							deathtable.innerHTML += '<tr><td>'+extra+' <a href="user.php?name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Name']+'</a></td><td align="center"><a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+response['deaths'][i]['Name']+'">'+response['deaths'][i]['Rank']+'</a></td><td align="center">'+response['deaths'][i]['Date']+'</td><td style="text-align:right;">'+response['deaths'][i]['Agod']+'d '+response['deaths'][i]['Agoh']+'h '+response['deaths'][i]['Agom']+'m</td></tr>';
+						}
+					} else {
+						deathtable.innerHTML += '<tr><td colspan="4" class="red" align="center">'+lang.fampage[13]+'</td></tr>';
+					}
+					var br = cEL('br');
+					maintable2.appendChild(br);
+					maintable2.appendChild(deathtable);
+					//family changes
+					var changetable = cEL('table');
+					changetable.setAttribute('class', 'thinline');
+					changetable.setAttribute('width', '100%');
+					changetable.setAttribute('cellspacing', '0');
+					changetable.setAttribute('cellpadding', '2');
+					changetable.setAttribute('rules', 'none');
+					changetable.innerHTML = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[7]+'</td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left" width="28%">'+lang.fampage[10]+'</td><td class="bold" align="left">'+lang.fampage[12]+'</td></tr>';
+					if(response['changes']){
+						for (i = -1; ++i < response['changes'].length;) {
+							changetable.innerHTML += '<tr><td align="left" width="28%" valign="top">'+response['changes'][i]['date']+'</td><td align="left">'+response['changes'][i]['text']+'</td></tr>';
+						}
+					} else {
+						changetable.innerHTML += '<tr><td colspan="2" class="red" align="center">'+lang.fampage[14]+'</td></tr>';
+					}
+					var br = cEL('br');
+					maintable2.appendChild(br);
+					maintable2.appendChild(changetable);
+					//position and worth
+					var posrow = cEL('tr');
+					posrow.innerHTML = '<td class="subtableheader" style="padding-left:4px; text-align:left;">'+lang.fampage[4]+':</td>';
+					posrow.innerHTML += '<td class="profilerow">#'+response['pos']+' - '+lang.fampage[5]+': '+response['worth']+'</td>';
+					$X('//td[@class="subtableheader"]').parentNode.parentNode.insertBefore(posrow, $X('//td[@class="subtableheader"]').parentNode.nextSibling);
+				}
+			}
+		});
+	
+	}
 }
 //---------------- Manage Users (top3 only) ----------------
 if (dls.indexOf('module=Family')!=-1) {
