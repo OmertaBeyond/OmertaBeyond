@@ -148,9 +148,9 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 48;
-const SCRIPT_SUBVERSION = 48;
-var minFFVersion = '3.6';
+const SCRIPT_VERSION_BUILD = 49;
+const SCRIPT_SUBVERSION = 49;
+var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
 const UPDATE_URL = SCRIPT_LINK+"/version.xml";
@@ -208,11 +208,11 @@ if(bmsgon == 1) {
 					var extra = (response['deaths'][0]['akill'] == 1)?'(<b>A</b>)':(response['deaths'][0]['bf'] == 1)?'(<b>BF</b>)':'';
 					var fam = (response['deaths'][0]['fam'] == '')?'':'('+response['deaths'][0]['fam']+')';
 					var text = '<br />'+time+' '+extra+' <a href="user.php?name='+response['deaths'][0]['name']+'">'+response['deaths'][0]['name']+'</a> '+response['deaths'][0]['rank_text']+' '+fam+'<br />';
-			
+
 					var msg = new Bmsg();
 					msg.Bmsg(id, type, title, text);
 					msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
-			
+
 					msg.add();
 					setValue('lastbmsg', response["deaths"][0]["ts"]);
 				} else if (lastbmsg < response["deaths"][len-1]["ts"]) {
@@ -227,23 +227,23 @@ if(bmsgon == 1) {
 						var fam = (response['deaths'][i]['fam'] == '')?'(None)':'('+response['deaths'][i]['fam']+')';
 						text += time+' '+extra+' <a href="user.php?name='+response['deaths'][i]['name']+'">'+response['deaths'][i]['name']+'</a> '+response['deaths'][i]['rank_text']+' '+fam+'<br />';
 					}
-	
+
 					var msg = new Bmsg();
 					msg.Bmsg(id, type, title, text);
-					//msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
-			
+//					msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+
 					msg.add();
 					setValue('lastbmsg', response["deaths"][0]["ts"]);
 				} else {
 					var msg = new Bmsg();
 					msg.Bmsg('msg', 'info', 'MrWhite is cool', 'no new death');
-					//msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
-			
+//					msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+
 					msg.add();
 				}
 			}
 		});
-	//	setTimeout(CheckBmsg(), 3000);
+//		setTimeout(CheckBmsg(), 3000);
 	}
 }
 //---------------- int->str bninfo compatibility ----------------
@@ -332,7 +332,7 @@ if (dlp == '/prefs.php') {
 
 	string += grabPrefs;//grab all current checked values and send to url
 	string += '">'+lang.prefsPage[2]+' '+lang.prefsname+'</button></td></tr>';
-	
+
 	getID('toptable').innerHTML = string;
 
 	for (i = -1; ++i < maxbit;) {
@@ -344,7 +344,6 @@ if (dlp == '/prefs.php') {
 	}
 
 	if (prefs[3]) {//JHL stuff
-		
 		function jhl_save(mode) {
 			getID('save_'+mode+'_img').setAttribute('src', GM_getResourceURL('loading'));
 			getID('save_'+mode+'_img').setAttribute('alt', 'Wait');
@@ -392,15 +391,14 @@ if (dlp == '/prefs.php') {
 		}
 
 		var string = '';
-	
 		string += '<tr style="height: 25px;"><td colspan="6" class="toptd">Omerta Beyond : Jail Highlighter '+lang.jhl[0]+'</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td style="width:210px;" class="td"><b>'+lang.jhl[1]+'</b></td><td style="width:75px;" class="td"><b>'+lang.jhl[2]+'</b></td><td style="width:76px;" class="td">&nbsp;</td><td style="width:50px;" class="td"><b>'+lang.jhl[3]+'</b></td><td class="td">&nbsp;</td></tr>';
-		
+
 		var busts = getValue('bust', '').split(',');
 		var x, info, nick, prio, color;
 		var y = 0;
 		var a = busts.length;
-		
+
 		function AddBust(y, nick, color, prio) {
 			string += '<tr id="jhl_tr_'+y+'" style="height:25px;" class="tr">';
 			string += '	<td>&nbsp;</td>';
@@ -414,7 +412,7 @@ if (dlp == '/prefs.php') {
 			string += '	<td>&nbsp;</td>';
 			string += '</tr>';
 		}
-		
+
 		for (x = 0; x < a; ++x) {
 			info = busts[x].split('|');
 			if (info[0] != '') {
@@ -431,13 +429,12 @@ if (dlp == '/prefs.php') {
 		string += '<button id="save_jhl_button" type="button" class="button">'+lang.jhl[6]+'</button>';
 		string += '<img id="save_jhl_img" height="16" width="16" src="'+GM_getResourceURL('loading')+'" style="margin-left:3px;opacity:0;" alt="" />';
 		string += '</td></tr>';
-
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="5"><b>'+lang.jhl[7]+'</b></td></tr>';
-		
+
 		var nobusts = getValue('nobust', '').split(',');
 		y = 0;
 		a = nobusts.length;
-		
+
 		function AddNoBust(y, nick) {
 			string += '<tr id="nojhl_tr_'+y+'" style="height: 25px;" class="tr">';
 			string += '	<td>&nbsp;</td>';
@@ -447,7 +444,7 @@ if (dlp == '/prefs.php') {
 			string += '	</td>';
 			string += '</tr>';
 		}
-		
+
 		for (x = 0; x < a; ++x) {
 			if (nobusts[x] != '') {
 				++y;
@@ -455,14 +452,12 @@ if (dlp == '/prefs.php') {
 			}
 		}
 		AddNoBust((y + 1), ''); // add empty one for new rows
-		
+
 		// save button for no busts
 		string += '<tr class="tr" style="height: 25px;text-align:center;"><td colspan="6" class="td">';
 		string += '<button id="save_nojhl_button" type="button" class="button">'+lang.jhl[6]+'</button>';
 		string += '<img id="save_nojhl_img" height="16" width="16" src="'+GM_getResourceURL('loading')+'" style="margin-left:3px;opacity:0;" alt="" />';
 		string += '</td></tr>';
-		
-		
 		// general options
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[8]+'</b><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[9]+'</b></td><td class="td">&nbsp;</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[10]+': <input id="defpri" value="'+getValue('defpri', 5)+'" type="text" class="inputmiddle" onblur="if(this.value>9||this.value<1){this.value='+getValue('defpri', 5)+';}" /></td><td colspan="2" style="text-align:right;">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="'+getValue('FL_prior', 3)+'" type="text" onblur="if(this.value>9||this.value<1){this.value='+getValue('FL_prior', 3)+';}" class="inputsmall" /></td></tr>';
@@ -545,7 +540,7 @@ if(dlp == '/marquee.php'){
 	if(prefs[1]){
 		GM_xmlhttpRequest({
 			method: 'GET',
-			url: 'http://gm.omertabeyond.com/prices.xml.php?v='+sets.version.replace('_', ''),
+			url: 'http://www.barafranca.com/BeO/webroot/index.php?module=API&action=smuggling_prices',
 			onload: function(resp){
 				var marquee = getTAG('div')[0];
 				marquee.innerHTML = '';
@@ -554,15 +549,15 @@ if(dlp == '/marquee.php'){
 				var dom = parser.parseFromString(resp.responseText, 'application/xml');
 
 				function getPrice(drug, city) {
-					return dom.getElementsByTagName(drug)[0].getElementsByTagName(city.replace(' ', ''))[0].textContent;
+					return dom.getElementsByTagName(drug)[city].textContent;
 				}
 
 				var p = [];
 				var q = new Array;
-				var p_C = [langs.en.cities[6], langs.en.cities[1], langs.en.cities[3], langs.en.cities[5], langs.en.cities[0], langs.en.cities[4], langs.en.cities[7], langs.en.cities[2]];
-				var p_id = ['6', '1', '3', '5', 'nul', '4', '7', '2'];
+				var p_C = [langs.en.cities[0], langs.en.cities[1], langs.en.cities[2], langs.en.cities[3], langs.en.cities[4], langs.en.cities[5], langs.en.cities[6], langs.en.cities[7]];
+				var p_id = ['0', '1', '2', '3', '4', '5', '6', '7'];
 
-				for (i=0;i<=7;i++){ p[i]=getPrice('Cocaine', p_C[i]); q[i]=p[i]; }
+				for (i=0;i<=7;i++){ p[i]=getPrice('cocaine', i); q[i]=p[i]; }
 
 				var max = p.sort( function(a, b){ return b-a; } )[0];
 				var min = p[(p.length-1)];
@@ -577,7 +572,10 @@ if(dlp == '/marquee.php'){
 					}
 					i++;
 				});
-				var time = dom.getElementsByTagName('Time')[0].textContent;
+				var time = dom.getElementsByTagName('humantime')[0].textContent;
+				time = time.split(' ')[0];
+				time = time.split(':');
+				time = (time[1]<30)?time[0]+':00 OT':time[0]+':30 OT';
 
 				var hoverdiv = cEL('div');
 				hoverdiv.id = 'hiddenbox';
@@ -589,7 +587,7 @@ if(dlp == '/marquee.php'){
 					link.href = '#';
 					link.style.color = '#FFF';
 					link.style.fontSize = '10px';
-					if (city == 'Palermo' || city == 'Corleone' || city == 'Las Vegas' || city == 'Detroit') {
+					if (city == 4 || city == 5 || city == 6 || city == 7) {
 						link.addEventListener('mouseover', function (event) {
 							hovermenu(city, event.clientX - 525);
 						}, true);
@@ -609,26 +607,26 @@ if(dlp == '/marquee.php'){
 					var hoverdiv = getID('hiddenbox');
 					hoverdiv.style.display = 'inline';
 					hoverdiv.style.left = x + 'px';
-					hoverdiv.innerHTML = 'Morphine: ' + getPrice('Morphine', city) + ' | ' + 'Heroin: ' + getPrice('Heroin', city) + ' | ' + 'Opium: ' + getPrice('Opium', city) + ' | ' + 'Whiskey: ' + getPrice('Whiskey', city) + ' | ' + 'Amaretto: ' + getPrice('Amaretto', city) + ' | ' + 'Rum: ' + getPrice('Rum', city);
+					hoverdiv.innerHTML = 'Morphine: ' + getPrice('morphine', city) + ' | ' + 'Heroin: ' + getPrice('heroin', city) + ' | ' + 'Opium: ' + getPrice('opium', city) + ' | ' + 'Whiskey: ' + getPrice('whiskey', city) + ' | ' + 'Amaretto: ' + getPrice('amaretto', city) + ' | ' + 'Rum: ' + getPrice('rum', city);
 				}
 
 				function flytolink(city, priceStr, priceToFly, cityId) {
 					var link, owncity;
 					link = cEL('a');
 					link.href = '#';
-					link.id = city;
+					link.id = langs.en.cities[city];
 					link.style.color = '#FFF';
 					link.style.fontSize = '10px';
 					link.addEventListener('click', function () {
 						if (owncity == city) {
 							alert(lang.marquee[3]);
-						} else if (confirm(lang.marquee[0] + city + '?')) {
+						} else if (confirm(lang.marquee[0] + langs.en.cities[city] + '?')) {
 							top.frames[2].location = 'http://' + dlh + '/BeO/webroot/index.php?module=Travel&action=TravelNow&City=' + ((cityId == 'nul') ? 0 : cityId);
 						}
 					}, true);
 
 					if (prefs[17]) {
-						if (city == 'Palermo' || city == 'Corleone' || city == 'Las Vegas' || city == 'Detroit') {
+						if (city == 4 || city == 5 || city == 6 || city == 7) {
 							link.addEventListener('mouseover', function (event) {
 								hovermenu(city, event.clientX - 525);
 								this.style.textDecoration = 'underline';
@@ -662,7 +660,7 @@ if(dlp == '/marquee.php'){
 				i=0;
 				p.forEach(function($n){
 					span.style.color = '#FFF';
-					span.appendChild(flytolink(p_C[i], p_C[i]+':'+q[i], 500, p_id[i]));
+					span.appendChild(flytolink(i, p_C[i]+':'+q[i], 500, p_id[i]));
 					var separator = cEL('span');
 					separator.innerHTML = ' | ';
 					span.appendChild(separator);
@@ -2855,10 +2853,9 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 }
 //---------------- Family page ----------------
 if (dlp == '/family.php') {
-
 	if (prefs[3]) {
-	
-		var names = getValue('bust', '')
+		var ownfam = getValue('family', '')
+		var names = getValue('bust', '');
 		var jhl_add = 1;
 		var who = getTXT('//td[@class="profilerow"]');
 		who = who.substr(0, who.indexOf(' ')).replace(/[^a-zA-Z]/g, '');
@@ -2873,7 +2870,6 @@ if (dlp == '/family.php') {
 				}
 			}
 		}
-	
 		var jhl_link = cEL('span'); //not an anchor, will mess up grabbing tops etc..
 		jhl_link.setAttribute('id', 'jhl_link');
 		jhl_link.setAttribute('class', 'red');
@@ -2908,11 +2904,11 @@ if (dlp == '/family.php') {
 				window.location.reload();
 			}, true);
 		}
-		$X('//td[@class="profilerow"]').appendChild(jhl_link);
-		
+		if(stripHTML(ownfam) != who) {
+			$X('//td[@class="profilerow"]').appendChild(jhl_link);
+		}
 	}
 	if (prefs[13]) {
-
 		//style family info table a bit
 		$x('//td[@class="subtableheader"]').forEach(function($n) {
 			$n.setAttribute('style', 'padding-left: 4px; text-align: left;');
@@ -3821,7 +3817,13 @@ if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != 
 if (dls.indexOf('iReply=') != -1) {
 	$X('//textarea').focus();
 }
-
+if (dls.indexOf('action=sendmessage') != -1) {
+	if(db.innerHTML.indexOf('Message sent to') != -1){
+		setTimeout(function () {
+			window.location = '/BeO/webroot/index.php?module=Mail&action=inbox';
+		}, 1000);
+	}
+}
 //---------------- linkify names ----------------
 //---- link names in inbox
 if (dls.indexOf('action=showMsg') != -1) {
@@ -4610,7 +4612,20 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 		setValue('btdate', 0);
 	}, true);
 }
-
+//grab obay bullets from message
+if (dls.indexOf('action=showMsg') != -1) {
+	var obaybul = getValue('obaybul', 0);
+	var msgTyp = getTXT('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr/td/b');
+	var msgText = '/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[5]/td';
+	arr = $X(msgText).innerHTML.split(' ');
+	var bulletmsg = new RegExp('Obay bid succesful');
+	if (bulletmsg.test(msgTyp)) {
+		var no = arr[2];
+		obaybul += parseInt(no);
+		setValue('obaybul', obaybul);
+		alert(no);
+	}
+}
 //---------------- Poker Tracker ----------------
 if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 	var ptgplay = getValue('ptgplay', 0);
