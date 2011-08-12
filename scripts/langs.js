@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.44
+	Version: 1.10.0.50
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -207,7 +207,7 @@ var langs = {
 			'Fill in this narc',
 			'Current Booze/Narcotics Prices'
 		],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
+		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!', 'Obay bid succesful'],
 		linkify: [
 			'Route 66 heist',
 			'Organised Crime',
@@ -304,7 +304,9 @@ var langs = {
 			'Money spent:',
 			'Price per bullet:',
 			'You need to wait another',
-			'Bought today:'
+			'Bought today:',
+			'Bought on Obay:',
+			'*not included in total or price per bullet'
 		],
 		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
@@ -657,7 +659,7 @@ var langs = {
 			'Fill in this narc',
 			'Current Booze/Narcotics Prices'
 		],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
+		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!', 'Obay bid succesful'],
 		linkify: [
 			'Route 66 heist',
 			'Organised Crime',
@@ -755,7 +757,9 @@ var langs = {
 			'Money spent:',
 			'Price per bullet:',
 			'You need to wait another',
-			'Bought today:'
+			'Bought today:',
+			'Bought on Obay:',
+			'*not included in total or price per bullet'
 		],
 		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
@@ -1115,7 +1119,8 @@ var langs = {
 			'explosieven',
 			'bestuurder',
 			'wapen',
-			'Re: Uitgebroken!,Re: Uitgekocht!,Uitgebroken!,Uitgekocht!'
+			'Re: Uitgebroken!,Re: Uitgekocht!,Uitgebroken!,Uitgekocht!',
+			'Obay bid succesful'
 		],
 		linkify: [
 			'Route 66 overval',
@@ -1216,7 +1221,9 @@ var langs = {
 			'Geld uitgegeven:',
 			'Prijs per kogel:',
 			'Je moet nog',
-			'Vandaag gekocht:'
+			'Vandaag gekocht:',
+			'Op Opbay gekocht:',
+			'*zitten niet bij het totaal of prijs per kogel'
 		],
 		crimetracker: ['Succes, je hebt', 'Succes je hebt \\$ (\\d+) verdiend.', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
@@ -1568,7 +1575,7 @@ var langs = {
 			'Fill in this narc',
 			'Current Booze/Narcotics Prices'
 		],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
+		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!', 'Obay bid succesful'],
 		linkify: [
 			'Route 66 heist',
 			'Organised Crime',
@@ -1665,7 +1672,9 @@ var langs = {
 			'Money spent:',
 			'Price per bullet:',
 			'You need to wait another',
-			'Bought today:'
+			'Bought today:',
+			'Bought on Obay:',
+			'*not included in total or price per bullet'
 		],
 		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [

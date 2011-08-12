@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 49;
-const SCRIPT_SUBVERSION = 49;
+const SCRIPT_VERSION_BUILD = 50;
+const SCRIPT_SUBVERSION = 50;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -529,6 +529,11 @@ if (dlp == '/game.php') { //just once on login
 	//CheckBmsg();
 }
 
+//--------------------- Redirect on main ---------------------
+if (dlp == '/main.php') {
+	window.location = 'http://'+dlh+'/BeO/webroot/index.php?module=Launchpad';
+}
+
 //---------------- Remove Third-party Hotkeys ----------------
 $x('//*[@accesskey]').forEach(function ($n) {
 	$n.removeAttribute('accessKey');
@@ -554,7 +559,7 @@ if(dlp == '/marquee.php'){
 
 				var p = [];
 				var q = new Array;
-				var p_C = [langs.en.cities[0], langs.en.cities[1], langs.en.cities[2], langs.en.cities[3], langs.en.cities[4], langs.en.cities[5], langs.en.cities[6], langs.en.cities[7]];
+				var p_C = [lang.cities[0], lang.cities[1], lang.cities[2], lang.cities[3], lang.cities[4], lang.cities[5], lang.cities[6], lang.cities[7]];
 				var p_id = ['0', '1', '2', '3', '4', '5', '6', '7'];
 
 				for (i=0;i<=7;i++){ p[i]=getPrice('cocaine', i); q[i]=p[i]; }
@@ -614,13 +619,13 @@ if(dlp == '/marquee.php'){
 					var link, owncity;
 					link = cEL('a');
 					link.href = '#';
-					link.id = langs.en.cities[city];
+					link.id = lang.cities[city];
 					link.style.color = '#FFF';
 					link.style.fontSize = '10px';
 					link.addEventListener('click', function () {
 						if (owncity == city) {
 							alert(lang.marquee[3]);
-						} else if (confirm(lang.marquee[0] + langs.en.cities[city] + '?')) {
+						} else if (confirm(lang.marquee[0] + lang.cities[city] + '?')) {
 							top.frames[2].location = 'http://' + dlh + '/BeO/webroot/index.php?module=Travel&action=TravelNow&City=' + ((cityId == 'nul') ? 0 : cityId);
 						}
 					}, true);
@@ -683,7 +688,7 @@ if(dlp == '/marquee.php'){
 
 				city = getPow('bninfo', 2, -1);
 				if(city > 0){
-					city = langs.en.cities[city-4];
+					city = lang.cities[city-4];
 					owncity = city;
 					getID(city).setAttribute('style',getID(city).getAttribute('style')+'font-style:italic');
 				}
@@ -902,7 +907,7 @@ if (dlp == '/menu.php') {
 	//extra city checker
 	menuCity = $I('//th[@id="travel_cityname"]');
 	for (i=0;i<8;i++) {
-		if (menuCity.search(langs.en.cities[i])!=-1) {
+		if (menuCity.search(lang.cities[i])!=-1) {
 			setPow('bninfo',2,i+4);
 		}
 	}
@@ -1042,7 +1047,7 @@ function bnUpdate(current){
 
 	//parse city to ID
 	for(var cityCode=0, i=0;i<8;i++){
-		if(city == langs.en.cities[i]){
+		if(city == lang.cities[i]){
 			cityCode = i+4;
 			break;
 		}
@@ -1588,7 +1593,7 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 	}
 }
 if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
-	if (db.innerHTML.search(lang.failedBullets[0]) != -1 || db.innerHTML.search(lang.failedBullets[1]) != -1 || db.innerHTML.search(lang.failedBullets[2]) != -1 || db.innerHTML.search(lang.failedBullets[3]) != -1 || db.innerHTML.search(lang.failedBullets[4]) != -1 || db.innerHTML.search(lang.failedBullets[5]) != -1 || db.innerHTML.search(lang.failedBullets[6]) != -1) {
+	if (db.innerHTML.search(lang.failedBullets[0]) != -1 || db.innerHTML.search(lang.failedBullets[1]) != -1 || db.innerHTML.search(lang.failedBullets[2]) != -1 || db.innerHTML.search(lang.failedBullets[3]) != -1 || db.innerHTML.search(lang.failedBullets[5]) != -1 || db.innerHTML.search(lang.failedBullets[6]) != -1) {
 		var fail = db.textContent;
 		setTimeout(function () {
 			window.location = 'bullets2.php?fail='+fail;
@@ -2120,32 +2125,6 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes&action=docrime') {
 		setValue('crimes', crimeTracker);
 	}
 }
-//---------------- Lackey Messages ----------------
-if (dls.indexOf('action=showMsg') != -1) {
-	var crimeTracker = getValue('crimes', 0);
-	var crimemoney = getValue('crimemoney', 0);
-	var carTracker = getValue('cars', 0);
-	var carmoney = getValue('carmoney', 0);
-	var msgTyp = getTXT('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr/td/b');
-	var msgText = '/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[5]/td';
-	arr = $X(msgText).innerHTML.split(' ');
-	var Lcrime = new RegExp(lang.crimetracker[3]);
-	if (Lcrime.test(msgTyp)) {
-		var no = (arr[29]=='sent')?arr[38]:arr[29];
-		crimeTracker += parseInt(no);
-		setValue('crimes', crimeTracker);
-		var am = (arr[55]=='reducing')?arr[65]:(arr[55]=='jail')?arr[46]:arr[37];
-		var crmoney = am.replace(/,/g, '').replace('$', '');
-		crimemoney += parseInt(crmoney);
-		setValue('crimemoney', crimemoney);
-	}
-	var Lcar = new RegExp(lang.crimetracker[2]);
-	if (Lcar.test(msgTyp)) {
-		var no = (arr[29]=='sent')?arr[38]:arr[29];
-		carTracker += parseInt(no);
-		setValue('cars', carTracker);
-	}
-}
 //---------------- Cars Page ----------------
 if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 	if (db.innerHTML.search(/table/i) > -1 && prefs[8]) { //if Car Nick AF is enabled
@@ -2558,6 +2537,7 @@ if(dlp == '/garage.php'){
 
 			var totVal = 0;
 			for(var i=2;i<rows-2;i++){ //loop rows
+				var carid = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td').innerHTML;
 				var y = '//html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
 				var car = $X(y).href.match(/\d*$/)[0];
 				var carType = '';
@@ -2862,8 +2842,7 @@ if (dlp == '/family.php') {
 		if (names) {
 			names = names.split(',');
 			var a = names.length;
-			var x, info;
-			for (x = 0; x < a; ++x) {
+			for (var x = 0; x < a; ++x) {
 				if (names[x] != '' && names[x].split('|')[0] == who) {
 					jhl_add = 0;
 					break;
@@ -2892,9 +2871,8 @@ if (dlp == '/family.php') {
 			jhl_link.innerHTML = lang.jhl[21];
 			jhl_link.addEventListener('click', function(){
 				var a = names.length;
-				var x, info;
 				var str = '';
-				for (x = 0; x < a; ++x) {
+				for (var x = 0; x < a; ++x) {
 					if (names[x] != '' && names[x].split('|')[0] != who) {
 						str += ','+names[x];
 					}
@@ -3176,7 +3154,7 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 					CM = CM.replace(/[a-zA-Z]| |\s/g, '');
 					list += CM.replace('$', '$ ') + '</td><td>';
 					CM = CM.replace(/[^0-9]/g,'');
-					list += (7500000 - CM)>0 ? '$ ' + commafy((7500000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
+					list += (15000000 - CM)>0 ? '$ ' + commafy((15000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
 					$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
 				}
 				list += '</table>';
@@ -3622,7 +3600,26 @@ if (dlp == '/obay.php' && db.innerHTML.indexOf('<table') != -1) {
 				var id = $n.getElementsByTagName('a')[0].href.split('=')[1];
 				var bid = $n.getElementsByTagName('td')[(sort?2:3)].innerHTML.replace(/\D/g,'');
 				var bettd = cEL('td');
-				bettd.innerHTML = '<form id="form'+id+'" method="post" style="display:none;" action="obay.php"><input type="hidden" value="" name="k"><input type="hidden" value="'+id+'" name="specific" /><input type="hidden" value="'+bid+'" name="bid" /><input type="hidden" value="0" name="anon" /></form><a href="javascript:document.getElementById(\'form'+id+'\').submit();">Bid</a>';
+				bettd.setAttribute('style', 'cursor:pointer;');
+				bettd.innerHTML = '<form id="form'+id+'" method="post" style="display:none;" action="obay.php"><input type="hidden" value="" name="k"><input type="hidden" value="'+id+'" name="specific" /><input type="hidden" value="" name="bid" id="bid'+id+'" /><input type="hidden" value="0" name="anon" /></form>Bid';
+				bettd.addEventListener('click', function() {
+					GM_xmlhttpRequest({//grab min bid
+						method:'GET',
+						url:'/obay.php?specific='+id,
+						onload:function(resp){
+							var dummy = cEL('div');//we'd like to use DOM here
+							dummy.style.display = 'none';
+							dummy.id = 'xhr';
+							dummy.innerHTML = resp.responseText;
+							db.appendChild(dummy);
+							if($X('//div[@id="xhr"]')) {
+								var minbid = $X('//div[@id="xhr"]//input[2]').getAttribute('value');
+								getID('bid'+id).value = minbid;
+								getID('form'+id).submit();
+							}
+						}
+					});
+				}, true);
 				$n.appendChild(bettd);
 			} else if($n.getAttribute('class') != 'tableitem') { //this row does not have an object, but needs adjusted colspan
 				$n.innerHTML = $n.innerHTML.replace('colspan="'+(sort?5:6)+'"','colspan="'+(sort?6:7)+'"');
@@ -3692,11 +3689,18 @@ if (dls.indexOf('action=tosell') != -1) {
 //---------------- INBOX -----------------------
 if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1) {
 	var msg = $x('//td[@style="cursor:pointer;cursor:hand"]').length
+	var unreadmsg = $x('//tr[@class="color2"]').length
 	var id = [];
-	for(var i=0;i<msg-1;i++){ //find first open spot
+	for(var i=0;i<msg;i++){ //find first open spot
 		id[i] = $x('//a[contains(@href,"showMsg")]')[i].href.split('?')[1].match(/\d+/g);
 		setValue('msgids', id.join(',')); //join and save values
 	}
+	var unreadid = [];
+	for(var a=0;a<unreadmsg;a++){ //find first open spot
+		unreadid[a] = $x('//tr[@class="color2"]/td[2]/a')[a].href.split('?')[1].match(/\d+/g);
+		setValue('unread', unreadid.join(',')); //join and save values
+	}
+	
 	var br = cEL('br');
 	var span = getTAG('span')[0];
 	var chkbutton = cEL('input');
@@ -3764,28 +3768,90 @@ if (dls.indexOf('action=outbox') != -1 || dls.indexOf('iParty=1') != -1){
 }
 
 if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != -1) {
-	var id = $X('//a[contains(@href,"delMsg")]').href.split('?')[1].match(/\d+/g);
+	var id = $X('//a[contains(@href,"delMsg")]').href.split('?')[1].match(/\d+/g)[0];
 	var ids = getValue('msgids', '');
 	ids = ids.split(','); //load stored data
 	var len = ids.length;
 	for(i = 0;i<len;i++){
-		if (ids[i] == id[0]) {
+		if (ids[i] == id) {
 			var nonext = (i==0)?'visibility:hidden; ':'';
 			var noprev = (i==len-1)?'visibility:hidden; ':'';
 			var next = ids[i-1];
 			var prev = ids[i+1];
 		}
 	}
-	
+	var unread = getValue('unread', '').split(',');
+	var unreadlen = unread.length;
+	for (var x = 0; x < unreadlen; ++x) {
+		if (unread[x] != '' && unread[x] == id) { //msg is unread
+			var msgTyp = getTXT('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr/td/b');
+			var msgText = '/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[5]/td';
+			var arr = $X(msgText).innerHTML.split(' ');
+			var bulletmsg = new RegExp(lang.inbox[7]);
+			var Lcrimemsg = new RegExp(lang.crimetracker[3]);
+			var Lcarmsg = new RegExp(lang.crimetracker[2]);
+			if (bulletmsg.test(msgTyp)) { //grab obay bullets from message
+				var obaybul = getValue('obaybul', 0);
+				var no = arr[2];
+				obaybul += parseInt(no);
+				setValue('obaybul', obaybul);
+				var str = '';
+				for (var y = 0; y < unreadlen; ++y) {
+					if (unread[y] != '' && unread[y] != id) {
+						str += ','+unread[y];
+					}
+				}
+				setValue('unread', str.substr(1));
+			} else if (Lcrimemsg.test(msgTyp)) { //grab money and crimes from lackey crime message
+				var crimeTracker = getValue('crimes', 0);
+				var crimemoney = getValue('crimemoney', 0);
+				var no = (arr[29]=='sent')?arr[38]:arr[29];
+				crimeTracker += parseInt(no);
+				setValue('crimes', crimeTracker);
+				var am = (arr[55]=='reducing')?arr[65]:(arr[55]=='jail')?arr[46]:arr[37];
+				var crmoney = am.replace(/,/g, '').replace('$', '');
+				crimemoney += parseInt(crmoney);
+				setValue('crimemoney', crimemoney);
+				var str = '';
+				for (var y = 0; y < unreadlen; ++y) {
+					if (unread[y] != '' && unread[y] != id) {
+						str += ','+unread[y];
+					}
+				}
+				setValue('unread', str.substr(1));
+			} else if (Lcarmsg.test(msgTyp)) { //grab carnicks from lackey car message
+				var carTracker = getValue('cars', 0);
+				var carmoney = getValue('carmoney', 0);
+				var no = (arr[29]=='sent')?arr[38]:arr[29];
+				carTracker += parseInt(no);
+				setValue('cars', carTracker);
+				var str = '';
+				for (var y = 0; y < unreadlen; ++y) {
+					if (unread[y] != '' && unread[y] != id) {
+						str += ','+unread[y];
+					}
+				}
+				setValue('unread', str.substr(1));
+			} else {
+				var str = '';
+				for (var y = 0; y < unreadlen; ++y) {
+					if (unread[y] != '' && unread[y] != id) {
+						str += ','+unread[y];
+					}
+				}
+				setValue('unread', str.substr(1));
+			}
+		}
+	}
 	window.addEventListener('keydown', function(e){
 		var key = e.keyCode;
 		if(key==39){ //right, reply
 			window.location = '/BeO/webroot/index.php?module=Mail&action=sendMsg&iReply='+id[0];
 		}
-		if(key==38) { //up, select previous
+		if(key==38 && id != ids[0]) { //up, select previous
 			window.location = '/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId='+next;
 		}
-		if(key==40) { //down, select next
+		if(key==40 && id != ids[len-1]) { //down, select next
 			window.location = '/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId='+prev;
 		}
 		if(key==37) { //down, select next
@@ -4434,6 +4500,8 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 	}, true);
 
 }
+var lackeymode = 0
+if(lackeymode==1) {
 //---------------- LackeyTracker ----------------
 if ((dls == '?module=Shop') || dls.indexOf('?module=Lackeys') != -1){
 	function ltracker() {
@@ -4570,13 +4638,14 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Lackeys') != -1){
 	if (dls.indexOf('?module=Lackeys') != -1 || dls.indexOf('?module=Lackeys&action=') != -1) { //via stand-alone
 		ltracker();
 	}
-
+}
 }
 //---------------- BulletTracker ----------------
 if (dlp == '/bullets2.php' && prefs[33]) {
 	var d = new Date()
 	var btdate = getValue('btdate', 0);
 	if(d.getDate()>btdate){ setValue('bttoday', 0); }
+	var obaybul = getValue('obaybul', 0);
 	var btbullets = getValue('btbullets', 0);
 	var bttoday = getValue('bttoday', 0);
 	var btmoney = getValue('btmoney', 0);
@@ -4600,7 +4669,7 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 	var div = cEL('div');
 	div.id = 'btracker';
 	div.setAttribute('style', 'position:fixed; bottom:20px; left:20px; width:200px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; border-radius:5px; padding:4px');
-	div.innerHTML = '<center><b>'+lang.bullettracker[2]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="btstats">'+lang.bullettracker[3]+' <font style="float:right"><b>'+commafy(btbullets)+'</b></font><br />'+lang.bullettracker[7]+' <font style="float:right"><b>'+commafy(bttoday)+'</b></font><br />'+lang.bullettracker[4]+' <font style="float:right"><b>$'+commafy(btmoney)+'</b></font><br />'+lang.bullettracker[5]+' <font style="float:right"><b>$'+commafy(btdolpbul)+'</b></font></div><br />&nbsp;<div id="resetbt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px; border-radius:5px;" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px" /></div>';
+	div.innerHTML = '<center><b>'+lang.bullettracker[2]+'</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="btstats">'+lang.bullettracker[3]+' <font style="float:right"><b>'+commafy(btbullets)+'</b></font><br />'+lang.bullettracker[7]+' <font style="float:right"><b>'+commafy(bttoday)+'</b></font><br />'+lang.bullettracker[4]+' <font style="float:right"><b>$'+commafy(btmoney)+'</b></font><br />'+lang.bullettracker[5]+' <font style="float:right"><b>$'+commafy(btdolpbul)+'</b></font><br />'+lang.bullettracker[8]+' <font style="float:right"><b>'+commafy(obaybul)+'*</b></font><br /><font size="1">'+lang.bullettracker[9]+'</font></div><br />&nbsp;<div id="resetbt" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px; border-radius:5px;" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px" /></div>';
 	db.appendChild(div);
 
 	getID('resetbt').addEventListener('click', function() {
@@ -4610,21 +4679,8 @@ if (dlp == '/bullets2.php' && prefs[33]) {
 		setValue('btmoney', 0);
 		setValue('bttoday', 0);
 		setValue('btdate', 0);
+		setValue('obaybul', 0);
 	}, true);
-}
-//grab obay bullets from message
-if (dls.indexOf('action=showMsg') != -1) {
-	var obaybul = getValue('obaybul', 0);
-	var msgTyp = getTXT('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr/td/b');
-	var msgText = '/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[5]/td';
-	arr = $X(msgText).innerHTML.split(' ');
-	var bulletmsg = new RegExp('Obay bid succesful');
-	if (bulletmsg.test(msgTyp)) {
-		var no = arr[2];
-		obaybul += parseInt(no);
-		setValue('obaybul', obaybul);
-		alert(no);
-	}
 }
 //---------------- Poker Tracker ----------------
 if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
@@ -5382,7 +5438,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 		if (sp) { //extra city checker
 			smugCity = $I('//h3');
 			for (i = 0; i < 8; i++) {
-				if (smugCity.search(langs.en.cities[i]) != -1) {
+				if (smugCity.search(lang.cities[i]) != -1) {
 					city = i + 4;
 					setPow('bninfo', 2, city);
 				}
@@ -5465,12 +5521,12 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 
 			//--Calc profits
 			if (i == city - 4) { //This is the current city
-				td.innerHTML = '<center><i>' + lang.BR[5] + langs.en.cities[i] + '</i></center>';
+				td.innerHTML = '<center><i>' + lang.BR[5] + lang.cities[i] + '</i></center>';
 				tr.appendChild(td);
 				allProfits.push(0);
 				bestBN.push([0, 0]);
 			} else if (plane == 0 && (((city == 6 || city == 11) && (i + 4) != 6 && (i + 4) != 11) || ((city != 6 && city != 11) && ((i + 4) == 6 || (i + 4) == 11)))) { //No plane to travel there
-				td.innerHTML = '<center><i>' + lang.BR[6] + langs.en.cities[i] + '</i></center>';
+				td.innerHTML = '<center><i>' + lang.BR[6] + lang.cities[i] + '</i></center>';
 				tr.appendChild(td);
 				allProfits.push(0);
 				bestBN.push([0, 0]);
@@ -5511,12 +5567,12 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 
 				//What's the result
 				if (totalProfit < 0) { //no profit :(
-					td.innerHTML = '<center><i>' + lang.BR[7] + langs.en.cities[i] + '</i></center>';
+					td.innerHTML = '<center><i>' + lang.BR[7] + lang.cities[i] + '</i></center>';
 					tr.appendChild(td);
 					bestBN.push([0, 0]); //push dummy to complete array
 				} else { //profit \o/
 					bestBN.push([bestNarc, bestBooze]);
-					td.innerHTML = '&nbsp;' + langs.en.cities[i];
+					td.innerHTML = '&nbsp;' + lang.cities[i];
 					td.setAttribute('colspan', '1');
 					tr.appendChild(td);
 					var bCell = cEL('td');
@@ -5969,7 +6025,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				for (BN = [], i = 0; i <= 1; i++) { //B/N
 					for (BN[i] = [], j = 0; j <= 6; j++) { //type
 						for (BN[i][j] = [], k = 0; k <= 7; k++) {
-							BN[i][j].push(parseInt(dom.getElementsByTagName((i == 0 ? (langs.en.narcs[(j + 1)]).replace('abacco', 'obacco') : langs.en.booze[(j + 1)]).toLowerCase())[k].textContent)); //city
+							BN[i][j].push(parseInt(dom.getElementsByTagName((i == 0 ? (lang.narcs[(j + 1)]).replace('abacco', 'obacco') : lang.booze[(j + 1)]).toLowerCase())[k].textContent)); //city
 						}
 						BN[i][j].unshift(BN[i][j].min()); //get min
 						BN[i][j].unshift(BN[i][j].max()); //get max
