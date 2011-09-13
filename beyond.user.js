@@ -35,7 +35,7 @@
 // @resource		nickreader	http://omertabeyond.googlecode.com/svn/trunk/images/magnifier.png
 // @resource		nextIcon	http://omertabeyond.googlecode.com/svn/trunk/images/next.png
 // @resource		prevIcon	http://omertabeyond.googlecode.com/svn/trunk/images/prev.png
-// @resource		check	http://omertabeyond.googlecode.com/svn/trunk/images/check.png
+// @resource		check		http://omertabeyond.googlecode.com/svn/trunk/images/check.png
 // @include			http://gm.omertabeyond.com/*.php*
 // @include			http://www.omertabeyond.com/html/poll/poll.php*
 // @include			http://www.omerta3.com/*
@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 50;
-const SCRIPT_SUBVERSION = 50;
+const SCRIPT_VERSION_BUILD = 51;
+const SCRIPT_SUBVERSION = 51;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -528,7 +528,21 @@ if (dlp == '/game.php') { //just once on login
 	}
 	//CheckBmsg();
 }
-
+//------------------ Reset trackers on death------------------
+if(dls.indexOf('?module=Account&action=omertician') != -1) {
+	if($X('//img[contains(@src, "grimreaper.gif")]')) {
+		if (confirm('Do you want to reset your trackers?')) {
+			setValue('carmoney', 0);
+			setValue('cars', 0);
+			setValue('crimemoney', 0);
+			setValue('crimes', 0);
+			setValue('obaybul', 0);
+			setValue('btbullets', 0);
+			setValue('btmoney', 0);
+			setValue('bttoday', 0);
+		}
+	}
+}
 //--------------------- Redirect on main ---------------------
 if (dlp == '/main.php') {
 	window.location = 'http://'+dlh+'/BeO/webroot/index.php?module=Launchpad';
@@ -545,7 +559,7 @@ if(dlp == '/marquee.php'){
 	if(prefs[1]){
 		GM_xmlhttpRequest({
 			method: 'GET',
-			url: 'http://www.barafranca.com/BeO/webroot/index.php?module=API&action=smuggling_prices',
+			url: 'http://'+dlh+'/BeO/webroot/index.php?module=API&action=smuggling_prices',
 			onload: function(resp){
 				var marquee = getTAG('div')[0];
 				marquee.innerHTML = '';
@@ -616,17 +630,18 @@ if(dlp == '/marquee.php'){
 				}
 
 				function flytolink(city, priceStr, priceToFly, cityId) {
-					var link, owncity;
+					var mycity = getPow('bninfo', 2, -1);
+					var link
 					link = cEL('a');
 					link.href = '#';
 					link.id = lang.cities[city];
 					link.style.color = '#FFF';
 					link.style.fontSize = '10px';
 					link.addEventListener('click', function () {
-						if (owncity == city) {
+						if (mycity-4 == city) {
 							alert(lang.marquee[3]);
 						} else if (confirm(lang.marquee[0] + lang.cities[city] + '?')) {
-							top.frames[2].location = 'http://' + dlh + '/BeO/webroot/index.php?module=Travel&action=TravelNow&City=' + ((cityId == 'nul') ? 0 : cityId);
+							top.frames[2].location='BeO/webroot/index.php?module=Travel&action=FetchInfo&CityId='+((city == 'nul') ? 0 : city)+'&travel=yes';
 						}
 					}, true);
 
@@ -658,8 +673,8 @@ if(dlp == '/marquee.php'){
 					return link;
 				}
 				var span, priceandtime, link, city, owncity;
-				var span = cEL('span');
-				var priceandtime = cEL('span');
+				span = cEL('span');
+				priceandtime = cEL('span');
 				span.appendChild(priceandtime);
 
 				i=0;
@@ -672,7 +687,7 @@ if(dlp == '/marquee.php'){
 					i++;
 				});
 
-				var link = cEL('a');
+				link = cEL('a');
 				link.href = PricesLink;
 				link.target = 'main';
 				link.innerHTML = lang.marquee[1];
@@ -1148,7 +1163,6 @@ if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/
 		});
 	}
 }
-
 if (dls.indexOf('?module=Travel&action=TravelNow') != -1) { //Get city when traveling
 	if (db.innerHTML.search('<table') != -1) {
 		var city = 0; //initialize to default for anything else
@@ -1163,10 +1177,15 @@ if (dls.indexOf('?module=Travel&action=TravelNow') != -1) { //Get city when trav
 		}
 		if (city) {
 			setPow('bninfo', 2, city); //if traveled, save new city
+			setTimeout(function(){ top.frames[0].frames[3].location='/marquee.php'; }, 1000);
 		}
 	}
 }
-
+if (dls.indexOf('?module=Travel&action=FetchInfo') != -1) {
+	if(GetParam('travel')){
+		$X('//form').submit();
+	}
+}
 //---------------- My Account / Statuspage ----------------
 if (dls == '?module=Launchpad') {
 	var carTracker, crimeTracker, crimemoney, carmoney, interest, bankleft, pad, x, famXP, x2, x3, planeXP, handgunXP, tommygunXP, bguardsXP, jailBustXP, bustTracker, carnicks, cartxt, crimes, crimetxt, isCapo, capo;
@@ -1277,13 +1296,13 @@ if (dls == '?module=Launchpad') {
 			$x('//a[contains(@href,"shoptabs=7")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
 			$X(bguardsXP).innerHTML = '<a href="/BeO/webroot/index.php?module=Bodyguards&action=">'+$X(bguardsXP).innerHTML+'</a>';
 			if ($X(planeXP) && lang.status[0].match(getTXT(planeXP))) {
-				$I(planeXP, '<a href="/BeO/webroot/index.php?module=Shop&action=display_section&id=7"><b>'+getTXT(planeXP)+'</b></a>');
+				$I(planeXP, '<a href="/BeO/webroot/index.php?module=Shop&shoptabs=4"><b>'+getTXT(planeXP)+'</b></a>');
 			}
 			if ($X(handgunXP) && lang.status[0].match(getTXT(handgunXP))) {
-				$I(handgunXP, '<a href="javascript:if(confirm(\''+lang.myacc[0]+'\')){window.location = \'http://'+dlh+'/BeO/webroot/index.php?module=Shop&action=buy_item&item=3\';}"><b>'+getTXT(handgunXP)+'</b></a>');
+				$I(handgunXP, '<a href="/BeO/webroot/index.php?module=Shop&shoptabs=1"><b>'+getTXT(handgunXP)+'</b></a>');
 			}
 			if ($X(tommygunXP) && lang.status[0].match(getTXT(tommygunXP))) {
-				$I(tommygunXP, '<a href="javascript:if(confirm(\''+lang.myacc[1]+'\')){window.location = \'http://'+dlh+'/BeO/webroot/index.php?module=Shop&action=buy_item&item=4\';}"><b>'+getTXT(tommygunXP)+'</b></a>');
+				$I(tommygunXP, '<a href="/BeO/webroot/index.php?module=Shop&shoptabs=1"><b>'+getTXT(tommygunXP)+'</b></a>');
 			}
 		}
 		if (tab == '/profile.php' && prefs[14]) {//remove kill passwords
@@ -2744,20 +2763,26 @@ if(dlp == '/garage.php'){
 		footer = cEL('div');
 		footer.id = 'footer';
 		footer.align = 'center';
-		footer.setAttribute('style', 'position:fixed; bottom:-40px; left:10%; width:80%; border:1px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
+		footer.setAttribute('style', 'position:fixed; bottom:0px; left:10%; width:80%; border:1px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
 		footer.setAttribute('class', 'otable');
 		html = '';
-		html += '<table class="thinline" cellspacing=0 cellpadding=2 rules="none" width="100%">';
+		html += '<table class="thinline" cellspacing=0 cellpadding=2 rules="none" width="100%"><tr>';
 		html += $x('//tr')[rows-1].innerHTML;
-		html += '</table>';
+		html += '</tr></table>';
 		footer.innerHTML = html;
 		wrap.appendChild(footer);
 		$X('//center').parentNode.insertBefore(wrap, $X('//center').nextSibling);
-		
+
+		var sheight = db.scrollHeight
+		var cheight = db.clientHeight
+		if (sheight <= cheight) {
+			getID('footer').style.display = 'none';
+		}
+
 		window.addEventListener('scroll', function(){
-			var max = document.body.scrollHeight - document.body.clientHeight; // bottom
-			var curr = document.body.scrollTop;
-			if (curr == max) {
+			var max = ((db.scrollHeight-db.clientHeight) - (getID('footer').offsetHeight*2)); // bottom
+			var curr = db.scrollTop;
+			if (curr >= max) {
 				getID('footer').style.display = 'none';
 			} else {
 				getID('footer').style.display = 'block';

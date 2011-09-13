@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.50
+	Version: 1.10.0.51
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -1222,7 +1222,7 @@ var langs = {
 			'Prijs per kogel:',
 			'Je moet nog',
 			'Vandaag gekocht:',
-			'Op Opbay gekocht:',
+			'Op Obay gekocht:',
 			'*zitten niet bij het totaal of prijs per kogel'
 		],
 		crimetracker: ['Succes, je hebt', 'Succes je hebt \\$ (\\d+) verdiend.', 'Lackey Car', 'Lackey Crime'],
