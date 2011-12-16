@@ -308,7 +308,7 @@ var langs = {
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
 		],
-		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
+		crimetracker: ['Well done! You made', 'Well done! You made \\$ (\\d+) from your crime.', 'Lackey Car', 'Lackey Crime'],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
