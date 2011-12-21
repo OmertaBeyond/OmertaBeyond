@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.53
+	Version: 1.10.0.54
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -19,7 +19,7 @@ var langs = {
 		prefs: [
 			'Disable the "go for it" button until the image code entered is the correct length',//0 - CRIMES/CARS
 			'Cocaine prices in the marquee',//1 - SMUGGLING/PRICES
-			'News in the info menu',//2 - News
+			'News in the info menu',//2 - UI EXTRAS
 			'Jail Highlighter, auto-form and hotkeys',//3 - JAIL/BUSTING
 			'Enable hotkeys (Smuggling)',//4 - SMUGGLING/PRICES
 			'Add "000" and "000000" when pressing k/m at inputfields',//5 - MISC
@@ -55,7 +55,7 @@ var langs = {
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
 			'Automaticaly check for updates',//37 - MISC
-			'Remove Facebook API from news frame'//38 - NEWS
+			'Remove Facebook API from news frame'//38 - CLEAN UP
 		],
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
@@ -308,7 +308,7 @@ var langs = {
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
 		],
-		crimetracker: ['Well done! You made', 'Well done! You made \\$ (\\d+) from your crime.', 'Lackey Car', 'Lackey Crime'],
+		crimetracker: ['Well done! You made', 'Well done! You made \\$ (\\d+) from your crime.'],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -507,7 +507,7 @@ var langs = {
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
 			'Automaticaly check for updates',//37 - MISC
-			'Remove Facebook API from news frame'//38 - NEWS
+			'Remove Facebook API from news frame'//38 - CLEAN UP
 		],
 		prefsTitle: [ //describe the options
 			'Disable the "go for it" button until the image code entered is the correct length',//0
@@ -761,7 +761,7 @@ var langs = {
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
 		],
-		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
+		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -924,7 +924,7 @@ var langs = {
 		prefs: [
 			'Blokkeer "ga ervoor" knop voor te korte image code',//0 - CRIMES/CARS
 			'Coke prijzen in de bovenbalk',//1 - SMUGGLING/PRICES
-			'Edo-Nieuws in het info menu',//2 - EDO
+			'Edo-Nieuws in het info menu',//2 - UI EXTRAS
 			'Jail Highlighter, automatisch invullen en sneltoetsen',//3 - JAIL/BUSTING
 			'Voeg extra sneltoetsen toe (Smokkelen)',//4 - Non-existant
 			'Voeg "000" en "000000" toe door k of m in te toetsen in een invoerveld',//5 - MISC
@@ -959,8 +959,8 @@ var langs = {
 			'Ruim de Spot Overvallen pagina op',//34 - UI Extras
 			'Laat misdaad- en autojatstats zien op status pagina',//35 - CRIMES/CARS
 			'Voeg Lijfwachten Overzicht toe op BG\'s pagina',//36 - UI EXTRAS
-			'Automaticaly check for updates',//37 - MISC
-			'Remove Facebook API from news frame'//38 - NEWS
+			'Controleer automatisch voor updates',//37 - MISC
+			'Verwijder de Facebook widget van nieuws frame'//38 - CLEAN UP
 		],
 		prefsTitle: [ //describe the options
 			'Je kan de "Ga ervoor" knop niet gebruiken voor je 3 tekens hebt ingevuld',//0
@@ -1225,7 +1225,7 @@ var langs = {
 			'Op Obay gekocht:',
 			'*zitten niet bij het totaal of prijs per kogel'
 		],
-		crimetracker: ['Succes, je hebt', 'Succes je hebt \\$ (\\d+) verdiend.', 'Lackey Car', 'Lackey Crime'],
+		crimetracker: ['Succes, je hebt', 'Succes je hebt \\$ (\\d+) verdiend.'],
 		raidpage: [
 			'<b>nu</b>',
 			'Nu!',
@@ -1388,7 +1388,7 @@ var langs = {
 		prefs: [
 			'Disable the "go for it" button until the image code entered is the correct length',//0 - CRIMES/CARS
 			'Cocaine prices in the marquee',//1 - SMUGGLING/PRICES
-			'News in the info menu',//2 - News
+			'News in the info menu',//2 - UI EXTRAS
 			'Jail Highlighter, auto-form and hotkeys',//3 - JAIL/BUSTING
 			'Enable hotkeys (Smuggling)',//4 - SMUGGLING/PRICES
 			'Add "000" and "000000" when pressing k/m at inputfields',//5 - MISC
@@ -1424,7 +1424,7 @@ var langs = {
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
 			'Show Bodyguard Overview on BG\'s page',//36 UI EXTRAS
 			'Automaticaly check for updates',//37 - MISC
-			'Remove Facebook API from news frame'//38 - NEWS
+			'Remove Facebook API from news frame'//38 - CLEAN UP
 		],
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
@@ -1677,7 +1677,7 @@ var langs = {
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
 		],
-		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it', 'Lackey Car', 'Lackey Crime'],
+		crimetracker: ['Success you made', 'Success you made \\$ (\\d+) out of it'],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',

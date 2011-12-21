@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 53;
-const SCRIPT_SUBVERSION = 53;
+const SCRIPT_VERSION_BUILD = 54;
+const SCRIPT_SUBVERSION = 54;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -165,16 +165,16 @@ const OB_v = SCRIPT_VERSION_MAJOR + '.' + SCRIPT_VERSION_MINOR + '.' + SCRIPT_VE
 const OB = OB_v + '.' + SCRIPT_VERSION_BUILD;
 
 GM_registerMenuCommand('[' + SCRIPT_NAME + '] v' + OB, function () {
-    alert('You are using ' + SCRIPT_NAME + '.\nVersion:\t\t' + OB_v +'\nRevision:\t\t' + SCRIPT_VERSION_BUILD);
+	alert('You are using ' + SCRIPT_NAME + '.\nVersion:\t\t' + OB_v +'\nRevision:\t\t' + SCRIPT_VERSION_BUILD);
 });
 
 GM_registerMenuCommand('[' + SCRIPT_NAME + '] Check for updates.', function () {
-    OBUpdate(true);
+	OBUpdate(true);
 });
 
 GM_registerMenuCommand('[' + SCRIPT_NAME + '] Reset values to default.', function () {
-    clearSettings();
-    window.location.href = window.location;
+	clearSettings();
+	window.location.href = window.location;
 });
 
 var maxbit = lang.maxprefs; //set the amount of preferences
@@ -188,8 +188,8 @@ var querys = [
 ];
 
 //---------------- Bmsg Example ----------------
-var bmsgon = 0;
-if(bmsgon == 1) {
+var bmsgon = false;
+if (bmsgon) {
 	function CheckBmsg() {
 		GM_xmlhttpRequest({
 			method: 'GET',
@@ -312,13 +312,10 @@ if (dlp == '/prefs.php') {
 	addPrefItems([25, 7, 26, 27, 29]);
 
 	addCat(lang.preftitles[4]); //Clean up
-	addPrefItems([6, 22, 12, 14, 30, 19, 20, 18]);
-
-	addCat(lang.preftitles[5]); //OBnews / Edo
-	addPrefItems([2, 38]);
+	addPrefItems([6, 22, 12, 14, 30, 19, 20, 18, 38]);
 
 	addCat(lang.preftitles[6]); //misc
-	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36, 37]);
+	addPrefItems([16, 11, 13, 5, 15, 9, 31, 33, 34, 36, 2, 37]);
 
 	string += '<tr style="height: 50px;"><td colspan="4" class="bigtd"><button type="button" name="Check_All" class="button" onclick="Check(document.myform.check_list)">'+lang.prefsPage[1]+'</button>';
 	string += '&nbsp;<button type="button" name="#" class="button" onclick="';
@@ -460,7 +457,7 @@ if (dlp == '/prefs.php') {
 		string += '</td></tr>';
 		// general options
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[8]+'</b><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[9]+'</b></td><td class="td">&nbsp;</td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[10]+': <input id="defpri" value="'+getValue('defpri', 5)+'" type="text" class="inputmiddle" onblur="if(this.value>9||this.value<1){this.value='+getValue('defpri', 5)+';}" /></td><td colspan="2" style="text-align:right;">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="'+getValue('FL_prior', 3)+'" type="text" onblur="if(this.value>9||this.value<1){this.value='+getValue('FL_prior', 3)+';}" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[10]+': <input id="defpri" value="'+getValue('defpri', 2)+'" type="text" class="inputmiddle" onblur="if(this.value>9||this.value<1){this.value='+getValue('defpri', 2)+';}" /></td><td colspan="2" style="text-align:right;">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="'+getValue('FL_prior', 3)+'" type="text" onblur="if(this.value>9||this.value<1){this.value='+getValue('FL_prior', 3)+';}" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[11]+': <input id="defcol" value="'+getValue('defcol', '33FF66')+'" type="text" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td><td><img class="picker_icon" src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="getID(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" style="width:100px;text-align:right;">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="'+getValue('Fam_prior', 9)+'" type="text" onblur="if(this.value>9||this.value<1){this.value='+getValue('Fam_prior', 9)+';}" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="'+getValue('maxHL', 5)+'" type="text" onblur="if(this.value>5){this.value=5;}" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="'+getValue('buyout', '/')+'" type="text" onblur="var h=\''+getValue('rawkeyprefs', '')+'\';if(h.indexOf(this.value)!=-1){this.value=\''+getValue('buyout', '/')+'\';}" class="inputsmall" /></td></tr>';
@@ -998,15 +995,14 @@ if (dlp == '/jail.php' || dlp == '/iminjail.php' || (dlp == '/kill.php' && dls !
 		}
 		
 		// add focus on text field again after reloading image
-		if ($X('//a[@onclick="reloadImageCode();"]') != null) {
-			$X('//a[@onclick="reloadImageCode();"]').addEventListener('click', function () {
-				node.focus();
-			}, true);
-		}
+		$X('//img[@id="imgcode"]').addEventListener('click', function () {
+			node.focus();
+		}, true);
 		
 		node.setAttribute('maxLength', '3');
 		node.setAttribute('onkeypress', 'javascript:var lettercode=event.charCode;var symcode = event.keyCode;return (lettercode>=48 && lettercode<=57 || lettercode>=65 && lettercode<=90 || lettercode>=97 && lettercode<=122 || symcode>=37 && symcode<=40 || symcode==8 || symcode==9 || symcode==13 || symcode==46 || symcode==116)? true : false;');
 	}
+	
 	if ($X('//img[@id="imgcode"]')) { //check for image code
 		var input = getELNAME('ver'); //jail, iminjail, kill, smuggling
 		if (input[0]) {
@@ -2395,9 +2391,9 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 				if (jhl_add == 1) {
 					names = getValue('bust', '');
 					if (names == '') {
-						setValue('bust', unick+'|'+getValue('defpri', 5)+'|'+getValue('defcol', '33FF66'));
+						setValue('bust', unick+'|'+getValue('defpri', 2)+'|'+getValue('defcol', '33FF66'));
 					} else {
-						setValue('bust', names+','+unick+'|'+getValue('defpri', 5)+'|'+getValue('defcol', '33FF66'));
+						setValue('bust', names+','+unick+'|'+getValue('defpri', 2)+'|'+getValue('defcol', '33FF66'));
 					}
 					alert(unick+' '+lang.jhl[20]);
 				} else {
@@ -2888,9 +2884,9 @@ if (dlp == '/family.php') {
 			jhl_link.addEventListener('click', function(){
 				names = getValue('bust', '');
 				if (names == '') {
-					setValue('bust', who+'|'+getValue('defpri', 5)+'|'+getValue('defcol', '33FF66'));
+					setValue('bust', who+'|'+getValue('defpri', 2)+'|'+getValue('defcol', '33FF66'));
 				} else {
-					setValue('bust', names+','+who+'|'+getValue('defpri', 5)+'|'+getValue('defcol', '33FF66'));
+					setValue('bust', names+','+who+'|'+getValue('defpri', 2)+'|'+getValue('defcol', '33FF66'));
 				}
 				alert(who+' '+lang.jhl[20]);
 				window.location.reload();
@@ -3128,7 +3124,7 @@ if (dlp == '/family.php') {
 	}
 }
 //---------------- Manage Users (top3 only) ----------------
-if (dls.indexOf('module=Family')!=-1) {
+if (dls.indexOf('module=Family') != -1) {
 	if(GetParam('who')){//invite from profile
 		$X('//input[@name="invite"]').value = GetParam('who');
 		$X('//input[@name="invite"]/parent::*/input[last()]').focus();
@@ -3194,7 +3190,7 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 	table.parentNode.insertBefore(newTable, input.nextSibling);//add newTable to page
 	table.parentNode.insertBefore(cEL('p'), input.nextSibling);//need more space ;)
 }
-if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
+if (dlp == '/cpbank.php' && db.innerHTML.search('type="password"') == -1) {
 	//Shortcut to send
 	var bank = $x('//table[@class="thinline"]//td[@class="tableheader"]/b');
 	bank[2].innerHTML += '&nbsp;<a href="#sent">&darr;</a>';
@@ -3226,11 +3222,11 @@ if(dlp == '/cpbank.php' && db.innerHTML.search('type="password"')==-1){
 	$X('//center').firstChild.nextSibling.insertBefore(br, $x('//table[@class="thinline"]')[1]);
 	$X('//center').firstChild.nextSibling.insertBefore(newtable, $x('//br')[1]);
 
-	if(prefs[5]){
+	if (prefs[5]) {
 		var inputs = $x('//input[@name="amount"] | //input[@name="amounttpob"]');
 		inputs.forEach(function($n){
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
-
+			
 		});
 	}
 }
@@ -3789,11 +3785,11 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1) {
 	}
 }
 if (dls.indexOf('action=outbox') != -1 || dls.indexOf('iParty=1') != -1){
-		$x('//a[contains(@href,"showSentMsg")]').forEach(function ($n) {
-			var id = $n.href.split('?')[1].match(/\d+/g)[0];
-			var delImg = "<img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=delMsg&iId=" + id + "&iParty=1\"' src='"+GM_getResourceURL('deleteIcon')+"' title='Delete' style='cursor:pointer; padding-right:3px; padding-left:4px; height:16px; width:16px; border:1px' />";
-			$n.parentNode.innerHTML = delImg + ' ' + $n.parentNode.innerHTML;
-		});
+	$x('//a[contains(@href,"showSentMsg")]').forEach(function ($n) {
+		var id = $n.href.split('?')[1].match(/\d+/g)[0];
+		var delImg = "<img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=delMsg&iId=" + id + "&iParty=1\"' src='"+GM_getResourceURL('deleteIcon')+"' title='Delete' style='cursor:pointer; padding-right:3px; padding-left:4px; height:16px; width:16px; border:1px' />";
+		$n.parentNode.innerHTML = delImg + ' ' + $n.parentNode.innerHTML;
+	});
 }
 
 if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != -1) {
@@ -3817,59 +3813,19 @@ if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != 
 			var msgText = '/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[5]/td';
 			var arr = $X(msgText).innerHTML.split(' ');
 			var bulletmsg = new RegExp(lang.inbox[7]);
-			var Lcrimemsg = new RegExp(lang.crimetracker[3]);
-			var Lcarmsg = new RegExp(lang.crimetracker[2]);
 			if (bulletmsg.test(msgTyp)) { //grab obay bullets from message
-				var obaybul = getValue('obaybul', 0);
-				var no = arr[2];
-				obaybul += parseInt(no);
-				setValue('obaybul', obaybul);
-				var str = '';
-				for (var y = 0; y < unreadlen; ++y) {
-					if (unread[y] != '' && unread[y] != id) {
-						str += ','+unread[y];
-					}
-				}
-				setValue('unread', str.substr(1));
-			} else if (Lcrimemsg.test(msgTyp)) { //grab money and crimes from lackey crime message
-				var crimeTracker = getValue('crimes', 0);
-				var crimemoney = getValue('crimemoney', 0);
-				var no = (arr[29]=='sent')?arr[38]:arr[29];
-				crimeTracker += parseInt(no);
-				setValue('crimes', crimeTracker);
-				var am = (arr[55]=='reducing')?arr[65]:(arr[55]=='jail')?arr[46]:arr[37];
-				var crmoney = am.replace(/,/g, '').replace('$', '');
-				crimemoney += parseInt(crmoney);
-				setValue('crimemoney', crimemoney);
-				var str = '';
-				for (var y = 0; y < unreadlen; ++y) {
-					if (unread[y] != '' && unread[y] != id) {
-						str += ','+unread[y];
-					}
-				}
-				setValue('unread', str.substr(1));
-			} else if (Lcarmsg.test(msgTyp)) { //grab carnicks from lackey car message
-				var carTracker = getValue('cars', 0);
-				var carmoney = getValue('carmoney', 0);
-				var no = (arr[29]=='sent')?arr[38]:arr[29];
-				carTracker += parseInt(no);
-				setValue('cars', carTracker);
-				var str = '';
-				for (var y = 0; y < unreadlen; ++y) {
-					if (unread[y] != '' && unread[y] != id) {
-						str += ','+unread[y];
-					}
-				}
-				setValue('unread', str.substr(1));
-			} else {
-				var str = '';
-				for (var y = 0; y < unreadlen; ++y) {
-					if (unread[y] != '' && unread[y] != id) {
-						str += ','+unread[y];
-					}
-				}
-				setValue('unread', str.substr(1));
+				setValue('obaybul', (getValue('obaybul', 0) + parseInt(arr[2], 10)));
 			}
+			
+			// resave unread msg's, without our msg
+			var str = '';
+			for (var y = 0; y < unreadlen; ++y) {
+				if (unread[y] != '' && unread[y] != id) {
+					str += ','+unread[y];
+				}
+			}
+			setValue('unread', str.substr(1));
+			x = unreadlen; // not needed to continue because we found our id
 		}
 	}
 	window.addEventListener('keydown', function(e){
@@ -3913,7 +3869,7 @@ if (dls.indexOf('iReply=') != -1) {
 	$X('//textarea').focus();
 }
 if (dls.indexOf('action=sendmessage') != -1) {
-	if(db.innerHTML.indexOf('Message sent to') != -1){
+	if (db.innerHTML.indexOf('Message sent to') != -1) {
 		setTimeout(function () {
 			window.location = '/BeO/webroot/index.php?module=Mail&action=inbox';
 		}, 1000);
@@ -4071,7 +4027,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 }
 
 //---------- All poker thingies (except tracker) -----------
-if (dls.search('module=Poker') != -1) {
+if (dls.search('module=Poker') != -1 || dl == 'http://rix.omertabeyond.com/poker.html') {
 	//allin
 	var goall = 0;
 	var money = $X('//td[@class="tableitem"]/b').innerHTML.replace(/,/g, '').replace('$', '');
@@ -4089,17 +4045,19 @@ if (dls.search('module=Poker') != -1) {
 		$X('//center/form/table/tbody/tr[5]/td/table/tbody/tr/td[3]').appendChild(allin);
 	}
 	//refresh
-	var refresh = $X('//span/a[contains(@href, "BeO/webroot/index.php?module=Poker&action=")]');
-	refresh.innerHTML = refresh.innerHTML + '(=)';
-	var refresh2 = refresh.cloneNode(1);
-	refresh.accessKey = '=';
-	var span = cEL('span');
-	span.setAttribute('style', 'background-color:#8fcbfc;border-width:1px;border-style:none solid solid none');
-	span.appendChild(refresh2);
-	if (db.textContent.search('Poker') != -1){
-		$X('//center').insertBefore(span, $X('//form'));
-	} else {
-		$X('//center').insertBefore(span, $X('//table[@class="thinline"]'));
+	var refresh = $X('//span/a[contains(@href, "BeO/webroot/index.php?module=Poker")]');
+	if (refresh != undefined) {
+		refresh.innerHTML = refresh.innerHTML + '(=)';
+		var refresh2 = refresh.cloneNode(1);
+		refresh.accessKey = '=';
+		var span = cEL('span');
+		span.setAttribute('style', 'background-color:#8fcbfc;border-width:1px;border-style:none solid solid none');
+		span.appendChild(refresh2);
+		if (db.textContent.search('Poker') != -1){
+			$X('//center').insertBefore(span, $X('//form'));
+		} else {
+			$X('//center').insertBefore(span, $X('//table[@class="thinline"]'));
+		}
 	}
 	//poker tracker
 	if ($X('//input[@name="leave"]') != null) {
@@ -4109,12 +4067,18 @@ if (dls.search('module=Poker') != -1) {
 	}
 	//hide full
 	if (db.innerHTML.search('Running Games') != -1) {
-		var hidefull = getValue('hidefull', 0);
-		function hideFull() {
-			if (hidefull == '0') {
-				setValue('hidefull', 1);
-			} else {
-				setValue('hidefull', 0);
+		function hideFull(hide) {
+			setValue('hidefull', hide);
+			var rows = $x('//tr[@align="center"]').length; //get number of rows
+			for (var i=rows+3;i>4;i--) { //loop rows
+				var Row = $X('/html/body//center/table[1]/tbody/tr['+i+']'); //get the specific row
+				if (Row.innerHTML.indexOf('<font color="#FF0000">X</font>') != -1) {
+					if (hide) {
+						$X('/html/body//center/table[1]/tbody/tr['+i+']').style.display = 'none';
+					} else {
+						$X('/html/body//center/table[1]/tbody/tr['+i+']').style.display = 'table-row';
+					}
+				}
 			}
 		}
 		var span = cEL('span');
@@ -4122,21 +4086,23 @@ if (dls.search('module=Poker') != -1) {
 		var input = cEL('input');
 		input.setAttribute('type', 'checkbox');
 		input.id = 'cb';
-		if (hidefull == '1') {
+		var hidefull = getValue('hidefull', false);
+		if (hidefull) {
 			input.setAttribute('checked', 'checked');
+			hideFull(true);
 		}
-		input.addEventListener('click', function() { hideFull(); }, true);
+
 		span.appendChild(input);
 		$X('//td[@class="tableitem"]').appendChild(span);
-		if (hidefull == '1') {
-			var rows = $x('//tr[@align="center"]').length; //get number of rows
-			for (var i=rows+3;i>4;i--) { //loop rows
-				var Row = $X('/html/body//center/table[1]/tbody/tr['+i+']'); //get the specific row
-				if (Row.innerHTML.indexOf('X') != -1) {
-					$Del('/html/body//center/table[1]/tbody/tr['+i+']');
-				}
+			
+		input.addEventListener('click', function() {
+			if (hidefull) {
+				hideFull(false);
+			} else {
+				hideFull(true);
 			}
-		}
+		}, true);
+		
 	}
 	//add m/k usage in amount boxes
 	if (prefs[5]) {
@@ -4165,40 +4131,35 @@ if (dls.search('module=Poker') != -1) {
 
 		// Add style switchers on checkboxes
 		getELNAME('c0')[0].addEventListener('click', function() {
-			var cb = $X('//input[@name="c0"]');
-			if (cb.checked) {
+			if ($X('//input[@name="c0"]').checked) {
 				getID('card_td_0').style.backgroundColor='#009966';
 			} else {
 				getID('card_td_0').style.backgroundColor='green';
 			}
 		}, true);
 		getELNAME('c1')[0].addEventListener('click', function() {
-			var cb = $X('//input[@name="c1"]');
-			if (cb.checked) {
+			if ($X('//input[@name="c1"]').checked) {
 				getID('card_td_1').style.backgroundColor='#009966';
 			} else {
 				getID('card_td_1').style.backgroundColor='green';
 			}
 		}, true);
 		getELNAME('c2')[0].addEventListener('click', function() {
-			var cb = $X('//input[@name="c2"]');
-			if (cb.checked) {
+			if ($X('//input[@name="c2"]').checked) {
 				getID('card_td_2').style.backgroundColor='#009966';
 			} else {
 				getID('card_td_2').style.backgroundColor='green';
 			}
 		}, true);
 		getELNAME('c3')[0].addEventListener('click', function() {
-			var cb = $X('//input[@name="c3"]');
-			if (cb.checked) {
+			if ($X('//input[@name="c3"]').checked) {
 				getID('card_td_3').style.backgroundColor='#009966';
 			} else {
 				getID('card_td_3').style.backgroundColor='green';
 			}
 		}, true);
 		getELNAME('c4')[0].addEventListener('click', function() {
-			var cb = $X('//input[@name="c4"]');
-			if (cb.checked) {
+			if ($X('//input[@name="c4"]').checked) {
 				getID('card_td_4').style.backgroundColor='#009966';
 			} else {
 				getID('card_td_4').style.backgroundColor='green';
@@ -4529,146 +4490,150 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 	}, true);
 
 }
-var lackeymode = 0
-if(lackeymode==1) {
-//---------------- LackeyTracker ----------------
-if ((dls == '?module=Shop') || dls.indexOf('?module=Lackeys') != -1){
-	function ltracker() {
-		var lspent = getValue('lspent', 0);//total
-		var lcspent = getValue('lcspent', 0);//crimes
-		var lcnspent = getValue('lcnspent', 0);//carnicks
-		var lbspent = getValue('lbspent', 0);//booze
-		var lnspent = getValue('lnspent', 0);//narcs
-		var lbospent = getValue('lbospent', 0);//busts
-		var lcperc = Math.round((lcspent / lspent) * 100);
-		lcperc = isNaN(lcperc) ? 0 : lcperc;
-		var lcnperc = Math.round((lcnspent / lspent) * 100);
-		lcnperc = isNaN(lcnperc) ? 0 : lcnperc;
-		var lbperc = Math.round((lbspent / lspent) * 100);
-		lbperc = isNaN(lbperc) ? 0 : lbperc;
-		var lnperc = Math.round((lnspent / lspent) * 100);
-		lnperc = isNaN(lnperc) ? 0 : lnperc;
-		var lboperc = Math.round((lbospent / lspent) * 100);
-		lboperc = isNaN(lboperc) ? 0 : lboperc;
-		var div = cEL('div');
-		div.id = 'lracker';
-		div.setAttribute('style', 'position:fixed; top:20px; right:20px; width:220px; background-color:#455C6F; border:2px solid #000; -moz-border-radius:5px; border-radius:5px; padding:4px');
-		div.innerHTML = '<center><b>Lackey Credit Tracker</b></center><table width="100%"><tr><td bgcolor="black"></td></tr></table><div id="lstats">Total spent:<font style="float:right"><b>'+lspent+'</b></font><br />Crimes:<font style="float:right"><b>'+lcspent+' ('+lcperc+'%)</b></font><br />Cars:<font style="float:right"><b>'+lcnspent+' ('+lcnperc+'%)</b></font><br />Busts: <font style="float:right"><b>'+lbospent+' ('+lboperc+'%)</b></font><br />Booze: <font style="float:right"><b>'+lbspent+' ('+lbperc+'%)</b></font><br />Narcs: <font style="float:right"><b>'+lnspent+' ('+lnperc+'%)</b></font></div><br />&nbsp;<div id="resetL" align="right" style="position:absolute; bottom:2px; right:2px; border:2px solid grey; -moz-border-radius:5px; border-radius:5px;" onmouseover="this.style.border=\'2px solid #DDDF00\'; this.style.cursor = \'pointer\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px;" /></div>';
 
-		if ((dls.indexOf('?module=Shop') != -1 && db.innerHTML.search('/static/images/game/lackeys/spats') != -1) || (dls.indexOf('?module=Lackeys&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) {
-			$X('//div[@id="smsdivcontainer"]').insertBefore(div, $X('//div[@class="otable widetable"]'));
-		}
-		if (dls.indexOf('?module=Lackeys') != -1 || dls.indexOf('?module=Lackeys&action=') != -1) { //via stand-alone
-			db.insertBefore(div, $X('//div[@class="otable widetable"]'));
-		}
-		if($X('//div[@id="error"]')){
-			var oldc = getValue('oldcred', 0);
-			var newc = $X('//div[@class="otable widetable"][2]/[@class="oheader"]').innerHTML.split(' ')[2].replace('(', '');
-			var spent = oldc-newc;
-			lspent += spent;
-			setValue('oldcred', newc);
-			setValue('lspent', lspent);
-		}
-		if(!$X('//div[@id="error"]')){
-		//add ETA
-		var numrows = $x('//div[2]/table').length;
-		var a = cEL('TextNode');
-		a.setAttribute('style', 'color:red;');
-		var a1 = cEL('TextNode');
-		a1.setAttribute('style', 'color:red;');
-		var d = new Date();
-		for(var i=1;i<numrows+1;i++) {
-			if ($X('//div[@class="otable widetable"][1]/table['+i+']/tbody/tr/td[2]/table/tbody/tr/td').innerHTML.search('Lackey Role: GTA') != -1) {
-				var creds = getTXT('//div[2]/table['+i+']/tbody/tr/td[2]/table/tbody/tr[2]/td').split(' ')[2];
-				var secs = parseInt(((creds*300)*1000), 10);
-				d.setTime(+d.getTime()+secs);
-				a.innerHTML = 'ETA: '+d.toUTCString();
-				$X('//div[@class="otable widetable"][1]/table['+i+']/tbody/tr/td[2]/table/tbody/tr/td').appendChild(a);
+//---------------- Lackeys II ----------------
+if (dls == '?module=Lackeys' || dl == 'http://rix.omertabeyond.com/sluggs.php') {
+	
+	// All text is English for now, so using lang vars is not needed at the moment
+	var loadedTab = 0;
+	
+	function overview() {
+		loadedTab = 1;
+	}
+	overview(); // this is already loaded by default and in the source, so call it
+
+	function spats() {
+		loadedTab = 2;
+	}
+	function noodles() {
+		loadedTab = 3;
+	}
+	function orourke() {
+		loadedTab = 4;
+	}
+	function freekowtski() {
+		loadedTab = 5;
+	}
+	function keaton() {
+		loadedTab = 6;
+	}
+	function sluggs() {
+		loadedTab = 7;
+
+		// Sluggs log entries
+		var path = '//table[@id="overview_log_6"]/tbody/tr', logEntry, r;
+		var x = 1;
+		$x(path).forEach(function ($n) {
+			logEntry = $x(path+'['+x+']/td')[1].innerHTML;
+		
+			// show price per bullet when Sluggs bought
+			if (r = logEntry.replace(/,/g, '').match(/Sluggs bought (\d+) bullets for \$(\d+)/)) {
+				$x(path+'['+x+']/td')[1].innerHTML = logEntry + ' ($'+Math.round(r[2] / r[1])+'/bullet)';
 			}
-			if ($X('//div[2]/table['+i+']/tbody/tr/td[2]/table/tbody/tr/td').innerHTML.search('Lackey Role: Crimes') != -1) {
-				var creds = getTXT('//div[2]/table['+i+']/tbody/tr/td[2]/table/tbody/tr[2]/td').split(' ')[2];
-				var secs = parseInt(((creds*90)*1000), 10);
-				d.setTime(+d.getTime()+secs);
-				a1.innerHTML = 'ETA: '+d.toUTCString();
-				$X('//div[2]/table['+i+']/tbody/tr/td[2]/table/tbody/tr/td').appendChild(a1);
+		
+			++x;
+		});
+		
+		// Hide useless entries
+		$X('//div[@class="otable widetable"]/div[2]').innerHTML = $X('//div[@class="otable widetable"]/div[2]').innerHTML + '<span><input type="checkbox" id="cb" /><label for="cb">Hide "Sluggs is laughing" entries</label></span>';
+		var sluggsHideLaughing = getValue('sluggsHideLaughing', true);
+		if (sluggsHideLaughing) {
+			getID('cb').setAttribute('checked', 'checked');
+			hideLaughing(true);
+		}
+
+		getID('cb').addEventListener('click', function() {
+			if (sluggsHideLaughing) {
+				hideLaughing(false);
+			} else {
+				hideLaughing(true);
 			}
-			if(i!=3){
-				if ($X('//div[@class="otable widetable"][1]/table['+i+']/tbody/tr/td[4]/table/tbody/tr/td').innerHTML.search('Lackey Role: GTA') != -1) {
-					var creds = getTXT('//div[2]/table['+i+']/tbody/tr/td[4]/table/tbody/tr[2]/td').split(' ')[2];
-					var secs = parseInt(((creds*300)*1000), 10);
-					d.setTime(+d.getTime()+secs);
-					a.innerHTML = 'ETA: '+d.toUTCString();
-					$X('//div[@class="otable widetable"][1]/table['+i+']/tbody/tr/td[4]/table/tbody/tr/td').appendChild(a);
-				}
-				if ($X('//div[2]/table['+i+']/tbody/tr/td[4]/table/tbody/tr/td').innerHTML.search('Lackey Role: Crimes') != -1) {
-					var creds = getTXT('//div[2]/table['+i+']/tbody/tr/td[4]/table/tbody/tr[2]/td').split(' ')[2];
-					var secs = parseInt(((creds*90)*1000), 10);
-					d.setTime(+d.getTime()+secs);
-					a1.innerHTML = 'ETA: '+d.toUTCString();
-					$X('//div[2]/table['+i+']/tbody/tr/td[4]/table/tbody/tr/td').appendChild(a1);
+		}, true);
+		
+	}
+	
+	function hideLaughing(hide) {
+		setValue('sluggsHideLaughing', hide);
+		x = 1;
+		$x(path).forEach(function ($n) {
+			if ($x(path+'['+x+']/td')[1].innerHTML.match(/Sluggs is laughing at your measly limit/)) {
+				if (hide) {
+					$n.style.display = 'none';
+				} else {
+					$n.style.display = 'table-row';
 				}
 			}
-		}
-		//add Times
-		if ($X('//div[@class="otable widetable"][2]/table[1]/tbody/tr/td[4]/table/tbody/tr/td').innerHTML.search('Lackey Role: GTA') != -1 && $X('//div[@class="otable widetable"][2]/table[1]/tbody/tr/td[4]/table/tbody/tr[2]/td').innerHTML.search('Already Running GTA for you. ') == -1) {
-			var loptions = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[4]/table/tbody/tr[2]/td/form/select/option').length;
-			for(var i = 0;i<loptions;i++) {
-				var d = new Date();
-				var val = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[4]/table/tbody/tr[2]/td/form/select/option')[i].value;
-				var time = sec2time(parseInt((val*300), 10));
-				var secs = parseInt(((val*300)*1000), 10);
-				d.setTime(+d.getTime()+secs);
-				var min = (d.getUTCMinutes()<10)?'0'+d.getUTCMinutes():d.getUTCMinutes();
-				var loption = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[4]/table/tbody/tr[2]/td/form/select/option')[i];
-				loption.textContent = time+' ('+d.getUTCHours()+':'+min+'OT) '+loption.textContent;
-			}
-		}
-		if ($X('//div[@class="otable widetable"][2]/table[1]/tbody/tr/td[2]/table/tbody/tr/td').innerHTML.search('Lackey Role: Crimes') != -1 && $X('//div[@class="otable widetable"][2]/table[1]/tbody/tr/td[4]/table/tbody/tr[2]/td').innerHTML.search('Already Running Crimes for you. ') == -1) {
-			var loptions = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[2]/table/tbody/tr[2]/td/form/select/option').length;
-			for(var i = 0;i<loptions;i++) {
-				var d = new Date();
-				var val = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[2]/table/tbody/tr[2]/td/form/select/option')[i].value;
-				var time = sec2time(parseInt((val*90), 10));
-				var secs = parseInt(((val*90)*1000), 10);
-				d.setTime(+d.getTime()+secs);
-				var umin = (d.getUTCMinutes()<10)?'0'+d.getUTCMinutes():d.getUTCMinutes();
-				var loption = $x('//div[@class="otable widetable"][2]/table/tbody/tr/td[2]/table/tbody/tr[2]/td/form/select/option')[i];
-				loption.textContent = time+' ('+d.getUTCHours()+':'+umin+'OT) '+loption.textContent;
-			}
-		}
-		}
+			++x;
+		});
 	}
-	if (dls.indexOf('?module=Shop') != -1 || (dls.indexOf('?module=Lackeys&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) { //via Shop
-		getID('smsdivcontainer').addEventListener('DOMNodeInserted', function (event) { //wait for DOM
-			if (event.target.innerHTML.search('/static/images/game/lackeys/spats') != -1) { //wait for BG overview node
-				getID('smsdivcontainer').addEventListener('load', function() { //add onLoad eventlistener
-					if(db.innerHTML.search('onceonly')==-1) { //onLoad bubbles more then once
-						var foo = cEL('div'); //create hardcoded fix so we run code only once
-						foo.id = 'onceonly';
-						getID('smsdivcontainer').appendChild(foo);
 
-						ltracker();
+	$X('//ul/li[1]').addEventListener('click', function() { // Overview
+		if (loadedTab != 1) {
+			getID('overview').addEventListener('load', function() {
+				if (loadedTab != 1) {
+					overview();
+				}
+			}, true);
+		}
+	}, true);
+	$X('//ul/li[2]').addEventListener('click', function() { // Spats - crimes
+		if (loadedTab != 2) {
+			getID('ui-tabs-1').addEventListener('load', function() {
+				if (loadedTab != 2) {
+					spats();
+				}
+			}, true);
+		}
+	}, true);
+	$X('//ul/li[3]').addEventListener('click', function() { // Noodles - cars
+		if (loadedTab != 3) {
+			getID('ui-tabs-2').addEventListener('load', function() {
+				if (loadedTab != 3) {
+					noodles();
+				}
+			}, true);
+		}
+	}, true);
+	$X('//ul/li[4]').addEventListener('click', function() { // O'Rourke - booze
+		if (loadedTab != 4) {
+			getID('ui-tabs-3').addEventListener('load', function() {
+				if (loadedTab != 4) {
+					orourke();
+				}
+			}, true);
+		}
+	}, true);
+	$X('//ul/li[5]').addEventListener('click', function() { // Freekowtski - narcs
+		if (loadedTab != 5) {
+			getID('ui-tabs-4').addEventListener('load', function() {
+				if (loadedTab != 5) {
+					freekowtski();
+				}
+			}, true);
+		}
+	}, true);
+	$X('//ul/li[6]').addEventListener('click', function() { // Keaton - busting
+		if (loadedTab != 6) {
+			getID('ui-tabs-5').addEventListener('load', function() {
+				if (loadedTab != 6) {
+					keaton();
+				}
+			}, true);
+		}
+	}, true);
+	$X('//ul/li[7]').addEventListener('click', function() { // Slugs - bullets
+		if (loadedTab != 7) {
+			getID('ui-tabs-6').addEventListener('load', function() {
+				if (loadedTab != 7) {
+					sluggs();
+				}
+			}, true);
+		}
+	}, true);
+	
 
-						getID('resetL').addEventListener('click', function() {
-							getID('resetL').innerHTML = '&nbsp;<b>'+lang.scratcher[17]+'<b>&nbsp;';
-							getID('lstats').innerHTML = 'Total spent:<font style="float:right"><b>0</b></font><br />Crimes:<font style="float:right"><b>0 (0%)</b></font><br />Cars:<font style="float:right"><b>0 (0%)</b></font><br />Busts: <font style="float:right"><b>0 (0%)</b></font><br />Booze: <font style="float:right"><b>0 (0%)</b></font><br />Narcs: <font style="float:right"><b>0 (0%)</b></font>';
-							setValue('lspent', 0);
-							setValue('lcspent', 0);
-							setValue('lcnspent', 0);
-							setValue('lbspent', 0);
-							setValue('lnspent', 0);
-							setValue('lbospent', 0);
-						}, true);
-					}
-				}, true);
-			}
-		}, false);
-	}
-	if (dls.indexOf('?module=Lackeys') != -1 || dls.indexOf('?module=Lackeys&action=') != -1) { //via stand-alone
-		ltracker();
-	}
 }
-}
+
 //---------------- BulletTracker ----------------
 if (dlp == '/bullets2.php' && prefs[33]) {
 	var d = new Date()
