@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			16-12-2011
+// @date			21-12-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 52;
-const SCRIPT_SUBVERSION = 52;
+const SCRIPT_VERSION_BUILD = 53;
+const SCRIPT_SUBVERSION = 53;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -2441,6 +2441,7 @@ if (dlp == '/bank.php') {
 	}
 
 	//add amt of interest next to %
+	if($x('//table')[2]) {
 	var money = $x('//table')[2].getElementsByTagName('td')[2].textContent; //check for banked money
 	if (!money.split(' ')[1]) { //money in bank
 		var h, m, s, seconds, d;
@@ -2467,17 +2468,18 @@ if (dlp == '/bank.php') {
 				m = parseInt(m, 10);
 				seconds = (seconds + (m * 60));
 			}
-			if ($X('//span[@id="counter__seconds_value"]') != null) {
-				s = getTXT('//span[@id="counter__seconds_value"]');
-				s = parseInt(s, 10);
-				seconds = (seconds + (s));
+				if ($X('//span[@id="counter__seconds_value"]') != null) {
+					s = getTXT('//span[@id="counter__seconds_value"]');
+					s = parseInt(s, 10);
+					seconds = (seconds + (s));
+				}
 			}
-		}
 
-		//when do we get interest?
-		var timestamp = Math.round(parseInt(new Date().getTime(), 10) / 1000);
-		timestamp = parseInt(timestamp, 10);
-		setValue('banktleft', (timestamp + seconds));
+			//when do we get interest?
+			var timestamp = Math.round(parseInt(new Date().getTime(), 10) / 1000);
+			timestamp = parseInt(timestamp, 10);
+			setValue('banktleft', (timestamp + seconds));
+		}
 	}
 
 	//Calculators
@@ -2508,8 +2510,10 @@ if (dlp == '/bank.php') {
 	dummy.setAttribute('align', 'center');
 	dummy.setAttribute('rules', 'none');
 	dummy.innerHTML = tbl;
-	$x('//td[@width="33%"]')[2].appendChild(dummy);
-	
+	if($x('//td[@width="33%"]')[2]) {
+		$x('//td[@width="33%"]')[2].appendChild(dummy);
+	}
+
 	function blockAlpha(event) {
 		if (event.keyCode == 75) {
 			$n.value = $n.value + '000';
@@ -3871,7 +3875,7 @@ if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != 
 	window.addEventListener('keydown', function(e){
 		var key = e.keyCode;
 		if(key==39){ //right, reply
-			window.location = '/BeO/webroot/index.php?module=Mail&action=sendMsg&iReply='+id[0];
+			window.location = '/BeO/webroot/index.php?module=Mail&action=sendMsg&iReply='+id;
 		}
 		if(key==38 && id != ids[0]) { //up, select previous
 			window.location = '/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId='+next;
@@ -3880,7 +3884,7 @@ if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != 
 			window.location = '/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId='+prev;
 		}
 		if(key==37) { //down, select next
-			window.location = '/BeO/webroot/index.php?module=Mail&action=delMsg&iId='+id[0]+'&iParty=2';
+			window.location = '/BeO/webroot/index.php?module=Mail&action=delMsg&iId='+id+'&iParty=2';
 		}
 	}, true);
 
@@ -6050,7 +6054,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				for (BN = [], i = 0; i <= 1; i++) { //B/N
 					for (BN[i] = [], j = 0; j <= 6; j++) { //type
 						for (BN[i][j] = [], k = 0; k <= 7; k++) {
-							BN[i][j].push(parseInt(dom.getElementsByTagName((i == 0 ? (lang.narcs[(j + 1)]).replace('abacco', 'obacco') : lang.booze[(j + 1)]).toLowerCase())[k].textContent)); //city
+							BN[i][j].push(parseInt(dom.getElementsByTagName((i == 0 ? (langs.en.narcs[(j + 1)]).replace('abacco', 'obacco') : langs.en.booze[(j + 1)]).toLowerCase())[k].textContent)); //city
 						}
 						BN[i][j].unshift(BN[i][j].min()); //get min
 						BN[i][j].unshift(BN[i][j].max()); //get max

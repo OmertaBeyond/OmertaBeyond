@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.51
+	Version: 1.10.0.53
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -1173,7 +1173,7 @@ var langs = {
 			'Er is geen data van Rank, Vliegtuig en Familiepositie. Bekijk je status en profiel pagina\'s om dit te verhelpen!',
 			'NU'
 		],
-		narcs: ['GEEN DRUGS', 'Morfine', 'Marihuana', 'Lijm', 'Hero&#239;ne', 'Opium', 'Coca&#239;ne', 'Tabak'],
+		narcs: ['GEEN DRUGS', 'Morfine', 'Marihuana', 'Lijm', 'Heroine', 'Opium', 'Cocaine', 'Tabak'],
 		booze: ['GEEN DRANK', 'Wijn', 'Bier', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
 		oneclick: [
 			'Je hebt de 1-klik stemmer niet gebruikt.\nWil je deze nu gebruiken?\n',
@@ -1319,6 +1319,7 @@ var langs = {
 			'afw',
 			'getraind'
 		],
+		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
 		killpage: 'Alle steden',
 		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?'],
 		busttracker: ['Je hebt deze gangster uit de gevangenis gebroken.', 'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken', 'Je bent ontsnapt uit de gevangenis.'],
