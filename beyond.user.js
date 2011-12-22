@@ -4497,9 +4497,11 @@ if (dls == '?module=Lackeys' || dl == 'http://rix.omertabeyond.com/sluggs.php') 
 	
 	// All text is English for now, so using lang vars is not needed at the moment
 	var loadedTab = 0;
+	var divX;
 	
 	function overview() {
 		loadedTab = 1;
+		//alert('overview');
 	}
 	overview(); // this is already loaded by default and in the source, so call it
 
@@ -4520,7 +4522,8 @@ if (dls == '?module=Lackeys' || dl == 'http://rix.omertabeyond.com/sluggs.php') 
 	}
 	function sluggs() {
 		loadedTab = 7;
-
+		divX = '//div[@id="ui-tabs-6"]';
+		//alert('sluggs');
 		// Sluggs log entries
 		var path = '//table[@id="overview_log_6"]/tbody/tr', logEntry, r;
 		var x = 1;
@@ -4536,7 +4539,7 @@ if (dls == '?module=Lackeys' || dl == 'http://rix.omertabeyond.com/sluggs.php') 
 		});
 		
 		// Hide useless entries
-		$X('//div[@class="otable widetable"]/div[2]').innerHTML = $X('//div[@class="otable widetable"]/div[2]').innerHTML + '<span><input type="checkbox" id="cb" /><label for="cb">Hide "Sluggs is laughing" entries</label></span>';
+		$X(divX+'/div/div[2]').innerHTML = $X(divX+'/div/div[2]').innerHTML + '<span><input type="checkbox" id="cb" /><label for="cb">Hide "Sluggs is laughing" entries</label></span>';
 		var sluggsHideLaughing = getValue('sluggsHideLaughing', true);
 		if (sluggsHideLaughing) {
 			getID('cb').setAttribute('checked', 'checked');
