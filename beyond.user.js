@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 55;
-const SCRIPT_SUBVERSION = 55;
+const SCRIPT_VERSION_BUILD = 56;
+const SCRIPT_SUBVERSION = 56;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -4027,7 +4027,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 }
 
 //---------- All poker thingies (except tracker) -----------
-if (dls.search('module=Poker') != -1 || dl == 'http://rix.omertabeyond.com/poker.html') {
+if (dls.search('module=Poker') != -1) {
 	//allin
 	var goall = 0;
 	var money = $X('//td[@class="tableitem"]/b').innerHTML.replace(/,/g, '').replace('$', '');
@@ -4493,37 +4493,41 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 }
 
 //---------------- Lackeys II ----------------
-if (dls == '?module=Lackeys' || dl == 'http://rix.omertabeyond.com/sluggs.php') {
+if (dls == '?module=Lackeys') {
 	
 	// All text is English for now, so using lang vars is not needed at the moment
-	var loadedTab = 0;
+	var loadedTab = 1;
 	var divX;
 	
 	function overview() {
-		loadedTab = 1;
-		//alert('overview');
+		divX = '//div[@id="overview"]';
 	}
 	overview(); // this is already loaded by default and in the source, so call it
 
 	function spats() {
 		loadedTab = 2;
+		divX = '//div[@id="ui-tabs-1"]';
 	}
 	function noodles() {
 		loadedTab = 3;
+		divX = '//div[@id="ui-tabs-2"]';
 	}
 	function orourke() {
 		loadedTab = 4;
+		divX = '//div[@id="ui-tabs-3"]';
 	}
 	function freekowtski() {
 		loadedTab = 5;
+		divX = '//div[@id="ui-tabs-4"]';
 	}
 	function keaton() {
 		loadedTab = 6;
+		divX = '//div[@id="ui-tabs-5"]';
 	}
 	function sluggs() {
 		loadedTab = 7;
 		divX = '//div[@id="ui-tabs-6"]';
-		//alert('sluggs');
+
 		// Sluggs log entries
 		var path = '//table[@id="overview_log_6"]/tbody/tr', logEntry, r;
 		var x = 1;
@@ -4573,13 +4577,7 @@ if (dls == '?module=Lackeys' || dl == 'http://rix.omertabeyond.com/sluggs.php') 
 	}
 
 	$X('//ul/li[1]').addEventListener('click', function() { // Overview
-		if (loadedTab != 1) {
-			getID('overview').addEventListener('load', function() {
-				if (loadedTab != 1) {
-					overview();
-				}
-			}, true);
-		}
+		loadedTab = 1;
 	}, true);
 	$X('//ul/li[2]').addEventListener('click', function() { // Spats - crimes
 		if (loadedTab != 2) {
