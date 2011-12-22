@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			21-12-2011
+// @date			22-12-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 54;
-const SCRIPT_SUBVERSION = 54;
+const SCRIPT_VERSION_BUILD = 55;
+const SCRIPT_SUBVERSION = 55;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -4069,6 +4069,7 @@ if (dls.search('module=Poker') != -1 || dl == 'http://rix.omertabeyond.com/poker
 	if (db.innerHTML.search('Running Games') != -1) {
 		function hideFull(hide) {
 			setValue('hidefull', hide);
+			hidefull = hide;
 			var rows = $x('//tr[@align="center"]').length; //get number of rows
 			for (var i=rows+3;i>4;i--) { //loop rows
 				var Row = $X('/html/body//center/table[1]/tbody/tr['+i+']'); //get the specific row
@@ -4554,6 +4555,7 @@ if (dls == '?module=Lackeys' || dl == 'http://rix.omertabeyond.com/sluggs.php') 
 	
 	function hideLaughing(hide) {
 		setValue('sluggsHideLaughing', hide);
+		sluggsHideLaughing = hide;
 		x = 1;
 		$x(path).forEach(function ($n) {
 			if ($x(path+'['+x+']/td')[1].innerHTML.match(/Sluggs is laughing at your measly limit/)) {
