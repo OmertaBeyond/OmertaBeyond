@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 57;
-const SCRIPT_SUBVERSION = 57;
+const SCRIPT_VERSION_BUILD = 58;
+const SCRIPT_SUBVERSION = 58;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -2438,43 +2438,31 @@ if (dlp == '/bank.php') {
 
 	//add amt of interest next to %
 	if($x('//table')[2]) {
-	var money = $x('//table')[2].getElementsByTagName('td')[2].textContent; //check for banked money
-	if (!money.split(' ')[1]) { //money in bank
-		var h, m, s, seconds, d;
-		var rx = $x('//table')[2].getElementsByTagName('td')[6].textContent; //get recieved amt
-		var tmp = 1 * rx.replace(/\D/g, '') - 1 * money.replace(/\D/g, ''); //calc interest
-		var intLine = $x('//table')[2].getElementsByTagName('td')[4];
-		intLine.innerHTML += ' &rarr; ($'+commafy(tmp)+')';
-		setValue('interest', tmp);
+		var money = $x('//table')[2].getElementsByTagName('td')[2].textContent; //check for banked money
+		if (!money.split(' ')[1]) { //money in bank
+			var rx = $x('//table')[2].getElementsByTagName('td')[6].textContent; //get recieved amt
+			var tmp = 1 * rx.replace(/\D/g, '') - 1 * money.replace(/\D/g, ''); //calc interest
+			var intLine = $x('//table')[2].getElementsByTagName('td')[4];
+			intLine.innerHTML += ' &rarr; ($'+commafy(tmp)+')';
+			setValue('interest', tmp);
 
-		//interest reminder
-		seconds = 0;
-		if ($X('//span[@id="counter__days_value"]') != null) { //just deposited some cash, so 1 day and 00:00:00 left
-			d = getTXT('//span[@id="counter__days_value"]');
-			d = parseInt(d, 10);
-			seconds = (seconds + (d * 86400));
-		} else {
+			//interest reminder
+			var seconds = 0;
+			if ($X('//span[@id="counter__days_value"]') != null) {
+				seconds = (seconds + (parseInt(getTXT('//span[@id="counter__days_value"]'), 10) * 86400));
+			}
 			if ($X('//span[@id="counter__hours_value"]') != null) {
-				h = getTXT('//span[@id="counter__hours_value"]');
-				h = parseInt(h, 10);
-				seconds = (seconds + (h * 3600));
+				seconds = (seconds + (parseInt(getTXT('//span[@id="counter__hours_value"]'), 10) * 3600));
 			}
 			if ($X('//span[@id="counter__minutes_value"]') != null) {
-				m = getTXT('//span[@id="counter__minutes_value"]');
-				m = parseInt(m, 10);
-				seconds = (seconds + (m * 60));
+				seconds = (seconds + (parseInt(getTXT('//span[@id="counter__minutes_value"]'), 10) * 60));
 			}
-				if ($X('//span[@id="counter__seconds_value"]') != null) {
-					s = getTXT('//span[@id="counter__seconds_value"]');
-					s = parseInt(s, 10);
-					seconds = (seconds + (s));
-				}
+			if ($X('//span[@id="counter__seconds_value"]') != null) {
+				seconds = (seconds + parseInt(getTXT('//span[@id="counter__seconds_value"]'), 10));
 			}
 
 			//when do we get interest?
-			var timestamp = Math.round(parseInt(new Date().getTime(), 10) / 1000);
-			timestamp = parseInt(timestamp, 10);
-			setValue('banktleft', (timestamp + seconds));
+			setValue('banktleft', (time() + seconds));
 		}
 	}
 
@@ -5049,91 +5037,60 @@ if (dlp == '/vfo.php') { //vote for omerta
 	$x('/html/body//table/tbody/tr[3]//a[contains(@href, "votelot.php")]').forEach(function ($n) {
 		$n.setAttribute('name', 'forticket');
 	});
-
-	$x('//td[@class="tableheader"]')[0].innerHTML = '<a href="#" class="orange" title="'+lang.oneclick[10]+'">' + $x('//td[@class="tableheader"]')[0].textContent + '</a>';
-	$x('//td[@class="tableheader"]/a')[0].addEventListener('click', function () {
+	
+	function voteNow(save) {
 		$x('//*[@name="forticket"]').forEach(function ($n) {
-			GM_openInTab($n);
+			//GM_openInTab($n); // does not work in current GM (0.9.13)
+			window.open($n); // use this until bug in GM is fixed
 		});
-	}, true);
-
-	if (prefs[9]) {
-		lastSTR = getValue('lastvote', 0); //get last voting time
-		vote = 0; //initialize to DON'T VOTE
-		if (!lastSTR) {
-			vote = confirm(lang.oneclick[0]);
-		} else { //not first run
-			//initialize last voting time and current time as Date objects
-			last = new Date(lastSTR);
-			now = new Date();
-
-			//time since last vote
-			date = now.getDate() - last.getDate();
-			hr = now.getHours() - last.getHours();
-			min = now.getMinutes() - last.getMinutes();
-			sec = now.getSeconds() - last.getSeconds();
-
-			//check for negative values
-			if (sec < 0) {
-				min--;
-				sec += 60;
-			}
-			if (min < 0) {
-				hr--;
-				min += 60;
-			}
-			if (hr < 0) {
-				date--;
-				hr += 24;
-			}
-			if (date < 0) {
-				month = last.getMonth();
-				month++; //getMonth starts with Jan=0
-				if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
-					date += 31;
-				}
-				if (month == 4 || month == 6 || month == 9 || month == 11) {
-					date += 30;
-				}
-				if (month == 2) {
-					date += 28;
-				}
-			}
-
-			msg = '';
-			if (now.getUTCDate() != last.getUTCDate()) { //different day, ask for vote [user decision to wait full 24hr]
-				msg += lang.oneclick[5] + '\n' + lang.oneclick[8];
-				msg += date + lang.oneclick[6] + hr + lang.oneclick[2] + min + lang.oneclick[3] + sec + lang.oneclick[4];
-				msg += '\n' + lang.oneclick[7];
-				vote = confirm(msg);
-			} else { //same day, no vote [not encouraging vote abusers]
-				hr = 23 - now.getUTCHours(); //time till 0:00 OT
-				min = 59 - now.getUTCMinutes();
-				sec = 59 - now.getUTCSeconds();
-				msg += lang.oneclick[1];
-				msg += hr + lang.oneclick[2] + min + lang.oneclick[3] + sec + lang.oneclick[4] + '\n';
-				msg += lang.oneclick[9];
-				vote = confirm(msg);
-			}
-		}
-		if (vote) { //give me liberty or give me death!
-			$x('/html/body//table/tbody/tr[3]//a[contains(@href, "votelot.php")]').forEach(function ($n) {
-				GM_openInTab($n.href);
-			});
-			//get current time after voting and store as last voting time
-			now2 = new Date();
-			nowSTR = now2.toUTCString();
-			setValue('lastvote', nowSTR);
+		if (save) {//store last voting time
+			setValue('lastvote', time());
 		}
 	}
-}
 
+	$X('//td[@class="tableheader"]').innerHTML = '<span id="votelink" class="orange" style="cursor:pointer;" title="'+lang.oneclick[10]+'">' + $X('//td[@class="tableheader"]').textContent + '</span>';
+	getID('votelink').addEventListener('click', function () {
+		voteNow(false);
+	}, true);
+	
+	if (prefs[9]) {
+		lastVote = getValue('lastvote', 0); //get last voting time
+		if (lastVote == 0) {
+			if (confirm(lang.oneclick[0])) {
+				voteNow(true);
+			}
+		} else { //not first run
+			
+			var till = lastVote + 86400 - time(); // time till next vote
+			var msg = '';
+			if (till <= 0) { // user can vote again so ask
+				var ago = time() - lastVote; // time since last vote
+				msg += lang.oneclick[5] + '\n' + lang.oneclick[8];
+				msg += Math.floor(ago / 86400) + lang.oneclick[6]; // days
+				msg += Math.floor((ago % 86400) / 3600) + lang.oneclick[2]; // hours
+				msg += Math.floor((ago % 3600) / 60) + lang.oneclick[3]; // minutes
+				msg += Math.floor(ago % 60) + lang.oneclick[4]; // seconds
+				msg += '\n' + lang.oneclick[7];
+			} else { // can't vote yet
+				msg += lang.oneclick[1];
+				msg += Math.floor(till / 3600) + lang.oneclick[2]; // hours
+				msg += Math.floor((till % 3600) / 60) + lang.oneclick[3]; // minutes
+				msg += Math.floor(till % 60) + lang.oneclick[4]; // seconds
+				msg += '\n' + lang.oneclick[9];
+			}
+			if (confirm(msg)) {
+				voteNow(true);
+			}
+		}
+		
+	}
+}
 
 // TSP trigger variable
 
 var editmode = 0;
 
-if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editmode ==1) {
+if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editmode == 1) {
 /*
 	//init
 	Grab prefs
@@ -5155,7 +5112,7 @@ if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editm
 	smart link/hotkeys - click-to-switch
 
 */
-	if(dlp == '/smuggling.php') {
+	if (dlp == '/smuggling.php') {
 		//Grab vital information
 		var cash = $I('//td').split('$')[1].split('<')[0].replace(/\D/g, ''); // Header stuff
 		var maxB = $X('//span').getAttribute('value');

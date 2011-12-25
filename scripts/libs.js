@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.10.0.50
+	Version: 1.10.0.58
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -428,6 +428,9 @@ function sec2time(sec) {
 	min = (min)?min+'m':'';
 	hr = (hr)?hr+'h ':'';
 	return hr + min;
+}
+function time() {
+	return Math.floor(parseInt(new Date().getTime(), 10) / 1000);
 }
 
 function OBUpdate(cb) {

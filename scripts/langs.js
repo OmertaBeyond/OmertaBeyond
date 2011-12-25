@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.54
+	Version: 1.10.0.58
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -271,8 +271,7 @@ var langs = {
 			'Do you want to use the 1-click voter now?',
 			'Since you last used the 1-click voter, it\'s been: \n',
 			'Do you still want to vote?',
-			'Vote for an extra ticket in the Omerta Super Lottery',
-			'Vote for some free bullets and money'
+			'Vote for an extra ticket in the Omerta Super Lottery'
 		],
 		scratcher: [
 			'<b>Congratulations!</b>',
@@ -724,8 +723,7 @@ var langs = {
 			'Do you want to use the 1-click voter now?',
 			'Since you last used the 1-click voter, it\'s been: \n',
 			'Do you still want to vote?',
-			'Vote for an extra ticket in the Omerta Super Lottery',
-			'Vote for some free bullets and money'
+			'Vote for an extra ticket in the Omerta Super Lottery'
 		],
 		scratcher: [
 			'<b>Congratulations!</b>',
@@ -1186,8 +1184,7 @@ var langs = {
 			'Wil je de 1-klik stemmer nu gebruiken?',
 			'Sinds de laatste keer dat je hebt gestemd is er verstreken:\n',
 			'Wil je alsnog de 1-klik stemmer gebruiken?',
-			'Stem voor een extra ticket in de Omerta Super Loterij',
-			'Stem voor wat gratis kogels en geld'
+			'Stem voor een extra ticket in de Omerta Super Loterij'
 		],
 		scratcher: [
 			'<b>Gefeliciteerd!</b>',
@@ -1640,8 +1637,7 @@ var langs = {
 			'Do you want to use the 1-click voter now?',
 			'Since you last used the 1-click voter, it\'s been: \n',
 			'Do you still want to vote?',
-			'Vote for an extra ticket in the Omerta Super Lottery',
-			'Vote for some free bullets and money'
+			'Vote for an extra ticket in the Omerta Super Lottery'
 		],
 		scratcher: [
 			'<b>Congratulations!</b>',
