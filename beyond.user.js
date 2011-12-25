@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			22-12-2011
+// @date			25-12-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 56;
-const SCRIPT_SUBVERSION = 56;
+const SCRIPT_VERSION_BUILD = 57;
+const SCRIPT_SUBVERSION = 57;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1040,7 +1040,6 @@ function bnUpdate(current){
 	var ride = tables[3].getElementsByTagName('td')[3].textContent;
 
 	setValue('bloodType',type);//save
-	setValue('missingHealth',health);
 	setValue('nick',nick);
 
 	//define max b/n judging by rank
@@ -1321,6 +1320,8 @@ if (dls == '?module=Launchpad') {
 		if($X('//a[contains(@href, "/BeO/webroot/index.php?module=Crimes")]')){//if page contains crime timer
 			clearInterval(attempt);
 			bnUpdate(1);//call update function
+
+
 		}
 	},1000);//no rush on updating bninfo, wait for page to load properly
 
@@ -1748,6 +1749,7 @@ if(dlp == '/info.php'){
 		}
 	}
 	if (prefs[38]) { //remove Facebook API from news frame
+		$Del('//select[@id="fbdropdown"]');
 		$del('//iframe');
 	}
 }
@@ -1851,7 +1853,6 @@ if (prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')) {
 	//Run JHL (if there are players in jail)
 	count = j = 0;
 	var HL_row = new Array(maxHL);
-
 	var inJail = $x('//tr[@bgcolor]');//add priority and bgcolor to html
 	if(inJail.length > 0){
 		inJail.forEach(function($n){//loop inmates and check if they have a priority listed
@@ -2229,7 +2230,6 @@ if (dlp == '/mid.php') {
 	bgXp = x2 + '[4]/td[5]';
 	boXp = x2 + '[3]/td[5]';
 	if ($X(healthXpBar)) {
-		setValue('missingHealth', 100 - getTXT(healthXpBar).replace('%', ''));
 		$I(cashXp, '<a href="/bank.php" target="main"><b>C</b>ash:</a>');
 		$I(bulletXp, '<a href="/bullets2.php" target="main"><b>B</b>ullets:</a>');
 		$I(rpXp, '<a href="BeO/webroot/index.php?module=Launchpad" target="main"><b>R</b>ank progress:</a>');
@@ -3260,11 +3260,11 @@ if (prefs[26]) {
 		if (/action=go/.test(db.innerHTML)) {
 			$x('//input')[10].focus();
 		}
-		if (/action=cancel/.test(db.innerHTML) && /action=go/.test(db.innerHTML) == false  && /action=setcar/.test(db.innerHTML) == false) {
+		if (/action=cancel/.test(db.innerHTML) && /action=go/.test(db.innerHTML) == false  && /action=set_car/.test(db.innerHTML) == false) {
 			$X('//a').focus();
 		}
-		if (/action=setcar/.test(db.innerHTML)) {
-			$x('//input')[1].focus();
+		if (/action=set_car/.test(db.innerHTML)) {
+			$X('//input').focus();
 		}
 		if (/result:/.test(db.innerHTML)) {
 			$X('//a').focus();
@@ -3499,7 +3499,7 @@ if (dlp == '/races.php') {
 }
 //---------------- Blood AF ----------------
 if (prefs[27] && (dls.indexOf('?module=Bloodbank&action=') != -1 || dls.indexOf('?module=Shop') != -1)) {
-	var table, prices, tr, missing, A, B, t, m, type, types, ajaxDiv;
+	var table, prices, tr, A, B, t, m, type, types, ajaxDiv;
 	type = getValue('bloodType');
 
 	function bloodAF(t) {
@@ -4235,6 +4235,7 @@ if (urlsearch == '/capocp.php' + dls) {
 				who[0] = '<a href="/user.php?nick=' + who[0] + '"><b>' + who[0] + '</b></a>';
 				$n.innerHTML = who.join(' ');
 			}
+
 		}
 	});
 }
@@ -4346,6 +4347,7 @@ if (dlp == '/kill.php') {
 	}
 	if (prefs[5]) {
 		var inputs = $x('//input[@name="bulletsf"]');
+
 		inputs.forEach(function ($n) {
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 		});
@@ -4494,7 +4496,8 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 
 //---------------- Lackeys II ----------------
 if (dls == '?module=Lackeys') {
-	
+	var path = '//table[@id="overview_log_6"]/tbody/tr', logEntry, r;
+
 	// All text is English for now, so using lang vars is not needed at the moment
 	var loadedTab = 1;
 	var divX;
@@ -4524,12 +4527,12 @@ if (dls == '?module=Lackeys') {
 		loadedTab = 6;
 		divX = '//div[@id="ui-tabs-5"]';
 	}
+	var sluggsHideLaughing = getValue('sluggsHideLaughing', true);
 	function sluggs() {
 		loadedTab = 7;
 		divX = '//div[@id="ui-tabs-6"]';
 
 		// Sluggs log entries
-		var path = '//table[@id="overview_log_6"]/tbody/tr', logEntry, r;
 		var x = 1;
 		$x(path).forEach(function ($n) {
 			logEntry = $x(path+'['+x+']/td')[1].innerHTML;
@@ -4544,7 +4547,7 @@ if (dls == '?module=Lackeys') {
 		
 		// Hide useless entries
 		$X(divX+'/div/div[2]').innerHTML = $X(divX+'/div/div[2]').innerHTML + '<span><input type="checkbox" id="cb" /><label for="cb">Hide "Sluggs is laughing" entries</label></span>';
-		var sluggsHideLaughing = getValue('sluggsHideLaughing', true);
+
 		if (sluggsHideLaughing) {
 			getID('cb').setAttribute('checked', 'checked');
 			hideLaughing(true);
@@ -4557,7 +4560,6 @@ if (dls == '?module=Lackeys') {
 				hideLaughing(true);
 			}
 		}, true);
-		
 	}
 	
 	function hideLaughing(hide) {
@@ -4624,7 +4626,7 @@ if (dls == '?module=Lackeys') {
 			}, true);
 		}
 	}, true);
-	$X('//ul/li[7]').addEventListener('click', function() { // Slugs - bullets
+	$X('//ul/li[7]').addEventListener('click', function() { // Sluggs - bullets
 		if (loadedTab != 7) {
 			getID('ui-tabs-6').addEventListener('load', function() {
 				if (loadedTab != 7) {
@@ -4633,8 +4635,13 @@ if (dls == '?module=Lackeys') {
 			}, true);
 		}
 	}, true);
-	
-
+	if(document.location.hash == '#ui-tabs-6') { // direct call from menu
+		window.addEventListener('load', function () {
+			setTimeout(function () {
+				sluggs();
+			}, 500);
+		}, true);
+	}
 }
 
 //---------------- BulletTracker ----------------
@@ -5339,6 +5346,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 		// b_amount - n_amount == amount per item user is carrying
 		// b        - n        == item we want
 
+
 		if (n > -1) { //do we want narcs?
 			if (carry_n == 0) { //nothing in pocket, fill it all
 				values[7+n] = narcs;
@@ -5969,8 +5977,8 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 
 				$I(bn_xp, str);
 
-				getID('do_n').addEventListener('click', function(){ AF(getInfo[5],0,1); }, true);
-				getID('do_b').addEventListener('click', function(){ AF(getInfo[5],1,0); }, true);
+				getID('do_n').addEventListener('click', function(){ AF(getValue('brcAF', 0),0,1); }, true);
+				getID('do_b').addEventListener('click', function(){ AF(getValue('brcAF', 0),1,0); }, true);
 				getID('do_sell').addEventListener('click', function(){ AF(2,1,1); }, true);
 			}
 			$X('//input[@id="brc' + getInfo[5] + '"]').setAttribute('checked', '1'); //check the selected option at the Div too
@@ -6112,7 +6120,6 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 
 	xpb = '//form/table/tbody/tr[2]/td/table/tbody/tr[';
 	xpn = '//form/table/tbody/tr[2]/td[2]/table/tbody/tr[';
-	
 
 	for (i = 0; i <= 15; i++) { //add click to fill stuff and hotkeys
 		if (i < 7) { //booze
