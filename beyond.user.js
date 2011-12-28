@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			25-12-2011
+// @date			28-12-2011
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 58;
-const SCRIPT_SUBVERSION = 58;
+const SCRIPT_VERSION_BUILD = 59;
+const SCRIPT_SUBVERSION = 59;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -473,8 +473,9 @@ if (dlp == '/prefs.php') {
 		getID('save_jhl_button').addEventListener('click', function(){ jhl_save('jhl'); }, true);
 		getID('save_nojhl_button').addEventListener('click', function(){ jhl_save('nojhl'); }, true);
 		getID('save_jhlprefs_button').addEventListener('click', function(){ jhl_save('jhlprefs'); }, true);
+	} else {
+		getID('tablejail').style.display = 'none';
 	}
-
 	//style coolness
 	$x('//table | //td[@class="toptd"] | //button | //input[@type="text"] | //div[@id="credits"]').forEach(function ($n) {
 		var $N = $n.nodeName;
@@ -1246,6 +1247,10 @@ if (dls == '?module=Launchpad') {
 				$I(famXP, '<a href="/family_recruitment.php"><b>'+getTXT(famXP)+'</b></a>');
 			}
 
+			if ($X(famXP) && getTXT(famXP) != lang.status[1]) {//Set family if in one
+				setValue('family', getTXT(famXP));
+			}
+
 			var inbank = parseInt($X('//table[@class="thinline"][3]/tbody/tr[4]/td[2]/a').innerHTML.replace(/,/g, '').replace(/\s/g, '').replace('$', ''), 10);
 			if (inbank > 0 && interest > 0) {
 				var tr = cEL('tr');
@@ -1532,6 +1537,7 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 		if (dls.indexOf('?module=Bodyguards') != -1 || dls.indexOf('?module=Bodyguards&action=') != -1) {
 			db.insertBefore(c, $X('//div[@class="otable widetable"]'));
 		}
+
 	}
 	//eventListeners
 	if (dls.indexOf('?module=Shop') != -1 || (dls.indexOf('?module=Bodyguards&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) { //via Shop
@@ -1843,6 +1849,7 @@ if (prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')) {
 	}
 	var friendRGB = $x('//td[@width="125px"]')[1].style.backgroundColor;
 	if(friendRGB==''){
+
 		friendHex = '';
 	} else {
 		friendRGB = friendRGB.replace(/[^0-9,]/g, '');
@@ -2296,6 +2303,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 					}
 				}
 			});
+
 		} else {
 			$X('//span[@id="status"]').innerHTML = status;
 		}
@@ -3315,6 +3323,11 @@ if (prefs[26]) {
 				$n.value = GetParam('driver');
 			});
 		}
+		if (/action=accept_raid/.test(db.innerHTML)) {
+			if ($X('//a[contains(@href, "action=accept_raid")]')) {
+				$X('//a[contains(@href, "action=accept_raid")]').focus();
+			}
+		}
 	}
 }
 //---------------- Raidpage ----------------
@@ -4333,6 +4346,7 @@ if (dlp == '/kill.php') {
 		newp.innerHTML = '$0';
 		shtable.appendChild(newp);
 	}
+
 	if (prefs[5]) {
 		var inputs = $x('//input[@name="bulletsf"]');
 
@@ -6275,7 +6289,6 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' 
 	var nickReaderIcon = GM_getResourceURL('nickreader');
 	function parseGrab(html, url){
 		var body = html.slice(html.indexOf('</head>')+7);//don't need <head>
-
 		if(body.indexOf('/BeO/webroot/index.php\?module=Donate.Methods') == -1){//check for clicklimit
 			var ident = url.split('=')[1];//make sure all requests are handled seperatly
 			var xDiv = cEL('div');//place html into page to get DOM
@@ -6345,7 +6358,7 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' 
 	}
 
 	function checkNRdiv(url){
-		var on = (getID('alt').textContent == '1' || getID('ctrl').textContent == '1')?1:0;//is the NR activated?
+		var on = (getID('shft').textContent == '1')?1:0;//is the NR activated?
 		var go = 1;//default is to add popup
 
 		if(db.innerHTML.indexOf('id="'+url) != -1){//check for an existing popup
@@ -6423,15 +6436,9 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' 
 				div.innerHTML = '<center><img src="'+nickReaderIcon+'" />&nbsp;&nbsp;<b>'+lang.NR.misc[2]+'</b></center>';
 				db.appendChild(div);
 
-				div = cEL('div');//setup ctrl event checker
+				div = cEL('div');//setup shift event checker
 				div.style.display = 'none';
-				div.id = 'ctrl';
-				div.innerHTML = 0;
-				db.appendChild(div);
-
-				div = cEL('div');//setup alt event checker
-				div.style.display = 'none';
-				div.id = 'alt';
+				div.id = 'shft';
 				div.innerHTML = 0;
 				db.appendChild(div);
 
@@ -6441,9 +6448,35 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' 
 				div.innerHTML = 0;
 				db.appendChild(div);
 
+				function slideIn() {
+					var s = getID("NRstatus");
+					setTimeout(function(){s.style.right=-140;},100);
+					setTimeout(function(){s.style.right=-100;},200);
+					setTimeout(function(){s.style.right=-60;},300);
+					setTimeout(function(){s.style.right=-30;},400);
+					setTimeout(function(){s.style.right=10;},500);
+				}
+				function slideOut() {
+					var s = getID("NRstatus");
+					setTimeout(function(){s.style.right=-30;},100);
+					setTimeout(function(){s.style.right=-60;},200);
+					setTimeout(function(){s.style.right=-100;},300);
+					setTimeout(function(){s.style.right=-140;},400);
+					setTimeout(function(){s.style.right=-180;},500);
+				}
+
 				//add eventListeners with slide!
-				db.setAttribute('onKeydown', 'function slideIn(){ var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-140;},100);setTimeout(function(){s.style.right=-100;},200);setTimeout(function(){s.style.right=-60;},300); setTimeout(function(){s.style.right=-30;},400);setTimeout(function(){s.style.right=10;},500);} if(event.keyCode==18){ if(document.getElementById("alt").innerHTML == 0){slideIn();} document.getElementById("alt").innerHTML = 1; } if(event.keyCode==17){ if(document.getElementById("ctrl").innerHTML == 0){ slideIn();document.getElementById("ctrl").innerHTML = 1;}else{var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-30;},100);setTimeout(function(){s.style.right=-60;},200);setTimeout(function(){s.style.right=-100;},300); setTimeout(function(){s.style.right=-140;},400);setTimeout(function(){s.style.right=-180;},500);document.getElementById("ctrl").innerHTML = 0;}}');
-				db.setAttribute('onKeyup', 'if(event.keyCode==18){ if(document.getElementById("alt").innerHTML == 1){var s = document.getElementById("NRstatus"); setTimeout(function(){s.style.right=-30;},100);setTimeout(function(){s.style.right=-60;},200);setTimeout(function(){s.style.right=-100;},300); setTimeout(function(){s.style.right=-140;},400);setTimeout(function(){s.style.right=-180;},500);} document.getElementById("alt").innerHTML = 0; document.getElementById("ctrl").innerHTML = 0; }');
+				window.addEventListener('keydown', function(event){
+					if(event.keyCode==16){
+						if(getID("shft").innerHTML == 0){
+							slideIn();
+							getID("shft").innerHTML = 1;
+						} else {
+							slideOut();
+							getID("shft").innerHTML = 0;
+						}
+					}
+				}, true);
 			}
 			nicks.forEach(function($n){//add mouse event checkers
 				if($n.href.search('cpuser')==-1){
@@ -6451,7 +6484,7 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' 
 					$n.addEventListener('mouseout', function(){ if(getID(this.href)){ getID(this.href).style.display = 'none';} }, true);
 				}
 			});
-			window.focus();//focus on frame so 'ctrl' event is noticed
+			window.focus();//focus on frame so 'shift' event is noticed
 		}
 	}
 	//run only on pages without manual trigger
