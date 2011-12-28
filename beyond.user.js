@@ -148,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 59;
-const SCRIPT_SUBVERSION = 59;
+const SCRIPT_VERSION_BUILD = 60;
+const SCRIPT_SUBVERSION = 60;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -298,7 +298,6 @@ if (dlp == '/prefs.php') {
 
 	//order here matters!
 	//place categories in order they need to appear
-
 	addCat(lang.preftitles[0]); //Crimes/Cars
 	addPrefItems([8, 10, 24, 0, 35]);
 
@@ -309,7 +308,7 @@ if (dlp == '/prefs.php') {
 	addPrefItems([3, 23]);
 
 	addCat(lang.preftitles[3]); //AF's
-	addPrefItems([25, 7, 26, 27, 29]);
+	addPrefItems([7, 26, 27, 29]);
 
 	addCat(lang.preftitles[4]); //Clean up
 	addPrefItems([6, 22, 12, 14, 30, 19, 20, 18, 38]);
@@ -467,9 +466,7 @@ if (dlp == '/prefs.php') {
 		string += '</td></tr>';
 		string += '<tr style="height: 20px;"><td class="tdcredits" colspan="6" class="bigtd"><div class="credits">'+lang.jhl[16]+'</div></td></tr>';
 
-
 		getID('tablejail').innerHTML = string;
-		
 		getID('save_jhl_button').addEventListener('click', function(){ jhl_save('jhl'); }, true);
 		getID('save_nojhl_button').addEventListener('click', function(){ jhl_save('nojhl'); }, true);
 		getID('save_jhlprefs_button').addEventListener('click', function(){ jhl_save('jhlprefs'); }, true);
@@ -1501,7 +1498,6 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 			} else {
 				var showspec = '&nbsp;' //just leave it blank in that case
 			}
-			//<table cellpadding="0" cellspacing="0"><tr><td>
 			trdump += '<tr style="background-color:'+color+'">';
 			trdump += '<td style="text-align:center;">'+bgsname[y]+'</td>';
 			trdump += '<td style="text-align:center;"><a href="http://'+dlh+'/obay.php?action=tosell&type=14&id='+bgsid[y]+'">'+bgsid[y]+'</td>';
@@ -1537,7 +1533,6 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 		if (dls.indexOf('?module=Bodyguards') != -1 || dls.indexOf('?module=Bodyguards&action=') != -1) {
 			db.insertBefore(c, $X('//div[@class="otable widetable"]'));
 		}
-
 	}
 	//eventListeners
 	if (dls.indexOf('?module=Shop') != -1 || (dls.indexOf('?module=Bodyguards&action=') != -1 && db.innerHTML.search('smsdivcontainer')>-1) ) { //via Shop
@@ -1548,7 +1543,6 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 						var foo = cEL('div'); //create hardcoded fix so we run code only once
 						foo.id = 'onceonly';
 						getID('smsdivcontainer').appendChild(foo);
-
 						if(prefs[36]){
 							bgspage();
 						}
@@ -1597,17 +1591,10 @@ if (urlsearch == '/BeO/webroot/index.php?module=Pillory') {
 
 //---------------- Bullet form ----------------
 if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto fill form is on AND bullet tables exist
-	var x, path, lbf, bf, BFTextXp;
+	var x, path, bf;
 	x = '/html/body//center';
 	path = '/table/tbody/tr[3]/td';
-	BFTextXp = x + '[2]/table/tbody/tr/td';
-	if (prefs[25] && db.innerHTML.indexOf(lang.bullettracker[6]) == -1 && getELNAME('produce')[0] == null) {
-		var maxBul = (sets.version == '_dm' ? 3000 : 1000);
-		window.addEventListener('load', function () {
-			$x('//input')[1].focus();
-		}, true);
-		lbf = $I(x + path).split('<br>')[3].match(/\d+/g)[0];
-		$X('//fieldset//input[@type="text"][@name="amount_sys"]').value = (lbf >= maxBul) ? maxBul : lbf;
+	if (db.innerHTML.indexOf(lang.bullettracker[6]) == -1 && getELNAME('produce')[0] == null) {
 		if (getELNAME('become')[0] == null) { // no owner fix
 			bf = $I(x + '[2]' + path).split('<br>')[4].replace(',', '').match(/\d+/g)[0];
 			$X('//fieldset//input[@type="text"][@name="amount_bull"]').value = bf;
@@ -1849,7 +1836,6 @@ if (prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')) {
 	}
 	var friendRGB = $x('//td[@width="125px"]')[1].style.backgroundColor;
 	if(friendRGB==''){
-
 		friendHex = '';
 	} else {
 		friendRGB = friendRGB.replace(/[^0-9,]/g, '');
@@ -4167,7 +4153,6 @@ if (dls.search('module=Poker') != -1) {
 				getID('card_td_4').style.backgroundColor='green';
 			}
 		}, true);
-		
 	}
 }
 
@@ -4236,7 +4221,6 @@ if (urlsearch == '/capocp.php' + dls) {
 				who[0] = '<a href="/user.php?nick=' + who[0] + '"><b>' + who[0] + '</b></a>';
 				$n.innerHTML = who.join(' ');
 			}
-
 		}
 	});
 }
@@ -4331,7 +4315,6 @@ if (dlp == '/kill.php') {
 			changeAmount();
 		}, true);
 		td2.appendChild(add2);
-
 	}
 	if ($X('//input[@name="name"]')) {
 		$X('//input[@name="name"]').value = GetParam('search');
@@ -4349,7 +4332,6 @@ if (dlp == '/kill.php') {
 
 	if (prefs[5]) {
 		var inputs = $x('//input[@name="bulletsf"]');
-
 		inputs.forEach(function ($n) {
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 		});
@@ -4446,7 +4428,6 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 	div.setAttribute('class', 'NRInfo');
 	div.setAttribute('style', 'position:fixed; bottom:20px; right:20px; width:250px; color:#FFF !important; background-color:'+getValue('titleBg', '#3F505F'));
 	var divdump = '<center><b>'+lang.scratcher[6]+'</b></center><table width="100%"><tr><td bgcolor="gray"></td></tr></table><div id="statsscratcher">'+lang.scratcher[7]+' <font style="float:right"><b>'+commafy(scratches)+'</b></font><br />'+lang.scratcher[8]+' <font style="float:right"><b>$'+commafy(monout)+'</b></font><br />'+lang.scratcher[9]+' <font style="float:right"><b>$'+commafy(monin)+'</b></font><br />'+lang.scratcher[10]+' <font style="float:right"><b>'+profit+'</b></font><br />'+lang.scratcher[11]+' <font style="float:right"><b>'+commafy(mils)+'</b></font><br />'+lang.scratcher[12]+' <font style="float:right"><b>'+commafy(bullets)+'</b></font><br />'+lang.scratcher[13]+' <font style="float:right"><b>$'+commafy(ppk)+'</b></font></div><br />&nbsp;';
-
 	divdump += '</div><div id="resetscratcher" align="right" style="position:absolute; padding:2px; bottom:3px; right:3px; border:2px solid grey; -moz-border-radius:7px; border-radius:7px;" onmouseover="this.style.border=\'2px solid #BBB\'; this.style.cursor=\'pointer\';" onmousedown="this.style.marginLeft=\'2px\';" onmouseout="this.style.border=\'2px solid grey\'; this.style.cursor=\'default\';" >&nbsp;<b>'+lang.scratcher[16]+'</b> <img src="'+GM_getResourceURL('deleteIcon')+'" style="vertical-align:-3px" /></div>';
 	div.innerHTML = divdump;
 	db.appendChild(div);
@@ -4532,6 +4513,7 @@ if (dls == '?module=Lackeys') {
 	var sluggsHideLaughing = getValue('sluggsHideLaughing', true);
 	function sluggs() {
 		loadedTab = 7;
+
 		divX = '//div[@id="ui-tabs-6"]';
 
 		// Sluggs log entries
@@ -4543,7 +4525,6 @@ if (dls == '?module=Lackeys') {
 			if (r = logEntry.replace(/,/g, '').match(/Sluggs bought (\d+) bullets for \$(\d+)/)) {
 				$x(path+'['+x+']/td')[1].innerHTML = logEntry + ' ($'+Math.round(r[2] / r[1])+'/bullet)';
 			}
-		
 			++x;
 		});
 		

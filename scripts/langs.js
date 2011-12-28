@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.58
+	Version: 1.10.0.60
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -33,7 +33,7 @@ var langs = {
 			'Detailed Familypage',//13 - MISC
 			'Remove "Kill password not set" messages',//14 - CLEAN-UP
 			'Extra links on user profiles',//15 - MISC
-			'Enable Nickreader (hold \'Alt\' or switch on/off with \'Ctrl\')',//16 - MISC
+			'Enable Nickreader (Switch on/off with \'Shift\')',//16 - MISC
 			'Extra prices popup in marquee',//17 - SMUGGLING/PRICES
 			'Remove blue profit calculations in CD-mode',//18 - CLEAN-UP
 			'Disable Avatars on forum and on friend\'s list on profile page',//19 - CLEAN-UP
@@ -42,14 +42,14 @@ var langs = {
 			'Remove Race form bar',//22 - CLEAN-UP
 			'Return to jail page after failure',//23 - JAIL/BUSTING
 			'Enable Garage Car Highlighting',//24 - CRIMES/CARS
-			'Auto-form Bullets',//25 - OTHER AFs
+			'',//25 - 
 			'Auto-form Group Crimes',//26 (heist, oc, moc) - OTHER AFs
 			'Auto-form Bloodbank',//27 - OTHER AFs
 			'Auto-form Smuggling',//28 - SMUGGLING/PRICES
 			'Auto-form Races',//29 - OTHER AFs
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
-			'Enable Scratcher',//32 - OTHER AFs, obsolete
+			'',//32
 			'Enable Trackers (Bullet, Poker, Scratching, BJ, Slots)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
@@ -60,7 +60,7 @@ var langs = {
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
 			'Shows the cocaine prices for every city in the upper bar (with color highlight for low and high)',//1
-			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from INA',//2
+			'News from http://news.omertabeyond.com will be shown below \'Latest news\' in the right panel',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
 			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
 			'Don\'t typ numerous zero\'s anymore in input fields, with this option u can typ \'k\' for 000 and \'m\' for 000000.',//5
@@ -83,20 +83,20 @@ var langs = {
 			'Removes the race form progress bar from your account page',//22
 			'Returns to jail page after your jail time is over',//23
 			'Highlights the cars in your garage in different colors, depending on the use for that car (heist/oc/moc)',//24
-			'Auto-fills in the maximum amount of bullets you can buy, according to the number of bullets in the bullet factory and the amount of money in your pocket',//25
+			'',//25
 			'Auto fills in the bullets, gun etc you need to do a heist, oc or moc',//26
 			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
 			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
 			'Sets focus on editbox and adds link to inbox after finished race',//29
 			'Remove \'Recent Posts\' from user\'s profile.',//30
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
-			'Show the Scratcher Panel with stats on the Scratch&Win page',//32, obsolete
+			'',//32
 			'Keep track of how many bullets you have bought, how many poker-, blackjack- or slotsgames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals',//36
 			'Automaticaly check for updates',//37
-			'You might not even have a Facebook account! Or you mjust might consider it as spam. Get rid of that thing with activating this preference.'//38
+			'You might not even have a Facebook account! Or you just might consider it as spam. Get rid of that thing with activating this preference.'//38
 		],
 		maxprefs: 39, // 1 + last pref #
 		preftitles: [
@@ -484,7 +484,7 @@ var langs = {
 			'Detailed Familypage',//13 - MISC
 			'Remove "Kill password not set" messages',//14 - CLEAN-UP
 			'Extra links on user profiles',//15 - MISC
-			'Enable Nickreader (hold \'Alt\' or switch on/off with \'Ctrl\')',//16 - MISC
+			'Enable Nickreader (Switch on/off with \'Shift\')',//16 - MISC
 			'Extra prices popup in marquee',//17 - SMUGGLING/PRICES
 			'Remove blue profit calculations in CD-mode',//18 - CLEAN-UP
 			'Disable Avatars on forum and on friend\'s list on profile page',//19 - CLEAN-UP
@@ -493,14 +493,14 @@ var langs = {
 			'Remove Race form bar',//22 - CLEAN-UP
 			'Return to jail page after failure',//23 - JAIL/BUSTING
 			'Enable Garage Car Highlighting',//24 - CRIMES/CARS
-			'Auto-form Bullets',//25 - OTHER AFs
+			'',//25 - 
 			'Auto-form Group Crimes',//26 (heist, oc, moc) - OTHER AFs
 			'Auto-form Bloodbank',//27 - OTHER AFs
 			'Auto-form Smuggling',//28 - SMUGGLING/PRICES
 			'Auto-form Races',//29 - OTHER AFs
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
-			'Enable Scratcher',//32 - OTHER AFs
+			'',//32 -
 			'Enable Trackers (Bullet, Poker, Scratching, BJ, Slots)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
@@ -511,7 +511,7 @@ var langs = {
 		prefsTitle: [ //describe the options
 			'Disable the "go for it" button until the image code entered is the correct length',//0
 			'Shows the cocaine prices for every city in the upper bar (with color highlight for low and high)',//1
-			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from INA',//2
+			'News from http://news.omertabeyond.com will be shown below \'Latest news\' in the right panel',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
 			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
 			'Don\'t typ numerous zero\'s anymore in input fields, with this option u can typ \'k\' for 000 and \'m\' for 000000.',//5
@@ -534,20 +534,20 @@ var langs = {
 			'Removes the race form progress bar from your account page',//22
 			'Returns to jail page after your jail time is over',//23
 			'Highlights the cars in your garage in different colors, depending on the use for that car (heist/oc/moc)',//24
-			'Auto-fills in the maximum amount of bullets you can buy, according to the number of bullets in the bullet factory and the amount of money in your pocket',//25
+			'',//25
 			'Auto fills in the bullets, gun etc you need to do a heist, oc or moc',//26
 			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
 			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
 			'Sets focus on editbox and adds link to inbox after finished race',//29
 			'Remove \'Recent Posts\' from user\'s profile.',//30
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
-			'Show the Scratcher Panel with stats on the Scratch&Win page',//32
+			'',//32
 			'Keep track of how many bullets you have bought, how many poker-, blackjack- or slotsgames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals',//36
 			'Automaticaly check for updates',//37 - MISC
-			'You might not even have a Facebook account! Or you mjust might consider it as spam. Get rid of that thing with activating this preference.'//38
+			'You might not even have a Facebook account! Or you just might consider it as spam. Get rid of that thing with activating this preference.'//38
 		],
 		maxprefs: 39, // 1 + last pref #
 		preftitles: [
@@ -936,7 +936,7 @@ var langs = {
 			'Gedetailleerde familiepagina',//13 - MISC
 			'Verwijder "Moord wachtwoord niet ingevuld" bericht',//14 - CLEAN-UP
 			'Extra links op gebruikersprofielen',//15 - MISC
-			'Nicklezer popup tijdens vasthouden van \'Alt\' of aan/uit met \'Ctrl\'',//16 - MISC
+			'Nicklezer popup (aan/uit met \'Shift\')',//16 - MISC
 			'Voeg "extra prijzen popup" toe in de bovenbalk',//17 - SMOKKELEN/PRIJZEN
 			'Verwijder blauwe berekeningen in CD-modus',//18 - CLEAN-UP
 			'Verwijder avatars op forum en in vriendenlijst op profielpagina',//19 - CLEAN-UP
@@ -945,14 +945,14 @@ var langs = {
 			'Verwijder Racevorm balk',//22 - CLEAN-UP
 			'Ga automatisch naar de gevangenis na mislukking',//23 - JAIL/BUSTING
 			'Voeg highlights toe aan auto\'s in de Garage',//24 - CRIMES/CARS
-			'Automatisch invullen van kogels',//25 - ANDERE AFs
+			'',//25 - 
 			'Automatisch invullen bij groeps misdaden',//26 (heist, oc, moc) - ANDERE AFs
 			'Automatisch invullen van bloed',//27 - OTHER AFs
 			'Automatisch invullen bij het smokkelen',//28 - SMUGGLING/PRICES
 			'Automatisch invullen bij autoracen',//29 - OTHER AFs
 			'Verwijder "Recente forumposts" van gebruikersprofielen',//30 - CLEAN-UP
 			'Sneltoetsen gebruiken bij de Postbus',//31 - MISC
-			'Auto-Krasser en Stats',//32 - OTHER AFs
+			'',//32 - 
 			'Voeg Volgers toe (Kogels, Poker, Krassen, BJ, Fruitmachine)',//33 - MISC
 			'Ruim de Spot Overvallen pagina op',//34 - UI Extras
 			'Laat misdaad- en autojatstats zien op status pagina',//35 - CRIMES/CARS
@@ -972,7 +972,7 @@ var langs = {
 			'Selecteert automatisch de beste optie bij misdaden en auto\'s jatten',//8
 			'Hiermee kan je alle pagina\'s openen waar je op kan stemmen (bij "stem op omerta") met 1 druk op de knop',//9
 			'Als je op misdaad/auto stelen klikt terwijl je nog wachttijd hebt word de pagina automatisch vernieuwt als de wachttijd voorbij is',//10
-			'Keert terug naar de pagina waar je was als je een verkeerde code invulde',//11
+			'Keert terug naar de pagina waar je was als je een verkeerde code invuld',//11
 			'Verwijdert capogeld tekst van je status pagina(Als je $0 capo geld hebt)',//12
 			'Top/Capo\'s/objecthouders staan in kleur op fampage samen met een letter ernaast die aangeeft wat ze zijn',//13
 			'Verwijdert Moordwachtwoord teksten',//14
@@ -986,14 +986,14 @@ var langs = {
 			'Verwijdert het racevorm balkje van je status pagina',//22
 			'Gaat terug naar gevangenis pagina als je weer vrij bent',//23
 			'Dit highlight de auto\'s in verschillende tinten grijs afhankelijk van waar je ze het beste voor kunt gebruiken (heist/oc/moc)',//24
-			'Vult automatische het maximale aantal kogels in dat je kunt kopen, word gekeken naar aantal kogels in de fabriek en het geld dat je hebt',//25
+			'',//25
 			'Vult kogels/wapen etc in voor heist, oc of moc',//26
 			'Vult het aantal eenheden bloed zodat je op 100% uitkomt, geslecteerd op goedkoopste soort die je kunt kopen',//27
 			'Vult het maximale aantal drank/drugs/beide dat je kan dragen. De beste deal calculator vult in en geeft je ook de mogelijkheid om op het drank/drugs type te klikken waar die het maximum invult',//28
 			'Focust op accepteren en voegt een link to naar inbox nadat je een race hebt gedaan',//29
 			'Verwijdert de regel met de laatste forumposts van profielen',//30
 			'Geeft je de mogelijkheid om berichten te openen met sneltoetsen en aldaar te antwoorden of het bericht te verwijderen met een sneltoets',//31
-			'Geef het Krasser paneel met stats weer op de Kras&Win pagina',//32
+			'',//32
 			'Hou bij hoeveel kogels je koopt bij de kogelfabriek, hoeveel handen je hebt gespeeld met poker, hoeveel kaarten je hebt gekrast en hoeveel keer je blackjack of op de fruitmachine hebt gespeeld',//33
 			'Krijg een goed overzicht van de spots zodat je makkelijker je doel kunt kiezen',//34
 			'Laat het aantal misdaaden zien die succesvol waren en het total aantal auto\'s die je gestolen hebt, plus de totale winst van beide',//35
@@ -1399,7 +1399,7 @@ var langs = {
 			'Detailed Familypage',//13 - MISC
 			'Remove "Kill password not set" messages',//14 - CLEAN-UP
 			'Extra links on user profiles',//15 - MISC
-			'Enable Nickreader (hold \'Alt\' or switch on/off with \'Ctrl\')',//16 - MISC
+			'Enable Nickreader (Switch on/off with \'Shift\')',//16 - MISC
 			'Extra prices popup in marquee',//17 - SMUGGLING/PRICES
 			'Remove blue profit calculations in CD-mode',//18 - CLEAN-UP
 			'Disable Avatars on forum and on friend\'s list on profile page',//19 - CLEAN-UP
@@ -1408,14 +1408,14 @@ var langs = {
 			'Remove Race form bar',//22 - CLEAN-UP
 			'Return to jail page after failure',//23 - JAIL/BUSTING
 			'Enable Garage Car Highlighting',//24 - CRIMES/CARS
-			'Auto-form Bullets',//25 - OTHER AFs
+			'',//25 - 
 			'Auto-form Group Crimes',//26 (heist, oc, moc) - OTHER AFs
 			'Auto-form Bloodbank',//27 - OTHER AFs
 			'Auto-form Smuggling',//28 - SMUGGLING/PRICES
 			'Auto-form Races',//29 - OTHER AFs
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
-			'Enable Scratcher',//32 - OTHER AFs, obsolete
+			'',//32 - 
 			'Enable Trackers (Bullet, Poker, Scratching, BJ, Slots)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS
@@ -1426,7 +1426,7 @@ var langs = {
 		prefsTitle: [ //describe the options
 			'You cant press the &quot;go for it&quot; button before you filled in a 3 character code',//0
 			'Shows the cocaine prices for every city in the upper bar (with color highlight for low and high)',//1
-			'Instead of the Omerta forums in the latest news (on the right side) you have latest articles from INA',//2
+			'News from http://news.omertabeyond.com will be shown below \'Latest news\' in the right panel',//2
 			'Enables the jail highlight for busting list, friends and family, it auto-selects them according to priority and it enables the buy out hotkeys',//3
 			'Enables the hotkeys for booze/narcs/both and for the auto-fill mode you choose (best/CD/RP/none)',//4
 			'Don\'t typ numerous zero\'s anymore in input fields, with this option u can typ \'k\' for 000 and \'m\' for 000000.',//5
@@ -1449,20 +1449,20 @@ var langs = {
 			'Removes the race form progress bar from your account page',//22
 			'Returns to jail page after your jail time is over',//23
 			'Highlights the cars in your garage in different colors, depending on the use for that car (heist/oc/moc)',//24
-			'Auto-fills in the maximum amount of bullets you can buy, according to the number of bullets in the bullet factory and the amount of money in your pocket',//25
+			'',//25
 			'Auto fills in the bullets, gun etc you need to do a heist, oc or moc',//26
 			'Auto-fills the amount of blood you can buy until 100%, using the cheapest type of blood you can buy',//27
 			'Auto fills in the max amount of booze/narcs/both you can carry, enables the best run calculator filling and also allows you to click the type of b/n you want to fill in the max amount',//28
 			'Sets focus on editbox and adds link to inbox after finished race',//29
 			'Remove \'Recent Posts\' from user\'s profile.',//30
 			'Enables you to open messages, reply instantly or to delete a message using hotkeys',//31
-			'Show the Scratcher Panel with stats on the Scratch&Win page',//32, obsolete
+			'',//32
 			'Keep track of how many bullets you have bought, how many poker-, blackjack- or slotsgames you played or how many cards you have scratched',//33
 			'Get a clear overview of the Spot raid page so you can pick your target with more ease',//34
 			'Show the amount of crimes which were successful and the amount of cars stolen, plus the total profit from both',//35
 			'A nice overview of all your bodyguards and their trained levels, including totals',//36
 			'Automaticaly check for updates',//37
-			'You might not even have a Facebook account! Or you mjust might consider it as spam. Get rid of that thing with activating this preference.'//38
+			'You might not even have a Facebook account! Or you just might consider it as spam. Get rid of that thing with activating this preference.'//38
 		],
 		maxprefs: 39, // 1 + last pref #
 		preftitles: [
