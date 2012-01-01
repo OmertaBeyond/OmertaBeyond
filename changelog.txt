@@ -2,7 +2,7 @@ Omerta Beyond Changelog
 
 Version 1.10.0.50 		12/08/2011
 
-        * Added Redirect to Status
+	* Added Redirect to Status
 	* Cleaned up some code
 	* Changed minFFVersion to 4.0
 	* ( FS#361 ) Changed page marquee gets prices from to omerta xml

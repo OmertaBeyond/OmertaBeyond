@@ -4,7 +4,7 @@
 	Changing these values are at your own risk. If you make bug changes or bugfixes,
 	please inform us too so we can make any changes if we think are necesary.
 
-	Version: 1.10.0.50
+	Version: 1.10.0.61
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -266,85 +266,85 @@ cursor:pointer;
 }
 
 
-		/* @Beyond Message */
-			.bm_shade {
-				position:fixed;
-				top:0px;
-				left:0px;
-				height:100%;
-				width:100%;
-				background-color:#222;
-				opacity:.00;
-				z-index:1;
-			}
-			.bm {
-				position:fixed;
-				font-family:Verdana,Tahoma;
-				font-size:12px;
-				width:300px;
-				line-height:18px;
-				background-color:#333;
-				color:#DDD;
-				z-index:2;
-				-moz-border-radius:3px
-			}
-			.bm a {
-				color:#DDD;
-			}
-			.bm a:hover {
-				color:#DDD;
-				text-decoration:underline;
-			}
-			.bm_title {
-				text-align:center;
-				font-weight:bold;
-				padding-top:1px;
-				color:#DDD;
-				height:18px;
-				-moz-border-radius-topLeft:3px;
-				-moz-border-radius-topRight:3px;
-				border:1px solid #000
-			}
-			.bm_warn .bm_body {
-				background:url('http://dump.omertabeyond.com/images/104error.png') 28px 28px no-repeat;
-			}
-			.bm_info .bm_body {
-				background:url('http://www.omertabeyond.com/pre/sbanks/skull3.png') 28px 28px repeat-y;
-				font-size:10px;
-			}
-			.bm_info > div:nth-child(1) {
-				background-color:darkred !important;
-			}
-			.bm_body {
-				padding-left:70px;
-				padding-top:10px;
-				padding-right:10px;
-				min-height:70px;
-				-moz-border-radius-bottomLeft:3px;
-				-moz-border-radius-bottomRight:3px;
-				border:1px solid #000
-			}
+/* @Beyond Message */
+.bm_shade {
+	position:fixed;
+	top:0px;
+	left:0px;
+	height:100%;
+	width:100%;
+	background-color:#222;
+	opacity:.00;
+	z-index:1;
+}
+.bm {
+	position:fixed;
+	font-family:Verdana,Tahoma;
+	font-size:12px;
+	width:300px;
+	line-height:18px;
+	background-color:#333;
+	color:#DDD;
+	z-index:2;
+	-moz-border-radius:3px
+}
+.bm a {
+	color:#DDD;
+}
+.bm a:hover {
+	color:#DDD;
+	text-decoration:underline;
+}
+.bm_title {
+	text-align:center;
+	font-weight:bold;
+	padding-top:1px;
+	color:#DDD;
+	height:18px;
+	-moz-border-radius-topLeft:3px;
+	-moz-border-radius-topRight:3px;
+	border:1px solid #000
+}
+.bm_warn .bm_body {
+	background:url('http://dump.omertabeyond.com/images/104error.png') 28px 28px no-repeat;
+}
+.bm_info .bm_body {
+	background:url('http://www.omertabeyond.com/pre/sbanks/skull3.png') 28px 28px repeat-y;
+	font-size:10px;
+}
+.bm_info > div:nth-child(1) {
+	background-color:darkred !important;
+}
+.bm_body {
+	padding-left:70px;
+	padding-top:10px;
+	padding-right:10px;
+	min-height:70px;
+	-moz-border-radius-bottomLeft:3px;
+	-moz-border-radius-bottomRight:3px;
+	border:1px solid #000
+}
 
-			.bm_buttons {
-				position:absolute;
-				right:10px;
-				bottom:10px;
-			}
-			.bm button {
-				float:right;
-				margin-right:10px;
-				border:1px solid #BBB;
-				background:#000;
-				-moz-border-radius:3px;
-				color:#DDD;
-				height:20px;
-				width:55px;
-			}
-			.bm button:hover {
-				color:#fff;
-				border:1px solid #fff;
-				background-color:#111;
-			}
-			button::-moz-focus-inner,input::-moz-focus-inner{
-				border: none
-			}
+.bm_buttons {
+	position:absolute;
+	right:10px;
+	bottom:10px;
+}
+.bm button {
+	float:right;
+	margin-right:10px;
+	border:1px solid #BBB;
+	background:#000;
+	-moz-border-radius:3px;
+	color:#DDD;
+	height:20px;
+	width:55px;
+}
+.bm button:hover {
+	color:#fff;
+	border:1px solid #fff;
+	background-color:#111;
+}
+button::-moz-focus-inner,input::-moz-focus-inner{
+	border: none
+}
