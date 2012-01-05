@@ -1,41 +1,41 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @version			1.10
-// @date			01-01-2012
+// @date			05-01-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
 // @author			Rix <rix@omertabeyond.com>
 // @author			MrWhite <mrwhite@omertabeyond.com>
 // @license			GNU General Public License v3
-// @namespace		v3.omertabeyond.com
-// @homepageURL		http://www.omertabeyond.com/
-// @description		Omerta Beyond 1.10 (Still the best 'legal' script! ;))
+// @namespace			v3.omertabeyond.com
+// @homepageURL			http://www.omertabeyond.com/
+// @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
-// @screenshot		http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
+// @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
-// @resource		css			http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
-// @resource		trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
-// @resource		colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
-// @resource		comLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-com.png
-// @resource		dmLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-dm.png
-// @resource		nlLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-nl.png
-// @resource		buttonMenu	http://omertabeyond.googlecode.com/svn/trunk/images/menu.png
-// @resource		buttonKey	http://omertabeyond.googlecode.com/svn/trunk/images/key.png
-// @resource		buttonReset	http://omertabeyond.googlecode.com/svn/trunk/images/reset.png
-// @resource		favoriteIco	http://omertabeyond.googlecode.com/svn/trunk/images/favicon.png
-// @resource		edoIco		http://omertabeyond.googlecode.com/svn/trunk/images/edo.png
-// @resource		updateIco	http://omertabeyond.googlecode.com/svn/trunk/images/updateicon.png
-// @resource		brcGear		http://omertabeyond.googlecode.com/svn/trunk/images/brcgear.png
-// @resource		deleteIcon	http://omertabeyond.googlecode.com/svn/trunk/images/deleteicon.png
-// @resource		reply		http://omertabeyond.googlecode.com/svn/trunk/images/reply.png
-// @resource		loading		http://omertabeyond.googlecode.com/svn/trunk/images/loading.png
-// @resource		nickreader	http://omertabeyond.googlecode.com/svn/trunk/images/magnifier.png
-// @resource		nextIcon	http://omertabeyond.googlecode.com/svn/trunk/images/next.png
-// @resource		prevIcon	http://omertabeyond.googlecode.com/svn/trunk/images/prev.png
-// @resource		check		http://omertabeyond.googlecode.com/svn/trunk/images/check.png
+// @resource			css			http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
+// @resource			trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
+// @resource			colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
+// @resource			comLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-com.png
+// @resource			dmLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-dm.png
+// @resource			nlLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-nl.png
+// @resource			buttonMenu	http://omertabeyond.googlecode.com/svn/trunk/images/menu.png
+// @resource			buttonKey	http://omertabeyond.googlecode.com/svn/trunk/images/key.png
+// @resource			buttonReset	http://omertabeyond.googlecode.com/svn/trunk/images/reset.png
+// @resource			favoriteIco	http://omertabeyond.googlecode.com/svn/trunk/images/favicon.png
+// @resource			edoIco		http://omertabeyond.googlecode.com/svn/trunk/images/edo.png
+// @resource			updateIco	http://omertabeyond.googlecode.com/svn/trunk/images/updateicon.png
+// @resource			brcGear		http://omertabeyond.googlecode.com/svn/trunk/images/brcgear.png
+// @resource			deleteIcon	http://omertabeyond.googlecode.com/svn/trunk/images/deleteicon.png
+// @resource			reply		http://omertabeyond.googlecode.com/svn/trunk/images/reply.png
+// @resource			loading		http://omertabeyond.googlecode.com/svn/trunk/images/loading.png
+// @resource			nickreader	http://omertabeyond.googlecode.com/svn/trunk/images/magnifier.png
+// @resource			nextIcon	http://omertabeyond.googlecode.com/svn/trunk/images/next.png
+// @resource			prevIcon	http://omertabeyond.googlecode.com/svn/trunk/images/prev.png
+// @resource			check		http://omertabeyond.googlecode.com/svn/trunk/images/check.png
 // @include			http://gm.omertabeyond.com/*.php*
 // @include			http://www.omertabeyond.com/html/poll/poll.php*
 // @include			http://www.omerta3.com/*
@@ -97,27 +97,24 @@ function whereToRun(hostname) {
 		case 'www.barafranca.us':
 		case 'barafranca.us':
 			return 'com';
-			break;
 		case 'deathmatch.barafranca.com':
 		case 'dm.barafranca.com':
 			return 'dm';
-			break;
 		case 'www.barafranca.nl':
 		case 'barafranca.nl':
 			return 'nl';
-			break;
 		case 'www.barafranca.gen.tr':
 		case 'barafranca.gen.tr':
 			return 'tr';
-			break;
 		case 'gm.omertabeyond.com':
 		case 'www.omertabeyond.com':
 			var version = window.location.search.split('=')[1];
-			if (version.indexOf('&') == -1) {
+			if (version.indexOf('&') === -1) {
 				return version;
 			} else {
 				return version.split('&')[0];
 			}
+		break;
 		default:
 			return undefined;
 	}
