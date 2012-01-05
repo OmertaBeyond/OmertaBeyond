@@ -17,7 +17,7 @@
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
-// @resource			css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
+// @resource			css			http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
 // @resource			trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
 // @resource			colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
 // @resource			comLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-com.png
@@ -37,6 +37,7 @@
 // @resource			nextIcon	http://omertabeyond.googlecode.com/svn/trunk/images/next.png
 // @resource			prevIcon	http://omertabeyond.googlecode.com/svn/trunk/images/prev.png
 // @resource			check		http://omertabeyond.googlecode.com/svn/trunk/images/check.png
+// @resource			changelog	http://omertabeyond.googlecode.com/svn/trunk/images/changelog.png
 // @include			http://gm.omertabeyond.com/*.php*
 // @include			http://www.omertabeyond.com/html/poll/poll.php*
 // @include			http://www.omerta3.com/*
@@ -63,7 +64,7 @@ $Date$:  Date of last commit
 */
 
 //---------------- (Omerta==0)?refresh:go ----------------
-if (db.innerHTML.indexOf('clicklimit') != -1 && dlp != '/menu.php') {
+if (db.innerHTML.indexOf('click limit') != -1 && dlp != '/menu.php') {
 	setTimeout(function () {
 		window.location.reload();
 	}, 60000);
@@ -146,8 +147,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 61;
-const SCRIPT_SUBVERSION = 61;
+const SCRIPT_VERSION_BUILD = 62;
+const SCRIPT_SUBVERSION = 62;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1635,7 +1636,7 @@ if(dlp == '/info.php'){
 			var url = (sets.version == '_com') ? OBnUrl+'beyond/' : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
 			for(var o=0,f=0;(o+f)<=4;1){//loop dates
 				var nextmonth=0;
-				if((oDay[o]<fDay[f] && oMonth[o]<=fMonth[f]) || (oDay[o]>fDay[f] && oMonth[o]<fMonth[f])){//check dates
+				if((oDay[o]<fDay[f] && oMonth[o]<=fMonth[f]) || (oDay[o]>fDay[f] && oMonth[o]<fMonth[f] || (oDay[o]>fDay[f] && fMonth[f]== 1))){//check dates
 					if(sets.version == '_com'){//ob
 						news.push([url+fUrl[f],fArticles[f].replace(/ /,'<br />')]);
 					} else {//edo
@@ -1671,7 +1672,7 @@ if(dlp == '/info.php'){
 			var times = $X('//a[contains(@href,"mag.php")]');
 			times.href = sets.version=='_com' ? OBnUrl : EdoUrl;
 			times.style.fontSize = '11px';
-			times.innerHTML = 'OBNews';
+			times.innerHTML = sets.version=='_com' ? 'OBNews' : 'Edo Nieuws';
 		}
 		//prep arrays
 		var fUrl=[];
@@ -2153,7 +2154,6 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 	function setCity(id) {
 		setValue('ship', id);
-
 	}
 	var worth = db.innerHTML.match(/\[\$(.*)\]/);
 	var carTracker = getValue('cars', 0);
@@ -2164,11 +2164,22 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 		var city = getPow('bninfo', 2, -1);
 		var fam = getPow('bninfo', 4, -1);
 		var carcity = city-4;
-		var worth2 = parseInt(worth[1].replace(',', '').trim(), 10);
-		if (worth2 >= 5000) {
-			$X('//input[@type="submit"]').focus();
+		//change position of sell button and add crush button
+		$x('//form')[0].parentNode.removeChild($x('//form')[0]);
+		var crushform = cEL('form');
+		crushform.setAttribute('method', 'post');
+		crushform.setAttribute('action', '/garage.php');
+		if(fam > 0){
+			crushform.innerHTML = '<form id="cars" method="post" action="/garage.php"><input type="hidden" name="cityin" value="6"><input type="hidden" name="carcity" value="'+carcity+'"><input type="hidden" value="'+carid+'" name="carid[0]" /><input type="hidden" name="carsafe[0]" value="0" /><input type="submit" name="crush" value="Crush" onclick="return confirm(\'Do you want to crush this car?\')" /> | <input type="submit" name="sell" value="Sell" onclick="return confirm(\'Do you want to sell this car?\')" /></form>';
 		} else {
-			$x('//input[@type="submit"]')[1].focus();
+			crushform.innerHTML = '<form id="cars" method="post" action="/garage.php"><input type="hidden" name="cityin" value="6"><input type="hidden" name="carcity" value="'+carcity+'"><input type="hidden" value="'+carid+'" name="carid[0]" /><input type="hidden" name="carsafe[0]" value="0" /><input type="submit" name="lcrush" value="Local Crush" onclick="return confirm(\'Do you want to crush this car?\')" /> | <input type="submit" name="sell" value="Sell" onclick="return confirm(\'Do you want to sell this car?\')" /></form>';
+		}
+		$X('//center').insertBefore(crushform, $X('//form')[1]);
+		var worth2 = parseInt(worth[1].replace(',', '').trim(), 10); //grab worth
+		if (worth2 >= 5000) {
+			$x('//input[@type="submit"]')[2].focus();
+		} else {
+			$X('//input[@type="submit"]').focus();
 		}
 		$X('//input[@value="'+shipcity+'"]').checked = true;
 		++carTracker;
@@ -2190,14 +2201,6 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 		sel.addEventListener('change', function() { setCity(this.value); }, true);
 		div.appendChild(sel);
 		db.appendChild(div);
-		if(fam > 0){
-			$x('//form')[0].parentNode.removeChild($x('//form')[0]);  
-			var crushform = cEL('form');
-			crushform.setAttribute('method', 'post');
-			crushform.setAttribute('action', '/garage.php');
-			crushform.innerHTML = '<form id="cars" method="post" action="/garage.php"><input type="hidden" name="cityin" value="6"><input type="hidden" name="carcity" value="'+carcity+'"><input type="hidden" value="'+carid+'" name="carid[0]" /><input type="hidden" name="carsafe[0]" value="0" /><input type="submit" name="crush" value="Crush" onclick="return confirm(\'Do you want to crush this car?\')" /> | <input type="submit" name="sell" value="Sell" onclick="return confirm(\'Do you want to sell this car?\')" /></form>';
-			$X('//center').insertBefore(crushform, $X('//form')[1]);
-		}
 	}
 }
 
@@ -2238,7 +2241,6 @@ if (dlp == '/mid.php') {
 		script.innerHTML = 'var timers = {crime: 0, car: 0, flight: 0, bullet: 0};';
 		db.appendChild(script);
 	}
-
 }
 
 //---------------- User Profile ----------------
@@ -2287,7 +2289,6 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 					}
 				}
 			});
-
 		} else {
 			$X('//span[@id="status"]').innerHTML = status;
 		}
@@ -2320,7 +2321,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 		y = db.innerHTML.search(lang.profile[1]);
 		z = db.innerHTML.search(lang.profile[2]);
 
-		if (x ==- 1) { tr--; }
+		if (x == -1) { tr--; }
 		if (y == -1) { tr--; }
 		if (z == -1) { tr--; }
 		xpath = '/html/body//center/table/tbody/tr['+tr+']/td[2]';
@@ -2838,7 +2839,7 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 }
 //---------------- Family page ----------------
 if (dlp == '/family.php') {
-	if (prefs[3]) {
+	if ((prefs[3])&&(dls.indexOf('join=yes') == -1)) {
 		var ownfam = getValue('family', '')
 		var names = getValue('bust', '');
 		var jhl_add = 1;
@@ -2891,7 +2892,7 @@ if (dlp == '/family.php') {
 			$X('//td[@class="profilerow"]').appendChild(jhl_link);
 		}
 	}
-	if (prefs[13]) {
+	if ((prefs[13])&&(dls.indexOf('join=yes') == -1)) {
 		//style family info table a bit
 		$x('//td[@class="subtableheader"]').forEach(function($n) {
 			$n.setAttribute('style', 'padding-left: 4px; text-align: left;');
@@ -2993,7 +2994,6 @@ if (dlp == '/family.php') {
 					color = 'purple';
 				}
 			}
-
 			if (sOnline.search('#'+n+'#') !=- 1) {
 				$n.setAttribute('class', color);
 			}
@@ -3062,7 +3062,7 @@ if (dlp == '/family.php') {
 					deathtable.setAttribute('cellspacing', '0');
 					deathtable.setAttribute('cellpadding', '2');
 					deathtable.setAttribute('rules', 'none');
-					deathtable.innerHTML = '<tr><td colspan="100%" class="tableheader">'+lang.fampage[6]+'</td></tr><tr><td colspan="100%" bgcolor="black" height="1"></td></tr><tr><td class="bold" align="left">'+lang.fampage[8]+'</td><td class="bold" align="center">'+lang.fampage[9]+'</td><td class="bold" align="center">'+lang.fampage[10]+'</td><td class="bold" style="text-align:right;">'+lang.fampage[11]+'</td></tr>';
+					deathtable.innerHTML = '<tr><td colspan="100%" class="tableheader">'+lang.fampage[6]+'<div style="float:right;margin-right:5px;margin-top:3px;"><a href="http://news.omertabeyond.com/deathslog/'+famid+'" target="_blank"><img src="'+GM_getResourceURL('changelog')+'" title="View full deathslog" /></a></div></td></tr><tr><td colspan="100%" bgcolor="black" height="1"></td></tr><tr><td class="bold" align="left">'+lang.fampage[8]+'</td><td class="bold" align="center">'+lang.fampage[9]+'</td><td class="bold" align="center">'+lang.fampage[10]+'</td><td class="bold" style="text-align:right;">'+lang.fampage[11]+'</td></tr>';
 					if(response['deaths']){
 						for (i = -1; ++i < response['deaths'].length;) {
 							var extra = (response['deaths'][i]['Akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['BF'] == 1)?'(<b>BF</b>)':'';
@@ -3081,7 +3081,7 @@ if (dlp == '/family.php') {
 					changetable.setAttribute('cellspacing', '0');
 					changetable.setAttribute('cellpadding', '2');
 					changetable.setAttribute('rules', 'none');
-					changetable.innerHTML = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[7]+'</td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left" width="28%">'+lang.fampage[10]+'</td><td class="bold" align="left">'+lang.fampage[12]+'</td></tr>';
+					changetable.innerHTML = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[7]+'<div style="float:right;margin-right:5px;margin-top:3px;"><a href="http://news.omertabeyond.com/famlog/'+famid+'" target="_blank"><img src="'+GM_getResourceURL('changelog')+'" title="View full changelog" /></a></div></td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left" width="28%">'+lang.fampage[10]+'</td><td class="bold" align="left">'+lang.fampage[12]+'</td></tr>';
 					if(response['changes']){
 						for (i = -1; ++i < response['changes'].length;) {
 							changetable.innerHTML += '<tr><td align="left" width="28%" valign="top">'+response['changes'][i]['date']+'</td><td align="left">'+response['changes'][i]['text']+'</td></tr>';
@@ -3100,9 +3100,19 @@ if (dlp == '/family.php') {
 				}
 			}
 		});
-	
+	}
+	if(dls.indexOf('final=yes') != -1) {
+		var famXP = db.textContent.split(' ')[3];
+		if(famXP != 'erased') {
+			setValue('family', famXP);
+		}
 	}
 }
+if(dlp == '/leavecrew.php') {
+	if(db.textContent.search('You left the family') != -1) {
+		setValue('family', 'None');
+	}
+}		
 //---------------- Manage Users (top3 only) ----------------
 if (dls.indexOf('module=Family') != -1) {
 	if(GetParam('who')){//invite from profile
@@ -3116,7 +3126,6 @@ if (dls.indexOf('module=Family') != -1) {
 	var cdP = ((parseInt((brugP/100),10)*perc)+parseInt(brugP));
 	var gfP = ((parseInt((cdP/100),10)*perc)+parseInt(cdP));
 	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><br /><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
-
 }
 if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 //--Add Capo Money list + calc
@@ -3235,7 +3244,9 @@ if (prefs[26]) {
 			if (dls.indexOf('who') != -1) {
 				dr.value = dls.split('&who=')[1]; //referral from profile page
 			}
-			dr.focus();
+			if (dr) {
+				dr.focus();
+			}
 		}
 		if (/action=go/.test(db.innerHTML)) {
 			$x('//input')[10].focus();
@@ -3289,14 +3300,14 @@ if (prefs[26]) {
 			}, true);
 		}
 		if (/action=setbullets/.test(db.innerHTML)) { //as WE
-			$x('//input[@type="text"]')[0].value = 500;
+			$X('//input[@type="text"]').value = 500;
 			window.addEventListener('load', function () {
-				$x('//input[@type="submit"]')[0].focus();
+				$X('//input[@type="submit"]').focus();
 			}, true);
 		}
 		if (/drivers/.test(db.innerHTML)) { //as LE
 			window.addEventListener('load', function () {
-				$x('//input[@type="submit"]')[0].focus();
+				$X('//input[@type="submit"]').focus();
 			}, true);
 		}
 	}
@@ -4051,7 +4062,7 @@ if (dls.search('module=Poker') != -1) {
 		}, true);
 	}
 	//hide full
-	if (db.innerHTML.search('Running Games') != -1) {
+	if (db.innerHTML.search(lang.pokertracker[11]) != -1) {
 		function hideFull(hide) {
 			setValue('hidefull', hide);
 			hidefull = hide;
@@ -4068,7 +4079,7 @@ if (dls.search('module=Poker') != -1) {
 			}
 		}
 		var span = cEL('span');
-		span.innerHTML = '<label for="cb">Hide full games</label>';
+		span.innerHTML = '<label for="cb">'+lang.pokertracker[12]+'</label>';
 		var input = cEL('input');
 		input.setAttribute('type', 'checkbox');
 		input.id = 'cb';
@@ -4306,6 +4317,7 @@ if (dlp == '/kill.php') {
 		}, true);
 		td2.appendChild(add1);
 		var add2 = cEL('input');
+
 		add2.setAttribute('type', 'button');
 		add2.value = '-1';
 		add2.addEventListener('click', function () {
@@ -5167,6 +5179,7 @@ if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editm
 			'<div style="background:#ddd;border-radius:5px;">' +
 				'<table cellspacing="0" cellpadding="0" border="0" width="100%">' +
 					'<tr style="height:23px;background: url(\'/static/images/game/generic/headershine.png\') repeat-x scroll 0 0 ' + getValue('titleBg', '#F0F0F0')+ ';color:#ddd;font-weight:bold;">' + // Dealer header
+
 						'<td style="border-bottom:2px solid #000;padding-left:6px;">' +
 							'Booze&nbsp;' +
 						'</td>' +

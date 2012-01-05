@@ -4,7 +4,7 @@
 	Don't change anything unless you know what are you doing.
 	Language arrays needed for multilingual OB
 
-	Version: 1.10.0.61
+	Version: 1.10.0.62
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -349,12 +349,14 @@ var langs = {
 			'You have called the current bet.',
 			'You have raised the bet.',
 			'Games played: ',
-			'Games won: ',
+			'Games won: ',//5
 			'Money spent: ',
 			'Money won: ',
 			'Profit: ',
 			'You have checked the current bet.',
-			'You have started a new game.'
+			'You have started a new game.',//10
+			'Running Games',
+			'Hide full games'
 		],
 		bjtracker: [
 			'BJ Tracker',
@@ -806,7 +808,9 @@ var langs = {
 			'Money won: ',
 			'Profit: ',
 			'You have checked the current bet.',
-			'You have started a new game.'
+			'You have started a new game.',//10
+			'Running Games',
+			'Hide full games'
 		],
 		bjtracker: [
 			'BJ Tracker',
@@ -1269,7 +1273,9 @@ var langs = {
 			'Geld gewonnen:',
 			'Winst:',
 			'Je hebt de huidige inzet gecalled.',
-			'Je hebt een nieuw spel gestart.'
+			'Je hebt een nieuw spel gestart.',//10
+			'Huidige spellen',
+			'Verstop volle spellen'
 		],
 		bjtracker: [
 			'BJ Volger',
@@ -1720,7 +1726,9 @@ var langs = {
 			'Money won: ',
 			'Profit: ',
 			'You have checked the current bet.',
-			'You have started a new game.'
+			'You have started a new game.',//10
+			'Running Games',
+			'Hide full games'
 		],
 		bjtracker: [
 			'BJ Tracker',
