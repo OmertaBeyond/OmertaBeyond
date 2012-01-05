@@ -13,10 +13,11 @@
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
 // @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
+// @encoding		UTF-8
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
-// @resource			css			http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
+// @resource			css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
 // @resource			trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
 // @resource			colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
 // @resource			comLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-com.png
