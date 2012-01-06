@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10
+// @version			1.10.0.63
 // @date			05-01-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -13,11 +13,11 @@
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
 // @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
-// @encoding		UTF-8
+// @encoding			UTF-8
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js
-// @resource			css			http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
+// @resource			css		http://omertabeyond.googlecode.com/svn/trunk/scripts/beyond.css
 // @resource			trash		http://omertabeyond.googlecode.com/svn/trunk/images/del.png
 // @resource			colorpicker	http://omertabeyond.googlecode.com/svn/trunk/images/colorpicker.gif
 // @resource			comLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-com.png
@@ -147,8 +147,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 62;
-const SCRIPT_SUBVERSION = 62;
+const SCRIPT_VERSION_BUILD = 63;
+const SCRIPT_SUBVERSION = 63;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
