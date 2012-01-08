@@ -3,7 +3,7 @@
 
 	Feel free to use them, but please let us know.
 
-	Version: 1.10.0.63
+	Version: 1.10.0.64
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -469,17 +469,17 @@ function OBUpdate(cb) {
 							if (confirm("There is a revision update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail)) {
 								GM_openInTab(ob_url);
 							}
-						} else if (SCRIPT_VERSION_BUILD == obv_build) {
-							alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail);
+						} else if (SCRIPT_VERSION_BUILD >= obv_build && cb) {
+							alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 						}
 					} else if (SCRIPT_VERSION_MAINTENANCE > obv_maintenance && cb) {
-						alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail);
+						alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 					}
 				} else if (SCRIPT_VERSION_MINOR > obv_minor && cb) {
-					alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail);
+					alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 				}
 			} else if (cb) {
-				alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail);
+				alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 			}
 		}
 	});
@@ -505,326 +505,326 @@ Array.prototype.iMin = function () {
 
 
 //BMSG BETA
-	var _Bmsg = { //keep track of our bmsgs
-		ids: [],
-		amount: 0,
-	}
-	function Bmsg() {}
-	Bmsg.prototype = {
-		name: 'Bmsg',
-		index: 0, //keep track of our messages
+var _Bmsg = { //keep track of our bmsgs
+	ids: [],
+	amount: 0,
+}
+function Bmsg() {}
+Bmsg.prototype = {
+	name: 'Bmsg',
+	index: 0, //keep track of our messages
 
-		//Handler functions
-		db: document.body,
-		cEL: function(name) {
-			return document.createElement(name);
-		},
-		cDiv: function(c,h,id) {
-			var d = this.cEL('div');
-			if (id) {
-				d.id = id;
-			}
-			d.className = c;
-			d.innerHTML = h;
-			return d;
-		},
-		cBut: function(h,a) {
-			var b = this.cEL('button');
-			b.innerHTML = h;
-			b.value = a; //just here for debug purpose, cant see eventListeners in code
-			b.addEventListener('click', function() {
-				a();
-			}, true);
-			return b;
-		},
-		getX: function() { //get msg div horizontal position
-			return this.db.clientWidth/2 - 175;
-		},
-		getY: function() { //get msg div vertical position
-			return this.db.clientHeight/2 - 50;
-		},
+	//Handler functions
+	db: document.body,
+	cEL: function(name) {
+		return document.createElement(name);
+	},
+	cDiv: function(c,h,id) {
+		var d = this.cEL('div');
+		if (id) {
+			d.id = id;
+		}
+		d.className = c;
+		d.innerHTML = h;
+		return d;
+	},
+	cBut: function(h,a) {
+		var b = this.cEL('button');
+		b.innerHTML = h;
+		b.value = a; //just here for debug purpose, cant see eventListeners in code
+		b.addEventListener('click', function() {
+			a();
+		}, true);
+		return b;
+	},
+	getX: function() { //get msg div horizontal position
+		return this.db.clientWidth/2 - 175;
+	},
+	getY: function() { //get msg div vertical position
+		return this.db.clientHeight/2 - 50;
+	},
 
-		//Debug function
-		e: function(e) {
-			console.info('Bmsg: ' + e);
-			return false
-		},
+	//Debug function
+	e: function(e) {
+		console.info('Bmsg: ' + e);
+		return false
+	},
 
-		//Interface functions
-		Bmsg: function(id, type, title, text, names, fns, add) { //setup initial values
-			this.id = id;
-			_Bmsg.ids.push(id);
-			this.num = _Bmsg.amount++;
-			this.type = type;
-			this.title = title;
-			this.text = text;
-			this.block = 0; //true will force user to dismiss msg first before he can continue browsing
+	//Interface functions
+	Bmsg: function(id, type, title, text, names, fns, add) { //setup initial values
+		this.id = id;
+		_Bmsg.ids.push(id);
+		this.num = _Bmsg.amount++;
+		this.type = type;
+		this.title = title;
+		this.text = text;
+		this.block = 0; //true will force user to dismiss msg first before he can continue browsing
 
-			if(this.type != 'info') {
-				//default Ok button with failsafe function
-				this.names = names || ['Ok'];
-				this.fns = fns || [function(){
-					var t = (getID('bm_shade') != null) ? 'bm_shade' : id;
-					getID(t).parentNode.removeChild(getID(t));
-				}];
-			} else {
-				this.names = [];
-				this.fns = [];
-			}
-			if (add) {
-				this.add();
-			}
-		},
-		add: function() { //add msg to page
-			if (this.id && this.type && this.title && this.text) {
-				if (this.db.innerHTML.indexOf('id="'+this.id+'"') == -1) {
-					var msg = this.cDiv('bm bm_' + this.type, '', this.id);//create msg div
-					msg.appendChild(this.cDiv('bm_title', this.title));//append title div
-					var cls = cEL('img');
-					cls.src = 'http://dump.omertabeyond.com/dm-813057571126.png';
-					cls.setAttribute('style', 'position:absolute; right:5px;cursor:pointer;');
-					cls.addEventListener('click', function() {
-						var hider = setInterval(function(){
-							msg.style.bottom = parseInt(msg.style.bottom) - 10;
-							if(parseInt(msg.style.bottom) < ((Math.ceil(l/10)*10+80)*-1)) {
-								clearInterval(hider);
-								var t = this.parentNode.parentNode.id;
-							//	var t = (getID('bm_shade') != null) ? 'bm_shade' : id;
-								getID(t).parentNode.removeChild(getID(t));
-							}
-						},20);
-					}, false);
-					msg.getElementsByTagName('div')[0].appendChild(cls);
-
-
-
-
-					if(this.type == 'tip') { //decide msg position depending on type
-						msg.style.left = this.getX() + 'px';
-						msg.style.top = this.getY() + 'px'; //hmmmmmmm
-					} else if (this.type == 'warn') {
-						msg.style.left = this.getX() + 'px';
-						msg.style.top = this.getY() + 'px';
-					} else { //default for now, options will follow
-						msg.style.bottom = '-9999px';
-						msg.style.right = '10px';
-
-					}
-
-
-					var cont = this.cDiv('bm_body', this.text + '');//append content div
-					if(this.icon) { //set custom icon
-						cont.setAttribute('style','background:url(\''+this.icon+'\') 28px 28px no-repeat !important;');
-					}
-					if(this.names.length > 0) {
-						if (this.names.length == this.fns.length) {
-							var buttons = this.cDiv('bm_buttons','');
-							for (var i=this.names.length-1; i>=0; i--) {
-								if (typeof this.fns[i] == 'function') {
-									buttons.appendChild(this.cBut(this.names[i], this.fns[i]));
-								} else {
-									this.e('[add] - Action ' + (i+1) + ' is not a function! \n\n' + this.fns + '');
-									return false
-								}
-							}
-							cont.appendChild(buttons);
-						} else {
-							this.e('[add] - The amount of options is not the same as the amount of actions!\n\n' + this.names + ' <-> ' + this.fns);
-							return false
+		if(this.type != 'info') {
+			//default Ok button with failsafe function
+			this.names = names || ['Ok'];
+			this.fns = fns || [function(){
+				var t = (getID('bm_shade') != null) ? 'bm_shade' : id;
+				getID(t).parentNode.removeChild(getID(t));
+			}];
+		} else {
+			this.names = [];
+			this.fns = [];
+		}
+		if (add) {
+			this.add();
+		}
+	},
+	add: function() { //add msg to page
+		if (this.id && this.type && this.title && this.text) {
+			if (this.db.innerHTML.indexOf('id="'+this.id+'"') == -1) {
+				var msg = this.cDiv('bm bm_' + this.type, '', this.id);//create msg div
+				msg.appendChild(this.cDiv('bm_title', this.title));//append title div
+				var cls = cEL('img');
+				cls.src = 'http://dump.omertabeyond.com/dm-813057571126.png';
+				cls.setAttribute('style', 'position:absolute; right:5px;cursor:pointer;');
+				cls.addEventListener('click', function() {
+					var hider = setInterval(function(){
+						msg.style.bottom = parseInt(msg.style.bottom) - 10;
+						if(parseInt(msg.style.bottom) < ((Math.ceil(l/10)*10+80)*-1)) {
+							clearInterval(hider);
+							var t = this.parentNode.parentNode.id;
+						//	var t = (getID('bm_shade') != null) ? 'bm_shade' : id;
+							getID(t).parentNode.removeChild(getID(t));
 						}
-					}
-					msg.appendChild(cont);
-
-					if (this.block) { //check if we are blocking => append msg to shade div
-						this.db.appendChild(this.cDiv('bm_shade', '', 'bm_shade'));
-					}
-					if (this.fading) {
-						msg.setAttribute('style', msg.getAttribute('style') + 'opacity:.01;');
-						this.db.appendChild(msg);
-						this.fade(1);
-					} else {
-						this.db.appendChild(msg);
-						var l = msg.clientHeight;
+					},20);
+				}, false);
+				msg.getElementsByTagName('div')[0].appendChild(cls);
 
 
-					// it's in there now, leave the tedious if/else's for now and go for manual sliding!
-						msg.style.right = '10px';
-						msg.style.bottom = '-'+(Math.ceil(l/10)*10+80);
 
 
-						msg.addEventListener('mouseover', function(e) { console.log(this.setAttribute('mouse','on')); }, false);
+				if(this.type == 'tip') { //decide msg position depending on type
+					msg.style.left = this.getX() + 'px';
+					msg.style.top = this.getY() + 'px'; //hmmmmmmm
+				} else if (this.type == 'warn') {
+					msg.style.left = this.getX() + 'px';
+					msg.style.top = this.getY() + 'px';
+				} else { //default for now, options will follow
+					msg.style.bottom = '-9999px';
+					msg.style.right = '10px';
 
-						var slider = setInterval(function(){
-							msg.style.bottom = parseInt(msg.style.bottom) + 10;
-							if(parseInt(msg.style.bottom) > 5) {
-								clearInterval(slider);
+				}
 
 
-								function hideNslide() {
-									var hider = setInterval(function(){
-										msg.style.bottom = parseInt(msg.style.bottom) - 10;
-										if(parseInt(msg.style.bottom) < ((Math.ceil(l/10)*10+80)*-1)) {
-											clearInterval(hider);
-											$Del('//div[@id="' + msg.id + '"]');
-										}
-									},20);
-								}
-								// add selfdestruct aswell
-								setTimeout(function(){
-										if(msg.getAttribute('mouse') != 'on') {
-											hideNslide(msg);
-										} else {
-											msg.addEventListener('mouseout', function(){
-												setTimeout(function(){hideNslide(msg);}, 300);
-											}, false);
-										}
-								}, 2500)
+				var cont = this.cDiv('bm_body', this.text + '');//append content div
+				if(this.icon) { //set custom icon
+					cont.setAttribute('style','background:url(\''+this.icon+'\') 28px 28px no-repeat !important;');
+				}
+				if(this.names.length > 0) {
+					if (this.names.length == this.fns.length) {
+						var buttons = this.cDiv('bm_buttons','');
+						for (var i=this.names.length-1; i>=0; i--) {
+							if (typeof this.fns[i] == 'function') {
+								buttons.appendChild(this.cBut(this.names[i], this.fns[i]));
+							} else {
+								this.e('[add] - Action ' + (i+1) + ' is not a function! \n\n' + this.fns + '');
+								return false
 							}
-						},40);
+						}
+						cont.appendChild(buttons);
+					} else {
+						this.e('[add] - The amount of options is not the same as the amount of actions!\n\n' + this.names + ' <-> ' + this.fns);
+						return false
 					}
+				}
+				msg.appendChild(cont);
+
+				if (this.block) { //check if we are blocking => append msg to shade div
+					this.db.appendChild(this.cDiv('bm_shade', '', 'bm_shade'));
+				}
+				if (this.fading) {
+					msg.setAttribute('style', msg.getAttribute('style') + 'opacity:.01;');
+					this.db.appendChild(msg);
+					this.fade(1);
 				} else {
-					this.e('[add] - There already seems to be an element with this id!\n\nid: ' + this.id);
-					return false
+					this.db.appendChild(msg);
+					var l = msg.clientHeight;
+
+
+				// it's in there now, leave the tedious if/else's for now and go for manual sliding!
+					msg.style.right = '10px';
+					msg.style.bottom = '-'+(Math.ceil(l/10)*10+80);
+
+
+					msg.addEventListener('mouseover', function(e) { console.log(this.setAttribute('mouse','on')); }, false);
+
+					var slider = setInterval(function(){
+						msg.style.bottom = parseInt(msg.style.bottom) + 10;
+						if(parseInt(msg.style.bottom) > 5) {
+							clearInterval(slider);
+
+
+							function hideNslide() {
+								var hider = setInterval(function(){
+									msg.style.bottom = parseInt(msg.style.bottom) - 10;
+									if(parseInt(msg.style.bottom) < ((Math.ceil(l/10)*10+80)*-1)) {
+										clearInterval(hider);
+										$Del('//div[@id="' + msg.id + '"]');
+									}
+								},20);
+							}
+							// add selfdestruct aswell
+							setTimeout(function(){
+									if(msg.getAttribute('mouse') != 'on') {
+										hideNslide(msg);
+									} else {
+										msg.addEventListener('mouseout', function(){
+											setTimeout(function(){hideNslide(msg);}, 300);
+										}, false);
+									}
+							}, 2500)
+						}
+					},40);
 				}
 			} else {
-				this.e('[add] - Missing initial message variable(s)!');
+				this.e('[add] - There already seems to be an element with this id!\n\nid: ' + this.id);
 				return false
 			}
-		},
-		slide: function(down) {
-			if ($X('//div[@id="' + this.id + '"]')) {
-				var el = $X('//div[@id="' + this.id + '"]');
-				var top = el.style.top;
-				var bottom = el.style.bottom;
-				var left = el.style.left;
-				var right = el.style.bottom;
+		} else {
+			this.e('[add] - Missing initial message variable(s)!');
+			return false
+		}
+	},
+	slide: function(down) {
+		if ($X('//div[@id="' + this.id + '"]')) {
+			var el = $X('//div[@id="' + this.id + '"]');
+			var top = el.style.top;
+			var bottom = el.style.bottom;
+			var left = el.style.left;
+			var right = el.style.bottom;
 
+			if (i == 1) { //change the effects to apply to shade div
+				el = shade;
+				style = '';
+			}
+			if (down) {
+				el.setAttribute('style', style + 'opacity: .15;');
+				var fade = setInterval(function() {
+					el.setAttribute('style', style + 'opacity:' + ((getActual(el, 'opacity')*1)+0.15) + ';');
+				}, 25);
+				setTimeout(function() {
+					clearInterval(fade);
+					if(el.id == 'bm_shade') {
+						el.setAttribute('style', 'opacity:.85;');
+					}
+				}, 250);
+			} else {
+				el.setAttribute('style', 'opacity: .90;'+style);
+				var fade = setInterval(function() {
+					el.setAttribute('style', style + 'opacity:' + (getActual(el, 'opacity')-0.15) + ';');
+				}, 25);
+				setTimeout(function() {
+					clearInterval(fade);
+					if (b != null) { //if a boolean set, save it into the object
+						this.bool = b;
+					}
+					if (el.id == 'bm_shade') {
+						$Del('//div[@id="bm_shade"]');
+					}
+					$Del('//div[@id="' + el.id + '"]'); //remove either the shade div or the msg div
+				}, 250);
+			}
+		} else {
+			this.e('[slide] - There is no element with ID: ' + this.id);
+		}
+	},
+	fade: function(appear) {
+		if ($X('//div[@id="' + this.id + '"]')) {
+			var shade = getID('bm_shade');
+			var el = $X('//div[@id="' + this.id + '"]');
+			var style = el.getAttribute('style');
+			style = style.split(' opacity')[0];
+			console.log(style);
+			var loop = shade?1:0;
+			for (var i=0; i<=loop; i++) {
 				if (i == 1) { //change the effects to apply to shade div
 					el = shade;
 					style = '';
 				}
-				if (down) {
+				if (appear) {
+					console.log('fade in');
 					el.setAttribute('style', style + 'opacity: .15;');
-					var fade = setInterval(function() {
-						el.setAttribute('style', style + 'opacity:' + ((getActual(el, 'opacity')*1)+0.15) + ';');
-					}, 25);
-					setTimeout(function() {
-						clearInterval(fade);
-						if(el.id == 'bm_shade') {
-							el.setAttribute('style', 'opacity:.85;');
-						}
-					}, 250);
+					for (i=1; i<6; i++) {
+						setTimeout(function() {
+							var opac = ((getActual(el, 'opacity')*1)+0.15);
+							opac = ''+(opac>0.95?0.95:opac);
+							el.setAttribute('style', style + 'opacity:' + opac + ';');
+						}, 25*i);
+					}
 				} else {
+					console.log('fade out');
 					el.setAttribute('style', 'opacity: .90;'+style);
-					var fade = setInterval(function() {
-						el.setAttribute('style', style + 'opacity:' + (getActual(el, 'opacity')-0.15) + ';');
-					}, 25);
-					setTimeout(function() {
-						clearInterval(fade);
-						if (b != null) { //if a boolean set, save it into the object
-							this.bool = b;
-						}
-						if (el.id == 'bm_shade') {
-							$Del('//div[@id="bm_shade"]');
-						}
-						$Del('//div[@id="' + el.id + '"]'); //remove either the shade div or the msg div
-					}, 250);
-				}
-			} else {
-				this.e('[slide] - There is no element with ID: ' + this.id);
-			}
-		},
-		fade: function(appear) {
-			if ($X('//div[@id="' + this.id + '"]')) {
-				var shade = getID('bm_shade');
-				var el = $X('//div[@id="' + this.id + '"]');
-				var style = el.getAttribute('style');
-				style = style.split(' opacity')[0];
-				console.log(style);
-				var loop = shade?1:0;
-				for (var i=0; i<=loop; i++) {
-					if (i == 1) { //change the effects to apply to shade div
-						el = shade;
-						style = '';
-					}
-					if (appear) {
-						console.log('fade in');
-						el.setAttribute('style', style + 'opacity: .15;');
-						for (i=1; i<6; i++) {
-							setTimeout(function() {
-								var opac = ((getActual(el, 'opacity')*1)+0.15);
-								opac = ''+(opac>0.95?0.95:opac);
-								el.setAttribute('style', style + 'opacity:' + opac + ';');
-							}, 25*i);
-						}
-					} else {
-						console.log('fade out');
-						el.setAttribute('style', 'opacity: .90;'+style);
-						for (i=1; i<6; i++) {
-							setTimeout(function() {
-								el.setAttribute('style', style + 'opacity:' + (getActual(el, 'opacity')-0.15) + ';');
-							}, 25*i);
-							if (i==5) {
-								if (b != null) { //if a boolean set, save it into the object
-									this.bool = b;
-								}
-								if (el.id == 'bm_shade') {
-									$Del('//div[@id="bm_shade"]');
-								}
-								$Del('//div[@id="' + el.id + '"]'); //remove either the shade div or the msg div
+					for (i=1; i<6; i++) {
+						setTimeout(function() {
+							el.setAttribute('style', style + 'opacity:' + (getActual(el, 'opacity')-0.15) + ';');
+						}, 25*i);
+						if (i==5) {
+							if (b != null) { //if a boolean set, save it into the object
+								this.bool = b;
 							}
+							if (el.id == 'bm_shade') {
+								$Del('//div[@id="bm_shade"]');
+							}
+							$Del('//div[@id="' + el.id + '"]'); //remove either the shade div or the msg div
 						}
 					}
 				}
-			} else {
-				this.e('[fade] - There is no element with ID: ' + this.id);
 			}
-		},
+		} else {
+			this.e('[fade] - There is no element with ID: ' + this.id);
+		}
+	},
 
 
-		//setting functions
-		set: function() { //set multiple parameters for the message
-			for (var i=0; i<arguments.length; i=i+2) {
-				if (arguments[i+1]) {
-					this[arguments[i]] = arguments[i+1];
-				}
-			}
-		},
-		setRef: function(e) { //set a reference element for "tip" messages
-			this.ref = e;
-		},
-		setNames: function(a) { //set button names
-			this.names = a;
-		},
-		setFns: function(a) { //set button functions
-			this.fns = a;
-		},
-		setType: function(t) { //set message type
-			this.type = t;
-		},
-		setBlock: function(b) { //define if message should block the page
-			this.block = b;
-		},
-		setFade: function(b) { //define if message should block the page
-			this.fading = b;
-		},
-		setIcon: function(u) { //define icon url
-			this.icon = u;
-		},
-		close: function(b) { //close the message
-			if (getID(this.id) != null && this.db.innerHTML.indexOf('class="bm') != -1) { //make sure there is something to remove
-				console.log(999);
-				if (this.fading) {
-					this.fade(0);
-				} else {
-					if (b != null) { //if a boolean set, save it into the object
-						this.bool = b;
-					}
-					$Del(this.block ? '//div[@id="bm_shade"]' : '//div[@id="' + this.id + '"]'); //remove either the shade div or the msg div
-				}
-			} else {
-				this.e('[close] - Could not find the given message!\n\n Message id:' + this.id);
-				return false
+	//setting functions
+	set: function() { //set multiple parameters for the message
+		for (var i=0; i<arguments.length; i=i+2) {
+			if (arguments[i+1]) {
+				this[arguments[i]] = arguments[i+1];
 			}
 		}
-	};
+	},
+	setRef: function(e) { //set a reference element for "tip" messages
+		this.ref = e;
+	},
+	setNames: function(a) { //set button names
+		this.names = a;
+	},
+	setFns: function(a) { //set button functions
+		this.fns = a;
+	},
+	setType: function(t) { //set message type
+		this.type = t;
+	},
+	setBlock: function(b) { //define if message should block the page
+		this.block = b;
+	},
+	setFade: function(b) { //define if message should block the page
+		this.fading = b;
+	},
+	setIcon: function(u) { //define icon url
+		this.icon = u;
+	},
+	close: function(b) { //close the message
+		if (getID(this.id) != null && this.db.innerHTML.indexOf('class="bm') != -1) { //make sure there is something to remove
+			console.log(999);
+			if (this.fading) {
+				this.fade(0);
+			} else {
+				if (b != null) { //if a boolean set, save it into the object
+					this.bool = b;
+				}
+				$Del(this.block ? '//div[@id="bm_shade"]' : '//div[@id="' + this.id + '"]'); //remove either the shade div or the msg div
+			}
+		} else {
+			this.e('[close] - Could not find the given message!\n\n Message id:' + this.id);
+			return false
+		}
+	}
+};

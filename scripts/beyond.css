@@ -4,7 +4,7 @@
 	Changing these values are at your own risk. If you make bug changes or bugfixes,
 	please inform us too so we can make any changes if we think are necesary.
 
-	Version: 1.10.0.63
+	Version: 1.10.0.64
 
 	$Rev$:  Revision of last commit
 	$Author$:  Author of last commit
@@ -14,266 +14,266 @@
 /* @Smart Fampage, we use style attribute to check for online status, thus add style by class	*/
 
 .menuLink,[class="menuLink rightMenuLink"] a,.story a {
-color:#FFF !important
+	color:#FFF !important
 }
 
 .menuLink:hover,[class="menuLink rightMenuLink"] a:hover,.story a:hover {
-color:#DD0 !important
+	color:#DD0 !important
 }
 
 .top {
-text-decoration:underline
+	text-decoration:underline
 }
 
 .obj {
-font-style:italic
+	font-style:italic
 }
 
 .loginHL {
-height:24px;
-vertical-align:middle;
--moz-border-radius:4px;
--webkit-border-radius:4px;
-border-radius:4px;
+	height:24px;
+	vertical-align:middle;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px
 }
 
 [type="text"].loginHL,[type="password"].loginHL {
-width:200px
+	width:200px
 }
 
 [type="submit"].loginHL:active {
-color:#FF0
+	color:#FF0
 }
 
 .loginHL:focus {
-border-color:#FF0
+	border-color:#FF0
 }
 
 /*	@Custom menu	*/
 #beyondadd {
-padding-left:5px;
-width:20px;
-background-color:transparent
+	padding-left:5px;
+	width:20px;
+	background-color:transparent
 }
 
 #beyondadd input {
-width:20px
+	width:20px
 }
 
 #beyondadd input:focus {
-border:2px solid #EE0
+	border:2px solid #EE0
 }
 
 a.menuOmertaBeyond {
-background-color:transparent;
-color:#fff;
-display:block;
-font-size:11px;
-text-decoration:none;
-margin:0;
-padding:5px
+	background-color:transparent;
+	color:#fff;
+	display:block;
+	font-size:11px;
+	text-decoration:none;
+	margin:0;
+	padding:5px
 }
 
 a.menuOmertaBeyond:hover {
-background-color:transparent;
-color:#dd0;
-text-decoration:none
+	background-color:transparent;
+	color:#dd0;
+	text-decoration:none
 }
 
 #save_button {
-background-color:#0F202F;
-border:1px solid #000;
-color:#EE0;
-font-size:9px;
-font-weight:700;
-margin-bottom:4px;
-width:70px;
-height:22px;
--moz-border-radius:5px;
--webkit-border-radius:5px;
-border-radius:5px;
+	background-color:#0F202F;
+	border:1px solid #000;
+	color:#EE0;
+	font-size:9px;
+	font-weight:700;
+	margin-bottom:4px;
+	width:70px;
+	height:22px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px
 }
 
 #save_button:hover {
-border-color:#EE0
+	border-color:#EE0
 }
 
 /*	@Nick-Reader	*/
 #NRstatus {
-background-color:#3F505F;
-color:#fff !important;
-text-decoration:none;
-width:150px;
-border:2px double gray;
-opacity:.90;
-position:fixed;
-display:block;
--moz-border-radius:5px;
--webkit-border-radius:5px;
-border-radius:5px;
-padding:5px
+	background-color:#3F505F;
+	color:#fff !important;
+	text-decoration:none;
+	width:150px;
+	border:2px double gray;
+	opacity:.90;
+	position:fixed;
+	display:block;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	padding:5px
 }
 
 .NRInfo {
-background-color:#3F505F;
-color:#FFA !important;
-text-decoration:none;
-width:300px;
-border:2px double gray;
-opacity:.90;
-position:absolute;
-display:block;
--moz-border-radius:5px;
--webkit-border-radius:5px;
-border-radius:5px;
-padding:5px
+	background-color:#3F505F;
+	color:#FFA !important;
+	text-decoration:none;
+	width:300px;
+	border:2px double gray;
+	opacity:.90;
+	position:absolute;
+	display:block;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	padding:5px
 }
 
 #NRtable {
-color:#FFF !important;
--moz-border-radius:5px;
--webkit-border-radius:5px;
-border-radius:5px;
+	color:#FFF !important;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px
 }
 
 /*	@Jail Page Footer	*/
 body > div#footerwrap {
-position:fixed
+	position:fixed
 }
 
 div#footerwrap {
-bottom:0;
-height:106px;
-position:absolute;
-width:698px
+	bottom:0;
+	height:106px;
+	position:absolute;
+	width:698px
 }
 
 div#footer {
-color:#222;
-height:106px;
-width:598px;
-margin:0 auto
+	color:#222;
+	height:106px;
+	width:598px;
+	margin:0 auto
 }
 
 #footerwrap #footer td {
-color:#222
+	color:#222
 }
 
 #footerwrap #footerr td a {
-color:#222
+	color:#222
 }
 
 #footerwrap #footer td a:hover {
-text-decoration:underline
+	text-decoration:underline
 }
 
 /*	@Preferences page	*/
 #cat {
-background-color:#809999;
-cursor:pointer
+	background-color:#809999;
+	cursor:pointer
 }
 
 /* @Global stuff */
 .green {
-color:green !important
+	color:green !important
 }
 
 .red {
-color:red !important
+	color:red !important
 }
 
 .orange {
-color:orange !important
+	color:orange !important
 }
 
 .blue {
-color:#00F !important
+	color:#00F !important
 }
 
 .purple {
-color:#FF00FF !important
+	color:#FF00FF !important
 }
 
 .bold {
-font-weight: bold;
+	font-weight: bold
 }
 
 /* Tidy Smuggling Page */
 #TS_header {
-width:90%;
-border:1px solid #000;
--moz-border-radius: 5px;
--webkit-border-radius:5px;
-border-radius:5px;
-line-height:20px;
-font-weight:bold;
-color:#ddd;
+	width:90%;
+	border:1px solid #000;
+	-moz-border-radius: 5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	line-height:20px;
+	font-weight:bold;
+	color:#ddd
 }
 #TS_header > div:nth-child(1) {
-background:url('/static/images/game/generic/headershine.png') repeat-x scroll 0 0;
-padding-bottom:3px;border-bottom:2px solid #000;
+	background:url('/static/images/game/generic/headershine.png') repeat-x scroll 0 0;
+	padding-bottom:3px;border-bottom:2px solid #000
 }
 #TS_header > div:nth-child(3) {
-border-bottom:1px solid #000;
-border-bottom-right-radius:5px;
-border-bottom-left-radius:5px;
+	border-bottom:1px solid #000;
+	border-bottom-right-radius:5px;
+	border-bottom-left-radius:5px
 }
 #TS_header > img, #TS_header > div > img {
-padding:3px;
-cursor:pointer;
+	padding:3px;
+	cursor:pointer
 }
 #TS_UI {
-height:50px;
-border-bottom:1px solid #000;
-color:#000;
+	height:50px;
+	border-bottom:1px solid #000;
+	color:#000
 }
 #TS_UI * td {
-width:33%;
-padding:5px;
-vertical-align:top;
+	width:33%;
+	padding:5px;
+	vertical-align:top
 }
 #TS_UI * td:nth-child(2) {
-padding-top:5px;
-text-align:center;
-line-height:20px;
-color:#222;
-font-weight:bold;
+	padding-top:5px;
+	text-align:center;
+	line-height:20px;
+	color:#222;
+	font-weight:bold
 }
 #TS_UI * img {
-margin-left:10px;
-padding:9px;
-border:3px solid #000;
-border-top:3px solid #555;
-border-left:3px solid #555;
--moz-border-radius: 5px;
--webkit-border-radius:5px;
-border-radius:5px;
-background:#fff;
-cursor:pointer;
+	margin-left:10px;
+	padding:9px;
+	border:3px solid #000;
+	border-top:3px solid #555;
+	border-left:3px solid #555;
+	-moz-border-radius: 5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	background:#fff;
+	cursor:pointer
 }
 .TS_spacer {
-position:relative;
-margin-left:13px;
-margin-bottom:1px;
-border:1px solid #ddd;
-width:0;
-font-size:25px;
+	position:relative;
+	margin-left:13px;
+	margin-bottom:1px;
+	border:1px solid #ddd;
+	width:0;
+	font-size:25px
 }
 .TS_divButton {
-float:right;
-font-weight:bold;
-margin-left:10px;
-padding:10px;
-padding-left:8px;
-padding-right:8px;
-border:3px solid #000;
-border-top:3px solid #555;
-border-left:3px solid #555;
--moz-border-radius: 5px;
--webkit-border-radius:5px;
-border-radius:5px;
-background:#fff;
-cursor:pointer;
+	float:right;
+	font-weight:bold;
+	margin-left:10px;
+	padding:10px;
+	padding-left:8px;
+	padding-right:8px;
+	border:3px solid #000;
+	border-top:3px solid #555;
+	border-left:3px solid #555;
+	-moz-border-radius: 5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	background:#fff;
+	cursor:pointer
 }
 
 
@@ -286,7 +286,7 @@ cursor:pointer;
 	width:100%;
 	background-color:#222;
 	opacity:.00;
-	z-index:1;
+	z-index:1
 }
 .bm {
 	position:fixed;
@@ -302,11 +302,11 @@ cursor:pointer;
 	border-radius:3px
 }
 .bm a {
-	color:#DDD;
+	color:#DDD
 }
 .bm a:hover {
 	color:#DDD;
-	text-decoration:underline;
+	text-decoration:underline
 }
 .bm_title {
 	text-align:center;
@@ -323,14 +323,14 @@ cursor:pointer;
 	border:1px solid #000
 }
 .bm_warn .bm_body {
-	background:url('http://dump.omertabeyond.com/images/104error.png') 28px 28px no-repeat;
+	background:url('http://dump.omertabeyond.com/images/104error.png') 28px 28px no-repeat
 }
 .bm_info .bm_body {
 	background:url('http://www.omertabeyond.com/pre/sbanks/skull3.png') 28px 28px repeat-y;
-	font-size:10px;
+	font-size:10px
 }
 .bm_info > div:nth-child(1) {
-	background-color:darkred !important;
+	background-color:darkred !important
 }
 .bm_body {
 	padding-left:70px;
@@ -349,7 +349,7 @@ cursor:pointer;
 .bm_buttons {
 	position:absolute;
 	right:10px;
-	bottom:10px;
+	bottom:10px
 }
 .bm button {
 	float:right;
@@ -361,12 +361,12 @@ cursor:pointer;
 	border-radius:3px;
 	color:#DDD;
 	height:20px;
-	width:55px;
+	width:55px
 }
 .bm button:hover {
 	color:#fff;
 	border:1px solid #fff;
-	background-color:#111;
+	background-color:#111
 }
 button::-moz-focus-inner,input::-moz-focus-inner{
 	border: none
