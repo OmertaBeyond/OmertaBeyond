@@ -1,6 +1,6 @@
 Omerta Beyond Changelog
 
-Version 1.10.0.50 		12/08/2011
+Version 1.10.0.50 BETA		12/08/2011
 
 	* Added Redirect to Status
 	* Cleaned up some code

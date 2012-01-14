@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.64
-// @date			08-01-2012
+// @version			1.10.0.65
+// @date			14-01-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -10,6 +10,7 @@
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
 // @homepageURL			http://www.omertabeyond.com/
+// @updateURL 			https://omertabeyond.googlecode.com/svn/trunk/beyond.meta.js
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
 // @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
@@ -147,8 +148,8 @@ const SCRIPT_VERSION = '1.10';
 const SCRIPT_VERSION_MAJOR = 1;
 const SCRIPT_VERSION_MINOR = 10;
 const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 64;
-const SCRIPT_SUBVERSION = 64;
+const SCRIPT_VERSION_BUILD = 65;
+const SCRIPT_SUBVERSION = 65;
 var minFFVersion = '4.0';
 const SITE_LINK = 'http://www.omertabeyond.com';
 const SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -4371,6 +4372,23 @@ if (dlp == '/familylog.php') {
 		}
 	});
 }
+
+//---------------------- MaybeUsefulCrap -----------
+var OBMIcon = GM_getResourceURL('favoriteIco');
+var OBM = 
+	<menu icon={OBMIcon} type="context" id="OBMenu">
+		<menu label={SCRIPT_NAME+" "+SCRIPT_VERSION}>
+			<menuitem icon={OBMIcon} id="obmversion" label={"Version: "+OB}>Version</menuitem>
+			<menuitem icon={OBMIcon} id="obmupdate" label={"Check for updates"}>UpdateCheck</menuitem>
+		</menu>
+	</menu>;
+
+var OBMDiv = cEL('div');
+db.appendChild(OBMDiv);
+OBMDiv.innerHTML = OBM;
+db.setAttribute('contextmenu', 'OBMenu');
+document.getElementById('obmversion').addEventListener('click', function(){ alert('You are using ' + SCRIPT_NAME + '.\nVersion:\t\t' + OB_v +'\nRevision:\t\t' + SCRIPT_VERSION_BUILD)}, false);
+document.getElementById('obmupdate').addEventListener('click', function(){ OBUpdate(true)}, false);
 
 //---------------------- ScratcherTheCode ---------- // ctrl F on 'scratcher' gave me too many results
 if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && prefs[33]) {
