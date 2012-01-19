@@ -1,14 +1,16 @@
 /*
-	This file contains the language array we use for Project Omerta Beyond
 
-	Don't change anything unless you know what are you doing.
-	Language arrays needed for multilingual OB
+This file contains the language array we use for Project Omerta Beyond
 
-	Version: 1.10.0.65
+Don't change anything unless you know what are you doing.
+Language arrays needed for multilingual OB
 
-	$Rev$:  Revision of last commit
-	$Author$:  Author of last commit
-	$Date$:  Date of last commit
+Version: 1.10.0.65
+
+$Rev$:  Revision of last commit
+$Author$:  Author of last commit
+$Date$:  Date of last commit
+
 */
 
 // Get language vars.
