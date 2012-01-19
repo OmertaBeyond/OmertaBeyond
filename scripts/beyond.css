@@ -200,6 +200,10 @@ div#footer {
 	font-weight: bold
 }
 
+input[type="submit"]:focus {
+	border: 1px dotted #000
+}
+
 /* Tidy Smuggling Page */
 #TS_header {
 	width:90%;

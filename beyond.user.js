@@ -65,7 +65,7 @@ $Date$:  Date of last commit
 */
 
 //---------------- (Omerta==0)?refresh:go ----------------
-if (db.innerHTML.indexOf('click limit') != -1 && dlp != '/menu.php') {
+ if (db.innerHTML.indexOf('You reached your click limit.') != -1 && dlp != '/menu.php') {
 	setTimeout(function () {
 		window.location.reload();
 	}, 60000);
