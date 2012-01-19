@@ -9,7 +9,6 @@ Version: 1.10.0.65
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
 $Date$:  Date of last commit
-
 */
 
 var dl, ds, dlp, dls, dlh, lh, ls, db, i, I, arr, host, urlsearch, hOne;
@@ -80,15 +79,15 @@ function GetPost(name) {
 
 function GetParam(name) {
 	var start, end, result;
-	start = location.search.indexOf('?' + name + '=');
+	start = location.search.indexOf("?" + name + "=");
 	if (start < 0) {
-		start = location.search.indexOf('&' + name + '=');
+		start = location.search.indexOf("&" + name + "=");
 	}
 	if (start < 0) {
 		return '';
 	}
 	start += name.length + 2;
-	end = location.search.indexOf('&', start) - 1;
+	end = location.search.indexOf("&", start) - 1;
 	if (end < 0) {
 		end = location.search.length;
 	}
@@ -151,7 +150,7 @@ function $XLast(xpath, root) {
 
 function $del(xpath) {
 	$x(xpath).forEach(
-		function($n) {
+		function ($n) {
 			$n.parentNode.removeChild($n);
 		}
 	);
@@ -322,7 +321,7 @@ function getPow(name, i, def) {
 }
 
 function setPow(name, i, value) {
-	var info = getValue(name, '0');
+	var info = getValue(name, "0");
 	if (name == 'bninfo') {
 		var w = 2; //set width of buckets
 	} else if (name == 'prefs') {
@@ -354,15 +353,15 @@ function refreshIn(page) {
 	totalSecLeft = parseInt(minToSec, 10) + parseInt(getSecLeft, 10);
 	totalTime = totalSecLeft * 1000;
 	addExtraSec = parseInt((totalTime + 1000), 10);
-	setTimeout(function() {
+	setTimeout(function () {
 		document.location.href = page;
 	}, addExtraSec);
 }
 
 function commafy(num) {
-	var str = (num + '').split('.'),
-		dec = str[1] || '',
-		num = str[0].replace(/(\d)(?=(\d{3})+\b)/g, '$1,');
+	var str = (num + "").split("."),
+		dec = str[1] || "",
+		num = str[0].replace(/(\d)(?=(\d{3})+\b)/g, "$1,");
 	return (dec) ? num + '.' + dec : num;
 }
 
@@ -387,7 +386,7 @@ function grabHTML(url, func) {
 	if (window.XMLHttpRequest) {
 		r = new XMLHttpRequest();
 	}
-	r.onreadystatechange = function() {
+	r.onreadystatechange = function () {
 		if (r.readyState == 4) {
 			if (r.status == 200) {
 				func(r.responseText, url);
@@ -404,9 +403,9 @@ function getTintedColor(color, v) {
 		color = color.substring(1, color.length);
 	}
 	rgb = parseInt(color, 16);
-	r = Math.abs(((rgb >> 16) & 0xFF) + v); if (r > 255) r = r - (r - 255);
-	g = Math.abs(((rgb >> 8) & 0xFF) + v); if (g > 255) g = g - (g - 255);
-	b = Math.abs((rgb & 0xFF) + v); if (b > 255) b = b - (b - 255);
+	r = Math.abs(((rgb >> 16) & 0xFF)+v); if (r>255) r=r-(r-255);
+	g = Math.abs(((rgb >> 8) & 0xFF)+v); if (g>255) g=g-(g-255);
+	b = Math.abs((rgb & 0xFF)+v); if (b>255) b=b-(b-255);
 	r = Number(r < 0 || isNaN(r)) ? 0 : ((r > 255) ? 255 : r).toString(16);
 	if (r.length == 1) r = '0' + r;
 	g = Number(g < 0 || isNaN(g)) ? 0 : ((g > 255) ? 255 : g).toString(16);
@@ -424,10 +423,10 @@ function hOne() {
 
 function sec2time(sec) {
 	var hr = Math.floor(sec / 3600);
-	var min = (sec - (hr * 3600)) / 60;
+	var min = (sec - (hr * 3600))/60;
 	while (min.length < 2) {min = '0' + min;}
-	min = (min) ? min + 'm' : '';
-	hr = (hr) ? hr + 'h ' : '';
+	min = (min)?min+'m':'';
+	hr = (hr)?hr+'h ':'';
 	return hr + min;
 }
 function time() {
@@ -436,72 +435,72 @@ function time() {
 
 function OBUpdate(cb) {
 	GM_xmlhttpRequest({
-		method: 'GET',
-		url: UPDATE_URL + '?uid=' + new Date().getTime(),
-		onload: function(response) {
+		method: "GET",
+		url: UPDATE_URL + "?uid=" + new Date().getTime(),
+		onload: function (response) {
 			var ob_parser, ob_dom, obv_major, obv_minor, obv_maintenance, obv_build, ob_url, obv_avail;
 			ob_parser = new DOMParser();
-			ob_dom = ob_parser.parseFromString(response.responseText, 'text/xml');
-			obv_major = ob_dom.getElementsByTagName('major')[0].textContent;
-			obv_minor = ob_dom.getElementsByTagName('minor')[0].textContent;
-			obv_maintenance = ob_dom.getElementsByTagName('maintenance')[0].textContent;
-			obv_build = ob_dom.getElementsByTagName('build')[0].textContent;
-			ob_url = ob_dom.getElementsByTagName('url')[0].textContent;
+			ob_dom = ob_parser.parseFromString(response.responseText, "text/xml");
+			obv_major = ob_dom.getElementsByTagName("major")[0].textContent;
+			obv_minor = ob_dom.getElementsByTagName("minor")[0].textContent;
+			obv_maintenance = ob_dom.getElementsByTagName("maintenance")[0].textContent;
+			obv_build = ob_dom.getElementsByTagName("build")[0].textContent;
+			ob_url = ob_dom.getElementsByTagName("url")[0].textContent;
 			obv_avail = obv_major + '.' + obv_minor + '.' + obv_maintenance + '.' + obv_build;
 
 			if (SCRIPT_VERSION_MAJOR < obv_major) {
-				if (confirm('There is a major update available for ' + SCRIPT_NAME + '!\nWould you like to upgrade?\n\nInstalled:\t' + OB + '\nAvailable:\t' + obv_avail)) {
+				if (confirm("There is a major update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail)) {
 					GM_openInTab(ob_url);
 				}
 			} else if (SCRIPT_VERSION_MAJOR == obv_major) {
-				GM_log('[Omerta Beyond Updater] Same major version ... lets check minor version');
+				GM_log("[Omerta Beyond Updater] Same major version ... lets check minor version");
 				if (SCRIPT_VERSION_MINOR < obv_minor) {
-					if (confirm('There is a minor update available for ' + SCRIPT_NAME + '!\nWould you like to upgrade?\n\nInstalled:\t' + OB + '\nAvailable:\t' + obv_avail)) {
+					if (confirm("There is a minor update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail)) {
 						GM_openInTab(ob_url);
 					}
 				} else if (SCRIPT_VERSION_MINOR == obv_minor) {
-					GM_log('[Omerta Beyond Updater] Same minor version ... lets check maintenance version');
+					GM_log("[Omerta Beyond Updater] Same minor version ... lets check maintenance version");
 					if (SCRIPT_VERSION_MAINTENANCE < obv_maintenance) {
-						if (confirm('There is a maintenance update available for ' + SCRIPT_NAME + '!\nWould you like to upgrade?\n\nInstalled:\t' + OB + '\nAvailable:\t' + obv_avail)) {
+						if (confirm("There is a maintenance update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail)) {
 							GM_openInTab(ob_url);
 						}
 					} else if (SCRIPT_VERSION_MAINTENANCE == obv_maintenance) {
-						GM_log('[Omerta Beyond Updater] Same maintenance version ... lets check build version');
+						GM_log("[Omerta Beyond Updater] Same maintenance version ... lets check build version");
 						if (SCRIPT_VERSION_BUILD < obv_build) {
-							if (confirm('There is a revision update available for ' + SCRIPT_NAME + '!\nWould you like to upgrade?\n\nInstalled:\t' + OB + '\nAvailable:\t' + obv_avail)) {
+							if (confirm("There is a revision update available for " + SCRIPT_NAME + "!\nWould you like to upgrade?\n\nInstalled:\t" + OB + "\nAvailable:\t" + obv_avail)) {
 								GM_openInTab(ob_url);
 							}
 						} else if (SCRIPT_VERSION_BUILD >= obv_build && cb) {
-							alert(SCRIPT_NAME + ' is up to date.\n\nInstalled:\t\t' + OB + '\nAvailable:\t' + obv_avail);
+							alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 						}
 					} else if (SCRIPT_VERSION_MAINTENANCE > obv_maintenance && cb) {
-						alert(SCRIPT_NAME + ' is up to date.\n\nInstalled:\t\t' + OB + '\nAvailable:\t' + obv_avail);
+						alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 					}
 				} else if (SCRIPT_VERSION_MINOR > obv_minor && cb) {
-					alert(SCRIPT_NAME + ' is up to date.\n\nInstalled:\t\t' + OB + '\nAvailable:\t' + obv_avail);
+					alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 				}
 			} else if (cb) {
-				alert(SCRIPT_NAME + ' is up to date.\n\nInstalled:\t\t' + OB + '\nAvailable:\t' + obv_avail);
+				alert(SCRIPT_NAME + " is up to date.\n\nInstalled:\t\t" + OB + "\nAvailable:\t" + obv_avail);
 			}
 		}
 	});
 }
 
-Array.prototype.sum = function() {
+Array.prototype.sum = function () {
 	for (i = 0, sum = 0; i < this.length; sum += this[i++]);
 	return sum;
 };
-Array.prototype.max = function() {
+Array.prototype.max = function () {
 	return Math.max.apply({}, this);
 };
-Array.prototype.min = function() {
+Array.prototype.min = function () {
 	return Math.min.apply({}, this);
 };
 
-Array.prototype.iMax = function() {
+Array.prototype.iMax = function () {
 	return this.indexOf(Math.max.apply({}, this));
 };
-Array.prototype.iMin = function() {
+Array.prototype.iMin = function () {
 	return this.indexOf(Math.min.apply({}, this));
 };
 
@@ -509,8 +508,8 @@ Array.prototype.iMin = function() {
 //BMSG BETA
 var _Bmsg = { //keep track of our bmsgs
 	ids: [],
-	amount: 0
-};
+	amount: 0,
+}
 function Bmsg() {}
 Bmsg.prototype = {
 	name: 'Bmsg',
@@ -540,16 +539,16 @@ Bmsg.prototype = {
 		return b;
 	},
 	getX: function() { //get msg div horizontal position
-		return this.db.clientWidth / 2 - 175;
+		return this.db.clientWidth/2 - 175;
 	},
 	getY: function() { //get msg div vertical position
-		return this.db.clientHeight / 2 - 50;
+		return this.db.clientHeight/2 - 50;
 	},
 
 	//Debug function
 	e: function(e) {
 		console.info('Bmsg: ' + e);
-		return false;
+		return false
 	},
 
 	//Interface functions
@@ -562,10 +561,10 @@ Bmsg.prototype = {
 		this.text = text;
 		this.block = 0; //true will force user to dismiss msg first before he can continue browsing
 
-		if (this.type != 'info') {
+		if(this.type != 'info') {
 			//default Ok button with failsafe function
 			this.names = names || ['Ok'];
-			this.fns = fns || [function() {
+			this.fns = fns || [function(){
 				var t = (getID('bm_shade') != null) ? 'bm_shade' : id;
 				getID(t).parentNode.removeChild(getID(t));
 			}];
@@ -579,16 +578,16 @@ Bmsg.prototype = {
 	},
 	add: function() { //add msg to page
 		if (this.id && this.type && this.title && this.text) {
-			if (this.db.innerHTML.indexOf('id="' + this.id + '"') == -1) {
+			if (this.db.innerHTML.indexOf('id="'+this.id+'"') == -1) {
 				var msg = this.cDiv('bm bm_' + this.type, '', this.id);//create msg div
 				msg.appendChild(this.cDiv('bm_title', this.title));//append title div
 				var cls = cEL('img');
 				cls.src = 'http://dump.omertabeyond.com/dm-813057571126.png';
 				cls.setAttribute('style', 'position:absolute; right:5px;cursor:pointer;');
 				cls.addEventListener('click', function() {
-					var hider = setInterval(function() {
+					var hider = setInterval(function(){
 						msg.style.bottom = parseInt(msg.style.bottom) - 10;
-						if (parseInt(msg.style.bottom) < ((Math.ceil(l / 10) * 10 + 80) * -1)) {
+						if(parseInt(msg.style.bottom) < ((Math.ceil(l/10)*10+80)*-1)) {
 							clearInterval(hider);
 							var t = this.parentNode.parentNode.id;
 						//	var t = (getID('bm_shade') != null) ? 'bm_shade' : id;
@@ -601,7 +600,7 @@ Bmsg.prototype = {
 
 
 
-				if (this.type == 'tip') { //decide msg position depending on type
+				if(this.type == 'tip') { //decide msg position depending on type
 					msg.style.left = this.getX() + 'px';
 					msg.style.top = this.getY() + 'px'; //hmmmmmmm
 				} else if (this.type == 'warn') {
@@ -615,24 +614,24 @@ Bmsg.prototype = {
 
 
 				var cont = this.cDiv('bm_body', this.text + '');//append content div
-				if (this.icon) { //set custom icon
-					cont.setAttribute('style', 'background:url(\'' + this.icon + '\') 28px 28px no-repeat !important;');
+				if(this.icon) { //set custom icon
+					cont.setAttribute('style','background:url(\''+this.icon+'\') 28px 28px no-repeat !important;');
 				}
-				if (this.names.length > 0) {
+				if(this.names.length > 0) {
 					if (this.names.length == this.fns.length) {
-						var buttons = this.cDiv('bm_buttons', '');
-						for (var i = this.names.length - 1; i >= 0; i--) {
+						var buttons = this.cDiv('bm_buttons','');
+						for (var i=this.names.length-1; i>=0; i--) {
 							if (typeof this.fns[i] == 'function') {
 								buttons.appendChild(this.cBut(this.names[i], this.fns[i]));
 							} else {
-								this.e('[add] - Action ' + (i + 1) + ' is not a function! \n\n' + this.fns + '');
-								return false;
+								this.e('[add] - Action ' + (i+1) + ' is not a function! \n\n' + this.fns + '');
+								return false
 							}
 						}
 						cont.appendChild(buttons);
 					} else {
 						this.e('[add] - The amount of options is not the same as the amount of actions!\n\n' + this.names + ' <-> ' + this.fns);
-						return false;
+						return false
 					}
 				}
 				msg.appendChild(cont);
@@ -651,46 +650,46 @@ Bmsg.prototype = {
 
 				// it's in there now, leave the tedious if/else's for now and go for manual sliding!
 					msg.style.right = '10px';
-					msg.style.bottom = '-' + (Math.ceil(l / 10) * 10 + 80);
+					msg.style.bottom = '-'+(Math.ceil(l/10)*10+80);
 
 
-					msg.addEventListener('mouseover', function(e) { console.log(this.setAttribute('mouse', 'on')); }, false);
+					msg.addEventListener('mouseover', function(e) { console.log(this.setAttribute('mouse','on')); }, false);
 
-					var slider = setInterval(function() {
+					var slider = setInterval(function(){
 						msg.style.bottom = parseInt(msg.style.bottom) + 10;
-						if (parseInt(msg.style.bottom) > 5) {
+						if(parseInt(msg.style.bottom) > 5) {
 							clearInterval(slider);
 
 
 							function hideNslide() {
-								var hider = setInterval(function() {
+								var hider = setInterval(function(){
 									msg.style.bottom = parseInt(msg.style.bottom) - 10;
-									if (parseInt(msg.style.bottom) < ((Math.ceil(l / 10) * 10 + 80) * -1)) {
+									if(parseInt(msg.style.bottom) < ((Math.ceil(l/10)*10+80)*-1)) {
 										clearInterval(hider);
 										$Del('//div[@id="' + msg.id + '"]');
 									}
 								},20);
 							}
 							// add selfdestruct aswell
-							setTimeout(function() {
-									if (msg.getAttribute('mouse') != 'on') {
+							setTimeout(function(){
+									if(msg.getAttribute('mouse') != 'on') {
 										hideNslide(msg);
 									} else {
-										msg.addEventListener('mouseout', function() {
-											setTimeout(function() {hideNslide(msg);}, 300);
+										msg.addEventListener('mouseout', function(){
+											setTimeout(function(){hideNslide(msg);}, 300);
 										}, false);
 									}
-							}, 2500);
+							}, 2500)
 						}
 					},40);
 				}
 			} else {
 				this.e('[add] - There already seems to be an element with this id!\n\nid: ' + this.id);
-				return false;
+				return false
 			}
 		} else {
 			this.e('[add] - Missing initial message variable(s)!');
-			return false;
+			return false
 		}
 	},
 	slide: function(down) {
@@ -708,18 +707,18 @@ Bmsg.prototype = {
 			if (down) {
 				el.setAttribute('style', style + 'opacity: .15;');
 				var fade = setInterval(function() {
-					el.setAttribute('style', style + 'opacity:' + ((getActual(el, 'opacity') * 1) + 0.15) + ';');
+					el.setAttribute('style', style + 'opacity:' + ((getActual(el, 'opacity')*1)+0.15) + ';');
 				}, 25);
 				setTimeout(function() {
 					clearInterval(fade);
-					if (el.id == 'bm_shade') {
+					if(el.id == 'bm_shade') {
 						el.setAttribute('style', 'opacity:.85;');
 					}
 				}, 250);
 			} else {
-				el.setAttribute('style', 'opacity: .90;' + style);
+				el.setAttribute('style', 'opacity: .90;'+style);
 				var fade = setInterval(function() {
-					el.setAttribute('style', style + 'opacity:' + (getActual(el, 'opacity') - 0.15) + ';');
+					el.setAttribute('style', style + 'opacity:' + (getActual(el, 'opacity')-0.15) + ';');
 				}, 25);
 				setTimeout(function() {
 					clearInterval(fade);
@@ -743,8 +742,8 @@ Bmsg.prototype = {
 			var style = el.getAttribute('style');
 			style = style.split(' opacity')[0];
 			console.log(style);
-			var loop = shade ? 1 : 0;
-			for (var i = 0; i <= loop; i++) {
+			var loop = shade?1:0;
+			for (var i=0; i<=loop; i++) {
 				if (i == 1) { //change the effects to apply to shade div
 					el = shade;
 					style = '';
@@ -752,21 +751,21 @@ Bmsg.prototype = {
 				if (appear) {
 					console.log('fade in');
 					el.setAttribute('style', style + 'opacity: .15;');
-					for (i = 1; i < 6; i++) {
+					for (i=1; i<6; i++) {
 						setTimeout(function() {
-							var opac = ((getActual(el, 'opacity') * 1) + 0.15);
-							opac = '' + (opac > 0.95 ? 0.95 : opac);
+							var opac = ((getActual(el, 'opacity')*1)+0.15);
+							opac = ''+(opac>0.95?0.95:opac);
 							el.setAttribute('style', style + 'opacity:' + opac + ';');
-						}, 25 * i);
+						}, 25*i);
 					}
 				} else {
 					console.log('fade out');
-					el.setAttribute('style', 'opacity: .90;' + style);
-					for (i = 1; i < 6; i++) {
+					el.setAttribute('style', 'opacity: .90;'+style);
+					for (i=1; i<6; i++) {
 						setTimeout(function() {
-							el.setAttribute('style', style + 'opacity:' + (getActual(el, 'opacity') - 0.15) + ';');
-						}, 25 * i);
-						if (i == 5) {
+							el.setAttribute('style', style + 'opacity:' + (getActual(el, 'opacity')-0.15) + ';');
+						}, 25*i);
+						if (i==5) {
 							if (b != null) { //if a boolean set, save it into the object
 								this.bool = b;
 							}
@@ -786,9 +785,9 @@ Bmsg.prototype = {
 
 	//setting functions
 	set: function() { //set multiple parameters for the message
-		for (var i = 0; i < arguments.length; i = i + 2) {
-			if (arguments[i + 1]) {
-				this[arguments[i]] = arguments[i + 1];
+		for (var i=0; i<arguments.length; i=i+2) {
+			if (arguments[i+1]) {
+				this[arguments[i]] = arguments[i+1];
 			}
 		}
 	},
@@ -826,7 +825,7 @@ Bmsg.prototype = {
 			}
 		} else {
 			this.e('[close] - Could not find the given message!\n\n Message id:' + this.id);
-			return false;
+			return false
 		}
 	}
 };
