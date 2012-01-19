@@ -508,7 +508,7 @@ Array.prototype.iMin = function () {
 //BMSG BETA
 var _Bmsg = { //keep track of our bmsgs
 	ids: [],
-	amount: 0,
+	amount: 0
 }
 function Bmsg() {}
 Bmsg.prototype = {
