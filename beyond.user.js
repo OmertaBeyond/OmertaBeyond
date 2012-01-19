@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.65
-// @date			14-01-2012
+// @version			1.10.0.66
+// @date			19-01-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -10,7 +10,7 @@
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
 // @homepageURL			http://www.omertabeyond.com/
-// @updateURL 			https://omertabeyond.googlecode.com/svn/trunk/beyond.meta.js
+// @updateURL			https://omertabeyond.googlecode.com/svn/trunk/beyond.meta.js
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
 // @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
@@ -81,7 +81,7 @@ if (db.innerHTML.indexOf('click limit') != -1 && dlp != '/menu.php') {
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
-}	else if (hOne == '500 - Internal Server Error') {
+} else if (hOne == '500 - Internal Server Error') {
 	setTimeout(function () {
 		window.location.reload();
 	}, 20000);
@@ -143,26 +143,26 @@ if (whereToRun == 'com' || whereToRun == undefined) {
 	whoami = GM_getValue('nick_tr', '');
 }
 
-const SCRIPT_NAME = 'Omerta Beyond';
-const SCRIPT_VERSION = '1.10';
-const SCRIPT_VERSION_MAJOR = 1;
-const SCRIPT_VERSION_MINOR = 10;
-const SCRIPT_VERSION_MAINTENANCE = 0;
-const SCRIPT_VERSION_BUILD = 65;
-const SCRIPT_SUBVERSION = 65;
+var SCRIPT_NAME = 'Omerta Beyond';
+var SCRIPT_VERSION = '1.10';
+var SCRIPT_VERSION_MAJOR = 1;
+var SCRIPT_VERSION_MINOR = 10;
+var SCRIPT_VERSION_MAINTENANCE = 0;
+var SCRIPT_VERSION_BUILD = 66;
+var SCRIPT_SUBVERSION = 66;
 var minFFVersion = '4.0';
-const SITE_LINK = 'http://www.omertabeyond.com';
-const SCRIPT_LINK = 'http://gm.omertabeyond.com';
-const UPDATE_URL = SCRIPT_LINK+"/version.xml";
+var SITE_LINK = 'http://www.omertabeyond.com';
+var SCRIPT_LINK = 'http://gm.omertabeyond.com';
+var UPDATE_URL = SCRIPT_LINK+"/version.xml";
 var PrefsLink = SCRIPT_LINK + sets.prefslink;
 var PricesLink = SCRIPT_LINK + sets.priceslink;
 var ContactLink = SCRIPT_LINK + sets.contactlink;
 var PollLink = SITE_LINK + sets.polllink;
-const OBnUrl = 'http://news.omertabeyond.com/';
-const EdoUrl = 'http://www.edo-nieuws.nl/news.php';
+var OBnUrl = 'http://news.omertabeyond.com/';
+var EdoUrl = 'http://www.edo-nieuws.nl/news.php';
 var ff = navigator.userAgent.split('/')[3].split(' ')[0];
-const OB_v = SCRIPT_VERSION_MAJOR + '.' + SCRIPT_VERSION_MINOR + '.' + SCRIPT_VERSION_MAINTENANCE;
-const OB = OB_v + '.' + SCRIPT_VERSION_BUILD;
+var OB_v = SCRIPT_VERSION_MAJOR + '.' + SCRIPT_VERSION_MINOR + '.' + SCRIPT_VERSION_MAINTENANCE;
+var OB = OB_v + '.' + SCRIPT_VERSION_BUILD;
 
 GM_registerMenuCommand('[' + SCRIPT_NAME + '] v' + OB, function () {
 	alert('You are using ' + SCRIPT_NAME + '.\nVersion:\t\t' + OB_v +'\nRevision:\t\t' + SCRIPT_VERSION_BUILD);
@@ -989,18 +989,18 @@ if (dlp == '/jail.php' || dlp == '/iminjail.php' || (dlp == '/kill.php' && dls !
 				}
 				setTimeout(enable, 1);
 			}, true);
-			
+
 		}
-		
+
 		// add focus on text field again after reloading image
 		$X('//img[@id="imgcode"]').addEventListener('click', function () {
 			node.focus();
 		}, true);
-		
+
 		node.setAttribute('maxLength', '3');
 		node.setAttribute('onkeypress', 'javascript:var lettercode=event.charCode;var symcode = event.keyCode;return (lettercode>=48 && lettercode<=57 || lettercode>=65 && lettercode<=90 || lettercode>=97 && lettercode<=122 || symcode>=37 && symcode<=40 || symcode==8 || symcode==9 || symcode==13 || symcode==46 || symcode==116)? true : false;');
 	}
-	
+
 	if ($X('//img[@id="imgcode"]')) { //check for image code
 		var input = getELNAME('ver'); //jail, iminjail, kill, smuggling
 		if (input[0]) {
@@ -1714,7 +1714,7 @@ if(dlp == '/info.php'){
 					addNews();//we got the news, now add it
 				}
 			});
-			
+
 			// add GC&MR link
 			$X('//*[@id="newsmore"]/p').innerHTML = '<a class="menuLink" href="http://news.omertabeyond.com/beyond/gcmr" onmousedown="return false;" style="text-align:left;width:*;padding-right:0px;display:inline-block;" target="main">GC&MR</a>' + $X('//*[@id="newsmore"]/p').innerHTML;
 			$X('//*[@id="newsmore"]/p/a[2]').setAttribute('style', 'text-align:right;width:50%;padding-left:0px;display:inline-block;');
@@ -2357,7 +2357,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 		actions.innerHTML += '<a href="BeO/webroot/index.php?module=Spots&action=&driver='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Raid</a><br />';
 		actions.innerHTML += '<a href="javascript:if(confirm(\'Are you sure you want to make '+unick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+unick+'\';" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Set Mentor</a><br />';
 		actions.innerHTML += '<a href="kill.php?search='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Hire Detectives</a><br />';
-		
+
 		if (prefs[3]) {
 			var names = getValue('bust', '');
 			var jhl_add = 1;
@@ -2379,7 +2379,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 			actions.innerHTML += '<a href="/BeO/webroot/index.php?module=Family&who='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Invite to Family</a>';
 		}
 		db.appendChild(actions);
-		
+
 		if (prefs[3]) {
 			getID('jhl_link').addEventListener('click', function () {
 				if (jhl_add == 1) {
@@ -2405,7 +2405,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 			}, false);
 		}
 
-		if (alive) {	
+		if (alive) {
 			if (!self) { //additions useless for self
 				$X('//span[@id="hp"]').innerHTML = '<a href="/honorpoints.php?who='+unick+'" class="red">'+$X('//span[@id="hp"]').innerHTML+'</a>'; //Send HP's
 			} else {//Linkify self hp's
@@ -2586,12 +2586,12 @@ if(dlp == '/garage.php'){
 
 		var sTr = cEL('tr');
 		sTr.id = 'selectRow';
-		
+
 		var spacer = cEL('td');
 		spacer.innerHTML = '<br /><br /><br />';
 		spacer.setAttribute('style', 'width:10%; vertical-align:top;');
 		sTr.appendChild(spacer);
-		
+
 		var sTd = cEL('td');
 		sTd.id = 'selectTd';
         sTd.setAttribute('align', 'center');
@@ -2739,7 +2739,7 @@ if(dlp == '/garage.php'){
 				}
 			}
 		}
-		
+
 		wrap = cEL('div');
 		wrap.id = 'footerwrap';
 		footer = cEL('div');
@@ -3113,7 +3113,7 @@ if(dlp == '/leavecrew.php') {
 	if(db.textContent.search('You left the family') != -1) {
 		setValue('family', 'None');
 	}
-}		
+}
 //---------------- Manage Users (top3 only) ----------------
 if (dls.indexOf('module=Family') != -1) {
 	if(GetParam('who')){//invite from profile
@@ -3216,7 +3216,7 @@ if (dlp == '/cpbank.php' && db.innerHTML.search('type="password"') == -1) {
 		var inputs = $x('//input[@name="amount"] | //input[@name="amounttpob"]');
 		inputs.forEach(function($n){
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
-			
+
 		});
 	}
 }
@@ -3331,7 +3331,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 	if (db.innerHTML.indexOf('/static/images/cities/maps') != -1) {
 		var am = $x('//div[contains(@id, "spot_")]').length / 3; // get total amount of spots
 		var city = $x('//b')[0].textContent;
-		
+
 		function whatspot(city, type) {
 			var cords;
 			if (city == 'Detroit') {
@@ -3722,7 +3722,7 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1) {
 		unreadid[a] = $x('//tr[@class="color2"]/td[2]/a')[a].href.split('?')[1].match(/\d+/g);
 		setValue('unread', unreadid.join(',')); //join and save values
 	}
-	
+
 	var br = cEL('br');
 	var span = getTAG('span')[0];
 	var chkbutton = cEL('input');
@@ -3813,7 +3813,7 @@ if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != 
 			if (bulletmsg.test(msgTyp)) { //grab obay bullets from message
 				setValue('obaybul', (getValue('obaybul', 0) + parseInt(arr[2], 10)));
 			}
-			
+
 			// resave unread msg's, without our msg
 			var str = '';
 			for (var y = 0; y < unreadlen; ++y) {
@@ -4092,7 +4092,7 @@ if (dls.search('module=Poker') != -1) {
 
 		span.appendChild(input);
 		$X('//td[@class="tableitem"]').appendChild(span);
-			
+
 		input.addEventListener('click', function() {
 			if (hidefull) {
 				hideFull(false);
@@ -4100,7 +4100,7 @@ if (dls.search('module=Poker') != -1) {
 				hideFull(true);
 			}
 		}, true);
-		
+
 	}
 	//add m/k usage in amount boxes
 	if (prefs[5]) {
@@ -4109,7 +4109,7 @@ if (dls.search('module=Poker') != -1) {
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 		});
 	}
-	
+
 	// add easy selecting cards for swapping
 	if ($X('//input[@name="c0"]') != null) { // user must check cards
 
@@ -4375,7 +4375,7 @@ if (dlp == '/familylog.php') {
 
 //---------------------- MaybeUsefulCrap -----------
 var OBMIcon = GM_getResourceURL('favoriteIco');
-var OBM = 
+var OBM =
 	<menu icon={OBMIcon} type="context" id="OBMenu">
 		<menu label={SCRIPT_NAME+" "+SCRIPT_VERSION}>
 			<menuitem icon={OBMIcon} id="obmversion" label={"Version: "+OB}>Version</menuitem>
@@ -4512,7 +4512,7 @@ if (dls == '?module=Lackeys') {
 	// All text is English for now, so using lang vars is not needed at the moment
 	var loadedTab = 1;
 	var divX;
-	
+
 	function overview() {
 		divX = '//div[@id="overview"]';
 	}
@@ -4548,14 +4548,14 @@ if (dls == '?module=Lackeys') {
 		var x = 1;
 		$x(path).forEach(function ($n) {
 			logEntry = $x(path+'['+x+']/td')[1].innerHTML;
-		
+
 			// show price per bullet when Sluggs bought
 			if (r = logEntry.replace(/,/g, '').match(/Sluggs bought (\d+) bullets for \$(\d+)/)) {
 				$x(path+'['+x+']/td')[1].innerHTML = logEntry + ' ($'+Math.round(r[2] / r[1])+'/bullet)';
 			}
 			++x;
 		});
-		
+
 		// Hide useless entries
 		$X(divX+'/div/div[2]').innerHTML = $X(divX+'/div/div[2]').innerHTML + '<span><input type="checkbox" id="cb" /><label for="cb">Hide "Sluggs is laughing" entries</label></span>';
 
@@ -4572,7 +4572,7 @@ if (dls == '?module=Lackeys') {
 			}
 		}, true);
 	}
-	
+
 	function hideLaughing(hide) {
 		setValue('sluggsHideLaughing', hide);
 		sluggsHideLaughing = hide;
@@ -5060,7 +5060,7 @@ if (dlp == '/vfo.php') { //vote for omerta
 	$x('/html/body//table/tbody/tr[3]//a[contains(@href, "votelot.php")]').forEach(function ($n) {
 		$n.setAttribute('name', 'forticket');
 	});
-	
+
 	function voteNow(save) {
 		$x('//*[@name="forticket"]').forEach(function ($n) {
 			//GM_openInTab($n); // does not work in current GM (0.9.13)
@@ -5075,7 +5075,7 @@ if (dlp == '/vfo.php') { //vote for omerta
 	getID('votelink').addEventListener('click', function () {
 		voteNow(false);
 	}, true);
-	
+
 	if (prefs[9]) {
 		lastVote = getValue('lastvote', 0); //get last voting time
 		if (lastVote == 0) {
@@ -5083,7 +5083,7 @@ if (dlp == '/vfo.php') { //vote for omerta
 				voteNow(true);
 			}
 		} else { //not first run
-			
+
 			var till = lastVote + 86400 - time(); // time till next vote
 			var msg = '';
 			if (till <= 0) { // user can vote again so ask
@@ -5105,7 +5105,7 @@ if (dlp == '/vfo.php') { //vote for omerta
 				voteNow(true);
 			}
 		}
-		
+
 	}
 }
 

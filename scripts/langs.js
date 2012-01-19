@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.10.0.65
+Version: 1.10.0.66
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -44,7 +44,7 @@ var langs = {
 			'Remove Race form bar',//22 - CLEAN-UP
 			'Return to jail page after failure',//23 - JAIL/BUSTING
 			'Enable Garage Car Highlighting',//24 - CRIMES/CARS
-			'',//25 - 
+			'',//25 -
 			'Auto-form Group Crimes',//26 (heist, oc, moc) - OTHER AFs
 			'Auto-form Bloodbank',//27 - OTHER AFs
 			'Auto-form Smuggling',//28 - SMUGGLING/PRICES
@@ -497,7 +497,7 @@ var langs = {
 			'Remove Race form bar',//22 - CLEAN-UP
 			'Return to jail page after failure',//23 - JAIL/BUSTING
 			'Enable Garage Car Highlighting',//24 - CRIMES/CARS
-			'',//25 - 
+			'',//25 -
 			'Auto-form Group Crimes',//26 (heist, oc, moc) - OTHER AFs
 			'Auto-form Bloodbank',//27 - OTHER AFs
 			'Auto-form Smuggling',//28 - SMUGGLING/PRICES
@@ -951,14 +951,14 @@ var langs = {
 			'Verwijder Racevorm balk',//22 - CLEAN-UP
 			'Ga automatisch naar de gevangenis na mislukking',//23 - JAIL/BUSTING
 			'Voeg highlights toe aan auto\'s in de Garage',//24 - CRIMES/CARS
-			'',//25 - 
+			'',//25 -
 			'Automatisch invullen bij groeps misdaden',//26 (heist, oc, moc) - ANDERE AFs
 			'Automatisch invullen van bloed',//27 - OTHER AFs
 			'Automatisch invullen bij het smokkelen',//28 - SMUGGLING/PRICES
 			'Automatisch invullen bij autoracen',//29 - OTHER AFs
 			'Verwijder "Recente forumposts" van gebruikersprofielen',//30 - CLEAN-UP
 			'Sneltoetsen gebruiken bij de Postbus',//31 - MISC
-			'',//32 - 
+			'',//32 -
 			'Voeg Volgers toe (Kogels, Poker, Krassen, BJ, Fruitmachine)',//33 - MISC
 			'Ruim de Spot Overvallen pagina op',//34 - UI Extras
 			'Laat misdaad- en autojatstats zien op status pagina',//35 - CRIMES/CARS
@@ -1416,14 +1416,14 @@ var langs = {
 			'Remove Race form bar',//22 - CLEAN-UP
 			'Return to jail page after failure',//23 - JAIL/BUSTING
 			'Enable Garage Car Highlighting',//24 - CRIMES/CARS
-			'',//25 - 
+			'',//25 -
 			'Auto-form Group Crimes',//26 (heist, oc, moc) - OTHER AFs
 			'Auto-form Bloodbank',//27 - OTHER AFs
 			'Auto-form Smuggling',//28 - SMUGGLING/PRICES
 			'Auto-form Races',//29 - OTHER AFs
 			'Remove "Recent forum posts" from user profile page',//30 - CLEAN-UP
 			'Add Hotkeys to Inbox',//31 - MISC
-			'',//32 - 
+			'',//32 -
 			'Enable Trackers (Bullet, Poker, Scratching, BJ, Slots)',//33 - MISC
 			'Tidy Spot raid page',//34 - UI Extras
 			'Show crimestats and carstats on status page',//35 - CRIMES/CARS

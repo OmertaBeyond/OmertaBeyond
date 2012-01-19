@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.65
-// @date			14-01-2012
+// @version			1.10.0.66
+// @date			19-01-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -10,7 +10,7 @@
 // @license			GNU General Public License v3
 // @namespace			v3.omertabeyond.com
 // @homepageURL			http://www.omertabeyond.com/
-// @updateURL 			https://omertabeyond.googlecode.com/svn/trunk/beyond.meta.js
+// @updateURL			https://omertabeyond.googlecode.com/svn/trunk/beyond.meta.js
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
 // @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png

@@ -4,7 +4,7 @@ This file contains helpers and useful functions for use with Project Omerta Beyo
 
 Feel free to use them, but please let us know.
 
-Version: 1.10.0.65
+Version: 1.10.0.66
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -78,7 +78,7 @@ function GetPost(name) {
 }
 
 function GetParam(name) {
-	var start, end, result;
+	var start, end, c, result;
 	start = location.search.indexOf("?" + name + "=");
 	if (start < 0) {
 		start = location.search.indexOf("&" + name + "=");
@@ -93,7 +93,7 @@ function GetParam(name) {
 	}
 	result = '';
 	for (I = start; I <= end; I++) {
-		var c = location.search.charAt(I);
+		c = location.search.charAt(I);
 		result = result + (c == '+' ? ' ' : c);
 	}
 	return unescape(result);
@@ -106,8 +106,7 @@ function setIcon(icon) {
 	for (i = 0; i < links.length; i++) {
 		if (links[i].type == 'image/x-icon' && (links[i].rel == 'shortcut icon' || links[i].rel == 'icon') && links[i].href != icon) {
 			head.removeChild(links[i]);
-		}
-		else if (links[i].href == icon) {
+		} else if (links[i].href == icon) {
 			return;
 		}
 	}
