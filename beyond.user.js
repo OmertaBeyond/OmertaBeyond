@@ -117,7 +117,6 @@ function whereToRun(hostname) {
 			} else {
 				return version.split('&')[0];
 			}
-		break;
 		default:
 			return undefined;
 	}
@@ -4328,7 +4327,6 @@ if (dlp == '/kill.php') {
 	}
 	if ($X('//input[@name="name"]')) {
 		$X('//input[@name="name"]').value = GetParam('search');
-		$X('//input[@name="name"]/parent::*/input[last()]').focus();
 	}
 	if ($X('//input[@name="safehouse"]')) {
 		var func = 'javascript: var amt=this.value.replace(/\\D/g,\'\'); if(amt){ get = document.getElementById(\'cost\'); if(get){ tmp = \'\'+Math.round(amt*amt*100); str =\'\'; while(tmp > 0){ if(str!=\'\'){ while(str.length % 4 !=3 ){ str = \'0\' + str;}; str = \',\' + str;};dec = (tmp % 1000)+\'\';str = dec + str;tmp = Math.floor(tmp/1000);}; get.textContent = \'$\' + str}; };';
