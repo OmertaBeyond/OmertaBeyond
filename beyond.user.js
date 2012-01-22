@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.66
-// @date			19-01-2012
+// @version			1.10.0.67
+// @date			21-01-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -148,8 +148,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 66;
-var SCRIPT_SUBVERSION = 66;
+var SCRIPT_VERSION_BUILD = 67;
+var SCRIPT_SUBVERSION = 67;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -2760,7 +2760,6 @@ if(dlp == '/garage.php'){
 		if (sheight <= cheight) {
 			getID('footer').style.display = 'none';
 		}
-
 		window.addEventListener('scroll', function(){
 			var max = ((db.scrollHeight-db.clientHeight) - (getID('footer').offsetHeight*2)); // bottom
 			var curr = db.scrollTop;
@@ -6260,7 +6259,7 @@ if (dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') { // login pa
 		$Del('/html/body/table/tbody/tr[2]'); //rough cleansing!
 		$Del('//tr/td/table//table/tbody/tr[2]'); //yellow links
 		$X('//td').setAttribute('height', '90%'); //new primary cell heigth
-		var logo = $Cut('//td[@width="280"]', 1); //replace the logo
+		var logo = $Cut('//td[contains(@style, "width:280px")]', 1); //replace the logo
 		logo.style.textAlign = 'center';
 		logo.innerHTML = logo.innerHTML + '<br /><br /><br /><br /><br /><hr color="#666" size="1" /><br />';
 		var tr = cEL('tr');

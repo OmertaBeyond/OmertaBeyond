@@ -4,7 +4,7 @@ This file contains helpers and useful functions for use with Project Omerta Beyo
 
 Feel free to use them, but please let us know.
 
-Version: 1.10.0.66
+Version: 1.10.0.67 
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -123,15 +123,15 @@ function $x(xpath, root) {
 	var got = doc.evaluate(xpath, root || doc, null, 0, null),
 		result = [];
 	switch (got.resultType) {
-	case got.STRING_TYPE:
-		return got.stringValue;
-	case got.NUMBER_TYPE:
-		return got.numberValue;
-	case got.BOOLEAN_TYPE:
-		return got.booleanValue;
-	default:
-		while (next = got.iterateNext()) result.push(next);
-		return result;
+		case got.STRING_TYPE:
+			return got.stringValue;
+		case got.NUMBER_TYPE:
+			return got.numberValue;
+		case got.BOOLEAN_TYPE:
+			return got.booleanValue;
+		default:
+			while (next = got.iterateNext()) result.push(next);
+			return result;
 	}
 }
 
