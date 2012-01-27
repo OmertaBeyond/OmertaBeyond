@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.68
-// @date			22-01-2012
+// @version			1.10.0.69
+// @date			27-01-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -147,8 +147,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 68;
-var SCRIPT_SUBVERSION = 68;
+var SCRIPT_VERSION_BUILD = 69;
+var SCRIPT_SUBVERSION = 69;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -229,20 +229,20 @@ if (bmsgon) {
 
 					var msg = new Bmsg();
 					msg.Bmsg(id, type, title, text);
-//					msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+					//msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
 
 					msg.add();
 					setValue('lastbmsg', response["deaths"][0]["ts"]);
 				} else {
 					var msg = new Bmsg();
 					msg.Bmsg('msg', 'info', 'MrWhite is cool', 'no new death');
-//					msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
+					//msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
 
 					msg.add();
 				}
 			}
 		});
-//		setTimeout(CheckBmsg(), 3000);
+		//setTimeout(CheckBmsg(), 3000);
 	}
 }
 //---------------- int->str bninfo compatibility ----------------

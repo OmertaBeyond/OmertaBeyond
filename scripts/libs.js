@@ -4,7 +4,7 @@ This file contains helpers and useful functions for use with Project Omerta Beyo
 
 Feel free to use them, but please let us know.
 
-Version: 1.10.0.67 
+Version: 1.10.0.69
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -764,7 +764,7 @@ Bmsg.prototype = {
 						setTimeout(function() {
 							el.setAttribute('style', style + 'opacity:' + (getActual(el, 'opacity')-0.15) + ';');
 						}, 25*i);
-						if (i==5) {
+						if (i == 5) {
 							if (b != null) { //if a boolean set, save it into the object
 								this.bool = b;
 							}
@@ -784,9 +784,9 @@ Bmsg.prototype = {
 
 	//setting functions
 	set: function() { //set multiple parameters for the message
-		for (var i=0; i<arguments.length; i=i+2) {
-			if (arguments[i+1]) {
-				this[arguments[i]] = arguments[i+1];
+		for (var i = 0; i < arguments.length; i = i + 2) {
+			if (arguments[i + 1]) {
+				this[arguments[i]] = arguments[i + 1];
 			}
 		}
 	},
@@ -824,7 +824,7 @@ Bmsg.prototype = {
 			}
 		} else {
 			this.e('[close] - Could not find the given message!\n\n Message id:' + this.id);
-			return false
+			return false;
 		}
 	}
 };
