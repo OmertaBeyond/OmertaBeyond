@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.69
-// @date			27-01-2012
+// @version			1.10.0.70
+// @date			31-01-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -147,8 +147,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 69;
-var SCRIPT_SUBVERSION = 69;
+var SCRIPT_VERSION_BUILD = 70;
+var SCRIPT_SUBVERSION = 70;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1636,7 +1636,7 @@ if(dlp == '/info.php'){
 			var url = (sets.version == '_com') ? OBnUrl+'beyond/' : 'http://www.edo-nieuws.nl/xje/xje_nieuws.php?id=';//set url prepend
 			for(var o=0,f=0;(o+f)<=4;1){//loop dates
 				var nextmonth=0;
-				if((oDay[o]<fDay[f] && oMonth[o]<=fMonth[f]) || (oDay[o]>fDay[f] && oMonth[o]<fMonth[f] || (oDay[o]>fDay[f] && fMonth[f]== 1))){//check dates
+				if((oDay[o]<fDay[f] && oMonth[o]<=fMonth[f]) || (oDay[o]>fDay[f] && oMonth[o]<fMonth[f])){//check dates
 					if(sets.version == '_com'){//ob
 						news.push([url+fUrl[f],fArticles[f].replace(/ /,'<br />')]);
 					} else {//edo
@@ -4504,7 +4504,7 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 
 //---------------- Lackeys II ----------------
 if (dls == '?module=Lackeys') {
-	var path = '//table[@id="overview_log_6"]/tbody/tr', logEntry, r;
+	var logpath = '//table[@id="overview_log_6"]/tbody/tr', logEntry, r;	
 
 	// All text is English for now, so using lang vars is not needed at the moment
 	var loadedTab = 1;
@@ -4512,28 +4512,67 @@ if (dls == '?module=Lackeys') {
 
 	function overview() {
 		divX = '//div[@id="overview"]';
+
+		//commafy
+		var sluggsbullets = getTXT('//*[@id="lackey_rp_6"]');
+		$X('//*[@id="lackey_rp_6"]').textContent = commafy(sluggsbullets);
+		for (var i=1;i<7;i++) {
+			var money = getTXT('//*[@id="lackey_money_'+i+'"]');
+			$X('//*[@id="lackey_money_'+i+'"]').textContent = commafy(money);
+		}
+		for (var i=1;i<7;i++) {
+			var buyout = getTXT('//*[@id="lackey_buyout_cost_'+i+'"]');
+			$X('//*[@id="lackey_buyout_cost_'+i+'"]').textContent = commafy(buyout);
+		}
+		//m/k usage
+		if (prefs[5]) {
+			var inputs = $x('//input[@id="lackey_send_money"] | //input[@id="lackey_send_credits"]');
+			inputs.forEach(function ($n) {
+				$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+			});
+		}
 	}
 	overview(); // this is already loaded by default and in the source, so call it
 
 	function spats() {
 		loadedTab = 2;
 		divX = '//div[@id="ui-tabs-1"]';
+		var money = getTXT('//*[@id="overview_money_1"]');
+		$X('//*[@id="overview_money_1"]').innerHTML = commafy(money);
+		var buyout = getTXT('//*[@id="overview_buyout_cost_1"]');
+		$X('//*[@id="overview_buyout_cost_1"]').innerHTML = commafy(buyout);
 	}
 	function noodles() {
 		loadedTab = 3;
 		divX = '//div[@id="ui-tabs-2"]';
+		var money = getTXT('//*[@id="overview_money_2"]');
+		$X('//*[@id="overview_money_2"]').innerHTML = commafy(money);
+		var buyout = getTXT('//*[@id="overview_buyout_cost_2"]');
+		$X('//*[@id="overview_buyout_cost_2"]').innerHTML = commafy(buyout);
 	}
 	function orourke() {
 		loadedTab = 4;
 		divX = '//div[@id="ui-tabs-3"]';
+		var money = getTXT('//*[@id="overview_money_3"]');
+		$X('//*[@id="overview_money_3"]').innerHTML = commafy(money);
+		var buyout = getTXT('//*[@id="overview_buyout_cost_3"]');
+		$X('//*[@id="overview_buyout_cost_3"]').innerHTML = commafy(buyout);
 	}
 	function freekowtski() {
 		loadedTab = 5;
 		divX = '//div[@id="ui-tabs-4"]';
+		var money = getTXT('//*[@id="overview_money_4"]');
+		$X('//*[@id="overview_money_4"]').innerHTML = commafy(money);
+		var buyout = getTXT('//*[@id="overview_buyout_cost_4"]');
+		$X('//*[@id="overview_buyout_cost_4"]').innerHTML = commafy(buyout);
 	}
 	function keaton() {
 		loadedTab = 6;
 		divX = '//div[@id="ui-tabs-5"]';
+		var money = getTXT('//*[@id="overview_money_5"]');
+		$X('//*[@id="overview_money_5"]').innerHTML = commafy(money);
+		var buyout = getTXT('//*[@id="overview_buyout_cost_5"]');
+		$X('//*[@id="overview_buyout_cost_5"]').innerHTML = commafy(buyout);
 	}
 	var sluggsHideLaughing = getValue('sluggsHideLaughing', true);
 	function sluggs() {
@@ -4541,14 +4580,28 @@ if (dls == '?module=Lackeys') {
 
 		divX = '//div[@id="ui-tabs-6"]';
 
+		var credits = getTXT('//*[@id="overview_credits_6"]');
+		var money = getTXT('//*[@id="overview_money_6"]');
+		var bullets = getTXT('//*[@id="overview_rp_6"]');
+		var maxprice = $X('//*[@id="setting_bullets_max_price_price_6"]').value
+		var minbul = $X('//*[@id="setting_bullets_min_qt_price_6"]').value
+		
+		// commafy and alert money
+		var needed = (credits/5)*(maxprice*minbul);
+		var short = money-needed;
+		var enough = (short<0)?'<p style="color:red;">'+commafy(money)+' ('+commafy(short)+')</p>':'<p style="color:green;">'+commafy(money)+'</p>';
+		$X('//td[@id="overview_money_6"]').innerHTML = enough;
+
+		$X('//td[@id="overview_rp_6"]').innerHTML = commafy(bullets);
+
 		// Sluggs log entries
 		var x = 1;
-		$x(path).forEach(function ($n) {
-			logEntry = $x(path+'['+x+']/td')[1].innerHTML;
+		$x(logpath).forEach(function ($n) {
+			logEntry = $x(logpath+'['+x+']/td')[1].innerHTML;
 
 			// show price per bullet when Sluggs bought
 			if (r = logEntry.replace(/,/g, '').match(/Sluggs bought (\d+) bullets for \$(\d+)/)) {
-				$x(path+'['+x+']/td')[1].innerHTML = logEntry + ' ($'+Math.round(r[2] / r[1])+'/bullet)';
+				$x(logpath+'['+x+']/td')[1].innerHTML = logEntry + ' ($'+Math.round(r[2] / r[1])+'/bullet)';
 			}
 			++x;
 		});
@@ -4574,8 +4627,8 @@ if (dls == '?module=Lackeys') {
 		setValue('sluggsHideLaughing', hide);
 		sluggsHideLaughing = hide;
 		x = 1;
-		$x(path).forEach(function ($n) {
-			if ($x(path+'['+x+']/td')[1].innerHTML.match(/Sluggs is laughing at your measly limit/)) {
+		$x(logpath).forEach(function ($n) {
+			if ($x(logpath+'['+x+']/td')[1].innerHTML.match(/Sluggs is laughing at your measly limit/)) {
 				if (hide) {
 					$n.style.display = 'none';
 				} else {
