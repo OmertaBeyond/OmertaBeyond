@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.70
-// @date			31-01-2012
+// @version			1.10.0.71
+// @date			01-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -949,6 +949,13 @@ if (dlp == '/menu.php') {
 				setValue('menuCaption', names);
 			}, 1000);
 		}, true);
+	});
+	$X('//form[@action="./user.php"]').addEventListener('submit', function(evt) {
+		var user = $X('//input[@name="nick"]');
+		if(!user.value) {
+			evt.preventDefault();
+			top.frames[2].location = 'http://' + window.location.hostname + '/user.php';
+		}
 	});
 }
 
@@ -3707,7 +3714,7 @@ if (dls.indexOf('action=tosell') != -1) {
 }
 
 //---------------- INBOX -----------------------
-if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1) {
+if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.indexOf('action=delMsg') != -1) {
 	var msg = $x('//td[@style="cursor:pointer;cursor:hand"]').length
 	var unreadmsg = $x('//tr[@class="color2"]').length
 	var id = [];
@@ -3732,7 +3739,7 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1) {
 
 	span.appendChild(br);
 	span.appendChild(chkbutton);
-
+	
 	var num = 1;
 	$x('//tr[@class="color1"] | //tr[@class="color2"]').forEach(function ($n) {
 		var space = document.createTextNode(' ');
@@ -3753,6 +3760,15 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1) {
 		} else {
 			$n.cells[0].appendChild(delImg);
 		}
+
+		//add checkbox at unread		
+//		if($n.className == 'color2') {
+//			var chkbox = cEL('input');
+//			chkbox.setAttribute('type', 'checkbox');
+//			chkbox.setAttribute('value', id);
+//			chkbox.setAttribute('name', 'selective[]');
+//			$n.cells[0].appendChild(chkbox);
+//		}
 
 		if ($n.cells[2].innerHTML.indexOf('user.php?nick=') != -1) { //add reply icon
 			var replyImg = cEL('img');
@@ -3941,8 +3957,8 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 	var MarriedMsg = new RegExp(lang.linkify[14]);
 	if (MarriedMsg.test(msgType)) { //married
-		setArr(20);
-		setArr(22);
+		setArr(28);
+		setArr(30);
 		$I(msgTxt, arr.join(' '));
 	}
 
@@ -3954,8 +3970,8 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 	var WitnessMsg = new RegExp(lang.linkify[17]);
 	if (WitnessMsg.test(msgType)) { //witness
-		setArr(14);
-		setArr(16);
+		setArr(13);
+		setArr(15);
 		$I(msgTxt, arr.join(' '));
 	}
 
@@ -3965,7 +3981,9 @@ if (dls.indexOf('action=showMsg') != -1) {
 			setArr(8);
 			$I(msgTxt, arr.join(' '));
 		} else {
-			setArr(9);
+			if(arr[3] === 'invited') {
+				setArr(9);
+			}
 			$I(msgTxt, arr.join(' '));
 		}
 	}
@@ -4004,7 +4022,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 	var condolences = new RegExp(lang.linkify[8]);
 	if (condolences.test(msgType)) { //condolences msg
-		var nickPos = arr[2];
+		var nickPos = arr[1];
 		var nickFirst = arr.indexOf(nickPos);
 		var nickLast = arr.lastIndexOf(nickPos);
 		setArr(nickFirst);
@@ -4585,10 +4603,10 @@ if (dls == '?module=Lackeys') {
 		var bullets = getTXT('//*[@id="overview_rp_6"]');
 		var maxprice = $X('//*[@id="setting_bullets_max_price_price_6"]').value
 		var minbul = $X('//*[@id="setting_bullets_min_qt_price_6"]').value
-		
+
 		// commafy and alert money
 		var needed = (credits/5)*(maxprice*minbul);
-		var short = money-needed;
+		var short = money.substr(1)-needed;
 		var enough = (short<0)?'<p style="color:red;">'+commafy(money)+' ('+commafy(short)+')</p>':'<p style="color:green;">'+commafy(money)+'</p>';
 		$X('//td[@id="overview_money_6"]').innerHTML = enough;
 
@@ -6277,8 +6295,8 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 }
 //------------------ Quick lookup ------------------
 if (dlp.indexOf('user.php') != -1 && dls.indexOf('page=user') != -1) {
-	if(getTXT('/html/body').search(lang.lookup[0]) != -1){
-		var input = GetParam('nick');
+	var input = GetParam('nick');
+	if(getTXT('/html/body').search(lang.lookup[0]) != -1 && input != false){
 		GM_xmlhttpRequest({ //grab data from xml
 			method: 'GET',
 			url: 'http://rix.omertabeyond.com/obxml/quicklookup.xml.php?v='+sets.version.replace('_', '')+'&input='+input,
@@ -6292,7 +6310,8 @@ if (dlp.indexOf('user.php') != -1 && dls.indexOf('page=user') != -1) {
 				}
 				else if(total!='0'){
 					db.innerHTML += (total<=50)?'<br />'+lang.lookup[1]+'<br />':'<br />'+lang.lookup[1]+'<br />'+lang.lookup[4]+' '+total+' '+lang.lookup[5]+'<br />';
-					for(var i=0;i<50;i++){
+					var num = (total<=50)?total:50;
+					for(var i=0;i<num;i++){
 						var results = xml.getElementsByTagName('name')[i].textContent;
 						db.innerHTML += '<br /><a href="'+dlp+'?nick='+results+'">'+results+'</a>';
 					}

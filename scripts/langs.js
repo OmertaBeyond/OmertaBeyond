@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.10.0.69
+Version: 1.10.0.71
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -216,17 +216,17 @@ var langs = {
 			'Mega Organized Crime',
 			'Target not found',
 			'Carrace invite',
-			'Target found',
+			'Target found',//5
 			'Kill success',
 			'Witness statement',
 			'Condolences',
 			'found',
-			'Ticket update',
+			'Ticket update',//10
 			'Crashed Message',
 			'Invitation',
 			'Raid Notification',
 			'Married',
-			'Wedding Gift',
+			'Wedding Gift',//15
 			'Wedding',
 			'Wedding Invitation',
 			'shot!'
@@ -1132,17 +1132,17 @@ var langs = {
 			'Mega Georganiseerde Misdaad',
 			'Doelwit niet gevonden',
 			'Autorace uitnodiging',
-			'Doelwit gevonden',
+			'Doelwit gevonden',//5
 			'Moord geslaagd',
 			'Getuigenverklaring',
-			'Condoleances',
+			'Innige deelneming',
 			'hebben',
-			'Ticket update',
+			'Ticket update',//10
 			'Crashed Message',
 			'Uitnodiging',
 			'Raid Notification',
 			'Married',
-			'Wedding Gift',
+			'Wedding Gift',//15
 			'Wedding',
 			'Wedding Invitation',
 			'beschoten!'
