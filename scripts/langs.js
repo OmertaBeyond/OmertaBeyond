@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.10.0.71
+Version: 1.10.0.72
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -253,12 +253,12 @@ var langs = {
 			'Booze',
 			'Narc',
 			'Profit',
-			'You are in ',
+			'You are in ',//5
 			'You can\'t fly to ',
 			'You won\'t make any profit in ',
 			'Auto-Fill',
 			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
-			'NOW'
+			'NOW'//10
 		],
 		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
 		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],

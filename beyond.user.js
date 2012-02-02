@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.71
-// @date			01-02-2012
+// @version			1.10.0.72
+// @date			02-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -147,8 +147,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 71;
-var SCRIPT_SUBVERSION = 71;
+var SCRIPT_VERSION_BUILD = 72;
+var SCRIPT_SUBVERSION = 72;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1181,8 +1181,12 @@ if (dls.indexOf('?module=Travel&action=TravelNow') != -1) { //Get city when trav
 	}
 }
 if (dls.indexOf('?module=Travel&action=FetchInfo') != -1) {
-	if(GetParam('travel')){
-		$X('//form').submit();
+	if (GetParam('travel')) {
+		if ($X('//form')) {
+			$X('//form').submit();
+		} else {
+			$X('//b/font').innerHTML = $X('//table/tbody/tr/td[2]/table/tbody/tr[6]/td').innerHTML;
+		}
 	}
 }
 //---------------- My Account / Statuspage ----------------
@@ -3451,13 +3455,13 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			if (getELNAME('driver')[y] != null) { getELNAME('driver')[y].value = str; }
 		}
 
-		getID('raidpagebullets').addEventListener('keyup', function() {
+		getID('raidpagebullets').addEventListener('blur', function() {
 			for (y = 0; y <= am; y+=1) {
 				if (getELNAME('bullets')[y] != null) { getELNAME('bullets')[y].value = getID('raidpagebullets').value; }
 			}
 		}, true);
 
-		getID('raidpagedriver').addEventListener('keyup', function() {
+		getID('raidpagedriver').addEventListener('blur', function() {
 			var str = getID('raidpagedriver').value;
 			str = str.substr(0, 1).toUpperCase() + str.substr(1).toLowerCase();
 			for (y = 0; y <= am; y+=1) {
@@ -3467,8 +3471,8 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 	}
 }
 //----------------Race AF ----------------
-if (prefs[29]) {
-	if (dlp == '/races.php') {
+if (dlp == '/races.php') {
+	if (prefs[29]) {
 		if (/do_race/.test(db.innerHTML)) {
 			$x('//input[@type="submit"]')[0].focus();
 		}
@@ -3478,7 +3482,6 @@ if (prefs[29]) {
 		if (/class=\"Normal\"/.test(db.innerHTML)) {
 			$x('//a[contains(@href, "decision=1")]')[0].focus();
 		}
-
 		if (!/input/.test(db.innerHTML) && !/table/.test(db.innerHTML)) {
 			if (db.innerHTML.match(lang.race[0])) {
 				db.innerHTML = db.innerHTML;
@@ -3487,10 +3490,6 @@ if (prefs[29]) {
 			}
 		}
 	}
-}
-
-//---------- m/k usage race -----------
-if (dlp == '/races.php') {
 	//add m/k usage in amount boxes
 	if (prefs[5]) {
 		var inputs = $x('//input[@name="amount"]');
@@ -4602,12 +4601,11 @@ if (dls == '?module=Lackeys') {
 		var money = getTXT('//*[@id="overview_money_6"]');
 		var bullets = getTXT('//*[@id="overview_rp_6"]');
 		var maxprice = $X('//*[@id="setting_bullets_max_price_price_6"]').value
-		var minbul = $X('//*[@id="setting_bullets_min_qt_price_6"]').value
 
 		// commafy and alert money
-		var needed = (credits/5)*(maxprice*minbul);
+		var needed = (credits/5)*(maxprice*1000);
 		var short = money.substr(1)-needed;
-		var enough = (short<0)?'<p style="color:red;">'+commafy(money)+' ('+commafy(short)+')</p>':'<p style="color:green;">'+commafy(money)+'</p>';
+		var enough = (short<0)?'<p style="color:red;">'+commafy(money)+' ($'+commafy(short)+')</p>':'<p style="color:green;">'+commafy(money)+'</p>';
 		$X('//td[@id="overview_money_6"]').innerHTML = enough;
 
 		$X('//td[@id="overview_rp_6"]').innerHTML = commafy(bullets);
@@ -5383,48 +5381,55 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 		lexHour = getValue('lexHour', -1);
 	}
 
-
 	//--Assemble functions
-
 	function fillBRC(n, b, mode) { //actually filling the forms
-		//set defaults
-		values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //set defaults
 
 		// booze    - narcs    == maximum user can buy
 		// carry_b  - carry_n  == total user is carrying
 		// b_amount - n_amount == amount per item user is carrying
 		// b        - n        == item we want
-
-
-		if (n > -1) { //do we want narcs?
+		if (n > -1 && !lnarcs && mode != 3) { //do we want narcs?
 			if (carry_n == 0) { //nothing in pocket, fill it all
 				values[7+n] = narcs;
-				inputs[17].checked = 1; //buy
+				getELNAME('typedrugs')[1].checked = 1; //buy
 			} else { //something in pocket
-				if (n_amount[n] < narcs) { //not full of wanted
-					if (n_amount[n] != carry_n) { //there is unwanted stuff
-						for (i=0; i<=6; i++) {
-							if (i != n || mode == 1) { //only sell what we don't want
-								values[i+7] = n_amount[i];
+				if (carry_n < narcs) { // we got space for more
+					if (n_amount[n] < narcs) { //not full of wanted
+						if (n_amount[n] != carry_n) { //there is unwanted stuff
+							for (i=0; i<=6; i++) {
+								if (i != n || mode == 1) { //only sell what we don't want
+									values[i+7] = n_amount[i];
+								}
 							}
+							getELNAME('typedrugs')[0].checked = 1; //sell
+						} else { //only carrying wanted narcs
+							values[7+n] = narcs - carry_n; //if any, fill missing amount
+							getELNAME('typedrugs')[1].checked = 1; //buy
 						}
-						inputs[16].checked = 1; //sell
-					} else { //only carrying wanted narcs
-						values[7+n] = narcs - carry_n; //if any, fill missing amount
-						inputs[17].checked = 1; //buy
+					} else { //full of wanted
+						if (mode > 0) { //CD/RP mode, sell all
+							values[7+n] = n_amount[n];
+							getELNAME('typedrugs')[0].checked = 1; //sell
+						}
 					}
-				} else { //full of wanted
-					if (mode > 0) { //CD/RP mode, sell all
-						values[7+n] = n_amount[n];
-						inputs[16].checked = 1; //sell
+				} else { // we go too much, guess it was a good heist
+					for(i=0;i<=6;i++) { //check what we carry
+						if(mode==0 && i == n) {
+							values[i+7] = 0;
+						} else {
+							values[i+7] = n_amount[i];
+							getELNAME('typedrugs')[0].checked = 1; //sell
+						}
 					}
 				}
 			}
-		} else if(mode != 3) { //sell the leftovers
+		}
+		if(n == -1 && mode == 4 && !lnarcs) {
 			for (i=0; i<=6; i++) {
 				values[i+7] = n_amount[i];
+				getELNAME('typedrugs')[0].checked = 1; //sell
 			}
-			inputs[16].checked = 1; //sell
 		}
 
 		//check for scenario: failed selling narcs in high
@@ -5434,605 +5439,628 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 		}
 		fail_n = (carry_b == 0 && carry_n == narcs && mode == 0 && selling_n > 0) ? 1 : 0;
 
-		if (b > -1 && !fail_n) { //do we want booze? Or are we still selling narcs in high?
+		if (b > -1 && !fail_n && !lbooze && mode != 3) { //do we want booze? Or are we still selling narcs in high?
 			if (carry_b == 0) {
 				values[b] = booze; //nothing in pocket, fill it all
-				inputs[8].checked = 1; //buy
+				getELNAME('typebooze')[1].checked = 1; //buy
 			} else {
-				if (b_amount[b] < booze) { //not full of wanted
-					if (b_amount[b] != carry_b) { //there is unwanted stuff
-						for (i=0; i<=6; i++) {
-							if ( (i != b || true) || mode == 1) { //only sell what we don't want or in CD mode
-								values[i] = b_amount[i];
+				if (carry_b < booze) { // we got space for more
+					if (b_amount[b] < booze) { //not full of wanted
+						if (b_amount[b] != carry_b) { //there is unwanted stuff
+							for (i=0; i<=6; i++) {
+								if ( (i != b || true) || mode == 1) { //only sell what we don't want or in CD mode
+									values[i] = b_amount[i];
+								}
+							}
+							getELNAME('typebooze')[0].checked = 1; //sell
+						} else { //only carrying wanted narcs
+							if(mode = 2) {
+								values[b] = carry_b; //if any, fill missing amount
+								getELNAME('typebooze')[0].checked = 1; //sell
+							} else {
+								values[b] = booze - carry_b; //if any, fill missing amount
+								getELNAME('typebooze')[1].checked = 1; //buy
 							}
 						}
-						inputs[7].checked = 1; //sell
-					} else { //only carrying wanted narcs
-						values[b] = booze - carry_b; //if any, fill missing amount
-						inputs[8].checked = 1; //buy
+					} else { //full of wanted
+						if (mode > 0) { //CD/RP mode, sell all
+							values[b] = b_amount[b];
+							getELNAME('typebooze')[0].checked = 1; //sell
+						}
 					}
-				} else { //full of wanted
-					if (mode > 0) { //CD/RP mode, sell all
-						values[b] = b_amount[b];
-						inputs[7].checked = 1; //sell
+				} else { // we go too much, guess it was a good heist
+					for(i=0;i<=6;i++) { //check what we carry
+						if(mode==0 && i == b) {
+							values[i+7] = 0;
+						} else {
+							values[i+7] = b_amount[i];
+							getELNAME('typebooze')[0].checked = 1; //sell
+						}
 					}
 				}
 			}
-		} else if(mode != 3) { //sell the leftovers
+		}
+		if(b == -1 && mode == 4 && !lbooze) {
 			for (i=0; i<=6; i++) {
 				values[i] = b_amount[i];
+				getELNAME('typebooze')[0].checked = 1; //sell
 			}
-			inputs[7].checked = 1; //sell
 		}
 
-		//fill in the boxes with the calculated values
-		boxes = $x('//input[@type="text"]');
-		for (i=0; i<=13; i++) {
-			boxes[i].value = values[i];
+		//fill in the fields with the calculated values
+		var sorts = ['wine', 'cognac', 'whiskey', 'amaretto', 'beer', 'port', 'rum', 'morphine', 'heroin', 'opium', 'cocaine', 'marihuana', 'tabacco', 'glue'];
+		var start = (lbooze)?7:0;
+		var end = (lnarcs)?6:13;
+		for (i=start; i<=end; i++) {
+			var box = $X('//input[@name="'+sorts[i]+'"]');
+			box.value = values[i];
 		}
 
 		//focus
-		$X($X('//input[@name="ver"]')?'//input[@name="ver"]':'//input[@type="submit"]').focus();
+		$X('//input[@name="ver"]').focus();
 	}
 
 	function appBRC(BN) { //Best Run Calculator
-		//get info from 'UnsafeDiv' ;)
-		var getInfo = $I('//div[@id="info"]');
-		getInfo = getInfo.split('*');
-
-		narc = getInfo[0];
-		booze = getInfo[1];
-		city = getInfo[2];
-		plane = getInfo[3];
-		fam = getInfo[4];
-		lex = parseInt(getInfo[8]);
-		lexHour = parseInt(getInfo[9]);
-		lexDay = parseInt(getInfo[10]);
-
-		if (sp) { //extra city checker
-			smugCity = $I('//h3');
-			for (i = 0; i < 8; i++) {
-				if (smugCity.search(lang.cities[i]) != -1) {
-					city = i + 4;
-					setPow('bninfo', 2, city);
+		if(!lboth) {
+			//get info from 'UnsafeDiv' ;)
+			var getInfo = $I('//div[@id="info"]');
+			getInfo = getInfo.split('*');
+	
+			narc = getInfo[0];
+			booze = getInfo[1];
+			city = getInfo[2];
+			plane = getInfo[3];
+			fam = getInfo[4];
+			lex = parseInt(getInfo[8]);
+			lexHour = parseInt(getInfo[9]);
+			lexDay = parseInt(getInfo[10]);
+	
+			if (sp) { //extra city checker
+				smugCity = $I('//h3');
+				for (i = 0; i < 8; i++) {
+					if (smugCity.search(lang.cities[i]) != -1) {
+						city = i + 4;
+						setPow('bninfo', 2, city);
+					}
 				}
 			}
-		}
-
-		//calc profits per item per city
-		lex = 1 + 0.01*lex;
-		for (nCityprofit = [], bCityprofit = [], i = 0; i <= 7; i++) { //get profit per single unit of b/n
-			for (nCityprofit[i] = [], bCityprofit[i] = [], j = 0; j <= 6; j++) { //price there - price here
-				nCityprofit[i].push(Math.round(BN[0][j][(i + 2)]*lex) - BN[0][j][(city - 4 + 2)]); //-4 correction for city ID,
-				bCityprofit[i].push(Math.round(BN[1][j][(i + 2)]*lex) - BN[1][j][(city - 4 + 2)]); //+2 correction for min/max @ [0]+[1] in BN array
+	
+			//calc profits per item per city
+			lex = 1 + 0.01*lex;
+			for (nCityprofit = [], bCityprofit = [], i = 0; i <= 7; i++) { //get profit per single unit of b/n
+				for (nCityprofit[i] = [], bCityprofit[i] = [], j = 0; j <= 6; j++) { //price there - price here
+					nCityprofit[i].push(Math.round(BN[0][j][(i + 2)]*lex) - BN[0][j][(city - 4 + 2)]); //-4 correction for city ID,
+					bCityprofit[i].push(Math.round(BN[1][j][(i + 2)]*lex) - BN[1][j][(city - 4 + 2)]); //+2 correction for min/max @ [0]+[1] in BN array
+				}
+				nCityprofit[i].unshift(nCityprofit[i].max()); //most profit per unit in this city
+				bCityprofit[i].unshift(bCityprofit[i].max());
 			}
-			nCityprofit[i].unshift(nCityprofit[i].max()); //most profit per unit in this city
-			bCityprofit[i].unshift(bCityprofit[i].max());
-		}
-
-		//--create BRC table
-		border = '1px solid #000';
-
-		table = cEL('table');
-		table.id = 'brc';
-		table.setAttribute('class', 'thinline');
-		table.width = '500';
-		tr = cEL('tr');
-		td = cEL('td');
-		td.style.backgroundColor = getValue('titleBg', '#F0F0F0');
-		td.setAttribute('colspan', '5');
-		td.setAttribute('class', 'tableheader');
-		td.innerHTML = lang.BR[0];
-		tr.appendChild(td);
-		table.appendChild(tr);
-		tr = cEL('tr');
-		td = cEL('td');
-		td.setAttribute('colspan', '5');
-		td.setAttribute('bgcolor', '#000');
-		td.setAttribute('height', '1');
-		tr.appendChild(td);
-		table.appendChild(tr);
-		tr = cEL('tr'); //header
-		td = cEL('td');
-		td.innerHTML = '&nbsp;' + lang.BR[1];
-		tr.appendChild(td);
-		td = cEL('td');
-		td.innerHTML = '&nbsp;' + lang.BR[2];
-		tr.appendChild(td);
-		td = cEL('td');
-		td.innerHTML = '&nbsp;' + lang.BR[3];
-		tr.appendChild(td);
-		td = cEL('td');
-		td.innerHTML = '&nbsp;' + lang.BR[4];
-		tr.appendChild(td);
-		td = cEL('td');
-		td.innerHTML = '&nbsp;';
-		tr.appendChild(td);
-		tr.style.borderBottom = border;
-		tr.style.backgroundColor = getValue('tableBg', '#F0F0F0');
-		table.appendChild(tr);
-
-		//--add city rows with induvidual profits
-		for (allProfits = [], bestBN = [], i = 0; i <= 7; i++) {
+	
+			//--create BRC table
+			border = '1px solid #000';
+	
+			table = cEL('table');
+			table.id = 'brc';
+			table.setAttribute('class', 'thinline');
+			table.width = '500';
 			tr = cEL('tr');
-			if (prefs[21] && pp) { //add HL effects here too
-				tr.id = '2row' + i;
-				tr.style.backgroundColor = getValue('tableBg', '#F0F0F0');
-				mOver = 'this.style.backgroundColor = \'#888\';';
-				mOver += 'document.getElementById(\'0row' + (i + 2) + '\').style.backgroundColor = \'#888\';';
-				mOver += 'document.getElementById(\'1row' + (i + 2) + '\').style.backgroundColor = \'#888\';';
-				tr.setAttribute('onMouseover', mOver);
-
-				mOut = 'this.style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
-				mOut += 'document.getElementById(\'0row' + (i + 2) + '\').style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
-				mOut += 'document.getElementById(\'1row' + (i + 2) + '\').style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
-				tr.setAttribute('onMouseout', mOut);
-			}
 			td = cEL('td');
-			tr.style.borderBottom = border;
-			tr.style.height = '19px';
+			td.style.backgroundColor = getValue('titleBg', '#F0F0F0');
 			td.setAttribute('colspan', '5');
-
-			//--Calc profits
-			if (i == city - 4) { //This is the current city
-				td.innerHTML = '<center><i>' + lang.BR[5] + lang.cities[i] + '</i></center>';
-				tr.appendChild(td);
-				allProfits.push(0);
-				bestBN.push([0, 0]);
-			} else if (plane == 0 && (((city == 6 || city == 11) && (i + 4) != 6 && (i + 4) != 11) || ((city != 6 && city != 11) && ((i + 4) == 6 || (i + 4) == 11)))) { //No plane to travel there
-				td.innerHTML = '<center><i>' + lang.BR[6] + lang.cities[i] + '</i></center>';
-				tr.appendChild(td);
-				allProfits.push(0);
-				bestBN.push([0, 0]);
-			} else { //Nothing wrong, clear to go
-				bestNarc = nCityprofit[i][0] < 0 ? 0 : nCityprofit[i].lastIndexOf(nCityprofit[i][0]); //best, if any, narc?
-				profitNarc = (bestNarc == 0) ? 0 : nCityprofit[i][bestNarc]; //profit per unit
-				profitNarc = profitNarc * narc;
-
-				bestBooze = bCityprofit[i][0] < 0 ? 0 : bCityprofit[i].lastIndexOf(bCityprofit[i][0]); //best, if any, booze?
-				profitBooze = (bestBooze == 0) ? 0 : bCityprofit[i][bestBooze]; //profit per unit
-				profitBooze = profitBooze * booze;
-
-				//count for fam pos
-				famProfit = (profitNarc + profitBooze);
-				famProfit = famProfit - Math.round(famProfit * [0, 0.12, 0.1, 0][fam]);
-
-				//calc travelcost
-				travelPrices = [ //travelcosts from A to B
-					[    0,   600, 10350, 1575,  3600, 1350,  1050, 10800], //det
-					[  600,     0, 11025, 2025,  3000, 1725,  1425, 11400], //chi
-					[10350, 11025,     0, 9075, 14025, 9450,  9750,  1875], //pal
-					[ 1575,  2025,  9075,    0,  5025,  375,   675,  9375], //ny
-					[ 3600,  3000, 14025, 5025,     0, 4650,  4350, 14400], //lv
-					[ 1350,  1725,  9450,  375,  4650,    0,   300,  9750], //phi
-					[ 1050,  1425,  9750,  675,  4350,  300,     0, 10050], //bal
-					[10800, 11400,  1875, 9375, 14400, 9750, 10050,     0]  //cor
-				];  //det   chi    pal    ny    lv     phi   bal    cor
-				travelCost = travelPrices[i][(city - 4)];
-				if (plane == 0) { //no plane => half travelcost
-					travelCost /= 2;
-				}
-
-				//Our total profit in this city
-				totalProfit = famProfit - Math.round(travelCost);
-
-				//save all profits in array for later
-				allProfits.push(totalProfit);
-
-				//What's the result
-				if (totalProfit < 0) { //no profit :(
-					td.innerHTML = '<center><i>' + lang.BR[7] + lang.cities[i] + '</i></center>';
-					tr.appendChild(td);
-					bestBN.push([0, 0]); //push dummy to complete array
-				} else { //profit \o/
-					bestBN.push([bestNarc, bestBooze]);
-					td.innerHTML = '&nbsp;' + lang.cities[i];
-					td.setAttribute('colspan', '1');
-					tr.appendChild(td);
-					var bCell = cEL('td');
-					bCell.style.borderLeft = border;
-					bCell.innerHTML = '&nbsp;' + lang.booze[bestBooze];
-					tr.appendChild(bCell);
-					var nCell = cEL('td');
-					nCell.style.borderLeft = border;
-					nCell.innerHTML = '&nbsp;' + lang.narcs[bestNarc];
-					tr.appendChild(nCell);
-					var pCell = cEL('td');
-					pCell.style.borderLeft = border;
-					pCell.innerHTML = '&nbsp;$ ' + commafy(totalProfit);
-					tr.appendChild(pCell);
-
-					if (sp) { //we need JS links @ smuggling and don't want to waste clicks
-						key = [0, 4, 6, 1, 2, 3, 5]; //convert b/n - botprices order to smuggling order
-						n1 = key[bestNarc - 1];
-						b1 = key[bestBooze - 1];
-
-						var aCell = cEL('td');
-						aCell.style.borderLeft = border;
-						aCell.innerHTML = '&nbsp;';
-						if (!link) {
-							link = [];
-						}
-						link = cEL('a');
-						link.id = 'go' + i;
-						link.setAttribute('style', 'font-weight:inherit; text-align:center; cursor:pointer');
-						link.innerHTML = 'Go!';
-						link.href = '#';
-						link.setAttribute('n', n1); //add what they should be AF'ing
-						link.setAttribute('b', b1);
-						aCell.appendChild(link);
-						tr.appendChild(aCell); //add the row
-					} else { //we need to GET to smuggling too
-						aCell = cEL('td');
-						aCell.style.borderLeft = border;
-						if (sets.version == "_com" ) {
-							plink = "http://www.barafranca.com";
-						} else if (sets.version == "_dm" ) {
-							plink = "http://dm.barafranca.com";
-						} else {
-							plink = "http://www.barafranca.nl";
-						}
-						aCell.innerHTML = '&nbsp;<a style="font-weight:inherit; text-align:center" href="'+ plink + '/smuggling.php?n=' + (bestNarc - 1) + '&b=' + (bestBooze - 1) + '">Go!</a>';
-						tr.appendChild(aCell); //add the row
-					}
-				}
-			}
+			td.setAttribute('class', 'tableheader');
+			td.innerHTML = lang.BR[0];
+			tr.appendChild(td);
 			table.appendChild(tr);
-		}
-		if(lex>1) {
-			lexRow = cEL('tr');
-			lexTd = cEL('td');
-			d = new Date();
-			lexTd.innerHTML = 'Lex Level: ' + parseInt((lex-1)*100) + ' - Seen ' + ((d.getDay() != lexDay)?'1 Day ago':d.getHours() - lexHour + ' Hours ago');
-			lexTd.setAttribute('colspan', '5');
-			lexTd.setAttribute('style', 'text-align: right; font-size:10px;');
-			lexRow.appendChild(lexTd);
-			table.appendChild(lexRow);
-		}
-
-		//add table page
-		if (pp) { //Duplicate page style and format
-			c = $X('//center[2]');
-			center = c.cloneNode(0);
-			center.appendChild(table);
-
-			function app(n, r) {
-				return c.parentNode.insertBefore(n, r);
-			}
-			br1 = cEL('br');
-			app(br1, c.nextSibling);
-			br2 = cEL('br');
-			app(br2, c.nextSibling);
-
-			app(center, c.nextSibling.nextSibling.nextSibling); //add BRC table to page
-		} else { //make our own
-			target = $X(sp ? '//form//table/tbody/tr[2]' : '//table//tr[5]');
 			tr = cEL('tr');
 			td = cEL('td');
-			td.setAttribute('colspan', '2');
-			td.appendChild(table);
+			td.setAttribute('colspan', '5');
+			td.setAttribute('bgcolor', '#000');
+			td.setAttribute('height', '1');
 			tr.appendChild(td);
-			if (sp) {
-				target.parentNode.insertBefore(tr, target.nextSibling.nextSibling.nextSibling);
-			} else {
-				table.width = target.parentNode.scrollWidth;
-				target.parentNode.parentNode.parentNode.appendChild(cEL('br'));
-				target.parentNode.parentNode.parentNode.appendChild(table);
+			table.appendChild(tr);
+			tr = cEL('tr'); //header
+			td = cEL('td');
+			td.innerHTML = '&nbsp;' + lang.BR[1];
+			tr.appendChild(td);
+			td = cEL('td');
+			td.innerHTML = '&nbsp;' + lang.BR[2];
+			tr.appendChild(td);
+			td = cEL('td');
+			td.innerHTML = '&nbsp;' + lang.BR[3];
+			tr.appendChild(td);
+			td = cEL('td');
+			td.innerHTML = '&nbsp;' + lang.BR[4];
+			tr.appendChild(td);
+			td = cEL('td');
+			td.innerHTML = '&nbsp;';
+			tr.appendChild(td);
+			tr.style.borderBottom = border;
+			tr.style.backgroundColor = getValue('tableBg', '#F0F0F0');
+			table.appendChild(tr);
+	
+			//--add city rows with induvidual profits
+			for (allProfits = [], bestBN = [], i = 0; i <= 7; i++) {
+				tr = cEL('tr');
+				if (prefs[21] && pp) { //add HL effects here too
+					tr.id = '2row' + i;
+					tr.style.backgroundColor = getValue('tableBg', '#F0F0F0');
+					mOver = 'this.style.backgroundColor = \'#888\';';
+					mOver += 'document.getElementById(\'0row' + (i + 2) + '\').style.backgroundColor = \'#888\';';
+					mOver += 'document.getElementById(\'1row' + (i + 2) + '\').style.backgroundColor = \'#888\';';
+					tr.setAttribute('onMouseover', mOver);
+	
+					mOut = 'this.style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
+					mOut += 'document.getElementById(\'0row' + (i + 2) + '\').style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
+					mOut += 'document.getElementById(\'1row' + (i + 2) + '\').style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
+					tr.setAttribute('onMouseout', mOut);
+				}
+				td = cEL('td');
+				tr.style.borderBottom = border;
+				tr.style.height = '19px';
+				td.setAttribute('colspan', '5');
+	
+				//--Calc profits
+				if (i == city - 4) { //This is the current city
+					td.innerHTML = '<center><i>' + lang.BR[5] + lang.cities[i] + '</i></center>';
+					tr.appendChild(td);
+					allProfits.push(0);
+					bestBN.push([0, 0]);
+				} else if (plane == 0 && (((city == 6 || city == 11) && (i + 4) != 6 && (i + 4) != 11) || ((city != 6 && city != 11) && ((i + 4) == 6 || (i + 4) == 11)))) { //No plane to travel there
+					td.innerHTML = '<center><i>' + lang.BR[6] + lang.cities[i] + '</i></center>';
+					tr.appendChild(td);
+					allProfits.push(0);
+					bestBN.push([0, 0]);
+				} else { //Nothing wrong, clear to go
+					bestNarc = nCityprofit[i][0] < 0 ? 0 : nCityprofit[i].lastIndexOf(nCityprofit[i][0]); //best, if any, narc?
+					profitNarc = (bestNarc == 0) ? 0 : nCityprofit[i][bestNarc]; //profit per unit
+					profitNarc = profitNarc * narc;
+	
+					bestBooze = bCityprofit[i][0] < 0 ? 0 : bCityprofit[i].lastIndexOf(bCityprofit[i][0]); //best, if any, booze?
+					profitBooze = (bestBooze == 0) ? 0 : bCityprofit[i][bestBooze]; //profit per unit
+					profitBooze = profitBooze * booze;
+	
+					//count for fam pos
+					famProfit = (profitNarc + profitBooze);
+					famProfit = famProfit - Math.round(famProfit * [0, 0.12, 0.1, 0][fam]);
+	
+					//calc travelcost
+					travelPrices = [ //travelcosts from A to B
+						[    0,   600, 10350, 1575,  3600, 1350,  1050, 10800], //det
+						[  600,     0, 11025, 2025,  3000, 1725,  1425, 11400], //chi
+						[10350, 11025,     0, 9075, 14025, 9450,  9750,  1875], //pal
+						[ 1575,  2025,  9075,    0,  5025,  375,   675,  9375], //ny
+						[ 3600,  3000, 14025, 5025,     0, 4650,  4350, 14400], //lv
+						[ 1350,  1725,  9450,  375,  4650,    0,   300,  9750], //phi
+						[ 1050,  1425,  9750,  675,  4350,  300,     0, 10050], //bal
+						[10800, 11400,  1875, 9375, 14400, 9750, 10050,     0]  //cor
+					];  //det   chi    pal    ny    lv     phi   bal    cor
+					travelCost = travelPrices[i][(city - 4)];
+					if (plane == 0) { //no plane => half travelcost
+						travelCost /= 2;
+					}
+	
+					//Our total profit in this city
+					totalProfit = famProfit - Math.round(travelCost);
+	
+					//save all profits in array for later
+					allProfits.push(totalProfit);
+	
+					//What's the result
+					if (totalProfit < 0) { //no profit :(
+						td.innerHTML = '<center><i>' + lang.BR[7] + lang.cities[i] + '</i></center>';
+						tr.appendChild(td);
+						bestBN.push([0, 0]); //push dummy to complete array
+					} else { //profit \o/
+						bestBN.push([bestNarc, bestBooze]);
+						td.innerHTML = '&nbsp;' + lang.cities[i];
+						td.setAttribute('colspan', '1');
+						tr.appendChild(td);
+						var bCell = cEL('td');
+						bCell.style.borderLeft = border;
+						bCell.innerHTML = '&nbsp;' + lang.booze[bestBooze];
+						tr.appendChild(bCell);
+						var nCell = cEL('td');
+						nCell.style.borderLeft = border;
+						nCell.innerHTML = '&nbsp;' + lang.narcs[bestNarc];
+						tr.appendChild(nCell);
+						var pCell = cEL('td');
+						pCell.style.borderLeft = border;
+						pCell.innerHTML = '&nbsp;$ ' + commafy(totalProfit);
+						tr.appendChild(pCell);
+	
+						if (sp) { //we need JS links @ smuggling and don't want to waste clicks
+							key = [0, 4, 6, 1, 2, 3, 5]; //convert b/n - botprices order to smuggling order
+							n1 = key[bestNarc - 1];
+							b1 = key[bestBooze - 1];
+	
+							var aCell = cEL('td');
+							aCell.style.borderLeft = border;
+							aCell.innerHTML = '&nbsp;';
+							if (!link) {
+								link = [];
+							}
+							link = cEL('a');
+							link.id = 'go' + i;
+							link.setAttribute('style', 'font-weight:inherit; text-align:center; cursor:pointer');
+							link.innerHTML = 'Go!';
+							link.href = '#';
+							link.setAttribute('n', n1); //add what they should be AF'ing
+							link.setAttribute('b', b1);
+							aCell.appendChild(link);
+							tr.appendChild(aCell); //add the row
+						} else { //we need to GET to smuggling too
+							aCell = cEL('td');
+							aCell.style.borderLeft = border;
+							if (sets.version == "_com" ) {
+								plink = "http://www.barafranca.com";
+							} else if (sets.version == "_dm" ) {
+								plink = "http://dm.barafranca.com";
+							} else {
+								plink = "http://www.barafranca.nl";
+							}
+							aCell.innerHTML = '&nbsp;<a style="font-weight:inherit; text-align:center" href="'+ plink + '/smuggling.php?n=' + (bestNarc - 1) + '&b=' + (bestBooze - 1) + '">Go!</a>';
+							tr.appendChild(aCell); //add the row
+						}
+					}
+				}
+				table.appendChild(tr);
 			}
-			if (sp) { //link the JS links to our filler function fillBRC()
-				for (i = 0; i <= 7; i++) {
-					if (db.innerHTML.indexOf('id="go' + i) != -1) { //check for Go! link
-						getID('go' + i).addEventListener('click', function () {
-							fillBRC(parseInt(this.getAttribute('n')), parseInt(this.getAttribute('b')), 0);
-						}, true);
+			if(lex>1) {
+				lexRow = cEL('tr');
+				lexTd = cEL('td');
+				d = new Date();
+				lexTd.innerHTML = 'Lex Level: ' + parseInt((lex-1)*100) + ' - Seen ' + ((d.getDay() != lexDay)?'1 Day ago':d.getHours() - lexHour + ' Hours ago');
+				lexTd.setAttribute('colspan', '5');
+				lexTd.setAttribute('style', 'text-align: right; font-size:10px;');
+				lexRow.appendChild(lexTd);
+				table.appendChild(lexRow);
+			}
+	
+			//add table page
+			if (pp) { //Duplicate page style and format
+				c = $X('//center[2]');
+				center = c.cloneNode(0);
+				center.appendChild(table);
+	
+				function app(n, r) {
+					return c.parentNode.insertBefore(n, r);
+				}
+				br1 = cEL('br');
+				app(br1, c.nextSibling);
+				br2 = cEL('br');
+				app(br2, c.nextSibling);
+	
+				app(center, c.nextSibling.nextSibling.nextSibling); //add BRC table to page
+			} else { //make our own
+				target = $X(sp ? '//form//table/tbody/tr[2]' : '//table//tr[5]');
+				tr = cEL('tr');
+				td = cEL('td');
+				td.setAttribute('colspan', '2');
+				td.appendChild(table);
+				tr.appendChild(td);
+				if (sp) {
+					target.parentNode.insertBefore(tr, target.nextSibling.nextSibling.nextSibling);
+				} else {
+					table.width = target.parentNode.scrollWidth;
+					target.parentNode.parentNode.parentNode.appendChild(cEL('br'));
+					target.parentNode.parentNode.parentNode.appendChild(table);
+				}
+				if (sp) { //link the JS links to our filler function fillBRC()
+					for (i = 0; i <= 7; i++) {
+						if (db.innerHTML.indexOf('id="go' + i) != -1) { //check for Go! link
+							getID('go' + i).addEventListener('click', function () {
+								fillBRC(parseInt(this.getAttribute('n')), parseInt(this.getAttribute('b')), 0);
+							}, true);
+						}
 					}
 				}
 			}
+			//finish it up > bold-ify Best Run
+			bestRun = allProfits.lastIndexOf(allProfits.max());
+			$X('//table[@id="brc"]//tr[' + (4 + bestRun) + ']').style.fontWeight = 'bold';
+			//!-Added the table
+			//--BRC AutoForm
+			if (sp) { //AF on Smuggling page
+				function AF(sel,Xn,Xb) {
+					n = -1;
+					b = -1;
+					//assemble info for AF
+					inputs = $x('//input');
+					bn_xp = '//form/table/tbody/tr[1]/td';
+
+					bn_text = $X(bn_xp).firstChild.firstChild.firstChild.innerHTML;
+					bn_text = bn_text.split('|');
+
+					cash = parseInt(bn_text[0].replace(/[^0-9.]/g, ''));
+					booze = parseInt(bn_text[1].replace(/[^0-9.]/g, '')); //max amount user can carry
+					narcs = parseInt(bn_text[2].replace(/[^0-9.]/g, ''));
+
+					b_amount = [0, 0, 0, 0, 0, 0];
+					n_amount = [0, 0, 0, 0, 0, 0]; //what is user carrying
+					xpb = '//form/table/tbody/tr[2]/td/table/tbody/tr[';
+					xpn = '//form/table/tbody/tr[2]/td[2]/table/tbody/tr[';
+					for (i = 0; i <= 15; i++) { //define how much of this item is being carried
+						if (i < 7 && !lbooze) {
+							b_amount[i] = parseInt($I(xpb + (i + 4) + ']/td[3]'));
+						}
+						if (i > 8 && !lnarcs) {
+							n_amount[(i - 9)] = parseInt($I(xpn + (i - 5) + ']/td[3]'));
+						}
+					}
+					carry_n = n_amount.sum();
+					carry_b = b_amount.sum(); //how much is the user carrying already
+					//which item do we want?
+					key = [0, 4, 6, 1, 2, 3, 5];
+					if (sel == 0) { //Calc for Best Run
+						n = key[(bestBN[bestRun][0] - 1)]; //this trick works, even I'm amazed
+						b = key[(bestBN[bestRun][1] - 1)];
+					}
+					if (sel == 1) { //CD Run
+						for (i = 0; i <= 6; i++) {
+							nItem = parseInt(BN[0][i][(city - 4 + 2)]);
+							highNarc = ((i == 0) ? nItem : ((highNarc > nItem) ? highNarc : nItem));
+							if (highNarc == nItem) {
+								n = i;
+							}
+							bItem = parseInt(BN[1][i][(city - 4 + 2)]);
+							highBooze = ((i == 0) ? bItem : ((highBooze > bItem) ? highBooze : bItem));
+							if (highBooze == bItem) {
+								b = i;
+							}
+						}
+						n = key[n];
+						b = key[b];
+					}
+					if (sel == 2) { //RP Run
+						for (i = 0; i <= 6; i++) {
+							nItem = parseInt(BN[0][i][(city - 4 + 2)]);
+							lowNarc = ((i == 0) ? nItem : ((lowNarc < nItem) ? lowNarc : nItem));
+							if (lowNarc == nItem) {
+								n = i;
+							}
+							bItem = parseInt(BN[1][i][(city - 4 + 2)]);
+							lowBooze = ((i == 0) ? bItem : ((lowBooze < bItem) ? lowBooze : bItem));
+							if (lowBooze == bItem) {
+								b = i;
+							}
+						}
+
+						n = key[n];
+						b = key[b];
+
+						//don't fill in if we can't earn RP and AF would want to buy
+						if(!lbooze) {
+							if ($I('//form//table//tr[2]/td[@align="center"][1]').search(lang.BR[10]) == -1 && getELNAME('typebooze')[1].checked) {
+								b = -1;
+							}
+						}
+						if(!lnarcs) {
+							if ($I('//form//table//tr[2]/td[@align="center"][2]').search(lang.BR[10]) == -1 && getELNAME('typedrugs')[1].checked) {
+								n = -1;
+							}
+						}
+					}
+					if (sel == 3) { //None
+						n = b = -1;
+					}
+					if (dls != '') { //user manual override using external Go! link
+						n = key[(GetParam('n'))];
+						b = key[(GetParam('b'))];
+					}
+
+					//overrule with hotkeys [ ] =
+					if(Xn) { var n = -1; }
+					if(Xb) { var b = -1; }
+
+					//we know our n and b => fill it in!
+					fillBRC(n, b, sel);
+				}
+				if ((dls == '' && prefs[28]) || dls != '') { //no call for AF && Smuggling AF on? ==> GO! || calls for AF? ==> GO!
+					AF(getInfo[5]);
+				}
+				//!-Done AutoForming
+				//--Add BRC AF settings Div
+				div = cEL('div');
+				div.id = 'AF';
+				div.setAttribute('mode', getInfo[6]);
+				div.setAttribute('class', 'NRinfo');
+	
+				var color = getValue('titleBg', '#3F505F');
+				div.setAttribute('style', 'right:10px; top:10px; width:100px !important; text-align:right; background-color:' + color + ' !important;');
+				if (getInfo[6] == -1) {
+					div.setAttribute('style', 'right:-90px; top:-80px; width:100px !important; text-align:right; background-color:' + color + ' !important;');
+				}
+				title = cEL('span');
+				title.innerHTML = '<center><u>' + lang.BR[8] + '</u></center>';
+				div.appendChild(title);
+	
+				H = prefs[4]; //do we want hotkeys?
+				//add button for each option
+				wrap1 = cEL('span');
+				a1 = cEL('a');
+				a1.innerHTML = (H ? lang.smuggling[6]+'(8)' : lang.smuggling[6]);
+				a1.id = 'a1';
+				a1.title = lang.smuggling[7];
+				if (H) {
+					a1.setAttribute('accesskey', '8');
+				}
+				wrap1.appendChild(a1);
+				best = cEL('input');
+				best.id = 'brc0';
+				best.setAttribute('type', 'radio');
+				best.name = 'brc';
+				wrap1.appendChild(best);
+				div.appendChild(wrap1);
+	
+				wrap2 = cEL('span');
+				wrap2.innerHTML = '<br />';
+				a2 = cEL('a');
+				a2.innerHTML = (H ? lang.smuggling[8]+'(9)' : lang.smuggling[8]);
+				a2.id = 'a2';
+				a2.title = lang.smuggling[9];
+				if (H) {
+					a2.setAttribute('accesskey', '9');
+				}
+				wrap2.appendChild(a2);
+				cd = cEL('input');
+				cd.id = 'brc1';
+				cd.setAttribute('type', 'radio');
+				cd.name = 'brc';
+				wrap2.appendChild(cd);
+				div.appendChild(wrap2);
+	
+				wrap3 = cEL('span');
+				wrap3.innerHTML = '<br />';
+				a3 = cEL('a');
+				a3.innerHTML = (H ? lang.smuggling[10]+'(0)' : lang.smuggling[10]);
+				a3.id = 'a3';
+				a3.title = lang.smuggling[11];
+				if (H) {
+					a3.setAttribute('accesskey', '0');
+				}
+				wrap3.appendChild(a3);
+				rp = cEL('input');
+				rp.id = 'brc2';
+	
+				rp.setAttribute('type', 'radio');
+				rp.name = 'brc';
+				wrap3.appendChild(rp);
+				div.appendChild(wrap3);
+	
+				wrap4 = cEL('span');
+				wrap4.innerHTML = '<br />';
+				a4 = cEL('a');
+				a4.innerHTML = (H ? lang.smuggling[12]+'(-)' : lang.smuggling[12]);
+				a4.id = 'a4';
+				a4.title = lang.smuggling[13];
+				if (H) {
+					a4.setAttribute('accesskey', '-');
+				}
+				wrap4.appendChild(a4);
+				none = cEL('input');
+				none.id = 'brc3';
+				none.setAttribute('type', 'radio');
+				none.name = 'brc';
+				wrap4.appendChild(none);
+				div.appendChild(wrap4);
+	
+				//add coolness icon
+				icon = cEL('img');
+				icon.id = 'brcIcon';
+				icon.src = getInfo[7];
+				icon.setAttribute('style', 'position:absolute; bottom:0px; left:0px; cursor:pointer');
+	
+				//add Div to page
+				div.appendChild(icon);
+				db.appendChild(div);
+	
+				//add cool sliding 'n hiding
+				getID('brcIcon').addEventListener('click', function () {
+					div = getID('AF');
+					s = div.style;
+					if (div.getAttribute('mode') == 1) { //mode 1 - visible
+						div.setAttribute('mode', 0); //mode 0 - moving
+						setTimeout(function () {
+							s.right = '0';
+							s.top = '0';
+						}, 100); //use timers for sliding effect
+						setTimeout(function () {
+							s.right = '-20';
+							s.top = '-20';
+						}, 200);
+						setTimeout(function () {
+							s.right = '-45';
+							s.top = '-40';
+						}, 300);
+						setTimeout(function () {
+							s.right = '-65';
+							s.top = '-60';
+						}, 400);
+						setTimeout(function () {
+							s.right = '-90';
+							s.top = '-80';
+							div.setAttribute('mode', -1);
+						}, 500);
+						setValue('brcDiv', -1); //mode -1 - hidden
+					}
+					if (div.getAttribute('mode') == -1) { //mode 1 - visible
+						div.setAttribute('mode', 0); //mode 0 - moving
+						setTimeout(function () {
+							s.right = '-65';
+							s.top = '-60';
+						}, 100);
+						setTimeout(function () {
+							s.right = '-45';
+							s.top = '-40';
+						}, 200);
+						setTimeout(function () {
+							s.right = '-20';
+							s.top = '-20';
+						}, 300);
+						setTimeout(function () {
+							s.right = '-0';
+							s.top = '-0';
+						}, 400);
+						setTimeout(function () {
+							s.right = '10';
+							s.top = '10';
+							div.setAttribute('mode', 1);
+						}, 500);
+						setValue('brcDiv', 1); //mode -1 - hidden
+					}
+				}, true);
+		//**/ //add AF() callers
+				$X('//input[@id="brc0"]').addEventListener('click', function () {
+					AF(0);
+					try {
+						setValue('brcAF', 0);
+					} catch (e) {}
+				}, true); //setValue will only work directly
+				$X('//input[@id="brc1"]').addEventListener('click', function () {
+					AF(1);
+					try {
+						setValue('brcAF', 1);
+					} catch (e) {}
+				}, true); //but thats fine :D
+				$X('//input[@id="brc2"]').addEventListener('click', function () {
+					AF(2);
+					try {
+						setValue('brcAF', 2);
+					} catch (e) {}
+				}, true); //hotkeys are 1 time action anyways
+				$X('//input[@id="brc3"]').addEventListener('click', function () {
+					AF(3);
+					try {
+						setValue('brcAF', 3);
+					} catch (e) {}
+				}, true);
+				if (H) { //add hotkeys
+					$X('//a[@id="a1"]').href = 'javascript:document.getElementById("brc0").click();';
+					$X('//a[@id="a2"]').href = 'javascript:document.getElementById("brc1").click();';
+					$X('//a[@id="a3"]').href = 'javascript:document.getElementById("brc2").click();';
+					$X('//a[@id="a4"]').href = 'javascript:document.getElementById("brc3").click();';
+
+					var getInfo = $I('//div[@id="info"]');
+					getInfo = getInfo.split('*');
+					var mode = getInfo[5];
+
+					bn_xp = '//form/table/tbody/tr[1]/td';
+					str = $I(bn_xp);
+
+					str += '<hr /><a accessKey="[" id="do_n" title="'+lang.smuggling[14]+'" onFocus="this.blur()" href="#">' + lang.smuggling[2] + ' ([)</a>';
+					str += ' - <a accessKey="]" id="do_b" title="'+lang.smuggling[15]+'" onFocus="this.blur()" href="#">' + lang.smuggling[1] + ' (])</a>';
+					str += ' - <a accessKey="=" id="do_sell" title="'+lang.smuggling[16]+'" onFocus="this.blur()" href="#">' + lang.smuggling[5] + ' (=)</a><br />';
+
+					$I(bn_xp, str);
+
+					getID('do_n').addEventListener('click', function(){ AF(getValue('brcAF', 0),0,1); }, true);
+					getID('do_b').addEventListener('click', function(){ AF(getValue('brcAF', 0),1,0); }, true);
+					getID('do_sell').addEventListener('click', function(){ AF(4,1,1); }, true);
+				}
+				$X('//input[@id="brc' + getInfo[5] + '"]').setAttribute('checked', '1'); //check the selected option at the Div too
+			}
+			//!-Done with BRC AF
 		}
-		//finish it up > bold-ify Best Run
-		bestRun = allProfits.lastIndexOf(allProfits.max());
-		$X('//table[@id="brc"]//tr[' + (4 + bestRun) + ']').style.fontWeight = 'bold';
-		//!-Added the table
-		//--BRC AutoForm
-		if (sp) { //AF on Smuggling page
-
-			function AF(sel,Xn,Xb) {
-				//assemble info for AF
-				inputs = $x('//input');
-				bn_xp = '//form/table/tbody/tr[1]/td';
-
-				bn_text = $X(bn_xp).firstChild.firstChild.firstChild.innerHTML;
-				bn_text = bn_text.split('|');
-
-				cash = parseInt(bn_text[0].replace(/[^0-9.]/g, ''));
-				booze = parseInt(bn_text[1].replace(/[^0-9.]/g, '')); //max amount user can carry
-				narcs = parseInt(bn_text[2].replace(/[^0-9.]/g, ''));
-
-				b_amount = [0, 0, 0, 0, 0, 0];
-				n_amount = [0, 0, 0, 0, 0, 0]; //what is user carrying
-				xpb = '//form/table/tbody/tr[2]/td/table/tbody/tr[';
-				xpn = '//form/table/tbody/tr[2]/td[2]/table/tbody/tr[';
-				for (i = 0; i <= 15; i++) { //define how much of this item is being carried
-					if (i < 7) {
-						b_amount[i] = parseInt($I(xpb + (i + 4) + ']/td[3]'));
-					}
-					if (i > 8) {
-						n_amount[(i - 9)] = parseInt($I(xpn + (i - 5) + ']/td[3]'));
-					}
-				}
-				carry_n = n_amount.sum();
-				carry_b = b_amount.sum(); //how much is the user carrying already
-				//which item do we want?
-				key = [0, 4, 6, 1, 2, 3, 5];
-				if (sel == 0) { //Calc for Best Run
-					n = key[(bestBN[bestRun][0] - 1)]; //this trick works, even I'm amazed
-					b = key[(bestBN[bestRun][1] - 1)];
-				}
-				if (sel == 1) { //CD Run
-					for (i = 0; i <= 6; i++) {
-						nItem = parseInt(BN[0][i][(city - 4 + 2)]);
-						highNarc = ((i == 0) ? nItem : ((highNarc > nItem) ? highNarc : nItem));
-						if (highNarc == nItem) {
-							n = i;
-						}
-						bItem = parseInt(BN[1][i][(city - 4 + 2)]);
-						highBooze = ((i == 0) ? bItem : ((highBooze > bItem) ? highBooze : bItem));
-						if (highBooze == bItem) {
-							b = i;
-						}
-					}
-					n = key[n];
-					b = key[b];
-				}
-				if (sel == 2) { //RP Run
-					for (i = 0; i <= 6; i++) {
-						nItem = parseInt(BN[0][i][(city - 4 + 2)]);
-						lowNarc = ((i == 0) ? nItem : ((lowNarc < nItem) ? lowNarc : nItem));
-						if (lowNarc == nItem) {
-							n = i;
-						}
-						bItem = parseInt(BN[1][i][(city - 4 + 2)]);
-						lowBooze = ((i == 0) ? bItem : ((lowBooze < bItem) ? lowBooze : bItem));
-						if (lowBooze == bItem) {
-							b = i;
-						}
-					}
-
-					n = key[n];
-					b = key[b];
-
-					//don't fill in if we can't earn RP and AF would want to buy
-					if ($I('//form//table//tr[2]/td[@align="center"][1]').search(lang.BR[10]) == -1 && inputs[8].checked) {
-						b = -1;
-					}
-					if ($I('//form//table//tr[2]/td[@align="center"][2]').search(lang.BR[10]) == -1 && inputs[17].checked) {
-						n = -1;
-					}
-				}
-				if (sel == 3) { //None
-					n = b = -1;
-				}
-				if (dls != '') { //user manual override using external Go! link
-					n = key[(GetParam('n'))];
-					b = key[(GetParam('b'))];
-				}
-
-				//overrule with hotkeys [ ] =
-				if(Xn) { var n = -1; }
-				if(Xb) { var b = -1; }
-
-				//still nothing defined, don't fill nothing!
-				if(!n) { var n = 0; }
-				if(!b) { var b = 0; }
-
-				//we know our n and b => fill it in!
-				fillBRC(n, b, sel);
-			}
-			if ((dls == '' && prefs[28]) || dls != '') { //no call for AF && Smuggling AF on? ==> GO! || calls for AF? ==> GO!
-				AF(getInfo[5]);
-			}
-			//!-Done AutoForming
-			//--Add BRC AF settings Div
-			div = cEL('div');
-			div.id = 'AF';
-			div.setAttribute('mode', getInfo[6]);
-			div.setAttribute('class', 'NRinfo');
-
-			var color = getValue('titleBg', '#3F505F');
-			div.setAttribute('style', 'right:10px; top:10px; width:100px !important; text-align:right; background-color:' + color + ' !important;');
-			if (getInfo[6] == -1) {
-				div.setAttribute('style', 'right:-90px; top:-80px; width:100px !important; text-align:right; background-color:' + color + ' !important;');
-			}
-			title = cEL('span');
-			title.innerHTML = '<center><u>' + lang.BR[8] + '</u></center>';
-			div.appendChild(title);
-
-			H = prefs[4]; //do we want hotkeys?
-			//add button for each option
-			wrap1 = cEL('span');
-			a1 = cEL('a');
-			a1.innerHTML = (H ? lang.smuggling[6]+'(8)' : lang.smuggling[6]);
-			a1.id = 'a1';
-			a1.title = lang.smuggling[7];
-			if (H) {
-				a1.setAttribute('accesskey', '8');
-			}
-			wrap1.appendChild(a1);
-			best = cEL('input');
-			best.id = 'brc0';
-			best.setAttribute('type', 'radio');
-			best.name = 'brc';
-			wrap1.appendChild(best);
-			div.appendChild(wrap1);
-
-			wrap2 = cEL('span');
-			wrap2.innerHTML = '<br />';
-			a2 = cEL('a');
-			a2.innerHTML = (H ? lang.smuggling[8]+'(9)' : lang.smuggling[8]);
-			a2.id = 'a2';
-			a2.title = lang.smuggling[9];
-			if (H) {
-				a2.setAttribute('accesskey', '9');
-			}
-			wrap2.appendChild(a2);
-			cd = cEL('input');
-			cd.id = 'brc1';
-			cd.setAttribute('type', 'radio');
-			cd.name = 'brc';
-			wrap2.appendChild(cd);
-			div.appendChild(wrap2);
-
-			wrap3 = cEL('span');
-			wrap3.innerHTML = '<br />';
-			a3 = cEL('a');
-			a3.innerHTML = (H ? lang.smuggling[10]+'(0)' : lang.smuggling[10]);
-			a3.id = 'a3';
-			a3.title = lang.smuggling[11];
-			if (H) {
-				a3.setAttribute('accesskey', '0');
-			}
-			wrap3.appendChild(a3);
-			rp = cEL('input');
-			rp.id = 'brc2';
-
-			rp.setAttribute('type', 'radio');
-			rp.name = 'brc';
-			wrap3.appendChild(rp);
-			div.appendChild(wrap3);
-
-			wrap4 = cEL('span');
-			wrap4.innerHTML = '<br />';
-			a4 = cEL('a');
-			a4.innerHTML = (H ? lang.smuggling[12]+'(-)' : lang.smuggling[12]);
-			a4.id = 'a4';
-			a4.title = lang.smuggling[13];
-			if (H) {
-				a4.setAttribute('accesskey', '-');
-			}
-			wrap4.appendChild(a4);
-			none = cEL('input');
-			none.id = 'brc3';
-			none.setAttribute('type', 'radio');
-			none.name = 'brc';
-			wrap4.appendChild(none);
-			div.appendChild(wrap4);
-
-			//add coolness icon
-			icon = cEL('img');
-			icon.id = 'brcIcon';
-			icon.src = getInfo[7];
-			icon.setAttribute('style', 'position:absolute; bottom:0px; left:0px; cursor:pointer');
-
-			//add Div to page
-			div.appendChild(icon);
-			db.appendChild(div);
-
-			//add cool sliding 'n hiding
-			getID('brcIcon').addEventListener('click', function () {
-				div = getID('AF');
-				s = div.style;
-				if (div.getAttribute('mode') == 1) { //mode 1 - visible
-					div.setAttribute('mode', 0); //mode 0 - moving
-					setTimeout(function () {
-						s.right = '0';
-						s.top = '0';
-					}, 100); //use timers for sliding effect
-					setTimeout(function () {
-						s.right = '-20';
-						s.top = '-20';
-					}, 200);
-					setTimeout(function () {
-						s.right = '-45';
-						s.top = '-40';
-					}, 300);
-					setTimeout(function () {
-						s.right = '-65';
-						s.top = '-60';
-					}, 400);
-					setTimeout(function () {
-						s.right = '-90';
-						s.top = '-80';
-						div.setAttribute('mode', -1);
-					}, 500);
-					setValue('brcDiv', -1); //mode -1 - hidden
-				}
-				if (div.getAttribute('mode') == -1) { //mode 1 - visible
-					div.setAttribute('mode', 0); //mode 0 - moving
-					setTimeout(function () {
-						s.right = '-65';
-						s.top = '-60';
-					}, 100);
-					setTimeout(function () {
-						s.right = '-45';
-						s.top = '-40';
-					}, 200);
-					setTimeout(function () {
-						s.right = '-20';
-						s.top = '-20';
-					}, 300);
-					setTimeout(function () {
-						s.right = '-0';
-						s.top = '-0';
-					}, 400);
-					setTimeout(function () {
-						s.right = '10';
-						s.top = '10';
-						div.setAttribute('mode', 1);
-					}, 500);
-					setValue('brcDiv', 1); //mode -1 - hidden
-				}
-			}, true);
-	//**/ //add AF() callers
-			$X('//input[@id="brc0"]').addEventListener('click', function () {
-				AF(0);
-				try {
-					setValue('brcAF', 0);
-				} catch (e) {}
-			}, true); //setValue will only work directly
-			$X('//input[@id="brc1"]').addEventListener('click', function () {
-				AF(1);
-				try {
-					setValue('brcAF', 1);
-				} catch (e) {}
-			}, true); //but thats fine :D
-			$X('//input[@id="brc2"]').addEventListener('click', function () {
-				AF(2);
-				try {
-					setValue('brcAF', 2);
-				} catch (e) {}
-			}, true); //hotkeys are 1 time action anyways
-			$X('//input[@id="brc3"]').addEventListener('click', function () {
-				AF(3);
-				try {
-					setValue('brcAF', 3);
-				} catch (e) {}
-			}, true);
-			if (H) { //add hotkeys
-				$X('//a[@id="a1"]').href = 'javascript:document.getElementById("brc0").click();';
-				$X('//a[@id="a2"]').href = 'javascript:document.getElementById("brc1").click();';
-				$X('//a[@id="a3"]').href = 'javascript:document.getElementById("brc2").click();';
-				$X('//a[@id="a4"]').href = 'javascript:document.getElementById("brc3").click();';
-
-				var getInfo = $I('//div[@id="info"]');
-				getInfo = getInfo.split('*');
-				var mode = getInfo[5];
-
-				bn_xp = '//form/table/tbody/tr[1]/td';
-				str = $I(bn_xp);
-
-				str += '<hr /><a accessKey="[" id="do_n" title="'+lang.smuggling[14]+'" onFocus="this.blur()" href="#">' + lang.smuggling[2] + ' ([)</a>';
-				str += ' - <a accessKey="]" id="do_b" title="'+lang.smuggling[15]+'" onFocus="this.blur()" href="#">' + lang.smuggling[1] + ' (])</a>';
-				str += ' - <a accessKey="=" id="do_sell" title="'+lang.smuggling[16]+'" onFocus="this.blur()" href="#">' + lang.smuggling[5] + ' (=)</a><br />';
-
-				$I(bn_xp, str);
-
-				getID('do_n').addEventListener('click', function(){ AF(getValue('brcAF', 0),0,1); }, true);
-				getID('do_b').addEventListener('click', function(){ AF(getValue('brcAF', 0),1,0); }, true);
-				getID('do_sell').addEventListener('click', function(){ AF(2,1,1); }, true);
-			}
-			$X('//input[@id="brc' + getInfo[5] + '"]').setAttribute('checked', '1'); //check the selected option at the Div too
-		}
-		//!-Done with BRC AF
 	}
 	//!-Done assembling functions
 	//--let's get started
@@ -6155,6 +6183,18 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 
 //---------------- Smuggling ----------------
 if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF links and tweak innerHTML, other functions taken over by BRC
+	var lbooze = 0, lnarcs = 0, lboth = 0;
+	//check if lackeys on
+	if (db.innerHTML.indexOf('/orourke.jpg') != -1 && db.innerHTML.indexOf('/freekowski.jpg') != -1) {
+		lboth = 1;
+	}
+	else if (db.innerHTML.indexOf('/orourke.jpg') != -1) {
+		lbooze = 1;
+	}
+	else if (db.innerHTML.indexOf('/freekowski.jpg') != -1) {
+		lnarcs = 1;
+	}
+
 	//get input fields
 	inputs = $x('//input');
 	bn_xp = '//form/table/tbody/tr[1]/td';
@@ -6170,97 +6210,98 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 	xpb = '//form/table/tbody/tr[2]/td/table/tbody/tr[';
 	xpn = '//form/table/tbody/tr[2]/td[2]/table/tbody/tr[';
 
-	for (i = 0; i <= 15; i++) { //add click to fill stuff and hotkeys
-		if (i < 7) { //booze
-			var x = i + 4;
-			b_amount[i] = parseInt($I(xpb + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpb + x + ']/td', '<a id="bh'+i+'" index="'+i+'" ' + (prefs[4] ? 'accesskey="' + (i + 1) + '" ' : '') + 'title="'+lang.smuggling[17]+' ' + (i + 1) + ' )" onFocus="this.blur()" href="javascript:{}">' + (prefs[4] ? (i + 1) : '') + ' ' + $I(xpb + x + ']/td') + '</a>');
+	if(!lboth) {
+		for (i = 0; i <= 15; i++) { //add click to fill stuff and hotkeys
+			if (i < 7 && !lbooze) { //booze
+				var x = i + 4;
+				b_amount[i] = parseInt($I(xpb + x + ']/td[3]'), 10); //define how much of this item is being carried
+				$I(xpb + x + ']/td', '<a id="bh'+i+'" index="'+i+'" ' + (prefs[4] ? 'accesskey="' + (i + 1) + '" ' : '') + 'title="'+lang.smuggling[17]+' ' + (i + 1) + ' )" onFocus="this.blur()" href="javascript:{}">' + (prefs[4] ? (i + 1) : '') + ' ' + $I(xpb + x + ']/td') + '</a>');
 
-			getID('bh'+i).addEventListener('click', function(e){
-				function z() { getTAG('input')[i].value = 0; } //zero
-				var i = parseInt(e.target.getAttribute('index'));
-				var inpt = getTAG('input'); //inputs
+				getID('bh'+i).addEventListener('click', function(e){
+					function z() { getTAG('input')[i].value = 0; } //zero
+					var i = parseInt(e.target.getAttribute('index'));
+					var inpt = getTAG('input'); //inputs
 
-				for(var j=0;j<=6;j++) {//reset form
-					if (j!=i) {
-						inpt[j].value = 0;
+					for(var j=0;j<=6;j++) {//reset form
+						if (j!=i) {
+							inpt[j].value = 0;
+						}
 					}
-				}
-
-				var missing = booze - b_amount[i];
-				var value = inpt[i].value;
-				if (b_amount[i] == 0) {
-					if (value == 0) {
-						inpt[i].value = booze;
-						inpt[8].checked = 1; //sell
-					} else { z(); }
-				} else if (b_amount[i] == booze) {
-					if (value == 0) {
-						inpt[i].value = booze;
-						inpt[7].checked = 1; //buy
-					} else { z(); }
-				} else if (b_amount[i] != booze) {
-					if (value == 0) {
-						inpt[i].value = missing;
-						inpt[8].checked = 1; //buy
-					} else if (value == missing) {
-						inpt[i].value = b_amount[i];
-						inpt[7].checked = 1; //sell
-					} else { z(); }
-				}
-				if ($X('//input[@name="ver"]')) {
-					$X('//input[@name="ver"]').focus();
-				} else {
-					$X('//input[@type="submit"]').focus();
-				}
-			}, true);
-		}
-		if (i > 8) { //narcs
-			var x = i - 5;
-			n_amount[(i - 9)] = parseInt($I(xpn + x + ']/td[3]'), 10); //define how much of this item is being carried
-			$I(xpn + x + ']/td', '<a onFocus="this.blur()" id="nh'+i+'" index="'+i+'" title="'+lang.smuggling[18]+'" href="javascript:{}">' + $I(xpn + x + ']/td') + '</a>');
-
-			getID('nh'+i).addEventListener('click', function(e){
-				function z() { getTAG('input')[i].value = 0; } //fill zero
-				var i = parseInt(e.target.getAttribute('index'));
-				var inpt = getTAG('input'); //inputs
-
-				for(var j=0;j<=6;j++) {//reset form
-					if (j!=i-9) {
-						inpt[j+9].value = 0;
+					var total = b_amount.sum();
+					var missing = booze - b_amount[i];
+					var value = inpt[i].value;
+					if (b_amount[i] == 0 && total < booze) {
+						if (value == 0) {
+							inpt[i].value = booze;
+							inpt[8].checked = 1; //buy
+						} else { z(); }
+					} else if (b_amount[i] == booze) {
+						if (value == 0) {
+							inpt[i].value = booze;
+							inpt[7].checked = 1; //sell
+						} else { z(); }
+					} else if (b_amount[i] < booze && total < booze) {
+						if (value == 0) {
+							inpt[i].value = missing;
+							inpt[8].checked = 1; //buy
+						} else if (value == missing) {
+							inpt[i].value = b_amount[i];
+							inpt[7].checked = 1; //sell
+						} else { z(); }
+					} else if (n_amount[i-9] > booze) {
+						if (value == 0) {
+							inpt[i].value = b_amount[i];
+							inpt[7].checked = 1; //sell
+						} else { z(); }
 					}
-				}
-
-				var missing = narcs - n_amount[i-9];
-				var value = parseInt(inpt[i].value);
-				if (n_amount[i-9] == 0) {
-					if (value == 0) {
-						inpt[i].value = narcs;
-						inpt[17].checked = 1; //sell
-					} else { z(); }
-				} else if (n_amount[i-9] == narcs) {
-					if (value == 0) {
-						inpt[i].value = narcs;
-						inpt[16].checked = 1; //buy
-					} else { z(); }
-				} else if (n_amount[i-9] < narcs) {
-					if (value == 0) {
-						inpt[i].value = missing;
-						inpt[17].checked = 1; //buy
-					} else if (value == missing) {
-						inpt[i].value = n_amount[i-9];
-						inpt[16].checked = 1; //sell
-					} else { z(); }
-				} else if (n_amount[i-9] > narcs) {
-					if (value == 0) {
-						inpt[i].value = n_amount[i-9];
-						inpt[17].checked = 1; //sell
-					} else { z(); }
-				}
-				if ($X('//input[@name="ver"]')) {
 					$X('//input[@name="ver"]').focus();
-				}
-			}, true);
+				}, true);
+			}
+			if (i > 8 && !lnarcs) { //narcs
+				var x = i - 5;
+				n_amount[(i - 9)] = parseInt($I(xpn + x + ']/td[3]'), 10); //define how much of this item is being carried
+				$I(xpn + x + ']/td', '<a onFocus="this.blur()" id="nh'+i+'" index="'+i+'" title="'+lang.smuggling[18]+'" href="javascript:{}">' + $I(xpn + x + ']/td') + '</a>');
+
+				getID('nh'+i).addEventListener('click', function(e){
+					function z() { getTAG('input')[i].value = 0; } //fill zero
+					var i = parseInt(e.target.getAttribute('index'));
+					var inpt = getTAG('input'); //inputs
+
+					for(var j=0;j<=6;j++) {//reset form
+						if (j!=i-9) {
+							inpt[j+9].value = 0;
+						}
+					}
+					var total = n_amount.sum();
+					var missing = narcs - n_amount[i-9];
+					var value = parseInt(inpt[i].value);
+					if (n_amount[i-9] == 0 && total < narcs) {
+						if (value == 0) {
+							inpt[i].value = narcs;
+							inpt[17].checked = 1; //buy
+						} else { z(); }
+					} else if (n_amount[i-9] == narcs) {
+						if (value == 0) {
+							inpt[i].value = narcs;
+							inpt[16].checked = 1; //sell
+						} else { z(); }
+					} else if (n_amount[i-9] < narcs && total < narcs) {
+						if (value == 0) {
+							inpt[i].value = missing;
+							inpt[17].checked = 1; //buy
+						} else if (value == missing) {
+							inpt[i].value = n_amount[i-9];
+							inpt[16].checked = 1; //sell
+						} else { z(); }
+					} else if (n_amount[i-9] > narcs) {
+						if (value == 0) {
+							inpt[i].value = n_amount[i-9];
+							inpt[16].checked = 1; //sell
+						} else { z(); }
+					}
+					$X('//input[@name="ver"]').focus();
+				}, true);
+			}
 		}
 	}
 	$x('//input[@name="typebooze"] | //input[@name="typedrugs"]').forEach(function($n){
@@ -6271,9 +6312,17 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 		}, true);
 	});
 
+	//visual fix
+	if(lnarcs) {
+		$X('//form/table/tbody/tr[2]/td[2]').innerHTML = '<br /><br />'+$X('//form/table/tbody/tr[2]/td[2]').innerHTML;
+	}
+	if(lbooze) {
+		$X('//form/table/tbody/tr[2]/td').innerHTML = '<br /><br />'+$X('//form/table/tbody/tr[2]/td').innerHTML;
+	}
+
 	//create more efficient info text
 	info_xp = '//form/table/tbody/tr/td';
-	part = $I(info_xp).split('<br>');
+	var part = $I(info_xp).split('<br>');
 
 	str = '<table border="0"><tr>';
 	str += '<td>' + lang.smuggling[0] + '$ ' + commafy(cash) + ' | </td>';
@@ -6283,7 +6332,9 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 	str += '<a href="prices.php" target="main">'+lang.smuggling[19]+'</a>';
 
 	$X(bn_xp).innerHTML = str;
-	inputs[18].focus(); //focus captcha
+	if(!lboth) {
+		$X('//input[@name="ver"]').focus(); //focus captcha field
+	}
 
 	//AF stuff on Smuggling page
 	if (dls != '') { //we found a BRC request!
@@ -6313,9 +6364,13 @@ if (dlp.indexOf('user.php') != -1 && dls.indexOf('page=user') != -1) {
 					var num = (total<=50)?total:50;
 					for(var i=0;i<num;i++){
 						var results = xml.getElementsByTagName('name')[i].textContent;
-						db.innerHTML += '<br /><a href="'+dlp+'?nick='+results+'">'+results+'</a>';
+						db.innerHTML += '<br /><a href="'+dlp+'?nick='+results+'" id="'+i+'" class="sel">'+results+'</a>';
 					}
 					nickReader();
+					getID('0').focus();
+					var j = 0;
+					window.addEventListener('keydown', function(event) { if(event.keyCode == 40) { if(j<num-1) { j++; getID(j).focus(); } } });
+					window.addEventListener('keydown', function(event) { if(event.keyCode == 38) { if(j!=0) { j--; getID(j).focus(); } } });
 				} else {
 					db.innerHTML += '<br />'+lang.lookup[2];
 				}

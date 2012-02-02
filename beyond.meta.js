@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.71
-// @date			01-02-2012
+// @version			1.10.0.72
+// @date			02-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
