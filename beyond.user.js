@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.72
-// @date			02-02-2012
+// @version			1.10.0.73
+// @date			04-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -147,8 +147,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 72;
-var SCRIPT_SUBVERSION = 72;
+var SCRIPT_VERSION_BUILD = 73;
+var SCRIPT_SUBVERSION = 73;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1108,6 +1108,7 @@ if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/
 								var role = 1;//default is in a family
 								var pos = $X('//div[@id="xhr"]//span[@id="position"]').getAttribute('value');
 								var fam = $X('//div[@id="xhr"]//span[@id="family"]').getAttribute('value');
+								var hascapo = ($X('//div[@id="xhr"]//span[@id="capo"]'))?1:0;
 
 								if(/None|Geen/.test(fam)){
 									role = 0;
@@ -1117,6 +1118,9 @@ if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/
 									}
 									if(/(Sottocapo|Consiglieri|Don) (of|van):/.test(pos)){
 										role = 3;
+									}
+									if(hascapo) {
+										role = 4;
 									}
 								}
 								setValue('family',fam);
@@ -1147,8 +1151,10 @@ if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/
 					var found = 0;
 					$x('//div[@id="str2dom"]//h2').forEach(function($n) { //loop <h2>
 						if ($n.innerHTML.search('Lex')>-1) { //get lex
-							setValue('lex', parseInt($n.innerHTML.split(' ').reverse()[1]));
-							found = 1;
+							if($I('//div[@id="str2dom"]//div[@id="jsprogbar_div_special_Lex"]') > 0) {
+								setValue('lex', parseInt($n.innerHTML.split(' ').reverse()[1]));
+								found = 1;
+							}
 						}
 					});
 					if (!found) {
@@ -1353,8 +1359,10 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 		var found = 0;
 		$x('//h2').forEach(function($n) { //loop <h2>
 			if ($n.innerHTML.search('Lex')>-1) { //get lex
-				setValue('lex', parseInt($n.innerHTML.split(' ').reverse()[1]));
-				found = 1;
+				if($I('//div[@id="jsprogbar_div_special_Lex"]') > 0) {
+					setValue('lex', parseInt($n.innerHTML.split(' ').reverse()[1]));
+					found = 1;
+				}
 			}
 		});
 		if (!found) {
@@ -2385,7 +2393,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 			var text = (jhl_add == 1)?'Add to ':'Remove from ';
 			actions.innerHTML += '<a href="#" id="jhl_link" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">'+text+'busting list</a><br />';
 		}
-		if (parseInt(getPow('bninfo',4,-1),10) > 2 && inFam == 'None') {//check for top3 position and if person is not in family
+		if (parseInt(getPow('bninfo',4,-1),10) === 3 && inFam === 'None') {//check for top3 position and if person is not in family
 			actions.innerHTML += '<a href="/BeO/webroot/index.php?module=Family&who='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Invite to Family</a>';
 		}
 		db.appendChild(actions);
@@ -5384,7 +5392,6 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 	//--Assemble functions
 	function fillBRC(n, b, mode) { //actually filling the forms
 		values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //set defaults
-
 		// booze    - narcs    == maximum user can buy
 		// carry_b  - carry_n  == total user is carrying
 		// b_amount - n_amount == amount per item user is carrying
@@ -5471,9 +5478,9 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				} else { // we go too much, guess it was a good heist
 					for(i=0;i<=6;i++) { //check what we carry
 						if(mode==0 && i == b) {
-							values[i+7] = 0;
+							values[i] = 0;
 						} else {
-							values[i+7] = b_amount[i];
+							values[i] = b_amount[i];
 							getELNAME('typebooze')[0].checked = 1; //sell
 						}
 					}
@@ -5502,10 +5509,8 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 
 	function appBRC(BN) { //Best Run Calculator
 		if(!lboth) {
-			//get info from 'UnsafeDiv' ;)
-			var getInfo = $I('//div[@id="info"]');
+			var getInfo = $I('//div[@id="info"]'); //get info from 'UnsafeDiv' ;)
 			getInfo = getInfo.split('*');
-	
 			narc = getInfo[0];
 			booze = getInfo[1];
 			city = getInfo[2];
@@ -5514,7 +5519,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 			lex = parseInt(getInfo[8]);
 			lexHour = parseInt(getInfo[9]);
 			lexDay = parseInt(getInfo[10]);
-	
+
 			if (sp) { //extra city checker
 				smugCity = $I('//h3');
 				for (i = 0; i < 8; i++) {
@@ -5524,7 +5529,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 					}
 				}
 			}
-	
+
 			//calc profits per item per city
 			lex = 1 + 0.01*lex;
 			for (nCityprofit = [], bCityprofit = [], i = 0; i <= 7; i++) { //get profit per single unit of b/n
@@ -5535,10 +5540,9 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				nCityprofit[i].unshift(nCityprofit[i].max()); //most profit per unit in this city
 				bCityprofit[i].unshift(bCityprofit[i].max());
 			}
-	
+
 			//--create BRC table
 			border = '1px solid #000';
-	
 			table = cEL('table');
 			table.id = 'brc';
 			table.setAttribute('class', 'thinline');
@@ -5577,7 +5581,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 			tr.style.borderBottom = border;
 			tr.style.backgroundColor = getValue('tableBg', '#F0F0F0');
 			table.appendChild(tr);
-	
+
 			//--add city rows with induvidual profits
 			for (allProfits = [], bestBN = [], i = 0; i <= 7; i++) {
 				tr = cEL('tr');
@@ -5588,7 +5592,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 					mOver += 'document.getElementById(\'0row' + (i + 2) + '\').style.backgroundColor = \'#888\';';
 					mOver += 'document.getElementById(\'1row' + (i + 2) + '\').style.backgroundColor = \'#888\';';
 					tr.setAttribute('onMouseover', mOver);
-	
+
 					mOut = 'this.style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
 					mOut += 'document.getElementById(\'0row' + (i + 2) + '\').style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
 					mOut += 'document.getElementById(\'1row' + (i + 2) + '\').style.backgroundColor = \'' + getValue('tableBg', '#F0F0F0') + '\';';
@@ -5598,7 +5602,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				tr.style.borderBottom = border;
 				tr.style.height = '19px';
 				td.setAttribute('colspan', '5');
-	
+
 				//--Calc profits
 				if (i == city - 4) { //This is the current city
 					td.innerHTML = '<center><i>' + lang.BR[5] + lang.cities[i] + '</i></center>';
@@ -5614,15 +5618,11 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 					bestNarc = nCityprofit[i][0] < 0 ? 0 : nCityprofit[i].lastIndexOf(nCityprofit[i][0]); //best, if any, narc?
 					profitNarc = (bestNarc == 0) ? 0 : nCityprofit[i][bestNarc]; //profit per unit
 					profitNarc = profitNarc * narc;
-	
+
 					bestBooze = bCityprofit[i][0] < 0 ? 0 : bCityprofit[i].lastIndexOf(bCityprofit[i][0]); //best, if any, booze?
 					profitBooze = (bestBooze == 0) ? 0 : bCityprofit[i][bestBooze]; //profit per unit
 					profitBooze = profitBooze * booze;
-	
-					//count for fam pos
-					famProfit = (profitNarc + profitBooze);
-					famProfit = famProfit - Math.round(famProfit * [0, 0.12, 0.1, 0][fam]);
-	
+
 					//calc travelcost
 					travelPrices = [ //travelcosts from A to B
 						[    0,   600, 10350, 1575,  3600, 1350,  1050, 10800], //det
@@ -5638,20 +5638,28 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 					if (plane == 0) { //no plane => half travelcost
 						travelCost /= 2;
 					}
-	
+
 					//Our total profit in this city
-					totalProfit = famProfit - Math.round(travelCost);
-	
+					totalProfit = (profitNarc + profitBooze) - Math.round(travelCost);
+
 					//save all profits in array for later
+					if (totalProfit < 0) {
+						bestBN.push([0, 0]); //push dummy to complete array
+					}
+					bestBN.push([bestNarc, bestBooze]);
+					var wnarc = (bestNarc == 0)?0:bestNarc-1;
+					var wbooze = (bestBooze == 0)?0:bestBooze-1;
+					narcsell = (BN[0][wnarc][0] * narc) * lex;
+					boozesell = (BN[1][wbooze][0] * booze) * lex;
+					pay = (Math.round(narcsell * [0, 0.11, 0.11, 0, 0.12][fam])+Math.round(boozesell * [0, 0.11, 0.11, 0, 0.12][fam]));
+					totalProfit = totalProfit - pay;
 					allProfits.push(totalProfit);
-	
+
 					//What's the result
 					if (totalProfit < 0) { //no profit :(
 						td.innerHTML = '<center><i>' + lang.BR[7] + lang.cities[i] + '</i></center>';
 						tr.appendChild(td);
-						bestBN.push([0, 0]); //push dummy to complete array
 					} else { //profit \o/
-						bestBN.push([bestNarc, bestBooze]);
 						td.innerHTML = '&nbsp;' + lang.cities[i];
 						td.setAttribute('colspan', '1');
 						tr.appendChild(td);
@@ -5667,7 +5675,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 						pCell.style.borderLeft = border;
 						pCell.innerHTML = '&nbsp;$ ' + commafy(totalProfit);
 						tr.appendChild(pCell);
-	
+
 						if (sp) { //we need JS links @ smuggling and don't want to waste clicks
 							key = [0, 4, 6, 1, 2, 3, 5]; //convert b/n - botprices order to smuggling order
 							n1 = key[bestNarc - 1];
@@ -5715,7 +5723,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				lexRow.appendChild(lexTd);
 				table.appendChild(lexRow);
 			}
-	
+
 			//add table page
 			if (pp) { //Duplicate page style and format
 				c = $X('//center[2]');
