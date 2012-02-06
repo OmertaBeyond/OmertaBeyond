@@ -2856,7 +2856,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 				if (x > 3) { // skip header of table
 					if ($X('//center/table[4]//tr['+x+']/td[1]').innerHTML.indexOf('(A)') == -1) { // skip akills
 						if (times[$X('//center/table[4]//tr['+x+']/td[2]').innerHTML] >= 2) {
-							$X('//center/table[4]//tr['+x+']/td[1]').innerHTML = '<b>(BF)</b> '+$X('//center/table[4]//tr['+x+']/td[1]').innerHTML;
+							$X('//center/table[4]//tr['+x+']/td[1]').innerHTML = '(<b>BF</b>) '+$X('//center/table[4]//tr['+x+']/td[1]').innerHTML;
 						}
 					}
 				}
