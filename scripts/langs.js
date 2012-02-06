@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.10.0.72
+Version: 1.10.0.75
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -152,8 +152,7 @@ var langs = {
 			'Are you sure you want to reset your custom menu?',
 			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer than 3 seconds',
 			'You\'re already using that key!',
-			'Customize Menu',
-			'Customize Hotkeys',
+			'Customize Menu & Hotkeys',
 			'Reset menu'
 		],
 		login: ['Register', 'OBnews'],
@@ -605,8 +604,7 @@ var langs = {
 			'Are you sure you want to reset your custom menu?',
 			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer than 3 seconds',
 			'You\'re already using that key!',
-			'Customize Menu',
-			'Customize Hotkeys',
+			'Customize Menu & hotkeys',
 			'Reset menu'
 		],
 		login: ['Register', 'OBnews'],
@@ -1059,8 +1057,7 @@ var langs = {
 			'Weet je zeker dat je je menu wilt resetten?',
 			' indeling geupdate! Keert terug naar normale menu..<br /><br />Klik <a href="javascript:location.href=\'menu.php\'">hier</a> als dit langer dan 3 seconden blijft',
 			'Je hebt die hotkey al in gebruik!',
-			'Pas menu aan',
-			'Pas sneltoetsen aan',
+			'Pas menu en sneltoetsen aan',
 			'Reset menu'
 		],
 		login: ['Registreren', 'Edo-nieuws'],
@@ -1524,8 +1521,7 @@ var langs = {
 			'Are you sure you want to reset your custom menu?',
 			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer than 3 seconds',
 			'You\'re already using that key!',
-			'Customize Menu',
-			'Customize Hotkeys',
+			'Customize Menu & Hotkeys',
 			'Reset menu'
 		],
 		login: ['Register', 'OBnews'],

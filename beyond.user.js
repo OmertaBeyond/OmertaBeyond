@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.74
+// @version			1.10.0.75
 // @date			06-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -56,6 +56,7 @@
 // @exclude			http://gamewiki.barafranca.com/*
 // @exclude			http://ircwiki.barafranca.com/*
 // @exclude			http://*barafranca.*/front-mafia-list.php*
+// @exclude			http://*barafranca.*/BeO/webroot/index.php?module=Donate.*
 // ==/UserScript==
 
 /*
@@ -147,8 +148,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 74;
-var SCRIPT_SUBVERSION = 74;
+var SCRIPT_VERSION_BUILD = 75;
+var SCRIPT_SUBVERSION = 75;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -267,7 +268,6 @@ if (dlp == '/prefs.php') {
 
 	var prefstr = lang.prefs;
 	var prefsTitle = lang.prefsTitle;
-
 	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + OB + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <img src="'+GM_getResourceURL('updateIco')+'" id="updater" title="'+lang.prefsPage[0]+'" style="cursor:pointer;" alt="'+lang.prefsPage[0]+'" width="16" height="16" /></td></tr>';
 
 	function addCat(title) { //pref category
@@ -731,10 +731,10 @@ if (dlp == '/menu.php') {
 	function checkKey(id) {
 		var buyout = getValue('buyout', '/');
 		var val;
-		a = ((getTAG('input').length-1) / 2);
-		for (i = 0;i <= a;i++) {
+		var am = (($x('//input').length-1) / 2);
+		for (i = 1;i <= am;i++) {
 			val = getID('ip'+i).value.toUpperCase();
-			if ((val == getID(id).value.toUpperCase() && 'ip'+(i+1) != id && getID(id).value.toUpperCase() != '') || val == buyout) {
+			if ((val == getID(id).value.toUpperCase() && 'ip'+(i) != id && getID(id).value.toUpperCase() != '') || val == buyout) {
 				alert(lang.cusmenu[2]);
 				getID(id).value = '';
 				i = 100;
@@ -806,7 +806,7 @@ if (dlp == '/menu.php') {
 					$Del(xp_tr);//delete it!
 					removed++;
 				} else if (hotkeys[link]) {//look for a hotkey
-					var but = $X(xp_tr + '/td/a');
+					but = $X(xp_tr + '/td/a');
 					but.accessKey = hotkeys[link];//add it too!
 					but.innerHTML = but.innerHTML + ' ('+ hotkeys[link].toUpperCase() +')';
 					but.addEventListener('focus', function(){this.blur();}, false);
@@ -828,47 +828,48 @@ if (dlp == '/menu.php') {
 				if (link == '' || link == 'index.php') {
 					link = a[(a.length-2)];
 				}
-				content = $X(xp_a).innerHTML;
-				$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="checkbox" checked="checked" id="cb['+q+']" value="'+link+'" /></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
+				content = $X(xp_a).textContent;
+				$Del(xp_a);
+				$Del(xp_tr+'/td');
+
+				var cbtd = cEL('td');
+				cbtd.id = 'beyonditems';
+				cbtd.width = '10%';
+				cbtd.setAttribute('style', 'padding-left:5px;');
+
+				var cb = cEL('input');
+				cb.type = 'checkbox';
+				cb.setAttribute('checked', 'checked');
+				cb.id = 'cb['+q+']';
+				cb.value = link;
+				cbtd.appendChild(cb);
+
+				var hktd = cEL('td');
+				hktd.id = 'beyondkeys';
+				hktd.width = '15%';
+				cbtd.setAttribute('style', 'padding-left:5px;');
+
+				var input = cEL('input');
+				input.type = 'text';
+				input.id = 'ip'+q;
+				input.size = '1';
+				input.setAttribute('maxlength', '1');
+				input.setAttribute('style', 'text-align:center;-moz-border-radius:4px;border-radius:4px;padding-left:3px');
+				input.addEventListener('change', function() { checkKey(this.id) }, false);
+				hktd.appendChild(input);
+
+				var atd = cEL('td');
+				atd.width = '80%';
+				atd.setAttribute('style', 'text-align:left;text-decoration:none;color:#fff;');
+				atd.innerHTML = content;
+
+				$X(xp_tr).insertBefore(atd, $X(xp_tr+'/td'));
+				$X(xp_tr).insertBefore(hktd, $X(xp_tr+'/td'));
+				$X(xp_tr).insertBefore(cbtd, $X(xp_tr+'/td'));
+
 				if (rem[link]) {
 					getID('cb['+q+']').checked = false;
 				}
-			}
-		}
-
-		//add save button
-		$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
-		$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
-
-		getID('save_button').addEventListener('click', function() {
-			var letsrem = '';
-			for (i = 1; i <= totlinks; i++) {
-				if (getID('cb['+i+']').checked == false) {
-					//assembling string for pages we want gone
-					letsrem += getID('cb['+i+']').value + '*';
-				}
-			}
-			letsrem = letsrem.substr(0, (letsrem.length - 1));
-			setValue('remlinks', letsrem);
-
-			$X('html/body').innerHTML = '<span class="red">Menu'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML;//succes msg
-			$X('html/body').style.backgroundColor=getValue('titleBg', '#3F505F');
-			setTimeout(function() { location.href='menu.php'; }, 1500);//refresh to see our results
-		}, true);
-	} else if (dls.indexOf('?keys') != -1) { //changing hotkeys
-		for (i = 1, q = 1; i <= subs; i++) {
-			for (j = 1; j <= buttons[i-1]; j++, q++) {
-				xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
-				xp_a = xp_tr + '/td/a';
-				href = $X(xp_a).href;
-				//making up the link
-				a = href.split("/");
-				link = a[(a.length-1)];
-				if (link == '' || link == 'index.php') {
-					link = a[(a.length-2)];
-				}
-				content = $X(xp_a).innerHTML;
-				$X(xp_tr).innerHTML = '<td id="beyondadd"><input type="hidden" id="cb['+q+']" value="'+link+'" /><input type="text" onChange="checkKey(this.id)" style="text-align:center; -moz-border-radius:4px; border-radius:4px; padding-left:3px" maxlength="1" id="ip'+q+'" /></td><td><a target="main" onmousedown="return false;" href="'+href+'" class="menuOmertaBeyond">'+content+'</a></td>';
 				if (hotkeys[link]) {
 					getID('ip'+q).value = hotkeys[link];
 				}
@@ -880,6 +881,15 @@ if (dlp == '/menu.php') {
 		$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
 
 		getID('save_button').addEventListener('click', function() {
+			var letsrem = '';
+			for (i = 1; i <= totlinks; i++) {
+				if (getID('cb['+i+']').checked == false) { //assembling string for pages we want gone
+					letsrem += getID('cb['+i+']').value + '*';
+				}
+			}
+			letsrem = letsrem.substr(0, (letsrem.length - 1));
+			setValue('remlinks', letsrem);
+			
 			var shotkeys = '';
 			for (i = 1; i <= totlinks; i++) {
 				if (getID('ip'+i).value != '') {
@@ -889,15 +899,14 @@ if (dlp == '/menu.php') {
 			shotkeys = shotkeys.substr(0, (shotkeys.length - 1));
 			setValue('ourhotkeys', shotkeys);
 
-			$X('html/body').innerHTML = '<span class="red">Hotkey'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML;//succes msg
+			$X('html/body').innerHTML = '<span class="red">Menu'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML; //succes msg
 			$X('html/body').style.backgroundColor=getValue('titleBg', '#3F505F');
-			setTimeout(function() { location.href='menu.php'; }, 1500);//refresh to see our results
+			setTimeout(function() { location.href='menu.php'; }, 1500); //refresh to see our results
 		}, true);
-
 	}
 	if (!dls) {
 		//add action buttons (change menu, change hotkeys, reset menu)
-		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img onmouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[3]+'" onClick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px" /> <img onMouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[4]+'" onClick="location.href=\'menu.php?keys\'" src="'+GM_getResourceURL('buttonKey')+'" style="vertical-align:-2px" /> <img id="reset_button" onMouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[5]+'" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px" /></span>';
+		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img onmouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[3]+'" onClick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px" /> <img id="reset_button" onMouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[5]+'" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px" /></span>';
 		getID('reset_button').addEventListener('click', function() {
 			if (confirm(lang.cusmenu[0])) { // are you sure?
 				setValue('remlinks', ''); //reset
@@ -906,8 +915,7 @@ if (dlp == '/menu.php') {
 			setTimeout(function() { location.href='menu.php'; }, 250);
 		}, true);
 	}
-	$X('//td[@class="container"]').setAttribute('colspan', '2');
-	//addept quick lookup colspan to match customs interface's
+	$X('//td[@class="container"]').setAttribute('colspan', '3'); //addept quick lookup colspan to match customs interface's
 
 	//beautify for fully collapsed menu in dark theme
 	$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
@@ -950,13 +958,16 @@ if (dlp == '/menu.php') {
 			}, 1000);
 		}, true);
 	});
-	$X('//form[@action="./user.php"]').addEventListener('submit', function(evt) {
-		var user = $X('//input[@name="nick"]');
-		if(!user.value) {
-			evt.preventDefault();
-			top.frames[2].location = 'http://' + window.location.hostname + '/user.php';
-		}
-	});
+	if(!dls) {
+		//got to own profile when empty search
+		$X('//form[@action="./user.php"]').addEventListener('submit', function(evt) {
+			var user = $X('//input[@name="nick"]');
+			if(!user.value) {
+				evt.preventDefault();
+				top.frames[2].location = 'http://' + window.location.hostname + '/user.php';
+			}
+		});
+	}
 }
 
 //---------------- Contact page 'tweaks' ----------------
@@ -2225,9 +2236,6 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
 
 //---------------- DC+ info bar ----------------
 if (dlp == '/mid.php') {
-	setTimeout(function () {
-		window.location.reload();
-	}, 30000);
 
 	var x, x2, boXpath, healthXp, healthXpBar, rpXp, boXp, bgXp;
 
@@ -2254,6 +2262,9 @@ if (dlp == '/mid.php') {
 			$Del('//div[@id="panel"]//table//tr[3]//td[6]');
 			$Del('//div[@id="panel"]//table//tr[3]//td[5]');
 		}
+		setTimeout(function () {
+			window.location.reload();
+		}, 30000);
 	} else { // no DC+ so make some dummies to by-pass a lot of errors
 		var script = cEL('script');
 		script.setAttribute('type', 'text/javascript');
@@ -3302,7 +3313,9 @@ if (prefs[26]) {
 		if (/expexp/.test(db.innerHTML)) {
 			$X('//input').focus();
 		}
-		$x('//input')[8].focus();
+		if($x('//input')[8]) {
+			$x('//input')[8].focus();
+		}
 	}
 	//MOC AF
 	if ((/MegaOC/).test(dls)) {
