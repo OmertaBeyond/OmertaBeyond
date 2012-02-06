@@ -4,7 +4,7 @@ This file contains helpers and useful functions for use with Project Omerta Beyo
 
 Feel free to use them, but please let us know.
 
-Version: 1.10.0.77
+Version: 1.10.0.78
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -528,7 +528,8 @@ Array.prototype.iMin = function () {
 var _Bmsg = { //keep track of our bmsgs
 	ids: [],
 	amount: 0
-}
+};
+
 function Bmsg() {}
 Bmsg.prototype = {
 	name: 'Bmsg',
@@ -567,7 +568,7 @@ Bmsg.prototype = {
 	//Debug function
 	e: function(e) {
 		console.info('Bmsg: ' + e);
-		return false
+		return false;
 	},
 
 	//Interface functions
@@ -609,7 +610,7 @@ Bmsg.prototype = {
 						if(parseInt(msg.style.bottom) < ((Math.ceil(l/10)*10+80)*-1)) {
 							clearInterval(hider);
 							var t = this.parentNode.parentNode.id;
-						//	var t = (getID('bm_shade') != null) ? 'bm_shade' : id;
+							//var t = (getID('bm_shade') != null) ? 'bm_shade' : id;
 							getID(t).parentNode.removeChild(getID(t));
 						}
 					},20);
@@ -644,13 +645,13 @@ Bmsg.prototype = {
 								buttons.appendChild(this.cBut(this.names[i], this.fns[i]));
 							} else {
 								this.e('[add] - Action ' + (i+1) + ' is not a function! \n\n' + this.fns + '');
-								return false
+								return false;
 							}
 						}
 						cont.appendChild(buttons);
 					} else {
 						this.e('[add] - The amount of options is not the same as the amount of actions!\n\n' + this.names + ' <-> ' + this.fns);
-						return false
+						return false;
 					}
 				}
 				msg.appendChild(cont);
@@ -698,17 +699,17 @@ Bmsg.prototype = {
 											setTimeout(function(){hideNslide(msg);}, 300);
 										}, false);
 									}
-							}, 2500)
+							}, 2500);
 						}
 					},40);
 				}
 			} else {
 				this.e('[add] - There already seems to be an element with this id!\n\nid: ' + this.id);
-				return false
+				return false;
 			}
 		} else {
 			this.e('[add] - Missing initial message variable(s)!');
-			return false
+			return false;
 		}
 	},
 	slide: function(down) {

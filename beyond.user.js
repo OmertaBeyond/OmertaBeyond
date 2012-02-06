@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.77
+// @version			1.10.0.78
 // @date			06-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -150,8 +150,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 77;
-var SCRIPT_SUBVERSION = 77;
+var SCRIPT_VERSION_BUILD = 78;
+var SCRIPT_SUBVERSION = 78;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -627,7 +627,7 @@ if(dlp == '/marquee.php'){
 
 				function flytolink(city, priceStr, priceToFly, cityId) {
 					var mycity = getPow('bninfo', 2, -1);
-					var link
+					var link;
 					link = cEL('a');
 					link.href = '#';
 					link.id = lang.cities[city];
@@ -891,7 +891,7 @@ if (dlp == '/menu.php') {
 			}
 			letsrem = letsrem.substr(0, (letsrem.length - 1));
 			setValue('remlinks', letsrem);
-			
+
 			var shotkeys = '';
 			for (i = 1; i <= totlinks; i++) {
 				if (getID('ip'+i).value != '') {
@@ -1527,7 +1527,7 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 			if (bgsspec[y] > 0) {
 				var showspec = bgsspec[y];
 			} else {
-				var showspec = '&nbsp;' //just leave it blank in that case
+				var showspec = '&nbsp;'; //just leave it blank in that case
 			}
 			trdump += '<tr style="background-color:'+color+'">';
 			trdump += '<td style="text-align:center;">'+bgsname[y]+'</td>';
@@ -1759,7 +1759,7 @@ if(dlp == '/info.php'){
 					var news = html.split('<a name=\'news_');
 
 					for(i=0;i<5;i++){
-						var	n = news[(i+1)];
+						var n = news[(i+1)];
 						fUrl.push(n.slice(0,n.indexOf('\' id')));
 						fArticles.push(n.slice(n.indexOf('/a>')+3,n.indexOf('</b>')));
 						n = n.slice(n.indexOf('Geplaatst door'),n.indexOf('<img src="themes/Tweaked-Blue/images/border/news/readmore.gif" />'));
@@ -2785,8 +2785,8 @@ if(dlp == '/garage.php'){
 		wrap.appendChild(footer);
 		$X('//center').parentNode.insertBefore(wrap, $X('//center').nextSibling);
 
-		var sheight = db.scrollHeight
-		var cheight = db.clientHeight
+		var sheight = db.scrollHeight;
+		var cheight = db.clientHeight;
 		if (sheight <= cheight) {
 			getID('footer').style.display = 'none';
 		}
@@ -2849,7 +2849,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 				}
 				++x;
 			});
-			
+
 			// show (BF) based on frequency
 			x = 1;
 			$x('//center/table[4]//tr').forEach(function ($n) {
@@ -2862,7 +2862,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 				}
 				++x;
 			});
-			
+
 			nickReader(); //apply nickReader again
 		}
 		if (tab.indexOf('allusers.php') != -1 || tab.indexOf('action=users_online') != -1 || tab.indexOf('action=global_stats') != -1) {
@@ -2901,7 +2901,7 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 //---------------- Family page ----------------
 if (dlp == '/family.php') {
 	if ((prefs[3])&&(dls.indexOf('join=yes') == -1)) {
-		var ownfam = getValue('family', '')
+		var ownfam = getValue('family', '');
 		var names = getValue('bust', '');
 		var jhl_add = 1;
 		var who = getTXT('//td[@class="profilerow"]');
@@ -3501,7 +3501,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		c.appendChild(cEL('br'));
 		c.appendChild(div);
 		db.appendChild(c);
-		
+
 		function timers() {
 			for(var i=0;i<am;i++) {
 				if(secs[i]>0) {
@@ -3512,7 +3512,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		}
 
 		db.addEventListener('load', function() { timers(); }, true );
-		
+
 		$x('//input')[1].focus();
 
 		//regrap all values (for AFing sake)
@@ -3785,8 +3785,8 @@ if (dls.indexOf('action=tosell') != -1) {
 
 //---------------- INBOX -----------------------
 if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.indexOf('action=delMsg') != -1) {
-	var msg = $x('//td[@style="cursor:pointer;cursor:hand"]').length
-	var unreadmsg = $x('//tr[@class="color2"]').length
+	var msg = $x('//td[@style="cursor:pointer;cursor:hand"]').length;
+	var unreadmsg = $x('//tr[@class="color2"]').length;
 	var id = [];
 	for(var i=0;i<msg;i++){ //find first open spot
 		id[i] = $x('//a[contains(@href,"showMsg")]')[i].href.split('?')[1].match(/\d+/g);
@@ -3809,7 +3809,7 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 
 	span.appendChild(br);
 	span.appendChild(chkbutton);
-	
+
 	var num = 1;
 	$x('//tr[@class="color1"] | //tr[@class="color2"]').forEach(function ($n) {
 		var space = document.createTextNode(' ');
@@ -3831,7 +3831,7 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 			$n.cells[0].appendChild(delImg);
 		}
 
-		//add checkbox at unread		
+		//add checkbox at unread
 //		if($n.className == 'color2') {
 //			var chkbox = cEL('input');
 //			chkbox.setAttribute('type', 'checkbox');
@@ -4477,12 +4477,13 @@ document.getElementById('obmupdate').addEventListener('click', function(){ OBUpd
 
 //---------------------- ScratcherTheCode ---------- // ctrl F on 'scratcher' gave me too many results
 if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && prefs[33]) {
-	var on = getValue('on', 0);
-	var unopened = getValue('unopened', 0)
-	var monin = getValue('monin', 0);
-	var mils = getValue('mils', 0);
-	var bullets = getValue('bullets', 0);
-	var scratches = getValue('scratches', 0);
+	var on, unopened, monin, mils, bullets, scratches;
+	on = getValue('on', 0);
+	unopened = getValue('unopened', 0);
+	monin = getValue('monin', 0);
+	mils = getValue('mils', 0);
+	bullets = getValue('bullets', 0);
+	scratches = getValue('scratches', 0);
 
 	if (db.innerHTML.indexOf(lang.scratcher[0]) != -1) { //grab winning event
 		if (db.innerHTML.indexOf(lang.scratcher[1]) != -1) { //bullets
@@ -4592,7 +4593,7 @@ if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && p
 
 //---------------- Lackeys II ----------------
 if (dls == '?module=Lackeys') {
-	var logpath = '//table[@id="overview_log_6"]/tbody/tr', logEntry, r;	
+	var logpath = '//table[@id="overview_log_6"]/tbody/tr', logEntry, r;
 
 	// All text is English for now, so using lang vars is not needed at the moment
 	var loadedTab = 1;
@@ -4671,7 +4672,7 @@ if (dls == '?module=Lackeys') {
 		var credits = getTXT('//*[@id="overview_credits_6"]');
 		var money = getTXT('//*[@id="overview_money_6"]');
 		var bullets = getTXT('//*[@id="overview_rp_6"]');
-		var maxprice = $X('//*[@id="setting_bullets_max_price_price_6"]').value
+		var maxprice = $X('//*[@id="setting_bullets_max_price_price_6"]').value;
 
 		// commafy and alert money
 		var needed = (credits/5)*(maxprice*1000);
@@ -4794,7 +4795,7 @@ if (dls == '?module=Lackeys') {
 
 //---------------- BulletTracker ----------------
 if (dlp == '/bullets2.php' && prefs[33]) {
-	var d = new Date()
+	var d = new Date();
 	var btdate = getValue('btdate', 0);
 	if(d.getDate()>btdate){ setValue('bttoday', 0); }
 	var obaybul = getValue('obaybul', 0);
@@ -5743,7 +5744,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 							key = [0, 4, 6, 1, 2, 3, 5]; //convert b/n - botprices order to smuggling order
 							n1 = key[bestNarc - 1];
 							b1 = key[bestBooze - 1];
-	
+
 							var aCell = cEL('td');
 							aCell.style.borderLeft = border;
 							aCell.innerHTML = '&nbsp;';
@@ -5792,7 +5793,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				c = $X('//center[2]');
 				center = c.cloneNode(0);
 				center.appendChild(table);
-	
+
 				function app(n, r) {
 					return c.parentNode.insertBefore(n, r);
 				}
@@ -5800,7 +5801,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				app(br1, c.nextSibling);
 				br2 = cEL('br');
 				app(br2, c.nextSibling);
-	
+
 				app(center, c.nextSibling.nextSibling.nextSibling); //add BRC table to page
 			} else { //make our own
 				target = $X(sp ? '//form//table/tbody/tr[2]' : '//table//tr[5]');
@@ -5935,7 +5936,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				div.id = 'AF';
 				div.setAttribute('mode', getInfo[6]);
 				div.setAttribute('class', 'NRinfo');
-	
+
 				var color = getValue('titleBg', '#3F505F');
 				div.setAttribute('style', 'right:10px; top:10px; width:100px !important; text-align:right; background-color:' + color + ' !important;');
 				if (getInfo[6] == -1) {
@@ -5944,7 +5945,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				title = cEL('span');
 				title.innerHTML = '<center><u>' + lang.BR[8] + '</u></center>';
 				div.appendChild(title);
-	
+
 				H = prefs[4]; //do we want hotkeys?
 				//add button for each option
 				wrap1 = cEL('span');
@@ -5962,7 +5963,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				best.name = 'brc';
 				wrap1.appendChild(best);
 				div.appendChild(wrap1);
-	
+
 				wrap2 = cEL('span');
 				wrap2.innerHTML = '<br />';
 				a2 = cEL('a');
@@ -5979,7 +5980,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				cd.name = 'brc';
 				wrap2.appendChild(cd);
 				div.appendChild(wrap2);
-	
+
 				wrap3 = cEL('span');
 				wrap3.innerHTML = '<br />';
 				a3 = cEL('a');
@@ -5992,12 +5993,12 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				wrap3.appendChild(a3);
 				rp = cEL('input');
 				rp.id = 'brc2';
-	
+
 				rp.setAttribute('type', 'radio');
 				rp.name = 'brc';
 				wrap3.appendChild(rp);
 				div.appendChild(wrap3);
-	
+
 				wrap4 = cEL('span');
 				wrap4.innerHTML = '<br />';
 				a4 = cEL('a');
@@ -6014,17 +6015,17 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				none.name = 'brc';
 				wrap4.appendChild(none);
 				div.appendChild(wrap4);
-	
+
 				//add coolness icon
 				icon = cEL('img');
 				icon.id = 'brcIcon';
 				icon.src = getInfo[7];
 				icon.setAttribute('style', 'position:absolute; bottom:0px; left:0px; cursor:pointer');
-	
+
 				//add Div to page
 				div.appendChild(icon);
 				db.appendChild(div);
-	
+
 				//add cool sliding 'n hiding
 				getID('brcIcon').addEventListener('click', function () {
 					div = getID('AF');

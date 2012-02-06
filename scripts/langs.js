@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.10.0.77
+Version: 1.10.0.78
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -418,7 +418,11 @@ var langs = {
 			'You will recieve:',
 			'Auto Refresh in 1 sec'
 		],
-		msg: ['Click to open the tickets page',	'Click to sell this WS on obay', 'Click to buy the missing blood'],
+		msg: [
+			'Click to open the tickets page',
+			'Click to sell this WS on obay',
+			'Click to buy the missing blood'
+		],
 		garage: [
 			'Potential Bullets:',
 			'Select based on Value',
@@ -871,7 +875,11 @@ var langs = {
 			'You will recieve:',
 			'Auto Refresh in 1 sec'
 		],
-		msg: ['Click to open the tickets page',	'Click to sell this WS on obay', 'Click to buy the missing blood'],
+		msg: [
+			'Click to open the tickets page',
+			'Click to sell this WS on obay',
+			'Click to buy the missing blood'
+		],
 		garage: [
 			'Potential Bullets:',
 			'Select based on Value',
@@ -1787,7 +1795,11 @@ var langs = {
 			'You will recieve:',
 			'Auto Refresh in 1 sec'
 		],
-		msg: ['Click to open the tickets page',	'Click to sell this WS on obay', 'Click to buy the missing blood'],
+		msg: [
+			'Click to open the tickets page',
+			'Click to sell this WS on obay',
+			'Click to buy the missing blood'
+		],
 		garage: [
 			'Potential Bullets:',
 			'Select based on Value',
