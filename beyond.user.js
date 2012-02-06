@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.76
+// @version			1.10.0.77
 // @date			06-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -57,6 +57,7 @@
 // @exclude			http://ircwiki.barafranca.com/*
 // @exclude			http://*barafranca.*/front-mafia-list.php*
 // @exclude			http://*barafranca.*/BeO/webroot/index.php?module=Donate.*
+// @run-at			window-load
 // ==/UserScript==
 
 /*
@@ -64,6 +65,7 @@ $Rev$:  Revision of last commit
 $Author$:  Author of last commit
 $Date$:  Date of last commit
 */
+
 
 //---------------- (Omerta==0)?refresh:go ----------------
  if (db.innerHTML.indexOf('You reached your click limit.') != -1 && dlp != '/menu.php') {
@@ -148,8 +150,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 76;
-var SCRIPT_SUBVERSION = 76;
+var SCRIPT_VERSION_BUILD = 77;
+var SCRIPT_SUBVERSION = 77;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
