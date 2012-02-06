@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.75
+// @version			1.10.0.76
 // @date			06-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -148,8 +148,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 75;
-var SCRIPT_SUBVERSION = 75;
+var SCRIPT_VERSION_BUILD = 76;
+var SCRIPT_SUBVERSION = 76;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -906,7 +906,7 @@ if (dlp == '/menu.php') {
 	}
 	if (!dls) {
 		//add action buttons (change menu, change hotkeys, reset menu)
-		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img onmouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[3]+'" onClick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px" /> <img id="reset_button" onMouseover="style.cursor=\'pointer\'" title="'+lang.cusmenu[5]+'" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px" /></span>';
+		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img title="'+lang.cusmenu[3]+'" onclick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px;cursor:pointer" /> <img id="reset_button" title="'+lang.cusmenu[4]+'" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px;cursor:pointer" /></span>';
 		getID('reset_button').addEventListener('click', function() {
 			if (confirm(lang.cusmenu[0])) { // are you sure?
 				setValue('remlinks', ''); //reset
@@ -2384,7 +2384,6 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 		actions.setAttribute('onmouseout', 'document.getElementById(\'actions\').setAttribute(\'style\', \'display:none;\');');
 		actions.innerHTML = '<a href="BeO/webroot/index.php?module=Heist&action=&who='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Heist</a><br />';
 		actions.innerHTML += '<a href="BeO/webroot/index.php?module=Spots&action=&driver='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Raid</a><br />';
-		actions.innerHTML += '<a href="javascript:if(confirm(\'Are you sure you want to make '+unick+' your Mentor?\')) document.location.href =\'/honorpoints.php?view=mentorsetup&mentor='+unick+'\';" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Set Mentor</a><br />';
 		actions.innerHTML += '<a href="kill.php?search='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Hire Detectives</a><br />';
 
 		if (prefs[3]) {
@@ -2831,6 +2830,37 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 			}
 			qLinks += '</td></tr><tr><td height="1" bgcolor="black"></tr></tbody></table>' + $X('//center').innerHTML;
 			$X('//center').innerHTML = qLinks;
+
+			// save frequency of death times
+			var times = [], time;
+			var x = 1;
+			$x('//center/table[4]//tr').forEach(function ($n) {
+				if (x > 3) { // skip header of table
+					if ($X('//center/table[4]//tr['+x+']/td[1]').innerHTML.indexOf('(A)') == -1) { // skip akills
+						time = $X('//center/table[4]//tr['+x+']/td[2]').innerHTML;
+						if (times[time] == undefined) {
+							times[time] = 1;
+						} else {
+							++times[time];
+						}
+					}
+				}
+				++x;
+			});
+			
+			// show (BF) based on frequency
+			x = 1;
+			$x('//center/table[4]//tr').forEach(function ($n) {
+				if (x > 3) { // skip header of table
+					if ($X('//center/table[4]//tr['+x+']/td[1]').innerHTML.indexOf('(A)') == -1) { // skip akills
+						if (times[$X('//center/table[4]//tr['+x+']/td[2]').innerHTML] >= 2) {
+							$X('//center/table[4]//tr['+x+']/td[1]').innerHTML = '<b>(BF)</b> '+$X('//center/table[4]//tr['+x+']/td[1]').innerHTML;
+						}
+					}
+				}
+				++x;
+			});
+			
 			nickReader(); //apply nickReader again
 		}
 		if (tab.indexOf('allusers.php') != -1 || tab.indexOf('action=users_online') != -1 || tab.indexOf('action=global_stats') != -1) {
@@ -3397,30 +3427,34 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		var user = getValue('nick', '');
 		var ownerid = '';
 		var ownfam = getValue('family', '');
+		var owner, cords, type, id, y, time, timem, times;
 		var secs = [];
-		for (var y = 0; y < am; y+=1) {
-			var id = $x('//*[@id="map"]/div[contains(@id, "spot_")]')[y].id; // = 'spot_*'
+		for (y = 0; y < am; y+=1) {
+			id = $x('//*[@id="map"]/div[contains(@id, "spot_")]')[y].id; // = 'spot_*'
 			id = parseInt(id.replace('spot_', ''), 10);
-			var type = getTXT('//*[@id="spot_default_'+id+'"]/b');
-			var cords = whatspot(city, type);
-			var owner = getTXT('//*[@id="spot_default_'+id+'"]/table/tbody/tr/td[2]');
-			var time = '';
-			if ($X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]') !== null) {
+			type = getTXT('//*[@id="spot_default_'+id+'"]/b');
+			cords = whatspot(city, type);
+			owner = getTXT('//*[@id="spot_default_'+id+'"]/table/tbody/tr/td[2]');
+			time = '';
+			if ($X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]') !== undefined) {
 				time = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]').innerHTML;
 			}
 			if (time === lang.raidpage[0]) {
 				time = lang.raidpage[1];
 				secs.push(0);
 			} else {
-				time = '';
+				time  = '';
+				timem = 0;
+				times = 0;
 				if (getID('counter_nextraid_'+id+'_minutes_value') !== null) { // make sure there are more than 60 sec left
-					var timem = getID('counter_nextraid_'+id+'_minutes_value').innerHTML;
+					timem = getID('counter_nextraid_'+id+'_minutes_value').innerHTML;
 					time = timem+'m ';
 				}
 				if (getID('counter_nextraid_'+id+'_seconds_value') !== null) {
-					var times = getID('counter_nextraid_'+id+'_seconds_value').innerHTML;
+					times = getID('counter_nextraid_'+id+'_seconds_value').innerHTML;
 					time += times+'s';
-				} else {
+				}
+				if (timem == 0 && times == 0) {
 					time = lang.raidpage[1];
 				}
 				secs.push(parseInt(timem*60, 10)+parseInt(times, 10));

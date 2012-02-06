@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.10.0.75
+Version: 1.10.0.76
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -604,7 +604,7 @@ var langs = {
 			'Are you sure you want to reset your custom menu?',
 			' settings updated! Returning to normal menu..<br /><br />Click <a href="javascript:location.href=\'menu.php\'">here</a> if this stays longer than 3 seconds',
 			'You\'re already using that key!',
-			'Customize Menu & hotkeys',
+			'Customize Menu & Hotkeys',
 			'Reset menu'
 		],
 		login: ['Register', 'OBnews'],
