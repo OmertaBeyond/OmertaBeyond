@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.73
-// @date			04-02-2012
+// @version			1.10.0.74
+// @date			06-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -147,8 +147,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 73;
-var SCRIPT_SUBVERSION = 73;
+var SCRIPT_VERSION_BUILD = 74;
+var SCRIPT_SUBVERSION = 74;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -3384,30 +3384,33 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		var user = getValue('nick', '');
 		var ownerid = '';
 		var ownfam = getValue('family', '');
+		var secs = [];
 		for (var y = 0; y < am; y+=1) {
 			var id = $x('//*[@id="map"]/div[contains(@id, "spot_")]')[y].id; // = 'spot_*'
-			id = parseInt(id.replace('spot_', ''));
+			id = parseInt(id.replace('spot_', ''), 10);
 			var type = getTXT('//*[@id="spot_default_'+id+'"]/b');
 			var cords = whatspot(city, type);
 			var owner = getTXT('//*[@id="spot_default_'+id+'"]/table/tbody/tr/td[2]');
-			var time = ''
-			if ($X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]') != null) {
+			var time = '';
+			if ($X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]') !== null) {
 				time = $X('//*[@id="spot_default_'+id+'"]/table/tbody/tr[2]/td[2]').innerHTML;
 			}
-			if (time == lang.raidpage[0]) {
+			if (time === lang.raidpage[0]) {
 				time = lang.raidpage[1];
+				secs.push(0);
 			} else {
 				time = '';
-				if (getID('counter_nextraid_'+id+'_minutes_value') != null) { // make sure there are more than 60 sec left
+				if (getID('counter_nextraid_'+id+'_minutes_value') !== null) { // make sure there are more than 60 sec left
 					var timem = getID('counter_nextraid_'+id+'_minutes_value').innerHTML;
 					time = timem+'m ';
 				}
-				if (getID('counter_nextraid_'+id+'_seconds_value') != null) {
+				if (getID('counter_nextraid_'+id+'_seconds_value') !== null) {
 					var times = getID('counter_nextraid_'+id+'_seconds_value').innerHTML;
 					time += times+'s';
 				} else {
 					time = lang.raidpage[1];
 				}
+				secs.push(parseInt(timem*60, 10)+parseInt(times, 10));
 			}
 
 			// making bars look good (white -> themetextcolor, adding % sign, some margin stuff)
@@ -3430,7 +3433,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 				}
 			}
 			//parsing everything
-			divdump += '<tr style="height: 22px;"><td style="padding-left:5px">'+cords+'</td><td>'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px; border-radius:3px;"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center">'+time+'</td><td style="text-align:center">'+rpform+'</td></tr>';
+			divdump += '<tr style="height: 22px;"><td style="padding-left:5px">'+cords+'</td><td>'+type+'</td><td>'+(owner!=lang.raidpage[12]?('<a href="http://'+dlh+'/user.php?nick='+owner.split(' ')[0]+'">'+owner.split(' ')[0]+'</a> '+ (owner.split(' ')[1]?owner.split(' ')[1]:'')):owner)+'</td><td style="text-align:right; padding-right:10px">'+profit+'</td><td><table cellpadding="0" cellspacing="0" style="border:1px solid #000; margin:0px; padding:0px; width:102px; -moz-border-radius:3px; border-radius:3px;"><tr><td>'+prot+'</td></tr></table></td><td style="text-align:center"><div id="timer'+y+'">'+time+'</div></td><td style="text-align:center"><div id="rpform'+y+'">'+rpform+'</div></td></tr>';
 			if(owner.split(' ')[0] == user) { ownerid = id; }
 		}
 		divdump += '</table>';
@@ -3449,7 +3452,18 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		c.appendChild(cEL('br'));
 		c.appendChild(div);
 		db.appendChild(c);
+		
+		function timers() {
+			for(var i=0;i<am;i++) {
+				if(secs[i]>0) {
+					var rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px; border-radius:5px;" type="submit" value="Go!" /></form>';
+					timer(secs[i], i, 'Now!', rpform);
+				}
+			}
+		}
 
+		db.addEventListener('load', function() { timers(); }, true );
+		
 		$x('//input')[1].focus();
 
 		//regrap all values (for AFing sake)

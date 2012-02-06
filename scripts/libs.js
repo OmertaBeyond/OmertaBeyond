@@ -4,7 +4,7 @@ This file contains helpers and useful functions for use with Project Omerta Beyo
 
 Feel free to use them, but please let us know.
 
-Version: 1.10.0.69
+Version: 1.10.0.74
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -430,6 +430,26 @@ function sec2time(sec) {
 }
 function time() {
 	return Math.floor(parseInt(new Date().getTime(), 10) / 1000);
+}
+
+function timer(s, i, end, rpform) {
+	var mins, sec, time;
+	if(s>=60) {
+		mins = Math.floor(s/60);
+		sec = s-(mins*60);
+	} else {
+		mins = 0;
+		sec = s;
+	}
+	time = (mins>0) ? mins+'m '+sec+'s' : sec+'s';
+	$X('//*[@id="timer'+i+'"]').innerHTML = time;
+	s = s-1;
+	if(s>0) {
+		setTimeout(function() { timer(s,i,end, rpform); }, 1000);
+	} else {
+		$X('//*[@id="timer'+i+'"]').innerHTML = end;
+		$X('//*[@id="rpform'+i+'"]').innerHTML = rpform;
+	}
 }
 
 function OBUpdate(cb) {
