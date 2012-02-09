@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.79
+// @version			1.10.0.80
 // @date			09-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -57,7 +57,6 @@
 // @exclude			http://ircwiki.barafranca.com/*
 // @exclude			http://*barafranca.*/front-mafia-list.php*
 // @exclude			http://*barafranca.*/BeO/webroot/index.php?module=Donate.*
-// @run-at			window-load
 // ==/UserScript==
 
 /*
@@ -150,8 +149,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 79;
-var SCRIPT_SUBVERSION = 79;
+var SCRIPT_VERSION_BUILD = 80;
+var SCRIPT_SUBVERSION = 80;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -4482,12 +4481,12 @@ if (dlp == '/familylog.php') {
 //---------------------- MaybeUsefulCrap -----------
 var OBMIcon = GM_getResourceURL('favoriteIco');
 var OBM =
-	<menu icon={OBMIcon} type="context" id="OBMenu">
-		<menu label={SCRIPT_NAME+" "+SCRIPT_VERSION}>
-			<menuitem icon={OBMIcon} id="obmversion" label={"Version: "+OB}>Version</menuitem>
-			<menuitem icon={OBMIcon} id="obmupdate" label={"Check for updates"}>UpdateCheck</menuitem>
-		</menu>
-	</menu>;
+	'<menu icon={OBMIcon} type="context" id="OBMenu">' +
+		'<menu label={SCRIPT_NAME+" "+SCRIPT_VERSION}>' +
+			'<menuitem icon={OBMIcon} id="obmversion" label={"Version: "+OB}>Version</menuitem>' +
+			'<menuitem icon={OBMIcon} id="obmupdate" label={"Check for updates"}>UpdateCheck</menuitem>' +
+		'</menu>' +
+	'</menu>';
 
 var OBMDiv = cEL('div');
 db.appendChild(OBMDiv);
