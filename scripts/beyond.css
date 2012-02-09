@@ -5,7 +5,7 @@ This file contains some basic css style we use for Project Omerta Beyond
 Changing these values are at your own risk. If you make bug changes or bugfixes,
 please inform us too so we can make any changes if we think are necesary.
 
-Version: 1.10.0.78
+Version: 1.10.0.79
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -179,32 +179,39 @@ div#footer {
 .green {
 	color:green !important
 }
-
 .red {
 	color:red !important
 }
-
 .orange {
 	color:orange !important
 }
-
 .blue {
 	color:#00F !important
 }
-
 .purple {
 	color:#FF00FF !important
 }
-
 .bold {
 	font-weight: bold
 }
-
 input[type="submit"]:focus {
 	border: 1px dotted #000
 }
 a.sel:focus {
 	border: 1px dotted #000
+}
+/* Icons */
+.inboxImg {
+	cursor:pointer;
+	padding-right:3px;
+	padding-left:3px;
+	height:16px;
+	width:16px;
+	border:1px;
+	opacity:0.7;
+}
+.inboxImg:hover {
+	opacity:1.0;
 }
 /* Tidy Smuggling Page */
 #TS_header {

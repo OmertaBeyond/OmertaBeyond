@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.78
-// @date			06-02-2012
+// @version			1.10.0.79
+// @date			09-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -150,8 +150,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 78;
-var SCRIPT_SUBVERSION = 78;
+var SCRIPT_VERSION_BUILD = 79;
+var SCRIPT_SUBVERSION = 79;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -3821,8 +3821,8 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 		delImg.setAttribute('title', 'Delete');
 		delImg.setAttribute('src', GM_getResourceURL('deleteIcon'));
 		delImg.setAttribute('onClick', 'location.href="/BeO/webroot/index.php?module=Mail&action=delMsg&iId=' + id + '&iParty=2"');
-		delImg.setAttribute('style', 'cursor:pointer; padding-right:3px; padding-left:4px; height:16px; width:16px; border:1px');
-		$n.cells[0].setAttribute('width', '80');
+		delImg.setAttribute('class', 'inboxImg');
+		$n.cells[0].setAttribute('width', '75');
 
 		if (target) { //before the select box
 			delImg.style.paddingLeft = '0px'; //looksee fix :x
@@ -3845,8 +3845,8 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 			replyImg.setAttribute('title', 'Reply');
 			replyImg.setAttribute('src', GM_getResourceURL('reply'));
 			replyImg.setAttribute('onClick', 'location.href="/BeO/webroot/index.php?module=Mail&action=sendMsg&iReply=' + id + '"');
-			replyImg.setAttribute('style', 'cursor:pointer; padding-right:3px; padding-left:3px; height:16px; width:16px; border:1px;');
-			$n.cells[0].setAttribute('width', '95');
+			replyImg.setAttribute('class', 'inboxImg');
+			$n.cells[0].setAttribute('width', '75');
 
 			$n.cells[0].appendChild(replyImg);
 		}
@@ -3864,6 +3864,46 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 		selectors[i].innerHTML = '[<b>' + keys[i] + '</b>] ' + selectors[i].innerHTML;
 		selectors[i].setAttribute('accesskey', keys[i]);
 	}
+	function delMsg(name) {
+		var msgs = $x('//td[@style="cursor:pointer;cursor:hand"]').length;
+		for(var i=0;i<msgs-1;i++){
+			var title = $x('//td[@style="cursor:pointer;cursor:hand"]//a')[i].textContent.replace(/[\n\r\t]/g, '').replace(' ', '');
+			var thismsgid = $x('//td[@style="cursor:pointer;cursor:hand"]//a')[i].href.split('iMsgId=')[1];
+			if(title==name) {
+				GM_xmlhttpRequest({ //grab data from xml
+					method: 'GET',
+					url: 'http://'+dlh+'/BeO/webroot/index.php?module=Mail&action=delMsg&iId=' + thismsgid + '&iParty=2',
+					onload: function(response) {
+						var errormsg = response.responseText.split('<font color="red">')[1];
+						errormsg = errormsg.split('</font>')[0]
+						$X('//font[@color="red"]').innerHTML = errormsg;
+						window.location.reload();
+					}
+				});
+			}
+		}
+	}
+	//add custom system delete
+	var osl = cEL('a');
+	osl.innerHTML = '<br />Delete System: Super Lottery';
+	osl.setAttribute('style', 'cursor:pointer;');
+	osl.addEventListener('click', function() { delMsg('Omerta Super Lottery'); });
+	$X('//td[@align="right"][@colspan="100%"]').appendChild(osl);
+	var tnf = cEL('a');
+	tnf.innerHTML = ' | Target not found';
+	tnf.setAttribute('style', 'cursor:pointer;');
+	tnf.addEventListener('click', function() { delMsg('Target not found'); });
+	$X('//td[@align="right"][@colspan="100%"]').appendChild(tnf);
+	var tf = cEL('a');
+	tf.innerHTML = ' | Target found';
+	tf.setAttribute('style', 'cursor:pointer;');
+	tf.addEventListener('click', function() { delMsg('Target found'); });
+	$X('//td[@align="right"][@colspan="100%"]').appendChild(tf);
+	var p = cEL('a');
+	p.innerHTML = ' | Promoted';
+	p.setAttribute('style', 'cursor:pointer;');
+	p.addEventListener('click', function() { delMsg('Promoted'); });
+	$X('//td[@align="right"][@colspan="100%"]').appendChild(p);
 }
 if (dls.indexOf('action=outbox') != -1 || dls.indexOf('iParty=1') != -1){
 	$x('//a[contains(@href,"showSentMsg")]').forEach(function ($n) {
@@ -3963,8 +4003,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 	var msgTxt = '/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[5]/td';
 	arr = $X(msgTxt).innerHTML.split(' ');
 
-	//if msg is heist inv.
-	var heistInv = new RegExp(lang.linkify[0]);
+	var heistInv = new RegExp(lang.linkify[0]); // Route 66 Heist
 	if (heistInv.test(msgType)) {
 		if (arr[2] == lang.inbox[2]) { //check if this is invitation
 			setArr(0);
@@ -3974,16 +4013,15 @@ if (dls.indexOf('action=showMsg') != -1) {
 			$I(msgTxt);
 		}
 	}
-	//if msg is oc inv.
-	var ocInv = new RegExp(lang.linkify[1]);
+	var ocInv = new RegExp(lang.linkify[1]); // Organised Crime
 	if (ocInv.test(msgType)) {
 		if (arr[2] == lang.inbox[2]) { //check if this is invitation
-			if (arr[7] == lang.inbox[3] || arr[7] == lang.inbox[5]) {
+			if (arr[7] == lang.inbox[3] || arr[7] == lang.inbox[5]) { //ee or we
 				setArr(0);
 				setArr(13);
 				$I(msgTxt, arr.join(' '));
 			}
-			if (arr[7] == lang.inbox[4]) {
+			if (arr[7] == lang.inbox[4]) { //driver
 				setArr(0);
 				setArr(12);
 				$I(msgTxt, arr.join(' '));
@@ -3992,8 +4030,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 			$I(msgTxt);
 		}
 	}
-	//if msg is ticket update
-	var thisIsTicket = new RegExp(lang.linkify[10]);
+	var thisIsTicket = new RegExp(lang.linkify[10]); //ticket update
 	if (thisIsTicket.test(msgType)) {
 		var first = $X(msgTxt).innerHTML.indexOf('(');
 		var last = $X(msgTxt).innerHTML.indexOf(')');
@@ -4002,49 +4039,41 @@ if (dls.indexOf('action=showMsg') != -1) {
 		$I(msgTxt, arr.join(' '));
 		$X(msgTxt).innerHTML = $X(msgTxt).innerHTML.replace(between, '<a href="/tickets/index.php?action=view-my-tickets" title="'+lang.msg[0]+'" target="_blank"><b>' + between + '</b></a>');
 	}
-	//if msg is WS
-	var wsMsg = new RegExp(lang.linkify[7]);
-	if (wsMsg.test(msgType)) { //if msg is WS
+	var wsMsg = new RegExp(lang.linkify[7]); // WS
+	if (wsMsg.test(msgType)) {
 		var wsIDnum = arr[arr.length - 1];
 		setValue('wsID', wsIDnum);
 		arr[arr.length - 1] = '<a href="/obay.php?action=tosell&type=10" title="'+lang.msg[1]+'"><b>' + arr[arr.length - 1] + '</b></a>';
 		setArr(3 + (sets.version == '_nl' ? 4 : 0));
 		setArr(5 + (sets.version == '_nl' ? 4 : 0));
-
 		$I(msgTxt, arr.join(' '));
 	}
-	//if msg was crush msg
-	var crushedMSG = new RegExp(lang.linkify[11]);
-	if (crushedMSG.test(msgType)) {
+	var CrashedMsg = new RegExp(lang.linkify[11]); //Crashed
+	if (CrashedMsg.test(msgType)) {
 		$X(msgTxt).innerHTML = '<a href="/BeO/webroot/index.php?module=Bloodbank&action=" title="'+lang.msg[2]+'"><b>' + $X(msgTxt).innerHTML + '</b></a>';
 	}
-
-	var raidInv = new RegExp(lang.linkify[13]);
-	if (raidInv.test(msgType)) { //raid inv.
+	var raidInv = new RegExp(lang.linkify[13]); //raid inv.
+	if (raidInv.test(msgType)) {
 		setArr(9);
 		$I(msgTxt, arr.join(' '));
 	}
-
-	var MarriedMsg = new RegExp(lang.linkify[14]);
-	if (MarriedMsg.test(msgType)) { //married
+	var MarriedMsg = new RegExp(lang.linkify[14]); //married
+	if (MarriedMsg.test(msgType)) {
 		setArr(28);
 		setArr(30);
 		$I(msgTxt, arr.join(' '));
 	}
-
-	var GiftMsg = new RegExp(lang.linkify[15]);
-	if (GiftMsg.test(msgType)) { //gift
+	var GiftMsg = new RegExp(lang.linkify[15]); //gift
+	if (GiftMsg.test(msgType)) {
 		setArr(5);
 		$I(msgTxt, arr.join(' '));
 	}
-
-	var WitnessMsg = new RegExp(lang.linkify[17]);
-	if (WitnessMsg.test(msgType)) { //witness
+	var WitnessMsg = new RegExp(lang.linkify[17]); //witness
+	if (WitnessMsg.test(msgType)) {
 		setArr(13);
 		setArr(15);
 		$I(msgTxt, arr.join(' '));
 	}
-
 	var famInv = new RegExp(lang.linkify[12]); //fam inv.
 	if (famInv.test(msgType)) {
 		if (arr.length < 18 + (sets.version == '_nl' ? 1 : 0)) {
@@ -4057,56 +4086,48 @@ if (dls.indexOf('action=showMsg') != -1) {
 			$I(msgTxt, arr.join(' '));
 		}
 	}
-
-	var mocInv = new RegExp(lang.linkify[2]);
-	if (mocInv.test(msgType)) { //moc inv.
+	var mocInv = new RegExp(lang.linkify[2]); //moc inv.
+	if (mocInv.test(msgType)) {
 		setArr(0);
 		$I(msgTxt, arr.join(' '));
 	}
-
-	var targetNotFound = new RegExp(lang.linkify[3]);
-	if (targetNotFound.test(msgType)) { //target not found
+	var targetNotFound = new RegExp(lang.linkify[3]); //target not found
+	if (targetNotFound.test(msgType)) {
 		setArr((sets.version=='_nl')?4:5);
 		$I(msgTxt, arr.join(' '));
 	}
-
-	var raceInv = new RegExp(lang.linkify[4]);
-	if (raceInv.test(msgType)) { //race invite
+	var raceInv = new RegExp(lang.linkify[4]); //race invite
+	if (raceInv.test(msgType)) {
 		setArr(8);
 		arr[arr.length - 15] = '<a href="/races.php"><strong>' + arr[arr.length - 15];
 		arr[arr.length - 14] = arr[arr.length - 14] + '</strong></a>';
 		$I(msgTxt, arr.join(' '));
 	}
-
-	var targetFound = new RegExp(lang.linkify[5]);
-	if (targetFound.test(msgType)) { //target found
+	var targetFound = new RegExp(lang.linkify[5]); //target found
+	if (targetFound.test(msgType)) {
 		setArr(3);
 		$I(msgTxt, arr.join(' '));
 	}
-
-	var killMsg = new RegExp(lang.linkify[6]);
-	if (killMsg.test(msgType)) { //if msg is Kill success
+	var killMsg = new RegExp(lang.linkify[6]); //Kill success
+	if (killMsg.test(msgType)) {
 		setArr(2);
 		$I(msgTxt, arr.join(' '));
 	}
-
-	var condolences = new RegExp(lang.linkify[8]);
-	if (condolences.test(msgType)) { //condolences msg
-		var nickPos = arr[1];
+	var condolences = new RegExp(lang.linkify[8]); //condoleances msg
+	if (condolences.test(msgType)) {
+		var nickPos = arr[2];
 		var nickFirst = arr.indexOf(nickPos);
 		var nickLast = arr.lastIndexOf(nickPos);
 		setArr(nickFirst);
 		setArr(nickLast);
 		$I(msgTxt, arr.join(' '));
 	}
-
-	var shot = new RegExp(lang.linkify[18]);
-	if (shot.test(msgType)) { //you have been shot msg
+	var shot = new RegExp(lang.linkify[18]); //you have been shot msg
+	if (shot.test(msgType)) {
 		setArr(38);
 		setArr(55);
 		$I(msgTxt, arr.join(' '));
 	}
-
 }
 
 //---------- All poker thingies (except tracker) -----------
@@ -6341,7 +6362,11 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 
 					for(var j=0;j<=6;j++) {//reset form
 						if (j!=i-9) {
-							inpt[j+9].value = 0;
+							if(lbooze) {
+								inpt[j].value = 0;
+							} else {
+								inpt[j+9].value = 0;
+							}
 						}
 					}
 					var total = n_amount.sum();
@@ -6349,26 +6374,51 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 					var value = parseInt(inpt[i].value);
 					if (n_amount[i-9] == 0 && total < narcs) {
 						if (value == 0) {
-							inpt[i].value = narcs;
-							inpt[17].checked = 1; //buy
+							if(lbooze) {
+								inpt[i-9].value = narcs;
+								inpt[8].checked = 1; //buy
+							} else {
+								inpt[i].value = narcs;
+								inpt[17].checked = 1; //buy
+							}
 						} else { z(); }
 					} else if (n_amount[i-9] == narcs) {
 						if (value == 0) {
-							inpt[i].value = narcs;
-							inpt[16].checked = 1; //sell
+							if(lbooze) {
+								inpt[i-9].value = narcs;
+								inpt[7].checked = 1; //sell
+							} else {
+								inpt[i].value = narcs;
+								inpt[16].checked = 1; //sell
+							}
 						} else { z(); }
 					} else if (n_amount[i-9] < narcs && total < narcs) {
 						if (value == 0) {
-							inpt[i].value = missing;
-							inpt[17].checked = 1; //buy
+							if(lbooze) {
+								inpt[i-9].value = missing;
+								inpt[8].checked = 1; //buy
+							} else {
+								inpt[i].value = missing;
+								inpt[17].checked = 1; //buy
+							}
 						} else if (value == missing) {
-							inpt[i].value = n_amount[i-9];
-							inpt[16].checked = 1; //sell
+							if(lbooze) {
+								inpt[i-9].value = n_amount[i-9];
+								inpt[7].checked = 1; //sell
+							} else {
+								inpt[i].value = n_amount[i-9];
+								inpt[16].checked = 1; //sell
+							}
 						} else { z(); }
 					} else if (n_amount[i-9] > narcs) {
 						if (value == 0) {
-							inpt[i].value = n_amount[i-9];
-							inpt[16].checked = 1; //sell
+							if(lbooze) {
+								inpt[i-9].value = n_amount[i-9];
+								inpt[7].checked = 1; //sell
+							} else {
+								inpt[i].value = n_amount[i-9];
+								inpt[16].checked = 1; //sell
+							}
 						} else { z(); }
 					}
 					$X('//input[@name="ver"]').focus();

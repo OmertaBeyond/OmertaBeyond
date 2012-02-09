@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.10.0.78
+Version: 1.10.0.79
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -208,7 +208,16 @@ var langs = {
 			'Fill in this narc',
 			'Current Booze/Narcotics Prices'
 		],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!', 'Obay bid succesful'],
+		inbox: [
+			'Notification',
+			'(Admin message)',
+			'inviting',
+			'explosives',
+			'driver',
+			'weapon',//5
+			'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!',
+			'Obay bid succesful'
+		],
 		linkify: [
 			'Route 66 heist',
 			'Organised Crime',
@@ -664,7 +673,16 @@ var langs = {
 			'Fill in this narc',
 			'Current Booze/Narcotics Prices'
 		],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!', 'Obay bid succesful'],
+		inbox: [
+			'Notification',
+			'(Admin message)',
+			'inviting',
+			'explosives',
+			'driver',
+			'weapon',
+			'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!',
+			'Obay bid succesful'
+		],
 		linkify: [
 			'Route 66 heist',
 			'Organised Crime',
@@ -1585,7 +1603,16 @@ var langs = {
 			'Fill in this narc',
 			'Current Booze/Narcotics Prices'
 		],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!', 'Obay bid succesful'],
+		inbox: [
+			'Notification',
+			'(Admin message)',
+			'inviting',
+			'explosives',
+			'driver',
+			'weapon',
+			'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!',
+			'Obay bid succesful'
+		],
 		linkify: [
 			'Route 66 heist',
 			'Organised Crime',
