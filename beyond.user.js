@@ -4479,7 +4479,7 @@ if (dlp == '/familylog.php') {
 		}
 	});
 }
-
+/*
 //---------------------- MaybeUsefulCrap -----------
 var OBMIcon = GM_getResourceURL('favoriteIco');
 var OBM =
@@ -4496,7 +4496,7 @@ OBMDiv.innerHTML = OBM;
 db.setAttribute('contextmenu', 'OBMenu');
 document.getElementById('obmversion').addEventListener('click', function(){ alert('You are using ' + SCRIPT_NAME + '.\nVersion:\t\t' + OB_v +'\nRevision:\t\t' + SCRIPT_VERSION_BUILD)}, false);
 document.getElementById('obmupdate').addEventListener('click', function(){ OBUpdate(true)}, false);
-
+*/
 //---------------------- ScratcherTheCode ---------- // ctrl F on 'scratcher' gave me too many results
 if ((dlp == '/scratch.php' || dlp == '/iminjail.php?redirect=/scratch.php') && prefs[33]) {
 	var on, unopened, monin, mils, bullets, scratches;
