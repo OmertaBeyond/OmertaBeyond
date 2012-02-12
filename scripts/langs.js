@@ -17,7 +17,14 @@ $Date$:  Date of last commit
 var langs = {
 	en: {
 		prefsname: 'Preferences',
-		menuitem: ['OB Poll', 'Contact Form', 'Beyond FAQ', 'B/N Prices', 'Live famstats', 'Daily famstats'],
+		menuitem: [
+			'OB Poll',
+			'Contact Form',
+			'Beyond FAQ',
+			'B/N Prices',
+			'Live famstats',
+			'Daily famstats'
+		],
 		prefs: [
 			'Disable the "go for it" button until the image code entered is the correct length',//0 - CRIMES/CARS
 			'Cocaine prices in the marquee',//1 - SMUGGLING/PRICES
@@ -155,9 +162,26 @@ var langs = {
 			'Customize Menu & Hotkeys',
 			'Reset menu'
 		],
-		login: ['Register', 'OBnews'],
-		status: ['none', 'None', 'successful', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
-		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
+		login: [
+			'Register',
+			'OBnews'
+		],
+		status: [
+			'none',
+			'None',
+			'successful',
+			'Money from crimes',
+			'crime',
+			'Worth all stolen cars',
+			'car',
+			'Interest',
+			'in',
+			'Now!'
+		],
+		wrongcode: [
+			'The code you',
+			'<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'
+		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
@@ -168,8 +192,22 @@ var langs = {
 			'You may only buy 1,000 bullets.'
 		],
 		race: 'You\'re still tired from your last race',
-		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
-		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
+		profile: [
+			'Marital status:',
+			'SMS Status',
+			'Family Buster of',
+			'Dead',
+			' History'
+		],
+		wealth: [
+			'Straydog',
+			'Poor',
+			'Nouveau Riche',
+			'Very rich',
+			'Too rich to be true',
+			'Richer than God',
+			'Rich'
+		],
 		driver: [
 			'Rookie',
 			'Co-Driver',
@@ -184,7 +222,22 @@ var langs = {
 			'Champion'//10
 		],
 		friends: 'Friends:',
-		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
+		stats: [
+			'back to top',
+			[
+				'Dead Fams',
+				'Honoured',
+				'CDCT',
+				'Fams',
+				'BF',
+				'Roul',
+				'NS',
+				'Slots',
+				'BJ',
+				'Bookies',
+				'PB'
+			]
+		],
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: [
 			'Pocket: ',
@@ -249,7 +302,13 @@ var langs = {
 			'Live Family stats based by Rix\'s calculation.'
 		],
 		NR: {
-			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
+			misc: [
+				' Loading info..',
+				'Family:',
+				'Nickreader enabled',
+				'.Clicklimit, please try again..',
+				'.Wait for the previous..'
+			],
 			positions: 'Don of,Capo of:,Sottocapo of:,Consiglieri of:',
 			objects: 'Blackjack:,Roulette:,Bulletfactory:,Numbers Game:,Slotmachine:,Punto Banco:,Bookmaker office:',
 			properties: 'User:,Rank:,Honor points:,Status,Wealth',
@@ -268,8 +327,26 @@ var langs = {
 			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
 			'NOW'//10
 		],
-		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
-		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		narcs: [
+			'NO NARCS',
+			'Morphine',
+			'Marijuana',
+			'Glue',
+			'Heroin',
+			'Opium',
+			'Cocaine',
+			'Tabacco'
+		],
+		booze: [
+			'NO BOOZE',
+			'Wine',
+			'Beer',
+			'Rum',
+			'Cognac',
+			'Whiskey',
+			'Amaretto',
+			'Port'
+		],
 		oneclick: [
 			'You haven\'t used the 1-click voter yet!\nDo you want to use it now?\n',
 			'You can\'t vote again yet!\nPlease wait another:\n',
@@ -317,7 +394,10 @@ var langs = {
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
 		],
-		crimetracker: ['Well done! You made', 'Well done! You made \\$ (\\d+) from your crime.'],
+		crimetracker: [
+			'Well done! You made',
+			'Well done! You made \\$ (\\d+) from your crime.'
+		],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -413,10 +493,27 @@ var langs = {
 			'def',
 			'trained'
 		],
-		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
+		cities: [
+			'Detroit',
+			'Chicago',
+			'Palermo',
+			'New York',
+			'Las Vegas',
+			'Philadelphia',
+			'Baltimore',
+			'Corleone',
+			'NOWHERE'
+		],
 		killpage: 'All cities',
-		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person', 'You busted yourself out of jail'],
+		myacc: [
+			'Are you sure you want to buy a Smith & Wesson .357 Magnum?',
+			'Are you sure you want to buy a Tommy Gun?'
+		],
+		busttracker: [
+			'You busted this person out of jail',
+			'You busted this person',
+			'You busted yourself out of jail'
+		],
 		accept: 'Accept',
 		calc: [
 			'You send:',
@@ -482,7 +579,14 @@ var langs = {
 	},
 	dm: {
 		prefsname: 'Preferences',
-		menuitem: ['OB Poll', 'Contact Form', 'Beyond FAQ', 'B/N Prices', 'Live famstats', 'Daily famstats'],
+		menuitem: [
+			'OB Poll',
+			'Contact Form',
+			'Beyond FAQ',
+			'B/N Prices',
+			'Live famstats',
+			'Daily famstats'
+		],
 		prefs: [
 			'Disable the "go for it" button for too short image code',//0 - CRIMES/CARS
 			'Cocaine prices in the marquee',//1 - SMUGGLING/PRICES
@@ -620,9 +724,26 @@ var langs = {
 			'Customize Menu & Hotkeys',
 			'Reset menu'
 		],
-		login: ['Register', 'OBnews'],
-		status: ['none', 'None', 'successful', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
-		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
+		login: [
+			'Register',
+			'OBnews'
+		],
+		status: [
+			'none',
+			'None',
+			'successful',
+			'Money from crimes',
+			'crime',
+			'Worth all stolen cars',
+			'car',
+			'Interest',
+			'in',
+			'Now!'
+		],
+		wrongcode: [
+			'The code you',
+			'<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'
+		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
@@ -633,8 +754,22 @@ var langs = {
 			'You may only buy 1,000 bullets.'
 		],
 		race: 'You\'re still tired from your last race',
-		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
-		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
+		profile: [
+			'Marital status:',
+			'SMS Status',
+			'Family Buster of',
+			'Dead',
+			' History'
+		],
+		wealth: [
+			'Straydog',
+			'Poor',
+			'Nouveau Riche',
+			'Very rich',
+			'Too rich to be true',
+			'Richer than God',
+			'Rich'
+		],
 		driver: [
 			'Rookie',
 			'Co-Driver',
@@ -649,7 +784,22 @@ var langs = {
 			'Champion'
 		],
 		friends: 'Friends:',
-		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
+		stats: [
+			'back to top',
+			[
+				'Dead Fams',
+				'Honoured',
+				'CDCT',
+				'Fams',
+				'BF',
+				'Roul',
+				'NS',
+				'Slots',
+				'BJ',
+				'Bookies',
+				'PB'
+			]
+		],
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: [
 			'Pocket: ',
@@ -715,7 +865,13 @@ var langs = {
 			'' // DO NOT REMOVE !!
 		],
 		NR: {
-			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
+			misc: [
+				' Loading info..',
+				'Family:',
+				'Nickreader enabled',
+				'.Clicklimit, please try again..',
+				'.Wait for the previous..'
+			],
 			positions: 'Don of,Capo of:,Sottocapo of:,Consiglieri of:',
 			objects: 'Blackjack:,Roulette:,Bulletfactory:,Numbers Game:,Slotmachine:,Punto Banco:,Bookmaker office:',
 			properties: 'User:,Rank:,Honor points:,Status,Wealth',
@@ -734,8 +890,26 @@ var langs = {
 			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
 			'NOW'
 		],
-		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
-		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		narcs: [
+			'NO NARCS',
+			'Morphine',
+			'Marijuana',
+			'Glue',
+			'Heroin',
+			'Opium',
+			'Cocaine',
+			'Tabacco'
+		],
+		booze: [
+			'NO BOOZE',
+			'Wine',
+			'Beer',
+			'Rum',
+			'Cognac',
+			'Whiskey',
+			'Amaretto',
+			'Port'
+		],
 		oneclick: [
 			'You haven\'t used the 1-click voter yet!\nDo you want to use it now?\n',
 			'You can\'t vote again yet!\nPlease wait another:\n',
@@ -783,7 +957,10 @@ var langs = {
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
 		],
-		crimetracker: ['Well done! You made', 'Well done! You made \\$ (\\d+) from your crime.'],
+		crimetracker: [
+			'Well done! You made',
+			'Well done! You made \\$ (\\d+) from your crime.'
+		],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -879,10 +1056,27 @@ var langs = {
 			'def',
 			'trained'
 		],
-		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
+		cities: [
+			'Detroit',
+			'Chicago',
+			'Palermo',
+			'New York',
+			'Las Vegas',
+			'Philadelphia',
+			'Baltimore',
+			'Corleone',
+			'NOWHERE'
+		],
 		killpage: 'All cities',
-		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person', 'You busted yourself out of jail'],
+		myacc: [
+			'Are you sure you want to buy a Smith & Wesson .357 Magnum?',
+			'Are you sure you want to buy a Tommy Gun?'
+		],
+		busttracker: [
+			'You busted this person out of jail',
+			'You busted this person',
+			'You busted yourself out of jail'
+		],
 		accept: 'Accept',
 		calc: [
 			'You send:',
@@ -948,7 +1142,14 @@ var langs = {
 	},
 	nl: {
 		prefsname: 'Voorkeuren',
-		menuitem: ['OB Poll', 'Contact formulier', 'Beyond FAQ', 'DnD prijzen', 'Live famstats', 'Dagelijkse famstats'],
+		menuitem: [
+			'OB Poll',
+			'Contact formulier',
+			'Beyond FAQ',
+			'DnD prijzen',
+			'Live famstats',
+			'Dagelijkse famstats'
+		],
 		prefs: [
 			'Blokkeer "ga ervoor" knop voor te korte image code',//0 - CRIMES/CARS
 			'Coke prijzen in de bovenbalk',//1 - SMUGGLING/PRICES
@@ -1086,9 +1287,26 @@ var langs = {
 			'Pas menu en sneltoetsen aan',
 			'Reset menu'
 		],
-		login: ['Registreren', 'Edo-nieuws'],
-		status: ['none', 'Geen', 'geslaagd', 'Geld van misdaden', 'misdaad', 'Waarde alle gestolen auto\'s', 'auto', 'Rente', 'in', 'Nu!'],
-		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],
+		login: [
+			'Registreren',
+			'Edo-nieuws'
+		],
+		status: [
+			'none',
+			'Geen',
+			'geslaagd',
+			'Geld van misdaden',
+			'misdaad',
+			'Waarde alle gestolen auto\'s',
+			'auto',
+			'Rente',
+			'in',
+			'Nu!'
+		],
+		wrongcode: [
+			'De code die',
+			'<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'
+		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'De prijs per kogel is net veranderd, als je de kogels echt wilt hebben, vul dan de velden opnieuw in.',
@@ -1099,8 +1317,22 @@ var langs = {
 			'You may only buy 1,000 bullets.'
 		],
 		race: 'Je bent nog moe van je vorige race',
-		profile: ['Burgerlijke staat:', 'SMS Status', 'Familie Uitbreker van', 'Dood', ' Geschiedenis'],
-		wealth: ['Sloeber', 'Arm', 'Modaal', 'Erg rijk', 'Te rijk om waar te zijn', 'Rijker dan God', 'Rijk'],
+		profile: [
+			'Burgerlijke staat:',
+			'SMS Status',
+			'Familie Uitbreker van',
+			'Dood',
+			' Geschiedenis'
+		],
+		wealth: [
+			'Sloeber',
+			'Arm',
+			'Modaal',
+			'Erg rijk',
+			'Te rijk om waar te zijn',
+			'Rijker dan God',
+			'Rijk'
+		],
 		driver: [
 			'Nieuweling',
 			'Bijrijder',
@@ -1115,7 +1347,22 @@ var langs = {
 			'Kampioen'
 		],
 		friends: 'Vrienden:',
-		stats: ['naar boven', ['Dode Fams', 'Geëerd', 'CDCT', 'Fams', 'BF', 'Roul', 'NG', 'FM', 'BJ', 'Bookies', 'PB']],
+		stats: [
+			'naar boven',
+			[
+				'Dode Fams',
+				'Geëerd',
+				'CDCT',
+				'Fams',
+				'BF',
+				'Roul',
+				'NG',
+				'FM',
+				'BJ',
+				'Bookies',
+				'PB'
+			]
+		],
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
 		smuggling: [
 			'Zak: ',
@@ -1181,7 +1428,13 @@ var langs = {
 			'' // DO NOT REMOVE !!
 		],
 		NR: {
-			misc: ['Info laden..', 'Familie:', 'Nicklezer actief', '.Kliklimiet, probeer nogmaals..', '.Wacht op de vorige..'],
+			misc: [
+				'Info laden..',
+				'Familie:',
+				'Nicklezer actief',
+				'.Kliklimiet, probeer nogmaals..',
+				'.Wacht op de vorige..'
+			],
 			positions: 'Don van:,Capo van:,Sottocapo van:,Consiglieri van:',
 			objects: 'Blackjack:,Roulette:,Kogelfabriek:,Nummerspel:,Fruitmachine:,Punto Banco:,Wedkantoor:',
 			properties: 'Gebruiker:,Rang:,Eerpunten:,Status,Vermogen',
@@ -1200,8 +1453,26 @@ var langs = {
 			'Er is geen data van Rank, Vliegtuig en Familiepositie. Bekijk je status en profiel pagina\'s om dit te verhelpen!',
 			'NU'
 		],
-		narcs: ['GEEN DRUGS', 'Morfine', 'Marihuana', 'Lijm', 'Heroine', 'Opium', 'Cocaine', 'Tabak'],
-		booze: ['GEEN DRANK', 'Wijn', 'Bier', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		narcs: [
+			'GEEN DRUGS',
+			'Morfine',
+			'Marihuana',
+			'Lijm',
+			'Heroine',
+			'Opium',
+			'Cocaine',
+			'Tabak'
+		],
+		booze: [
+			'GEEN DRANK',
+			'Wijn',
+			'Bier',
+			'Rum',
+			'Cognac',
+			'Whiskey',
+			'Amaretto',
+			'Port'
+		],
 		oneclick: [
 			'Je hebt de 1-klik stemmer niet gebruikt.\nWil je deze nu gebruiken?\n',
 			'Je kan nog niet stemmen!\nWacht nog:\n',
@@ -1219,8 +1490,6 @@ var langs = {
 			'<b>Gefeliciteerd!</b>',
 			'Kogels<br>Ze zijn toegevoegd aan jouw account!<br>',
 			'gewonnen (\\d+) Kogels',
-
-
 			'<br>Het is toegevoegd aan je account!<br>',
 			'Je hebt gewonnen \\$ (\\d+)',
 			'<b>Start met krassen!</b>',
@@ -1251,7 +1520,10 @@ var langs = {
 			'Op Obay gekocht:',
 			'*zitten niet bij het totaal of prijs per kogel'
 		],
-		crimetracker: ['Goed gedaan! Je hebt', 'Goed gedaan! Je hebt \\$ (\\d+) gekregen van je misdaad.'],
+		crimetracker: [
+			'Goed gedaan! Je hebt',
+			'Goed gedaan! Je hebt \\$ (\\d+) gekregen van je misdaad.'
+		],
 		raidpage: [
 			'<b>nu</b>',
 			'Nu!',
@@ -1347,10 +1619,27 @@ var langs = {
 			'afw',
 			'getraind'
 		],
-		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
+		cities: [
+			'Detroit',
+			'Chicago',
+			'Palermo',
+			'New York',
+			'Las Vegas',
+			'Philadelphia',
+			'Baltimore',
+			'Corleone',
+			'NOWHERE'
+		],
 		killpage: 'Alle steden',
-		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?'],
-		busttracker: ['Je hebt deze gangster uit de gevangenis gebroken.', 'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken', 'Je bent ontsnapt uit de gevangenis.'],
+		myacc: [
+			'Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?',
+			'Weet je zeker dat je een Tommy Gun wilt kopen?'
+		],
+		busttracker: [
+			'Je hebt deze gangster uit de gevangenis gebroken.',
+			'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken',
+			'Je bent ontsnapt uit de gevangenis.'
+		],
 		accept: 'Accepteer',
 		calc: [
 			'Je stuurt:',
@@ -1361,7 +1650,11 @@ var langs = {
 			'Je krijgt:',
 			'Opnieuw laden in 1 sec'
 		],
-		msg: ['Klik om de tickets pagina te openen', 'Klik om de getuigenverklaring op obay te verkopen', 'Klik om je verloren bloed te kopen'],
+		msg: [
+			'Klik om de tickets pagina te openen',
+			'Klik om de getuigenverklaring op obay te verkopen',
+			'Klik om je verloren bloed te kopen'
+		],
 		garage: [
 			'Mogelijke kogels:',
 			'Selecteer op waarde',
@@ -1412,7 +1705,14 @@ var langs = {
 	},
 	tr: {
 		prefsname: 'Preferences',
-		menuitem: ['OB Poll', 'Contact Form', 'Beyond FAQ', 'B/N Prices', 'Live famstats', 'Daily famstats'],
+		menuitem: [
+			'OB Poll',
+			'Contact Form',
+			'Beyond FAQ',
+			'B/N Prices',
+			'Live famstats',
+			'Daily famstats'
+		],
 		prefs: [
 			'Disable the "go for it" button until the image code entered is the correct length',//0 - CRIMES/CARS
 			'Cocaine prices in the marquee',//1 - SMUGGLING/PRICES
@@ -1550,9 +1850,26 @@ var langs = {
 			'Customize Menu & Hotkeys',
 			'Reset menu'
 		],
-		login: ['Register', 'OBnews'],
-		status: ['none', 'None', 'successful', 'Money from crimes', 'crime', 'Worth all stolen cars', 'car', 'Interest', 'in', 'Now!'],
-		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
+		login: [
+			'Register',
+			'OBnews'
+		],
+		status: [
+			'none',
+			'None',
+			'successful',
+			'Money from crimes',
+			'crime',
+			'Worth all stolen cars',
+			'car',
+			'Interest',
+			'in',
+			'Now!'
+		],
+		wrongcode: [
+			'The code you',
+			'<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'
+		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
@@ -1563,8 +1880,22 @@ var langs = {
 			'You may only buy 1,000 bullets.'
 		],
 		race: 'You\'re still tired from your last race',
-		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
-		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
+		profile: [
+			'Marital status:',
+			'SMS Status',
+			'Family Buster of',
+			'Dead',
+			' History'
+		],
+		wealth: [
+			'Straydog',
+			'Poor',
+			'Nouveau Riche',
+			'Very rich',
+			'Too rich to be true',
+			'Richer than God',
+			'Rich'
+		],
 		driver: [
 			'Rookie',
 			'Co-Driver',
@@ -1579,7 +1910,22 @@ var langs = {
 			'Champion'//10
 		],
 		friends: 'Friends:',
-		stats: ['back to top', ['Dead Fams', 'Honoured', 'CDCT', 'Fams', 'BF', 'Roul', 'NS', 'Slots', 'BJ', 'Bookies', 'PB']],
+		stats: [
+			'back to top',
+			[
+				'Dead Fams',
+				'Honoured',
+				'CDCT',
+				'Fams',
+				'BF',
+				'Roul',
+				'NS',
+				'Slots',
+				'BJ',
+				'Bookies',
+				'PB'
+			]
+		],
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: [
 			'Pocket: ',
@@ -1663,8 +2009,26 @@ var langs = {
 			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
 			'NOW'
 		],
-		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
-		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		narcs: [
+			'NO NARCS',
+			'Morphine',
+			'Marijuana',
+			'Glue',
+			'Heroin',
+			'Opium',
+			'Cocaine',
+			'Tabacco'
+		],
+		booze: [
+			'NO BOOZE',
+			'Wine',
+			'Beer',
+			'Rum',
+			'Cognac',
+			'Whiskey',
+			'Amaretto',
+			'Port'
+		],
 		oneclick: [
 			'You haven\'t used the 1-click voter yet!\nDo you want to use it now?\n',
 			'You can\'t vote again yet!\nPlease wait another:\n',
@@ -1712,7 +2076,10 @@ var langs = {
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
 		],
-		crimetracker: ['Well done! You made', 'Well done! You made \\$ (\\d+) from your crime.'],
+		crimetracker: [
+			'Well done! You made',
+			'Well done! You made \\$ (\\d+) from your crime.'
+		],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -1808,10 +2175,27 @@ var langs = {
 			'def',
 			'trained'
 		],
-		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
+		cities: [
+			'Detroit',
+			'Chicago',
+			'Palermo',
+			'New York',
+			'Las Vegas',
+			'Philadelphia',
+			'Baltimore',
+			'Corleone',
+			'NOWHERE'
+		],
 		killpage: 'All cities',
-		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person', 'You busted yourself out of jail'],
+		myacc: [
+			'Are you sure you want to buy a Smith & Wesson .357 Magnum?',
+			'Are you sure you want to buy a Tommy Gun?'
+		],
+		busttracker: [
+			'You busted this person out of jail',
+			'You busted this person',
+			'You busted yourself out of jail'
+		],
 		accept: 'Accept',
 		calc: [
 			'You send:',

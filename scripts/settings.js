@@ -22,7 +22,10 @@ var settings = {
 		polllink: '/html/poll/poll.php?v=com',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=com&d=n',
 		status: ['none', 'None'],
-		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
+		wrongcode: [
+			'The code you',
+			'<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'
+		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
@@ -33,8 +36,22 @@ var settings = {
 		],
 		garage: 'Type',
 		race: 'You\'re still tired from your last race',
-		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
-		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
+		profile: [
+			'Marital status:',
+			'SMS Status',
+			'Family Buster of',
+			'Dead',
+			' History'
+		],
+		wealth: [
+			'Straydog',
+			'Poor',
+			'Nouveau Riche',
+			'Very rich',
+			'Too rich to be true',
+			'Richer than God',
+			'Rich'
+		],
 		driver: [
 			'Rookie',
 			'Co-Driver',
@@ -50,9 +67,28 @@ var settings = {
 		],
 		friends: 'Friends:',
 		bank: 'You cannot transfer less than 100 dollars',
-		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets', 'bullets', 'Bet'],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
+		smuggling: [
+			'Pocket: ',
+			'Booze',
+			'Narcs',
+			'Current Booze/Narcotics Prices',
+			'All Prices',
+			'Both'
+		],
+		obay: [
+			'Pack of bullets',
+			'bullets',
+			'Bet'
+		],
+		inbox: [
+			'Notification',
+			'(Admin message)',
+			'inviting',
+			'explosives',
+			'driver',
+			'weapon',
+			'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'
+		],
 		linkify: [
 			'Route 66 heist',
 			'Organised Crime',
@@ -73,7 +109,13 @@ var settings = {
 			'Wedding'
 		],
 		NR: {
-			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
+			misc: [
+				' Loading info..',
+				'Family:',
+				'Nickreader enabled',
+				'.Clicklimit, please try again..',
+				'.Wait for the previous..'
+			],
 			positions: 'Don of,Capo of:,Sottocapo of:,Consiglieri of:',
 			objects: 'Blackjack:,Roulette:,Bulletfactory:,Numbers Game:,Slotmachine:,Punto Banco:,Bookmaker office:',
 			properties: 'User:,Rank:,Honor points:,Status,Wealth',
@@ -92,8 +134,26 @@ var settings = {
 			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
 			'NOW'
 		],
-		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
-		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		narcs: [
+			'NO NARCS',
+			'Morphine',
+			'Marijuana',
+			'Glue',
+			'Heroin',
+			'Opium',
+			'Cocaine',
+			'Tabacco'
+		],
+		booze: [
+			'NO BOOZE',
+			'Wine',
+			'Beer',
+			'Rum',
+			'Cognac',
+			'Whiskey',
+			'Amaretto',
+			'Port'
+		],
 		scratcher: [
 			'<b>Congratulations!</b>',
 			'bullets<br>They have been added to your account!<br>',
@@ -155,10 +215,26 @@ var settings = {
 			'You have checked the current bet.',
 			'You have started a new game.'
 		],
-		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
+		cities: [
+			'Detroit',
+			'Chicago',
+			'Palermo',
+			'New York',
+			'Las Vegas',
+			'Philadelphia',
+			'Baltimore',
+			'Corleone',
+			'NOWHERE'
+		],
 		killpage: 'All cities',
-		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
+		myacc: [
+			'Are you sure you want to buy a Smith & Wesson .357 Magnum?',
+			'Are you sure you want to buy a Tommy Gun?'
+		],
+		busttracker: [
+			'You busted this person out of jail',
+			'You busted this person out of jail & his/her cellmate out of jail'
+		]
 	},
 	dm: {
 		version: '_dm',
@@ -167,8 +243,14 @@ var settings = {
 		contactlink: '/contact.php?v=dm',
 		polllink: '/html/poll/poll.php?v=dm',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=dm&d=n',
-		status: ['none', 'None'],
-		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
+		status: [
+			'none',
+			'None'
+		],
+		wrongcode: [
+			'The code you',
+			'<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'
+		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
@@ -179,8 +261,22 @@ var settings = {
 		],
 		garage: 'Type',
 		race: 'You\'re still tired from your last race',
-		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
-		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
+		profile: [
+			'Marital status:',
+			'SMS Status',
+			'Family Buster of',
+			'Dead',
+			' History'
+		],
+		wealth: [
+			'Straydog',
+			'Poor',
+			'Nouveau Riche',
+			'Very rich',
+			'Too rich to be true',
+			'Richer than God',
+			'Rich'
+		],
 		driver: [
 			'Rookie',
 			'Co-Driver',
@@ -196,9 +292,28 @@ var settings = {
 		],
 		friends: 'Friends:',
 		bank: 'You cannot transfer less than 100 dollars',
-		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets', 'bullets', 'Bet'],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
+		smuggling: [
+			'Pocket: ',
+			'Booze',
+			'Narcs',
+			'Current Booze/Narcotics Prices',
+			'All Prices',
+			'Both'
+		],
+		obay: [
+			'Pack of bullets',
+			'bullets',
+			'Bet'
+		],
+		inbox: [
+			'Notification',
+			'(Admin message)',
+			'inviting',
+			'explosives',
+			'driver',
+			'weapon',
+			'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'
+		],
 		linkify: [
 			'Route 66 heist',
 			'Organised Crime',
@@ -219,7 +334,13 @@ var settings = {
 			'Wedding'
 		],
 		NR: {
-			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
+			misc: [
+				' Loading info..',
+				'Family:',
+				'Nickreader enabled',
+				'.Clicklimit, please try again..',
+				'.Wait for the previous..'
+			],
 			positions: 'Don of,Capo of:,Sottocapo of:,Consiglieri of:',
 			objects: 'Blackjack:,Roulette:,Bulletfactory:,Numbers Game:,Slotmachine:,Punto Banco:,Bookmaker office:',
 			properties: 'User:,Rank:,Honor points:,Status,Wealth',
@@ -238,8 +359,26 @@ var settings = {
 			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
 			'NOW'
 		],
-		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
-		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		narcs: [
+			'NO NARCS',
+			'Morphine',
+			'Marijuana',
+			'Glue',
+			'Heroin',
+			'Opium',
+			'Cocaine',
+			'Tabacco'
+		],
+		booze: [
+			'NO BOOZE',
+			'Wine',
+			'Beer',
+			'Rum',
+			'Cognac',
+			'Whiskey',
+			'Amaretto',
+			'Port'
+		],
 		scratcher: [
 			'<b>Congratulations!</b>',
 			'bullets<br>They have been added to your account!<br>',
@@ -301,10 +440,26 @@ var settings = {
 			'You have checked the current bet.',
 			'You have started a new game.'
 		],
-		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
+		cities: [
+			'Detroit',
+			'Chicago',
+			'Palermo',
+			'New York',
+			'Las Vegas',
+			'Philadelphia',
+			'Baltimore',
+			'Corleone',
+			'NOWHERE'
+		],
 		killpage: 'All cities',
-		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
+		myacc: [
+			'Are you sure you want to buy a Smith & Wesson .357 Magnum?',
+			'Are you sure you want to buy a Tommy Gun?'
+		],
+		busttracker: [
+			'You busted this person out of jail',
+			'You busted this person out of jail & his/her cellmate out of jail'
+		]
 	},
 	nl: {
 		version: '_nl',
@@ -313,8 +468,14 @@ var settings = {
 		contactlink: '/contact.php?v=nl',
 		polllink: '/html/poll/poll.php?v=nl',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=nl&d=n',
-		status: ['none', 'Geen'],
-		wrongcode: ['De code die', '<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'],
+		status: [
+			'none',
+			'Geen'
+		],
+		wrongcode: [
+			'De code die',
+			'<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'
+		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'De prijs per kogel is net veranderd, als je de kogels echt wilt hebben, vul dan de velden opnieuw in.',
@@ -325,8 +486,22 @@ var settings = {
 		],
 		garage: 'Type',
 		race: 'Je bent nog moe van je vorige race',
-		profile: ['Burgerlijke staat:', 'SMS Status', 'Familie Uitbreker van', 'Dood', ' Geschiedenis'],
-		wealth: ['Sloeber', 'Arm', 'Modaal', 'Erg rijk', 'Te rijk om waar te zijn', 'Rijker dan God', 'Rijk'],
+		profile: [
+			'Burgerlijke staat:',
+			'SMS Status',
+			'Familie Uitbreker van',
+			'Dood',
+			' Geschiedenis'
+		],
+		wealth: [
+			'Sloeber',
+			'Arm',
+			'Modaal',
+			'Erg rijk',
+			'Te rijk om waar te zijn',
+			'Rijker dan God',
+			'Rijk'
+		],
 		driver: [
 			'Nieuweling',
 			'Bijrijder',
@@ -342,8 +517,19 @@ var settings = {
 		],
 		friends: 'Vrienden:',
 		bank: 'Je kunt niet minder dan 100 dollar versturen',
-		smuggling: ['Zak: ', 'Drank', 'Drugs', 'Huidige Drank/Drugs Prijzen', 'Alle Prijzen', 'Beide'],
-		obay: ['Pak met kogels', 'kogels', 'Bied'],
+		smuggling: [
+			'Zak: ',
+			'Drank',
+			'Drugs',
+			'Huidige Drank/Drugs Prijzen',
+			'Alle Prijzen',
+			'Beide'
+		],
+		obay: [
+			'Pak met kogels',
+			'kogels',
+			'Bied'
+		],
 		inbox: [
 			'Mededeling',
 			'(Admin bericht)',
@@ -373,7 +559,13 @@ var settings = {
 			'Wedding'
 		],
 		NR: {
-			misc: ['Info laden..', 'Familie:', 'Nicklezer actief', '.Kliklimiet, probeer nogmaals..', '.Wacht op de vorige..'],
+			misc: [
+				'Info laden..',
+				'Familie:',
+				'Nicklezer actief',
+				'.Kliklimiet, probeer nogmaals..',
+				'.Wacht op de vorige..'
+			],
 			positions: 'Don van:,Capo van:,Sottocapo van:,Consiglieri van:',
 			objects: 'Blackjack:,Roulette:,Kogelfabriek:,Nummerspel:,Fruitmachine:,Punto Banco:,Wedkantoor:',
 			properties: 'Gebruiker:,Rang:,Eerpunten:,Status,Vermogen',
@@ -392,8 +584,26 @@ var settings = {
 			'Er is geen data van Rank, Vliegtuig en Familiepositie. Bekijk je status en profiel pagina\'s om dit te verhelpen!',
 			'NU'
 		],
-		narcs: ['GEEN DRUGS', 'Morfine', 'Marihuana', 'Lijm', 'Hero&#239;ne', 'Opium', 'Coca&#239;ne', 'Tabak'],
-		booze: ['GEEN DRANK', 'Wijn', 'Bier', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		narcs: [
+			'GEEN DRUGS',
+			'Morfine',
+			'Marihuana',
+			'Lijm',
+			'Hero&#239;ne',
+			'Opium',
+			'Coca&#239;ne',
+			'Tabak'
+		],
+		booze: [
+			'GEEN DRANK',
+			'Wijn',
+			'Bier',
+			'Rum',
+			'Cognac',
+			'Whiskey',
+			'Amaretto',
+			'Port'
+		],
 		scratcher: [
 			'<b>Gefeliciteerd!</b>',
 			'Kogels<br>Ze zijn toegevoegd aan jouw account!<br>',
@@ -456,8 +666,14 @@ var settings = {
 			'Je hebt een nieuw spel gestart.'
 		],
 		killpage: 'Alle steden',
-		myacc: ['Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?', 'Weet je zeker dat je een Tommy Gun wilt kopen?'],
-		busttracker: ['Je hebt deze gangster uit de gevangenis gebroken.', 'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken']
+		myacc: [
+			'Weet je zeker dat je een Smith & Wesson .357 Magnum wilt kopen?',
+			'Weet je zeker dat je een Tommy Gun wilt kopen?'
+		],
+		busttracker: [
+			'Je hebt deze gangster uit de gevangenis gebroken.',
+			'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken'
+		]
 	},
 	tr: {
 		version: '_tr',
@@ -466,8 +682,14 @@ var settings = {
 		contactlink: '/contact.php?v=tr',
 		polllink: '/html/poll/poll.php?v=tr',
 		statslink: '',
-		status: ['none', 'None'],
-		wrongcode: ['The code you', '<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'],
+		status: [
+			'none',
+			'None'
+		],
+		wrongcode: [
+			'The code you',
+			'<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'
+		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
@@ -478,8 +700,22 @@ var settings = {
 		],
 		garage: 'Type',
 		race: 'You\'re still tired from your last race',
-		profile: ['Marital status:', 'SMS Status', 'Family Buster of', 'Dead', ' History'],
-		wealth: ['Straydog', 'Poor', 'Nouveau Riche', 'Very rich', 'Too rich to be true', 'Richer than God', 'Rich'],
+		profile: [
+			'Marital status:',
+			'SMS Status',
+			'Family Buster of',
+			'Dead',
+			' History'
+		],
+		wealth: [
+			'Straydog',
+			'Poor',
+			'Nouveau Riche',
+			'Very rich',
+			'Too rich to be true',
+			'Richer than God',
+			'Rich'
+		],
 		driver: [
 			'Rookie',
 			'Co-Driver',
@@ -495,9 +731,28 @@ var settings = {
 		],
 		friends: 'Friends:',
 		bank: 'You cannot transfer less than 100 dollars',
-		smuggling: ['Pocket: ', 'Booze', 'Narcs', 'Current Booze/Narcotics Prices', 'All Prices', 'Both'],
-		obay: ['Pack of bullets', 'bullets', 'Bet'],
-		inbox: ['Notification', '(Admin message)', 'inviting', 'explosives', 'driver', 'weapon', 'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'],
+		smuggling: [
+			'Pocket: ',
+			'Booze',
+			'Narcs',
+			'Current Booze/Narcotics Prices',
+			'All Prices',
+			'Both'
+		],
+		obay: [
+			'Pack of bullets',
+			'bullets',
+			'Bet'
+		],
+		inbox: [
+			'Notification',
+			'(Admin message)',
+			'inviting',
+			'explosives',
+			'driver',
+			'weapon',
+			'Re: Bustout!,Re: Bailed!,Bustout!,Bailed!'
+		],
 		linkify: [
 			'Route 66 heist',
 			'Organised Crime',
@@ -518,7 +773,13 @@ var settings = {
 			'Wedding'
 		],
 		NR: {
-			misc: [' Loading info..', 'Family:', 'Nickreader enabled', '.Clicklimit, please try again..', '.Wait for the previous..'],
+			misc: [
+				' Loading info..',
+				'Family:',
+				'Nickreader enabled',
+				'.Clicklimit, please try again..',
+				'.Wait for the previous..'
+			],
 			positions: 'Don of,Capo of:,Sottocapo of:,Consiglieri of:',
 			objects: 'Blackjack:,Roulette:,Bulletfactory:,Numbers Game:,Slotmachine:,Punto Banco:,Bookmaker office:',
 			properties: 'User:,Rank:,Honor points:,Status,Wealth',
@@ -537,8 +798,26 @@ var settings = {
 			'Can\'t find any data about Rank, Plane and Family position. Please visit your status and profile pages to fix this!',
 			'NOW'
 		],
-		narcs: ['NO NARCS', 'Morphine', 'Marijuana', 'Glue', 'Heroin', 'Opium', 'Cocaine', 'Tabacco'],
-		booze: ['NO BOOZE', 'Wine', 'Beer', 'Rum', 'Cognac', 'Whiskey', 'Amaretto', 'Port'],
+		narcs: [
+			'NO NARCS',
+			'Morphine',
+			'Marijuana',
+			'Glue',
+			'Heroin',
+			'Opium',
+			'Cocaine',
+			'Tabacco'
+		],
+		booze: [
+			'NO BOOZE',
+			'Wine',
+			'Beer',
+			'Rum',
+			'Cognac',
+			'Whiskey',
+			'Amaretto',
+			'Port'
+		],
 		scratcher: [
 			'<b>Congratulations!</b>',
 			'bullets<br>They have been added to your account!<br>',
@@ -600,9 +879,25 @@ var settings = {
 			'You have checked the current bet.',
 			'You have started a new game.'
 		],
-		cities: ['Detroit', 'Chicago', 'Palermo', 'New York', 'Las Vegas', 'Philadelphia', 'Baltimore', 'Corleone', 'NOWHERE'],
+		cities: [
+			'Detroit',
+			'Chicago',
+			'Palermo',
+			'New York',
+			'Las Vegas',
+			'Philadelphia',
+			'Baltimore',
+			'Corleone',
+			'NOWHERE'
+		],
 		killpage: 'All cities',
-		myacc: ['Are you sure you want to buy a Smith & Wesson .357 Magnum?', 'Are you sure you want to buy a Tommy Gun?'],
-		busttracker: ['You busted this person out of jail', 'You busted this person out of jail & his/her cellmate out of jail']
+		myacc: [
+			'Are you sure you want to buy a Smith & Wesson .357 Magnum?',
+			'Are you sure you want to buy a Tommy Gun?'
+		],
+		busttracker: [
+			'You busted this person out of jail',
+			'You busted this person out of jail & his/her cellmate out of jail'
+		]
 	}
 };
