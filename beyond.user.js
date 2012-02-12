@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.80
-// @date			09-02-2012
+// @version			1.10.0.81
+// @date			12-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -149,8 +149,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 80;
-var SCRIPT_SUBVERSION = 80;
+var SCRIPT_VERSION_BUILD = 81;
+var SCRIPT_SUBVERSION = 81;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -3821,7 +3821,7 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 		delImg.setAttribute('src', GM_getResourceURL('deleteIcon'));
 		delImg.setAttribute('onClick', 'location.href="/BeO/webroot/index.php?module=Mail&action=delMsg&iId=' + id + '&iParty=2"');
 		delImg.setAttribute('class', 'inboxImg');
-		$n.cells[0].setAttribute('width', '75');
+		$n.cells[0].setAttribute('width', '80');
 
 		if (target) { //before the select box
 			delImg.style.paddingLeft = '0px'; //looksee fix :x
@@ -3831,13 +3831,15 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 		}
 
 		//add checkbox at unread
-//		if($n.className == 'color2') {
-//			var chkbox = cEL('input');
-//			chkbox.setAttribute('type', 'checkbox');
-//			chkbox.setAttribute('value', id);
-//			chkbox.setAttribute('name', 'selective[]');
-//			$n.cells[0].appendChild(chkbox);
-//		}
+		/*
+		if($n.className == 'color2') {
+			var chkbox = cEL('input');
+			chkbox.setAttribute('type', 'checkbox');
+			chkbox.setAttribute('value', id);
+			chkbox.setAttribute('name', 'selective[]');
+			$n.cells[0].appendChild(chkbox);
+		}
+		*/
 
 		if ($n.cells[2].innerHTML.indexOf('user.php?nick=') != -1) { //add reply icon
 			var replyImg = cEL('img');
@@ -3845,7 +3847,7 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 			replyImg.setAttribute('src', GM_getResourceURL('reply'));
 			replyImg.setAttribute('onClick', 'location.href="/BeO/webroot/index.php?module=Mail&action=sendMsg&iReply=' + id + '"');
 			replyImg.setAttribute('class', 'inboxImg');
-			$n.cells[0].setAttribute('width', '75');
+			$n.cells[0].setAttribute('width', '95');
 
 			$n.cells[0].appendChild(replyImg);
 		}

@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Variables depending on version
 
-Version: 1.10.0.80
+Version: 1.10.0.81
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
