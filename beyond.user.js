@@ -4483,12 +4483,12 @@ if (dlp == '/familylog.php') {
 //---------------------- MaybeUsefulCrap -----------
 var OBMIcon = GM_getResourceURL('favoriteIco');
 var OBM =
-	'<menu icon={OBMIcon} type="context" id="OBMenu">' +
-		'<menu label={SCRIPT_NAME+" "+SCRIPT_VERSION}>' +
-			'<menuitem icon={OBMIcon} id="obmversion" label={"Version: "+OB}>Version</menuitem>' +
-			'<menuitem icon={OBMIcon} id="obmupdate" label={"Check for updates"}>UpdateCheck</menuitem>' +
-		'</menu>' +
-	'</menu>';
+	<menu icon={OBMIcon} type="context" id="OBMenu">
+		<menu label={SCRIPT_NAME+" "+SCRIPT_VERSION}>
+			<menuitem icon={OBMIcon} id="obmversion" label={"Version: "+OB}>Version</menuitem>
+			<menuitem icon={OBMIcon} id="obmupdate" label={"Check for updates"}>UpdateCheck</menuitem>
+		</menu>
+	</menu>;
 
 var OBMDiv = cEL('div');
 db.appendChild(OBMDiv);
