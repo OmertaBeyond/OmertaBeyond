@@ -4,7 +4,7 @@ This file contains helpers and useful functions for use with Project Omerta Beyo
 
 Feel free to use them, but please let us know.
 
-Version: 1.10.0.81
+Version: 1.10.0.82
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -450,6 +450,25 @@ function timer(s, i, end, rpform) {
 		$X('//*[@id="timer'+i+'"]').innerHTML = end;
 		$X('//*[@id="rpform'+i+'"]').innerHTML = rpform;
 	}
+}
+
+function in_array (needle, haystack, argStrict) {
+    var key = '',
+        strict = !! argStrict;
+    if (strict) {
+        for (key in haystack) {
+            if (haystack[key] === needle) {
+                return true;
+            }
+        }
+    } else {
+        for (key in haystack) {
+            if (haystack[key] == needle) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 function OBUpdate(cb) {

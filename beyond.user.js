@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.81
-// @date			12-02-2012
+// @version			1.10.0.82
+// @date			14-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -149,8 +149,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 81;
-var SCRIPT_SUBVERSION = 81;
+var SCRIPT_VERSION_BUILD = 82;
+var SCRIPT_SUBVERSION = 82;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -731,11 +731,11 @@ if (dlp == '/menu.php') {
 	}
 	function checkKey(id) {
 		var buyout = getValue('buyout', '/');
-		var val;
+		var nokey = [buyout, '-',  '[', ']', ';', '\''];
 		var am = (($x('//input').length-1) / 2);
 		for (i = 1;i <= am;i++) {
-			val = getID('ip'+i).value.toUpperCase();
-			if ((val == getID(id).value.toUpperCase() && 'ip'+(i) != id && getID(id).value.toUpperCase() != '') || val == buyout) {
+			var val = getID('ip'+i).value.toUpperCase();
+			if ((val == getID(id).value.toUpperCase() && 'ip'+(i) != id && getID(id).value.toUpperCase() != '') || in_array(val, nokey) || val.match(/\d+/g) != null) {
 				alert(lang.cusmenu[2]);
 				getID(id).value = '';
 				i = 100;
@@ -2768,21 +2768,15 @@ if(dlp == '/garage.php'){
 				}
 			}
 		}
-
-		wrap = cEL('div');
-		wrap.id = 'footerwrap';
-		footer = cEL('div');
+		var footer = cEL('div');
 		footer.id = 'footer';
 		footer.align = 'center';
 		footer.setAttribute('style', 'position:fixed; bottom:0px; left:10%; width:80%; border:1px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
-		footer.setAttribute('class', 'otable');
-		html = '';
-		html += '<table class="thinline" cellspacing=0 cellpadding=2 rules="none" width="100%"><tr>';
+		var html = '<table class="thinline" cellspacing=0 cellpadding=2 rules="none" width="100%"><tr>';
 		html += $x('//tr')[rows-1].innerHTML;
 		html += '</tr></table>';
 		footer.innerHTML = html;
-		wrap.appendChild(footer);
-		$X('//center').parentNode.insertBefore(wrap, $X('//center').nextSibling);
+		$X('//center').parentNode.insertBefore(footer, $X('//center').nextSibling);
 
 		var sheight = db.scrollHeight;
 		var cheight = db.clientHeight;
@@ -3188,7 +3182,7 @@ if (dls.indexOf('module=Family') != -1) {
 	promo[6].innerHTML = '<td>Bruglione</td><td>$ '+commafy(brugP)+'</td><td>Capodecina</td><td>$ '+commafy(cdP)+'</td><br /><td>GF / FL</td><td>$ '+commafy(gfP)+'</td><td>&nbsp;</td><td>&nbsp;</td>';
 }
 if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
-//--Add Capo Money list + calc
+	//Add Capo Money list
 	var txt = $x('//td[@class="tableitem"]');//CapoMoney txt
 	var nick = $x('//td[@class="tableheader"]/b');//Capo's
 	nick.splice(0, 1);//remove first table (not a capo table)
@@ -3214,26 +3208,26 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 	newTable.appendChild(headTr);
 	newTable.appendChild(blackTr);
 	//add CM list | switch to !DOM :D
-		var newTr = cEL('tr');
-			var newTd = cEL('td');
-				var list = '<table width="100%">';
-				list += '<tr><td></td><td><b>Capo</b></td><td><b>CapoMoney</b></td><td><b>to GF</b></td></tr>';
-				for(i=0;i<nick.length;i++){//loop all capo's
-					var n = i+2;
-					var member = $x('count(//table['+n+']//tr[@valign="top"]//td/a)');//members
-					var name = nick[i].textContent.slice(nick[i].textContent.indexOf(' '),nick[i].textContent.lastIndexOf(' (')).replace(/\s/,'');
-					list += '<tr><td><a href="#'+name+'">&darr;</a></td><td><a href="http://'+dlh+'/user.php?nick='+name+'">'+name+'</a>('+member+')';
-					list += '</td><td>';
-					var CM = txt[i].innerHTML.slice(0,txt[i].innerHTML.indexOf('<'));
-					CM = CM.replace(/[a-zA-Z]| |\s/g, '');
-					list += CM.replace('$', '$ ') + '</td><td>';
-					CM = CM.replace(/[^0-9]/g,'');
-					list += (15000000 - CM)>0 ? '$ ' + commafy((15000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
-					$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
-				}
-				list += '</table>';
-			newTd.innerHTML = list;
-		newTr.appendChild(newTd);
+	var newTr = cEL('tr');
+	var newTd = cEL('td');
+	var list = '<table width="100%">';
+	list += '<tr><td></td><td><b>Capo</b></td><td><b>CapoMoney</b></td><td><b>to GF</b></td></tr>';
+	for(i=0;i<nick.length;i++){//loop all capo's
+		var n = i+2;
+		var member = $x('count(//table['+n+']//tr[@valign="top"]//td/a)');//members
+		var name = nick[i].textContent.slice(nick[i].textContent.indexOf(' '),nick[i].textContent.lastIndexOf(' (')).replace(/\s/,'');
+		list += '<tr><td><a href="#'+name+'">&darr;</a></td><td><a href="http://'+dlh+'/user.php?nick='+name+'">'+name+'</a>('+member+')';
+		list += '</td><td>';
+		var CM = txt[i].innerHTML.slice(0,txt[i].innerHTML.indexOf('<'));
+		CM = CM.replace(/[a-zA-Z]| |\s/g, '');
+		list += CM.replace('$', '$ ') + '</td><td>';
+		CM = CM.replace(/[^0-9]/g,'');
+		list += (15000000 - CM)>0 ? '$ ' + commafy((15000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
+		$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
+	}
+	list += '</table>';
+	newTd.innerHTML = list;
+	newTr.appendChild(newTd);
 	newTable.appendChild(newTr);
 
 	table.parentNode.insertBefore(newTable, input.nextSibling);//add newTable to page
@@ -3250,9 +3244,6 @@ if (dlp == '/cpbank.php' && db.innerHTML.search('type="password"') == -1) {
 	var func3  = '); str =\'\'; while(tmp > 0){ if(str!=\'\'){ while(str.length % 4 !=3 ){ str = \'0\' + str;};';
 	func3 += 'str = \',\' + str;};dec = (tmp % 1000)+\'\';str = dec + str;tmp = Math.floor(tmp/1000);};';
 	func3 += 'get.textContent = \'$\' + str}; };';
-	var func_switch  = '* (amt >= 1000000 ? (amt >= 3000000 ? (amt >= 6000000 ? (amt >= 10000000 ? (amt >= 15000000 ? ';
-	func_switch += '(amt >= 21000000 ? (amt >= 27000000 ? (amt >= 35000000 ? 1.01 : 1.015) : 1.02) : 1.025 ) : 1.03) : 1.035)';
-	func_switch += ' : 1.04) : 1.045) : 1.05 )';
 
 	var tbl = '<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
 	tbl += '<tr><td align="right" width="25%">'+lang.calc[0]+'</td>';
@@ -3275,7 +3266,6 @@ if (dlp == '/cpbank.php' && db.innerHTML.search('type="password"') == -1) {
 		var inputs = $x('//input[@name="amount"] | //input[@name="amounttpob"]');
 		inputs.forEach(function($n){
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
-
 		});
 	}
 }
@@ -3821,7 +3811,7 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 		delImg.setAttribute('src', GM_getResourceURL('deleteIcon'));
 		delImg.setAttribute('onClick', 'location.href="/BeO/webroot/index.php?module=Mail&action=delMsg&iId=' + id + '&iParty=2"');
 		delImg.setAttribute('class', 'inboxImg');
-		$n.cells[0].setAttribute('width', '80');
+		$n.cells[0].setAttribute('width', '70');
 
 		if (target) { //before the select box
 			delImg.style.paddingLeft = '0px'; //looksee fix :x
@@ -3830,25 +3820,17 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 			$n.cells[0].appendChild(delImg);
 		}
 
-		//add checkbox at unread
-		/*
-		if($n.className == 'color2') {
-			var chkbox = cEL('input');
-			chkbox.setAttribute('type', 'checkbox');
-			chkbox.setAttribute('value', id);
-			chkbox.setAttribute('name', 'selective[]');
-			$n.cells[0].appendChild(chkbox);
-		}
-		*/
-
 		if ($n.cells[2].innerHTML.indexOf('user.php?nick=') != -1) { //add reply icon
 			var replyImg = cEL('img');
 			replyImg.setAttribute('title', 'Reply');
 			replyImg.setAttribute('src', GM_getResourceURL('reply'));
 			replyImg.setAttribute('onClick', 'location.href="/BeO/webroot/index.php?module=Mail&action=sendMsg&iReply=' + id + '"');
 			replyImg.setAttribute('class', 'inboxImg');
-			$n.cells[0].setAttribute('width', '95');
-
+			if($n.className == 'color2') {
+				$n.cells[0].setAttribute('width', '70');
+			} else {
+				$n.cells[0].setAttribute('width', '90');
+			}
 			$n.cells[0].appendChild(replyImg);
 		}
 		if (num < 11 && prefs[31]) { //add msg hotkeys
