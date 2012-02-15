@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.82
-// @date			14-02-2012
+// @version			1.10.0.83
+// @date			15-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -25,7 +25,6 @@
 // @resource			dmLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-dm.png
 // @resource			nlLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-nl.png
 // @resource			buttonMenu	http://omertabeyond.googlecode.com/svn/trunk/images/menu.png
-// @resource			buttonKey	http://omertabeyond.googlecode.com/svn/trunk/images/key.png
 // @resource			buttonReset	http://omertabeyond.googlecode.com/svn/trunk/images/reset.png
 // @resource			favoriteIco	http://omertabeyond.googlecode.com/svn/trunk/images/favicon.png
 // @resource			edoIco		http://omertabeyond.googlecode.com/svn/trunk/images/edo.png
@@ -65,32 +64,35 @@ $Author$:  Author of last commit
 $Date$:  Date of last commit
 */
 
-
 //---------------- (Omerta==0)?refresh:go ----------------
  if (db.innerHTML.indexOf('You reached your click limit.') != -1 && dlp != '/menu.php') {
 	setTimeout(function () {
 		window.location.reload();
-	}, 60000);
+	}, 60000); // 60s
 } else if (hOne == '504 Gateway Time-out') {
 	setTimeout(function () {
 		window.location.reload();
-	}, 20000);
+	}, 20000); // 20s
 } else if (hOne == '502 Bad Gateway') {
 	setTimeout(function () {
 		window.location.reload();
-	}, 20000);
+	}, 20000); // 20s
 } else if (hOne == '503 Service Unavailable') {
 	setTimeout(function () {
 		window.location.reload();
-	}, 20000);
+	}, 20000); // 20s
 } else if (hOne == '500 - Internal Server Error') {
 	setTimeout(function () {
 		window.location.reload();
-	}, 20000);
+	}, 20000); // 20s
 } else if (db.innerHTML.indexOf('Downtime. We\'ll be back shortly. Hopefully. ') != -1) {
 	setTimeout(function () {
 		window.location.reload();
-	}, 300000);
+	}, 300000); // 5m
+} else if (db.innerHTML.indexOf('You can\'t do that as you are still in the safehouse') != -1) {
+	setTimeout(function () {
+		window.location.reload();
+	}, 600000); // 10m
 } else { //freedom!
 
 function whereToRun(hostname) {
@@ -149,8 +151,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 82;
-var SCRIPT_SUBVERSION = 82;
+var SCRIPT_VERSION_BUILD = 83;
+var SCRIPT_SUBVERSION = 83;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -269,7 +271,7 @@ if (dlp == '/prefs.php') {
 
 	var prefstr = lang.prefs;
 	var prefsTitle = lang.prefsTitle;
-	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + OB + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <img src="'+GM_getResourceURL('updateIco')+'" id="updater" title="'+lang.prefsPage[0]+'" style="cursor:pointer;" alt="'+lang.prefsPage[0]+'" width="16" height="16" /></td></tr>';
+	var string = '<tr style="height: 25px;" id="prefsrow"><td colspan="4" class="toptd">Omerta Beyond ' + OB + ' <span style="padding-right:10px;">: '+lang.prefsname+' </span> <img src="'+GM_getResourceURL('updateIco')+'" id="updater" title="'+lang.prefsPage[0]+'" class="updateImg" alt="'+lang.prefsPage[0]+'" /></td></tr>';
 
 	function addCat(title) { //pref category
 		toggleStr = 'var node = this; while(node.nextSibling.innerHTML.search(/<input/)!=-1){ var node = node.nextSibling; var show = ((node.style.display == \'none\') ? \'\' : \'none\'); node.style.display = show; };'; //js to toggle hiding prefs for category
@@ -399,11 +401,11 @@ if (dlp == '/prefs.php') {
 			string += '<tr id="jhl_tr_'+y+'" style="height:25px;" class="tr">';
 			string += '	<td>&nbsp;</td>';
 			string += '	<td>';
-			string += '		<img id="jhl_d_'+y+'" class="del_icon" height="16" width="16" style="cursor:pointer;" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getID(\'jhl_a_'+y+'\').value=\'\';getID(\'jhl_b_'+y+'\').value=\'CCCCCC\';getID(\'jhl_b_'+y+'\').style.backgroundColor=\'#CCCCCC\';getID(\'jhl_c_'+y+'\').value=\'\';}else{getID(\'jhl_tr_'+y+'\').parentNode.removeChild(getID(\'jhl_tr_'+y+'\'));}" />';
+			string += '		<img id="jhl_d_'+y+'" class="del_icon" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getID(\'jhl_a_'+y+'\').value=\'\';getID(\'jhl_b_'+y+'\').value=\'CCCCCC\';getID(\'jhl_b_'+y+'\').style.backgroundColor=\'#CCCCCC\';getID(\'jhl_c_'+y+'\').value=\'\';}else{getID(\'jhl_tr_'+y+'\').parentNode.removeChild(getID(\'jhl_tr_'+y+'\'));}" />';
 			string += '		<input id="jhl_a_'+y+'" value="'+nick.replace('%20', ' ').replace('%26', '&')+'" type="text" name="jhl_nick" class="inputbig" onkeyup="AddBust('+y+');" />';
 			string += '	</td>';
 			string += '	<td><input id="jhl_b_'+y+'" value="'+color+'" type="text" name="jhl_color" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td>';
-			string += '	<td><img id="jhl_e_'+y+'" class="picker_icon" src="'+GM_getResourceURL('colorpicker')+'" height="14" width="14" style="cursor:pointer;" onclick="getID(\'jhl_b_'+y+'\').color.showPicker()" alt="Pick color" /></td>';
+			string += '	<td><img id="jhl_e_'+y+'" class="picker_icon" src="'+GM_getResourceURL('colorpicker')+'" onclick="getID(\'jhl_b_'+y+'\').color.showPicker()" alt="Pick color" /></td>';
 			string += '	<td><input id="jhl_c_'+y+'" value="'+prio+'" type="text" name="jhl_prio" class="inputsmall" /></td>';
 			string += '	<td>&nbsp;</td>';
 			string += '</tr>';
@@ -435,7 +437,7 @@ if (dlp == '/prefs.php') {
 			string += '<tr id="nojhl_tr_'+y+'" style="height: 25px;" class="tr">';
 			string += '	<td>&nbsp;</td>';
 			string += '	<td colspan="5">';
-			string += '		<img id="nojhl_b_'+y+'" class="del_icon" height="16" width="16" style="cursor:pointer;" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getID(\'nojhl_a_'+y+'\').value=\'\';}else{getID(\'nojhl_tr_'+y+'\').parentNode.removeChild(getID(\'nojhl_tr_'+y+'\'));}" />';
+			string += '		<img id="nojhl_b_'+y+'" class="del_icon" src="'+GM_getResourceURL('trash')+'" alt="Delete" onclick="if('+y+'==1){getID(\'nojhl_a_'+y+'\').value=\'\';}else{getID(\'nojhl_tr_'+y+'\').parentNode.removeChild(getID(\'nojhl_tr_'+y+'\'));}" />';
 			string += '		<input id="nojhl_a_'+y+'" value="'+nick.replace('%20', ' ').replace('%26', '&')+'" type="text" name="nojhl_nick" class="inputbig" onkeyup="AddNoBust('+y+');" />';
 			string += '	</td>';
 			string += '</tr>';
@@ -457,7 +459,7 @@ if (dlp == '/prefs.php') {
 		// general options
 		string += '<tr style="height: 25px;" class="tr"><td class="td">&nbsp;</td><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[8]+'</b><td class="td" colspan="2" style="text-align:center;"><b>'+lang.jhl[9]+'</b></td><td class="td">&nbsp;</td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[10]+': <input id="defpri" value="'+getValue('defpri', 2)+'" type="text" class="inputmiddle" onblur="if(this.value>9||this.value<1){this.value='+getValue('defpri', 2)+';}" /></td><td colspan="2" style="text-align:right;">'+lang.jhl[14]+': &nbsp;</td><td colspan="2"><input id="FL_prior" value="'+getValue('FL_prior', 3)+'" type="text" onblur="if(this.value>9||this.value<1){this.value='+getValue('FL_prior', 3)+';}" class="inputsmall" /></td></tr>';
-		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[11]+': <input id="defcol" value="'+getValue('defcol', '33FF66')+'" type="text" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td><td><img class="picker_icon" src="'+GM_getResourceURL("colorpicker")+'" height="14" width="14" style="cursor:pointer;" onclick="getID(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" style="width:100px;text-align:right;">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="'+getValue('Fam_prior', 9)+'" type="text" onblur="if(this.value>9||this.value<1){this.value='+getValue('Fam_prior', 9)+';}" class="inputsmall" /></td></tr>';
+		string += '<tr style="height: 25px;" class="tr"><td colspan="2" style="text-align:right;">'+lang.jhl[11]+': <input id="defcol" value="'+getValue('defcol', '33FF66')+'" type="text" class="color {pickerPosition:\'top\',pickerFaceColor:\'transparent\',pickerFace:3,pickerBorder:0,pickerInsetColor:\'black\'}" /></td><td><img class="picker_icon" src="'+GM_getResourceURL("colorpicker")+'" onclick="getID(\'defcol\').color.showPicker()" alt="Pick color" /></td><td colspan="1" style="width:100px;text-align:right;">'+lang.jhl[15]+': &nbsp;</td><td colspan="2"><input id="Fam_prior" value="'+getValue('Fam_prior', 9)+'" type="text" onblur="if(this.value>9||this.value<1){this.value='+getValue('Fam_prior', 9)+';}" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[12]+': &nbsp;</td><td colspan="2"><input id="maxHL" value="'+getValue('maxHL', 5)+'" type="text" onblur="if(this.value>5){this.value=5;}" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="4" style="text-align:right;">'+lang.jhl[13]+': &nbsp;</td><td colspan="2"><input id="buyout" value="'+getValue('buyout', '/')+'" type="text" onblur="var h=\''+getValue('rawkeyprefs', '')+'\';if(h.indexOf(this.value)!=-1){this.value=\''+getValue('buyout', '/')+'\';}" class="inputsmall" /></td></tr>';
 		string += '<tr style="height: 25px;" class="tr"><td colspan="6" class="td" style="text-align:center;">';
@@ -907,7 +909,7 @@ if (dlp == '/menu.php') {
 	}
 	if (!dls) {
 		//add action buttons (change menu, change hotkeys, reset menu)
-		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img title="'+lang.cusmenu[3]+'" onclick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" style="vertical-align:-2px;cursor:pointer" /> <img id="reset_button" title="'+lang.cusmenu[4]+'" src="'+GM_getResourceURL('buttonReset')+'" style="vertical-align:-2px;cursor:pointer" /></span>';
+		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img title="'+lang.cusmenu[3]+'" onclick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" class="menuImg" /> <img id="reset_button" title="'+lang.cusmenu[4]+'" src="'+GM_getResourceURL('buttonReset')+'" class="menuImg" /></span>';
 		getID('reset_button').addEventListener('click', function() {
 			if (confirm(lang.cusmenu[0])) { // are you sure?
 				setValue('remlinks', ''); //reset
@@ -1682,7 +1684,7 @@ if(dlp == '/info.php'){
 			for(i=0;i<oNews.length;i++){//add to page
 				var item = oNews[i].getElementsByTagName('a')[0];
 				item.href = news[i][0];
-				item.setAttribute('style', 'font-size:11px !important;');//manual override to make sure it keeps font-size
+				item.setAttribute('style', 'font-size:11px !important;text-decoration:none;');//manual override to make sure it keeps font-size
 				if(item.href.search('barafranca')==-1) {
 					var newsIcon;
 					if(sets.version == '_com') {
@@ -1691,7 +1693,6 @@ if(dlp == '/info.php'){
 						newsIcon = GM_getResourceURL('edoIco');
 					}
 					item.parentNode.parentNode.setAttribute('style', 'background:url(\''+newsIcon+'\') no-repeat 90% 20%;');
-					//item.setAttribute('target', 'blank');
 				}
 				if(news[i][1].search(lang.login[2])!=-1){
 					item.setAttribute('target', 'main');
@@ -2141,13 +2142,9 @@ if (prefs[11]) {
 if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
 		$x('//input[@type="radio"]')[4].checked = true;
-	} else if (getTXT('html/body').search('Your lackeys are working for you ') == -1 && prefs[10]) {
-		refreshIn('/BeO/webroot/index.php?module=Crimes');
 	}
 	if ($X('//input[@type="text"]')) {
 		$X('//input[@type="text"]').focus();
-	} else if ($X('//input[@type="submit"]')) {
-		$X('//input[@type="submit"]').focus();
 	}
 }
 //--------------- crime succesfull ---------------
@@ -2171,13 +2168,9 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 			p.push($i('//form//td[3]', i).replace(/\D|/g, ''));
 		}
 		$x('//input')[(p.indexOf(p.max() + '') + 1)].checked = true; //select radio by %
-	} else if (getTXT('html/body').search('Your lackeys are working for you') == -1 && prefs[10]) {
-		refreshIn('/BeO/webroot/index.php?module=Cars');
 	}
 	if ($X('//input[@type="text"]')) {
 		$X('//input[@type="text"]').focus();
-	} else if ($X('//input[@type="submit"]')) {
-		$X('//input[@type="submit"]').focus();
 	}
 }
 
@@ -2768,32 +2761,34 @@ if(dlp == '/garage.php'){
 				}
 			}
 		}
-		var footer = cEL('div');
-		footer.id = 'footer';
-		footer.align = 'center';
-		footer.setAttribute('style', 'position:fixed; bottom:0px; left:10%; width:80%; border:1px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
-		var html = '<table class="thinline" cellspacing=0 cellpadding=2 rules="none" width="100%"><tr>';
-		html += $x('//tr')[rows-1].innerHTML;
-		html += '</tr></table>';
-		footer.innerHTML = html;
-		$X('//center').parentNode.insertBefore(footer, $X('//center').nextSibling);
-
-		var sheight = db.scrollHeight;
-		var cheight = db.clientHeight;
-		if (sheight <= cheight) {
-			getID('footer').style.display = 'none';
-		}
-		window.addEventListener('scroll', function(){
-			var max = ((db.scrollHeight-db.clientHeight) - (getID('footer').offsetHeight*2)); // bottom
-			var curr = db.scrollTop;
-			if (curr >= max) {
+		if(window.innerWidth>800) {
+			var footer = cEL('div');
+			footer.id = 'footer';
+			footer.align = 'center';
+			footer.setAttribute('style', 'position:fixed; bottom:0px; left:10%; width:80%; border:1px solid #000 !important; background-color:'+getValue('bodyBg', '#B0B0B0')+';');
+			var html = '<table class="thinline" cellspacing=0 cellpadding=2 rules="none" width="100%"><tr>';
+			html += $x('//tr')[rows-1].innerHTML;
+			html += '</tr></table>';
+			footer.innerHTML = html;
+			$X('//center').parentNode.insertBefore(footer, $X('//center').nextSibling);
+	
+			var sheight = db.scrollHeight;
+			var cheight = db.clientHeight;
+			if (sheight <= cheight) {
 				getID('footer').style.display = 'none';
-			} else {
-				getID('footer').style.display = 'block';
 			}
-		}, true);
-		var footercity = parseInt(city, 10)+8;
-		$x('//input[@name="shipcity"]')[footercity].checked = true;
+			window.addEventListener('scroll', function(){
+				var max = ((db.scrollHeight-db.clientHeight) - (getID('footer').offsetHeight*2)); // bottom
+				var curr = db.scrollTop;
+				if (curr >= max) {
+					getID('footer').style.display = 'none';
+				} else {
+					getID('footer').style.display = 'block';
+				}
+			}, true);
+			var footercity = parseInt(city, 10)+8;
+			$x('//input[@name="shipcity"]')[footercity].checked = true;
+		}
 	}
 	setTimeout(function(){ garageCrusher(); }, 1000); //minimal delay in attempt to fix breaking up of html with slow connections
 }
@@ -2855,7 +2850,6 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 				}
 				++x;
 			});
-
 			nickReader(); //apply nickReader again
 		}
 		if (tab.indexOf('allusers.php') != -1 || tab.indexOf('action=users_online') != -1 || tab.indexOf('action=global_stats') != -1) {
@@ -3116,7 +3110,7 @@ if (dlp == '/family.php') {
 					deathtable.setAttribute('cellspacing', '0');
 					deathtable.setAttribute('cellpadding', '2');
 					deathtable.setAttribute('rules', 'none');
-					deathtable.innerHTML = '<tr><td colspan="100%" class="tableheader">'+lang.fampage[6]+'<div style="float:right;margin-right:5px;margin-top:3px;"><a href="http://news.omertabeyond.com/deathslog/'+famid+'" target="_blank"><img src="'+GM_getResourceURL('changelog')+'" title="View full deathslog" /></a></div></td></tr><tr><td colspan="100%" bgcolor="black" height="1"></td></tr><tr><td class="bold" align="left">'+lang.fampage[8]+'</td><td class="bold" align="center">'+lang.fampage[9]+'</td><td class="bold" align="center">'+lang.fampage[10]+'</td><td class="bold" style="text-align:right;">'+lang.fampage[11]+'</td></tr>';
+					deathtable.innerHTML = '<tr><td colspan="100%" class="tableheader">'+lang.fampage[6]+'<div style="float:right;margin-right:5px;margin-top:3px;"><a href="http://news.omertabeyond.com/deathslog/'+famid+'" target="_blank"><img src="'+GM_getResourceURL('changelog')+'" title="View full deathslog" class="brcImg" /></a></div></td></tr><tr><td colspan="100%" bgcolor="black" height="1"></td></tr><tr><td class="bold" align="left">'+lang.fampage[8]+'</td><td class="bold" align="center">'+lang.fampage[9]+'</td><td class="bold" align="center">'+lang.fampage[10]+'</td><td class="bold" style="text-align:right;">'+lang.fampage[11]+'</td></tr>';
 					if(response['deaths']){
 						for (i = -1; ++i < response['deaths'].length;) {
 							var extra = (response['deaths'][i]['Akill'] == 1)?'(<b>A</b>)':(response['deaths'][i]['BF'] == 1)?'(<b>BF</b>)':'';
@@ -3135,7 +3129,7 @@ if (dlp == '/family.php') {
 					changetable.setAttribute('cellspacing', '0');
 					changetable.setAttribute('cellpadding', '2');
 					changetable.setAttribute('rules', 'none');
-					changetable.innerHTML = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[7]+'<div style="float:right;margin-right:5px;margin-top:3px;"><a href="http://news.omertabeyond.com/famlog/'+famid+'" target="_blank"><img src="'+GM_getResourceURL('changelog')+'" title="View full changelog" /></a></div></td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left" width="28%">'+lang.fampage[10]+'</td><td class="bold" align="left">'+lang.fampage[12]+'</td></tr>';
+					changetable.innerHTML = '<tr><td colspan="100%" class=tableheader>'+lang.fampage[7]+'<div style="float:right;margin-right:5px;margin-top:3px;"><a href="http://news.omertabeyond.com/famlog/'+famid+'" target="_blank"><img src="'+GM_getResourceURL('changelog')+'" title="View full changelog" class="brcImg" /></a></div></td></tr><tr><td colspan="100%" bgcolor=black height=1></td></tr><tr><td class="bold" align="left" width="28%">'+lang.fampage[10]+'</td><td class="bold" align="left">'+lang.fampage[12]+'</td></tr>';
 					if(response['changes']){
 						for (i = -1; ++i < response['changes'].length;) {
 							changetable.innerHTML += '<tr><td align="left" width="28%" valign="top">'+response['changes'][i]['date']+'</td><td align="left">'+response['changes'][i]['text']+'</td></tr>';
@@ -3648,7 +3642,6 @@ if (dlp == '/honorpoints.php' && dls) {
 //---------------- Compatibility page ----------------
 if (dlp == '/servers.php') {
 	var x = $x('//ul/font/li');
-	//x.forEach(function($n){ $n.style.listStyleImage = 'url(\'' + GM_getResourceURL('brcGear') + '\')'; });
 	x[0].innerHTML += ' - Compatible';
 	x[2].innerHTML += ' - Compatible';
 	x[7].innerHTML += ' - Compatible';
@@ -3891,7 +3884,7 @@ if (dls.indexOf('action=inbox') != -1 || dls.indexOf('iParty=2') != -1 || dls.in
 if (dls.indexOf('action=outbox') != -1 || dls.indexOf('iParty=1') != -1){
 	$x('//a[contains(@href,"showSentMsg")]').forEach(function ($n) {
 		var id = $n.href.split('?')[1].match(/\d+/g)[0];
-		var delImg = "<img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=delMsg&iId=" + id + "&iParty=1\"' src='"+GM_getResourceURL('deleteIcon')+"' title='Delete' style='cursor:pointer; padding-right:3px; padding-left:4px; height:16px; width:16px; border:1px' />";
+		var delImg = "<img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=delMsg&iId=" + id + "&iParty=1\"' src='"+GM_getResourceURL('deleteIcon')+"' title='Delete' class='inboxImg' />";
 		$n.parentNode.innerHTML = delImg + ' ' + $n.parentNode.innerHTML;
 	});
 }
@@ -3949,20 +3942,20 @@ if (dls.indexOf('action=showMsg') != -1 || dls.indexOf('action=showSentMsg') != 
 	}, true);
 
 	var titleRow = $X('/html/body/center/table/tbody/tr/td[2]/table/tbody/tr[1]/td');
-	titleRow.innerHTML = titleRow.innerHTML+"<div style='float:right;padding-top:2px;'><img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId="+prev+"\"' src='"+GM_getResourceURL('prevIcon')+"' title='Previous' style='"+noprev+"cursor:pointer;' />&nbsp;<img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId="+next+"\"' src='"+GM_getResourceURL('nextIcon')+"' title='Next' style='"+nonext+"cursor:pointer;' /></div>";
+	titleRow.innerHTML = titleRow.innerHTML+"<div style='float:right;padding-top:2px;'><img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId="+prev+"\"' src='"+GM_getResourceURL('prevIcon')+"' title='Previous' style='"+noprev+"' class='inboxImg' />&nbsp;<img onClick='location.href=\"/BeO/webroot/index.php?module=Mail&action=showMsg&iMsgId="+next+"\"' src='"+GM_getResourceURL('nextIcon')+"' title='Next' style='"+nonext+"' class='inboxImg' /></div>";
 
 	if ($X('//a[contains(@href,"/family.php?join=yes")]')) {
 		$X('//a[contains(@href,"/family.php?join=yes")]').removeAttribute('target');
 	}
 	var linkz = $x('//table[@class="thinline"]/tbody/tr[7]/td/a').reverse();
 	if (linkz.length == 1) {
-		linkz[0].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
+		linkz[0].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" title="Delete ([)" class="inboxImg" /> ';
 		if (prefs[31]) { //add hotkeys to showMsg
 			linkz[0].setAttribute('accesskey', '[');
 		}
 	} else {
-		linkz[0].innerHTML = '<img src="' + GM_getResourceURL('reply') + '" onMouseover="style.cursor=\'pointer\'" title="Reply (])" width="16" height="16" border="0" /> ';
-		linkz[1].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" onMouseover="style.cursor=\'pointer\'" title="Delete ([)" width="16" height="16" border="0" /> ';
+		linkz[0].innerHTML = '<img src="' + GM_getResourceURL('reply') + '" title="Reply (])" class="inboxImg" /> ';
+		linkz[1].innerHTML = '<img src="' + GM_getResourceURL('deleteIcon') + '" title="Delete ([)" class="inboxImg" /> ';
 		if (prefs[31]) { //add hotkeys to showMsg
 			linkz[0].setAttribute('accesskey', ']');
 			linkz[1].setAttribute('accesskey', '[');
@@ -4605,7 +4598,6 @@ if (dls == '?module=Lackeys') {
 
 	function overview() {
 		divX = '//div[@id="overview"]';
-
 		//commafy
 		var sluggsbullets = getTXT('//*[@id="lackey_rp_6"]');
 		$X('//*[@id="lackey_rp_6"]').textContent = commafy(sluggsbullets);
@@ -4617,6 +4609,31 @@ if (dls == '?module=Lackeys') {
 			var buyout = getTXT('//*[@id="lackey_buyout_cost_'+i+'"]');
 			$X('//*[@id="lackey_buyout_cost_'+i+'"]').textContent = commafy(buyout);
 		}
+		//focus send buttons
+		var sm = $x('//input[@id="lackey_send_money"]');
+		sm.forEach(function ($n) {
+			$n.addEventListener('keydown', function(event) {
+				if(event.keyCode == 13) {
+					$x('//div[@id="lackey_popup_send_money"]//input[@type="button"]')[0].click();
+				}
+			}, false);
+		});		
+		var sc = $x('//input[@id="lackey_send_credits"]');
+		sc.forEach(function ($n) {
+			$n.addEventListener('keydown', function(event) {
+				if(event.keyCode == 13) {
+					$x('//div[@id="lackey_popup_send_credits"]//input[@type="button"]')[0].click();
+				}
+			}, false);
+		});		
+		var hc = $x('//input[@id="lackey_hire_credits"]');
+		hc.forEach(function ($n) {
+			$n.addEventListener('keydown', function(event) {
+				if(event.keyCode == 13) {
+					$x('//div[@id="lackey_popup_hire"]//input[@type="button"]')[0].click();
+				}
+			}, false);
+		});
 		//m/k usage
 		if (prefs[5]) {
 			var inputs = $x('//input[@id="lackey_send_money"] | //input[@id="lackey_send_credits"]');
@@ -5328,7 +5345,7 @@ if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editm
 				'</table>' +
 			'</div>' +
 			'<div style="background-color:' + getTintedColor(getValue('titleBg', '#F0F0F0'), 110) + ';">'+
-				'<img src="' + GM_getResourceURL('brcGear') + '" />'+ // City prices
+				'<img src="'+GM_getResourceURL('brcGear')+'" class="brcImg" />'+ // City prices
 			'</div>' + // B/N prices table
 			'<img src="http://www.omertabeyond.com/pre/Dopedog/table.png" />'; // BRC settings
 		form.appendChild(header);
@@ -5717,9 +5734,9 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 					bestBN.push([bestNarc, bestBooze]);
 					var wnarc = (bestNarc == 0)?0:bestNarc-1;
 					var wbooze = (bestBooze == 0)?0:bestBooze-1;
-					narcsell = (BN[0][wnarc][0] * narc) * lex;
-					boozesell = (BN[1][wbooze][0] * booze) * lex;
-					pay = (Math.round(narcsell * [0, 0.11, 0.11, 0, 0.12][fam])+Math.round(boozesell * [0, 0.11, 0.11, 0, 0.12][fam]));
+					var narcsell = (BN[0][wnarc][0] * narc) * lex;
+					var boozesell = (BN[1][wbooze][0] * booze) * lex;
+					var pay = (Math.round(narcsell * [0, 0.11, 0.11, 0, 0.12][fam])+Math.round(boozesell * [0, 0.11, 0.11, 0, 0.12][fam]));
 					totalProfit = totalProfit - pay;
 					allProfits.push(totalProfit);
 
@@ -6024,7 +6041,8 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				icon = cEL('img');
 				icon.id = 'brcIcon';
 				icon.src = getInfo[7];
-				icon.setAttribute('style', 'position:absolute; bottom:0px; left:0px; cursor:pointer');
+				icon.setAttribute('style', 'position:absolute; bottom:0px; left:0px;');
+				icon.setAttribute('class', 'brcImg');
 
 				//add Div to page
 				div.appendChild(icon);

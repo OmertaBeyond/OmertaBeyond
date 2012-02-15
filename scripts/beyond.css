@@ -7,7 +7,7 @@ This file contains some basic css style we use for Project Omerta Beyond
 Changing these values are at your own risk. If you make bug changes or bugfixes,
 please inform us too so we can make any changes if we think are necesary.
 
-Version: 1.10.0.81
+Version: 1.10.0.83
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
@@ -16,23 +16,18 @@ $Date$:  Date of last commit
 */
 
 /* @Smart Fampage, we use style attribute to check for online status, thus add style by class	*/
-
 .menuLink, [class="menuLink rightMenuLink"] a, .story a {
 	color:#FFF !important;
 }
-
 .menuLink:hover, [class="menuLink rightMenuLink"] a:hover, .story a:hover {
 	color:#DD0 !important;
 }
-
 .top {
 	text-decoration:underline;
 }
-
 .obj {
 	font-style:italic;
 }
-
 .loginHL {
 	height:24px;
 	vertical-align:middle;
@@ -40,15 +35,12 @@ $Date$:  Date of last commit
 	-webkit-border-radius:4px;
 	border-radius:4px;
 }
-
 [type="text"].loginHL, [type="password"].loginHL {
 	width:200px;
 }
-
 [type="submit"].loginHL:active {
 	color:#FF0;
 }
-
 .loginHL:focus {
 	border-color:#FF0;
 }
@@ -59,15 +51,12 @@ $Date$:  Date of last commit
 	width:20px;
 	background-color:transparent;
 }
-
 #beyondadd input {
 	width:20px;
 }
-
 #beyondadd input:focus {
 	border:2px solid #EE0;
 }
-
 a.menuOmertaBeyond {
 	background-color:transparent;
 	color:#fff;
@@ -77,13 +66,11 @@ a.menuOmertaBeyond {
 	margin:0;
 	padding:5px;
 }
-
 a.menuOmertaBeyond:hover {
 	background-color:transparent;
 	color:#dd0;
 	text-decoration:none;
 }
-
 #save_button {
 	background-color:#0F202F;
 	border:1px solid #000;
@@ -97,7 +84,6 @@ a.menuOmertaBeyond:hover {
 	-webkit-border-radius:5px;
 	border-radius:5px;
 }
-
 #save_button:hover {
 	border-color:#EE0;
 }
@@ -117,7 +103,6 @@ a.menuOmertaBeyond:hover {
 	border-radius:5px;
 	padding:5px;
 }
-
 .NRInfo {
 	background-color:#3F505F;
 	color:#FFA !important;
@@ -132,7 +117,6 @@ a.menuOmertaBeyond:hover {
 	border-radius:5px;
 	padding:5px;
 }
-
 #NRtable {
 	color:#FFF !important;
 	-moz-border-radius:5px;
@@ -144,29 +128,24 @@ a.menuOmertaBeyond:hover {
 body > div#footerwrap {
 	position:fixed;
 }
-
 div#footerwrap {
 	bottom:0;
 	height:106px;
 	position:absolute;
 	width:698px;
 }
-
 div#footer {
 	color:#222;
 	height:106px;
 	width:598px;
 	margin:0 auto;
 }
-
 #footerwrap #footer td {
 	color:#222;
 }
-
 #footerwrap #footerr td a {
 	color:#222;
 }
-
 #footerwrap #footer td a:hover {
 	text-decoration:underline;
 }
@@ -202,6 +181,7 @@ input[type="submit"]:focus {
 a.sel:focus {
 	border: 1px dotted #000;
 }
+
 /* Icons */
 .inboxImg {
 	cursor: pointer;
@@ -215,6 +195,33 @@ a.sel:focus {
 .inboxImg:hover {
 	opacity: 1.2;
 }
+.menuImg {
+	cursor: pointer;
+	vertical-align:-2px;
+	height: 16px;
+	width: 16px;
+	opacity: 0.7;
+}
+.menuImg:hover {
+	opacity: 1.2;
+}
+.brcImg {
+	cursor: pointer;
+	opacity: 0.7;
+}
+.brcImg:hover {
+	opacity: 1.2;
+}
+.updateImg {
+	cursor: pointer;
+	height: 16px;
+	width: 16px;
+	opacity: 0.7;
+}
+.updateImg:hover {
+	opacity: 1.2;
+}
+
 /* Tidy Smuggling Page */
 #TS_header {
 	width:90%;
@@ -293,7 +300,6 @@ a.sel:focus {
 	background:#fff;
 	cursor:pointer;
 }
-
 
 /* @Beyond Message */
 .bm_shade {
