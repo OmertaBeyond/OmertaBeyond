@@ -14,33 +14,33 @@
 // @updateURL			https://omertabeyond.googlecode.com/svn/trunk/update/beyond.meta.js
 // @supportURL			http://helpdesk.omertabeyond.com/
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
-// @icon			http://omertabeyond.com/releases/1.10.0.85/images/logo.small.png
-// @screenshot			http://omertabeyond.com/releases/1.10.0.85/images/sshot.png http://omertabeyond.com/releases/1.10.0.85/images/sshot_tn.png
+// @icon			http://omertabeyond.com/releases/latest/images/logo.small.png
+// @screenshot			http://omertabeyond.com/releases/latest/images/sshot.png http://omertabeyond.com/releases/latest/images/sshot_tn.png
 // @encoding			UTF-8
 // @priority			1
-// @require			http://omertabeyond.com/releases/1.10.0.85/scripts/libs.js
-// @require			http://omertabeyond.com/releases/1.10.0.85/scripts/settings.js
-// @require			http://omertabeyond.com/releases/1.10.0.85/scripts/langs.js
-// @resource			css		http://omertabeyond.com/releases/1.10.0.85/scripts/beyond.css
-// @resource			trash		http://omertabeyond.com/releases/1.10.0.85/images/del.png
-// @resource			colorpicker	http://omertabeyond.com/releases/1.10.0.85/images/colorpicker.gif
-// @resource			comLogo		http://omertabeyond.com/releases/1.10.0.85/images/logo-com.png
-// @resource			dmLogo		http://omertabeyond.com/releases/1.10.0.85/images/logo-dm.png
-// @resource			nlLogo		http://omertabeyond.com/releases/1.10.0.85/images/logo-nl.png
-// @resource			buttonMenu	http://omertabeyond.com/releases/1.10.0.85/images/menu.png
-// @resource			buttonReset	http://omertabeyond.com/releases/1.10.0.85/images/reset.png
-// @resource			favoriteIco	http://omertabeyond.com/releases/1.10.0.85/images/favicon.png
-// @resource			edoIco		http://omertabeyond.com/releases/1.10.0.85/images/edo.png
-// @resource			updateIco	http://omertabeyond.com/releases/1.10.0.85/images/updateicon.png
-// @resource			brcGear		http://omertabeyond.com/releases/1.10.0.85/images/brcgear.png
-// @resource			deleteIcon	http://omertabeyond.com/releases/1.10.0.85/images/deleteicon.png
-// @resource			reply		http://omertabeyond.com/releases/1.10.0.85/images/reply.png
-// @resource			loading		http://omertabeyond.com/releases/1.10.0.85/images/loading.png
-// @resource			nickreader	http://omertabeyond.com/releases/1.10.0.85/images/magnifier.png
-// @resource			nextIcon	http://omertabeyond.com/releases/1.10.0.85/images/next.png
-// @resource			prevIcon	http://omertabeyond.com/releases/1.10.0.85/images/prev.png
-// @resource			check		http://omertabeyond.com/releases/1.10.0.85/images/check.png
-// @resource			changelog	http://omertabeyond.com/releases/1.10.0.85/images/changelog.png
+// @require			http://omertabeyond.com/releases/latest/scripts/libs.js
+// @require			http://omertabeyond.com/releases/latest/scripts/settings.js
+// @require			http://omertabeyond.com/releases/latest/scripts/langs.js
+// @resource			css		http://omertabeyond.com/releases/latest/scripts/beyond.css
+// @resource			trash		http://omertabeyond.com/releases/latest/images/del.png
+// @resource			colorpicker	http://omertabeyond.com/releases/latest/images/colorpicker.gif
+// @resource			comLogo		http://omertabeyond.com/releases/latest/images/logo-com.png
+// @resource			dmLogo		http://omertabeyond.com/releases/latest/images/logo-dm.png
+// @resource			nlLogo		http://omertabeyond.com/releases/latest/images/logo-nl.png
+// @resource			buttonMenu	http://omertabeyond.com/releases/latest/images/menu.png
+// @resource			buttonReset	http://omertabeyond.com/releases/latest/images/reset.png
+// @resource			favoriteIco	http://omertabeyond.com/releases/latest/images/favicon.png
+// @resource			edoIco		http://omertabeyond.com/releases/latest/images/edo.png
+// @resource			updateIco	http://omertabeyond.com/releases/latest/images/updateicon.png
+// @resource			brcGear		http://omertabeyond.com/releases/latest/images/brcgear.png
+// @resource			deleteIcon	http://omertabeyond.com/releases/latest/images/deleteicon.png
+// @resource			reply		http://omertabeyond.com/releases/latest/images/reply.png
+// @resource			loading		http://omertabeyond.com/releases/latest/images/loading.png
+// @resource			nickreader	http://omertabeyond.com/releases/latest/images/magnifier.png
+// @resource			nextIcon	http://omertabeyond.com/releases/latest/images/next.png
+// @resource			prevIcon	http://omertabeyond.com/releases/latest/images/prev.png
+// @resource			check		http://omertabeyond.com/releases/latest/images/check.png
+// @resource			changelog	http://omertabeyond.com/releases/latest/images/changelog.png
 // @include			http://gm.omertabeyond.com/*.php*
 // @include			http://www.omertabeyond.com/html/poll/poll.php*
 // @include			http://www.omerta3.com/*
