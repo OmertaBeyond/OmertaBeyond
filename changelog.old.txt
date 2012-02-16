@@ -1,5 +1,149 @@
 Omerta Beyond Changelog
 
+
+Version 1.10.0.50 BETA		12/08/2011
+
+	* Added Redirect to Status
+	* Cleaned up some code
+	* Changed minFFVersion to 4.0
+	* ( FS#361 ) Changed page marquee gets prices from to omerta xml
+	* Removed “Add to bustinglist” for fams on own familypage
+	* ( FS#448 ) Implemented go back to inbox after sent message
+	* ( FS#489 ) Added obay bullets to BulletTracker
+	* ( FS#629 ) Added autofocus on login form
+	* ( FS#628 ) Added boolean for PockerTracker
+	* Fixed ninja bug breaking title and favicon (commented out another line from bmsg)
+	* Fixed ninja bug title and favicon not showing on “logout” page (a slash was missing)
+	* Changed behavior of whereToRun() to make it easier to include remote pages for testing purposes (such as a .html dump you want to create code for). This is now as easy as including the link to the file in the @inlude section and then create an if-hook on it in the code of Beyond.
+	* Added easier way to select and swap cards with poker (you can now click the cards you want to swap and they are highlighted).
+	* Text field for codes now regains focus after clicking on the “Can’t read this?” link.
+	* Fixed some grammar errors in the update checker.
+	* ( FS#316 ) Extra fields for JHL entries are now added dynamically instead of using the “more/less” buttons.
+	* JHL settings are now saved clientside, so the page isn’t “refreshed” anymore.
+	* Changed the way JHL settings are saved in our variables, creating more room for future settings and less room for errors.
+	* Added constant to set bmsg on and off
+	* ( FS#492 ) Fixed jailHL not working when nobust set
+	* ( FS#600 ) Directionkeys in jail busted fixed
+	* Added link to user rankings on dead mans profile
+	* Removed Select all SH button
+	* ( FS#443 ) Added garage button stick to bottom
+	* ( FS#565 ) Fixed omerta3.com not properly detected
+	* ( FS#472 ) Fixed AF when raiding
+	* ( FS#599 ) Added hotkeys to inbox for next/prev/del/reply msg
+	* Bulletlackey results will be added to Bullettracker
+	* Added crush button to nicked car page
+	* Added Bmsg 0.1 (example included incode)
+	* Added Tidy Smuggling Page *WIP* (enable with incode boolean)
+	* ( FS#427 ) Implemented Mailbox Navigation Buttons
+	* ( FS#596 ) Fixed only OBN showing
+	* ( FS#578 ) Implemented hide full games @ poker
+	* (FS#573) Started with Lackey counter
+	* Placed onceonly div for bgov before the bgspage function
+	* Fixed broken killpass remover
+	* ( FS#328 ) Added last 10 family changes
+	* ( FS#591 ) Changed to focus on heistlinks
+	* ( FS#437 ) Changed setValue for missinghealth
+	* Fixed Nickreader appearing in menu
+	* ( FS#569 ) Implemented label on garage entry
+	* ( FS#455 ) Implemented removal from Jail hl for families
+	* ( FS#440 ) Fixed saving city on travelling
+	* ( FS#451 ) Implemented ship to city autoform
+	* ( FS#519 ) Implemented Actions dropdown on profile
+	* ( FS#577 ) Fixed calculators gone at bank
+	* ( FS#581 ) Fixed outlining of fambank
+	* Fixed In bank account not bold
+	* Switched Lex att/def starting amounts
+	* Placed grabLex function outside pref[36]
+	* Fixed arrow at bank account
+	* Added autoship focus @ garage
+	* Fixed typo at heist cancel focus
+	* Changed way of grabbing default color @ nickreader, brc, menu
+	* ( FS#449 ) Fixed - Hotkeys in descriptions
+	* ( FS#582 ) Fixed - Custom menu showing [ object Window ] instead of text
+	* ( FS#583 ) Fixed - Highlights on family page not working
+	* ( FS#584 ) Fixed - Obay Autoselect/focus fails for Pack of Bullets
+	* ( FS#475 ) Implemented - Add a “bid” link next to the “go” link on Obay
+	* ( FS#576 ) BF fail not working fixed
+	* ( FS#512 ) ALL-in button @ Poker implemented
+	* ( FS#487 ) Load BG stats on obay
+	* ( FS#513 ) Added extra refresh button @ poker
+	* ( FS#478 ) Reduced refreshtime to 0 on bulletspage
+	* ( FS#489 ) Added bullets bought today
+	* ( FS#483 ) Added Quicklookup suggestions
+	* ( FS#564 ) added separate icon for EDO news
+	* ( FS#563 ) fixed wrong linkification on dets page
+	* ( FS#496 ) Fixed raidpage for spotowners
+	* ( FS#555 ) made button dissapear when spot is not raidable
+	* Removed Rob & Mia code from BGOV
+	* Fixed refreshIn error when Lackeys close crimes/carnicks
+	* ( FS#453 ) Added total money for cars on garagepage
+	* ( FS#558 ) Fixed can’t select cars without garage pref
+	* Removed CD from capomoneys table and changed amount for GF
+	* ( FS#556 ) Adding lackey results to car/crimetrackers
+	* ( FS#557 ) Fixed wrong linkifying in top log
+	* Replaced fin link with OBnews on loginpage
+	* Removed all controlpanel checks
+	* ( FS#481 ) Fixed - Smuggling names no focus if no codes
+	* Added “Remove Facebook API” feature
+	* Added Family worth and position to faminfo @ fampage
+	* ( FS#495 ) Fixed BT not showing on timer
+	* ( FS#486 ) Fixed In jail msg gone
+	* ( FS#311 ) improved some html
+	* Made some changes to garage
+	* ( FS#546 ) Fixed My account page
+	* ( FS#544 ) Added OBnews in info menu
+	* ( FS#543 ) Changed 1-click voter
+	* ( FS#532 ) Fixed - b/n fill
+	* Removed f.be stats link from menu
+	* ( FS#482 ) fixed custom menu link problem
+	* ( FS#444 ) added  to all necessary inputfields
+	* ( FS#354 ) added SH calculator
+	* Changed text of  pref
+	* ( FS#505 ) Added last family deaths
+	* ( FS#490 ) Implemented history info on user profile
+	* ( FS#528 ) Removed redundant image removal on cars/crimes pages (Omerta implemented this option)
+	* Added compatibility CSS for Firefox 4
+	* Bumped copyright year
+	* Cosmetics on outbox (turned ‘delete’ into icon on preview msg)
+	* ( FS#517 ) fixed raiding from profiles
+	* Removed ignored parts of xhr (header is not supported anymore by firefox)
+	* ( FS#506 ) switched to new FAQ page, mistakes yet to be fixed
+	* ( FS#511 ) shown ‘unknown’ death time for those that we don’t have any info
+	* ( FS#510 ) added delete icon at outbox
+	* Cosmetic fix at Mailbox (faster drawing of icons for 12ms according to firebug)
+	* ( FS#491 ) added link for car race invite message
+	* ( FS#500 ) fixed .dm bug for PPB (prices per bullet)
+	* ( FS#501 ) fixed busted focus for bullet bids
+	* Changed format for laston (should be faster now)
+	* Added thumbnail for @screenshot (FF4)
+	* ( FS#306 ) implement HR overview on family page
+	* ( FS#502 ) implement death time on user profile
+	* Removed obsolete code in order to fix problems at bullets page
+	* some more FF4 compatibility fixes
+	* (FS#14) WIP ... added very basic .tr support
+	* ( FS#471 )( FS#480 ) Enhanced the update checker
+	* ( FS#485 ) Added new lines on the end of files to fix compatibility with LubeMonkey, WebMonkey and Scriptish.
+	* Fixed .nl edo nieuws link
+	* Fixed omerta game register break
+	* ( FS#458 ) implemented spotownership to family page
+	* Fixed add to jailhl broken when friend request pending
+	* Fixed BJtracker not working .nl
+	* ( FS#142 ) Implemented (WIP) - Add Lex improvements to calculation
+	* ( FS#488 ) Fixed - Garage HL not working in omerta3 domain
+	* ( FS#457 ) Fixed - [Discussion] AF smuggling modi
+	* ( FS#459 ) Fixed - BRC is wrong
+	* ( FS#481 ) Fixed - Smuggling names no focus if no codes
+	* ( FS#450 ) Fixed - BGOV dissapears
+	* Expanded linkify for condoleances and you've been shot message
+	* Implemented SlotsTracker
+	* ( FS#474 ) Fixed wrong linkify in dets fail msg
+	* ( FS#374 ) Implented linkify @ weddingwitness invite
+	* ( FS#476 ) Removed commafy at id on BGOV
+	* ( FS#477 ) Implented link to obay at BGOV
+	* Fixed not working crimetracker on .nl
+	* cleaned up some code
+	* Bumped version to 1.10 xD
+
 Version 1.9.3.93 		05/10/2010
 
 	* Removed obsolete code (~1.9kB)
