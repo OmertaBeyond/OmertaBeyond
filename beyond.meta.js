@@ -28,7 +28,6 @@
 // @resource			dmLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-dm.png
 // @resource			nlLogo		http://omertabeyond.googlecode.com/svn/trunk/images/logo-nl.png
 // @resource			buttonMenu	http://omertabeyond.googlecode.com/svn/trunk/images/menu.png
-// @resource			buttonKey	http://omertabeyond.googlecode.com/svn/trunk/images/key.png
 // @resource			buttonReset	http://omertabeyond.googlecode.com/svn/trunk/images/reset.png
 // @resource			favoriteIco	http://omertabeyond.googlecode.com/svn/trunk/images/favicon.png
 // @resource			edoIco		http://omertabeyond.googlecode.com/svn/trunk/images/edo.png
