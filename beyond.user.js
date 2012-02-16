@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.10.0.85
+// @version			1.20.0.0
 // @date			16-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -151,12 +151,12 @@ if (whereToRun == 'com' || whereToRun == undefined) {
 }
 
 var SCRIPT_NAME = 'Omerta Beyond';
-var SCRIPT_VERSION = '1.10';
+var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
-var SCRIPT_VERSION_MINOR = 10;
+var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 85;
-var SCRIPT_SUBVERSION = 85;
+var SCRIPT_VERSION_BUILD = 0;
+var SCRIPT_SUBVERSION = 0;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
