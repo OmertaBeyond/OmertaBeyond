@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
-// @version			1.10.0.83
-// @date			15-02-2012
+// @id				Omerta Beyond
+// @version			1.10.0.84
+// @date			16-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -11,10 +12,13 @@
 // @namespace			v3.omertabeyond.com
 // @homepageURL			http://www.omertabeyond.com/
 // @updateURL			https://omertabeyond.googlecode.com/svn/trunk/beyond.meta.js
+// @supportURL			http://helpdesk.omertabeyond.com/
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
-// @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
+// @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.tiny.png http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
+// @icon64			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
 // @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
 // @encoding			UTF-8
+// @priority			1
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/settings.js
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/langs.js

@@ -4,7 +4,7 @@ This file contains helpers and useful functions for use with Project Omerta Beyo
 
 Feel free to use them, but please let us know.
 
-Version: 1.10.0.82
+Version: 1.10.0.84
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit
