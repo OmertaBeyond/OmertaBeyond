@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.10.0.84
+// @version			1.10.0.85
 // @date			16-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -59,6 +59,7 @@
 // @exclude			http://ircwiki.barafranca.com/*
 // @exclude			http://*barafranca.*/front-mafia-list.php*
 // @exclude			http://*barafranca.*/BeO/webroot/index.php?module=Donate.*
+// @exclude			http://*barafranca.*/game-register.php*
 // ==/UserScript==
 
 /*

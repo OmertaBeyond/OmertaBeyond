@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.10.0.84
+// @version			1.10.0.85
 // @date			16-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
@@ -59,6 +59,7 @@
 // @exclude			http://ircwiki.barafranca.com/*
 // @exclude			http://*barafranca.*/front-mafia-list.php*
 // @exclude			http://*barafranca.*/BeO/webroot/index.php?module=Donate.*
+// @exclude			http://*barafranca.*/game-register.php*
 // ==/UserScript==
 
 /*
@@ -154,8 +155,8 @@ var SCRIPT_VERSION = '1.10';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 10;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 83;
-var SCRIPT_SUBVERSION = 83;
+var SCRIPT_VERSION_BUILD = 85;
+var SCRIPT_SUBVERSION = 85;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
