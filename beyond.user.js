@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.0
-// @date			16-02-2012
+// @version			1.20.0.1
+// @date			29-02-2012
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
@@ -155,8 +155,8 @@ var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 0;
-var SCRIPT_SUBVERSION = 0;
+var SCRIPT_VERSION_BUILD = 1;
+var SCRIPT_SUBVERSION = 1;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1097,7 +1097,7 @@ function bnUpdate(current){
 	setPow('bninfo', 3, plane);//save
 }
 
-if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/pic.php' && dlp != '/mid.php' && dlp != '/right.php' && dlp != '/main.php') {
+if(dlp != '/menu.php' && dlp != '/banner.php' && dlp != '/info.php' && dlp != '/pic.php' && dlp != '/mid.php' && dlp != '/right.php' && dlp != '/main.php' && dlp != '/marquee.php') {
 	var d = new Date();//check once every hour for new info
 	if( getValue('nick', '')=='' || getValue('bninfo', -1)==-1 || getValue('brcDate', -1) != d.getHours()){
 		GM_xmlhttpRequest({
@@ -1279,7 +1279,9 @@ if (dls == '?module=Launchpad') {
 			}
 
 			if ($X(famXP) && getTXT(famXP) != lang.status[1]) {//Set family if in one
-				setValue('family', getTXT(famXP));
+				setTimeout(function() {
+					setValue('family', getTXT(famXP));
+				}, 0);
 			}
 
 			var inbank = parseInt($X('//table[@class="thinline"][3]/tbody/tr[4]/td[2]/a').innerHTML.replace(/,/g, '').replace(/\s/g, '').replace('$', ''), 10);
@@ -3188,6 +3190,7 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 	var input = $X('//input[@value="Promote"]');//select first input
 	var a = '//table[';
 	var b = ']//tr/td[@class="tableheader"]/b';
+	$I('//table//tr/td[@class="tableheader"]/b', $I('//table//tr/td[@class="tableheader"]/b')+'</a>&nbsp;<a href="#capos">&darr; <u>Capo\'s</u> &darr;</a>');
 
 	//setup new table
 	var newTable = cEL('table');
@@ -3201,27 +3204,24 @@ if (dlp == '/cpuser.php' && db.innerHTML.search('type="password"') == -1) {
 	newTable.setAttribute('rules', 'none');
 	//clone header from existing table
 	var headTr = table.getElementsByTagName('tr')[0].cloneNode(1);
-	headTr.getElementsByTagName('td')[0].innerHTML = '<b>Capomoney\'s</b>';
+	headTr.getElementsByTagName('td')[0].innerHTML = '<a name="capos"><b>Capomoney\'s</b></a>';
 	var blackTr = table.getElementsByTagName('tr')[1].cloneNode(1);
 	newTable.appendChild(headTr);
 	newTable.appendChild(blackTr);
 	//add CM list | switch to !DOM :D
 	var newTr = cEL('tr');
 	var newTd = cEL('td');
-	var list = '<table width="100%">';
-	list += '<tr><td></td><td><b>Capo</b></td><td><b>CapoMoney</b></td><td><b>to GF</b></td></tr>';
+	var list = '<table width="100%"><tr><td></td><td><b>Capo</b></td><td><b>CapoMoney</b></td><td><b>to GF</b></td></tr>';
 	for(i=0;i<nick.length;i++){//loop all capo's
 		var n = i+2;
 		var member = $x('count(//table['+n+']//tr[@valign="top"]//td/a)');//members
 		var name = nick[i].textContent.slice(nick[i].textContent.indexOf(' '),nick[i].textContent.lastIndexOf(' (')).replace(/\s/,'');
-		list += '<tr><td><a href="#'+name+'">&darr;</a></td><td><a href="http://'+dlh+'/user.php?nick='+name+'">'+name+'</a>('+member+')';
-		list += '</td><td>';
-		var CM = txt[i].innerHTML.slice(0,txt[i].innerHTML.indexOf('<'));
+		var CM = txt[i].innerHTML.split('<br')[0];
 		CM = CM.replace(/[a-zA-Z]| |\s/g, '');
-		list += CM.replace('$', '$ ') + '</td><td>';
 		CM = CM.replace(/[^0-9]/g,'');
-		list += (15000000 - CM)>0 ? '$ ' + commafy((15000000 - CM)) + '</td><td>' : '<b>X</b></td><td>';//GF
-		$I(a+(i+2)+b,'<a name="' + name + '">' + $I(a+(i+2)+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
+		list += '<tr><td><a href="#'+name+'">&darr;</a></td><td><a href="http://'+dlh+'/user.php?nick='+name+'">'+name+'</a>('+member+')</td><td>$ '+commafy(CM)+'</td><td>';
+		list += (15000000 - CM)>0 ? '$ ' + commafy((15000000 - CM)) + '</td></tr>' : '<b>X</b></td></tr>';//GF
+		$I(a+n+b,'<a name="' + name + '">' + $I(a+n+b) + '</a>&nbsp;<a href="#">&uarr; <u>'+lang.stats[0]+'</u> &uarr;</a>');
 	}
 	list += '</table>';
 	newTd.innerHTML = list;
@@ -4095,7 +4095,7 @@ if (dls.indexOf('action=showMsg') != -1) {
 	}
 	var condolences = new RegExp(lang.linkify[8]); //condoleances msg
 	if (condolences.test(msgType)) {
-		var nickPos = arr[2];
+		var nickPos = (sets.version=='_nl')?arr[1]:arr[2];
 		var nickFirst = arr.indexOf(nickPos);
 		var nickLast = arr.lastIndexOf(nickPos);
 		setArr(nickFirst);
@@ -4257,7 +4257,7 @@ if (dls.search('module=Poker') != -1) {
 if (dlp.indexOf('/gambling/roulette.php') != -1) {
 	//add m/k usage in amount boxes
 	if (prefs[5]) {
-		var inputs = $x('//input');
+		var inputs = $x('//input[not(contains(@type, "hidden"))][not(contains(@type, "Hidden"))]');
 		inputs.forEach(function ($n) {
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 		});
@@ -4970,13 +4970,50 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 	var bjtie = getValue('bjtie', 0);
 	var bet = getValue('bjbet', 0);
 	var str = db.innerHTML.replace(/,/g, '');
+
 	if (db.innerHTML.indexOf(lang.bjtracker[10]) != -1) {
 		var betinput = $x('//input')[1];
 		betinput.focus();
 		betinput.addEventListener('keyup', function() {
 			setValue('bjbet', parseInt(betinput.value, 10));
 		}, true);
+	
+		//remember last bet
+		function bjlastBet(toff) {
+			setValue('bjlastbet', toff);
+			bjlastbet = toff;
+			if (toff) {
+				betinput.value = bet;
+			} else {
+				betinput.value = '0';
+			}
+		}
+		var br = cEL('br');
+		var span = cEL('span');
+		span.innerHTML = '<label for="bjcb">Remember last bet</label>';
+		span.setAttribute('style', 'float:right;bottom:0px;');
+		var bjcb = cEL('input');
+		bjcb.setAttribute('type', 'checkbox');
+		bjcb.id = 'bjcb';
+		var bjlastbet = getValue('bjlastbet', false);
+		if (bjlastbet) {
+			bjcb.setAttribute('checked', 'checked');
+			bjlastBet(true);
+		}
+		span.appendChild(bjcb)
+		var rows = $x('//table/tbody/tr').length;
+		var i = (rows=='11') ? 9 : 3;
+		$X('//table/tbody/tr['+i+']/td').appendChild(br);
+		$X('//table/tbody/tr['+i+']/td').appendChild(span);
+		bjcb.addEventListener('click', function() {
+			if (bjlastbet) {
+				bjlastBet(false);
+			} else {
+				bjlastBet(true);
+			}
+		}, true);
 	}
+
 	if (db.innerHTML.indexOf('<img src="/static/images/game/casino/cards') != -1) {//game active
 		if (db.innerHTML.indexOf(lang.bjtracker[6]) != -1) {//insurance set
 
@@ -5150,6 +5187,39 @@ if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
 		setValue('slotbet', parseInt(betinput.value, 10));
 	}, true);
 
+	//remember last bet
+	function slotlastBet(toff) {
+		setValue('slotlastbet', toff);
+		slotlastbet = toff;
+		if (toff) {
+			betinput.value = slotbet;
+		} else {
+			betinput.value = '0';
+		}
+	}
+	var span = cEL('span');
+	span.innerHTML = '<label for="slotcb">Remember last bet</label>';
+	span.setAttribute('style', 'float:right;bottom:0px;');
+	var slotcb = cEL('input');
+	slotcb.setAttribute('type', 'checkbox');
+	slotcb.id = 'slotcb';
+	var slotlastbet = getValue('slotlastbet', false);
+	if (slotlastbet) {
+		slotcb.setAttribute('checked', 'checked');
+		slotlastBet(true);
+	}
+	span.appendChild(slotcb)
+	var rows = $x('//table/tbody/tr').length;
+	var i = (rows=='7') ? 4 : 3;
+	$X('//table/tbody/tr['+i+']/td').appendChild(span);
+	slotcb.addEventListener('click', function() {
+		if (slotlastbet) {
+			slotlastBet(false);
+		} else {
+			slotlastBet(true);
+		}
+	}, true);
+
 	if (db.innerHTML.indexOf(lang.slottracker[1]) != -1) {//won
 		var slotpic1 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[1]/center').replace(/">/g, '').split('/');
 		var slotpic2 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[2]/center').replace(/">/g, '').split('/');
@@ -5216,6 +5286,176 @@ if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 		});
 	}
+}
+//------------ Remember last bet NG ------------
+if (dlp.indexOf('/gambling/numbersgame.php') != -1) {
+	var ngbet = getValue('ngbet', 0);
+	var ngnum = getValue('ngnum', 0);
+	var numinput = $x('//select')[0];
+	var betinput = $x('//input')[1];
+	betinput.focus();
+	betinput.addEventListener('keyup', function() {
+		setValue('ngbet', parseInt(betinput.value, 10));
+	}, true);
+	numinput.addEventListener('change', function() {
+		if (numinput.value == 'Odd' || numinput.value == 'Even') {
+			setValue('ngnum', numinput.value);
+		} else if (numinput.value == 'Numpty') {
+			setValue('ngnum', 0);
+		} else {
+			setValue('ngnum', parseInt(numinput.value, 10));
+		}
+	}, true);
+	function nglastBet(toff) {
+		setValue('nglastbet', toff);
+		nglastbet = toff;
+		if (toff) {
+			numinput.value = ngnum;
+			betinput.value = ngbet;
+		} else {
+			numinput.value = 'Numpty';
+			betinput.value = '0';
+		}
+	}
+	var br = cEL('br');
+	var span = cEL('span');
+	span.innerHTML = '<label for="ngcb">Remember last bet</label>';
+	span.setAttribute('style', 'float:right;bottom:0px;');
+	var ngcb = cEL('input');
+	ngcb.setAttribute('type', 'checkbox');
+	ngcb.id = 'ngcb';
+	var nglastbet = getValue('nglastbet', false);
+	if (nglastbet) {
+		ngcb.setAttribute('checked', 'checked');
+		nglastBet(true);
+	}
+	span.appendChild(ngcb)
+	$X('//table/tbody/tr[6]/td').appendChild(br);
+	$X('//table/tbody/tr[6]/td').appendChild(span);
+	ngcb.addEventListener('click', function() {
+		if (nglastbet) {
+			nglastBet(false);
+		} else {
+			nglastBet(true);
+		}
+	}, true);
+}
+
+//------------ Remember last bet PB ------------
+if (dls.indexOf('?module=PuntoBanco') != -1) {
+	var pbbet = getValue('pbbet', 0);
+	var pbpbt = getValue('pbpbt', 0);
+	var betinput = $x('//input')[0];
+	betinput.focus();
+	betinput.addEventListener('change', function() {
+		setValue('pbbet', parseInt(betinput.value, 10));
+	}, true);
+	var pbt = $x('//input[@name="option"]');
+	pbt.forEach(function ($n) {
+		$n.addEventListener('click', function() {
+			setValue('pbpbt', parseInt($n.value, 10));
+		}, true);
+	});
+	function pblastBet(toff) {
+		setValue('pblastbet', toff);
+		pblastbet = toff;
+		if (toff) {
+			pbpbt = getValue('pbpbt', 0);
+			$x('//input[@name="option"]')[pbpbt].checked = true;
+			betinput.value = pbbet;
+		} else {
+			for(i=0;i<3;i++) {
+				$x('//input[@name="option"]')[i].checked = false;
+			}
+			betinput.value = '0';
+		}
+	}
+	var br = cEL('br');
+	var span = cEL('span');
+	span.innerHTML = '<label for="pbcb">Remember last bet</label>';
+	span.setAttribute('style', 'float:right;bottom:0px;');
+	var pbcb = cEL('input');
+	pbcb.setAttribute('type', 'checkbox');
+	pbcb.id = 'pbcb';
+	var pblastbet = getValue('pblastbet', false);
+	if (pblastbet) {
+		pbcb.setAttribute('checked', 'checked');
+		pblastBet(true);
+	}
+	span.appendChild(pbcb)
+	var rows = $x('//table/tbody/tr').length;
+	var i = (rows=='7') ? 6 : 12;
+	$X('//table/tbody/tr['+i+']/td').appendChild(br);
+	$X('//table/tbody/tr['+i+']/td').appendChild(span);
+	pbcb.addEventListener('click', function() {
+		if (pblastbet) {
+			pblastBet(false);
+		} else {
+			pblastBet(true);
+		}
+	}, true);
+}
+
+//------------ Remember last bet Roul ------------
+if (dlp.indexOf('/gambling/roulette.php') != -1) {
+	var betinput = $x('//input');
+	betinput.forEach(function ($n) {
+		$n.addEventListener('keyup', function() {
+			var string = '';
+			for(i=2;i<betinput.length-2;i++) {
+				if(betinput[i].value != '') {
+					string += betinput[i].name+'|'+betinput[i].value+'*';
+					setValue('roulwhat', string);
+				}
+			}
+		});
+	});
+	function roullastBet(toff) {
+		setValue('roullastbet', toff);
+		roullastbet = toff;
+		if (toff) {
+			roulwhat = getValue('roulwhat', '');
+			if(roulwhat != '') {
+				roulwhat = roulwhat.substr(0, (roulwhat.length - 1));
+				var what = [];
+				roulwhat = roulwhat.split('*');
+				a = roulwhat.length;
+				for (y = 0; y < a; y++) {
+					what = roulwhat[y].split('|');
+					$X('//input[@name="'+what[0]+'"]').value = what[1];
+				}
+			}
+		} else {
+			for(i=2;i<betinput.length-2;i++) {
+				$x('//input')[i].value = '';
+			}
+		}
+	}
+	var br = cEL('br');
+	var span = cEL('span');
+	span.innerHTML = '<label for="roulcb">Remember last bet</label>';
+	span.setAttribute('style', 'float:left;bottom:0px;');
+	$X('//table/tbody/tr[4]/td').removeAttribute('valign');
+	var roulcb = cEL('input');
+	roulcb.setAttribute('type', 'checkbox');
+	roulcb.id = 'roulcb';
+	var roullastbet = getValue('roullastbet', false);
+	if (roullastbet) {
+		roulcb.setAttribute('checked', 'checked');
+		roullastBet(true);
+	}
+	span.appendChild(roulcb)
+	var rows = $x('//table/tbody/tr[4]/td[2]/table/tbody/tr').length;
+	var i = (rows=='17') ? 17 : 12;
+	$X('//table/tbody/tr[4]/td[2]/table/tbody/tr['+i+']/td').appendChild(br);
+	$X('/html/body/form/center/table/tbody/tr[4]/td').appendChild(span);
+	roulcb.addEventListener('click', function() {
+		if (roullastbet) {
+			roullastBet(false);
+		} else {
+			roullastBet(true);
+		}
+	}, true);
 }
 
 //---------------- 1-Click Voter ----------------
@@ -5740,7 +5980,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 					var wbooze = (bestBooze == 0)?0:bestBooze-1;
 					var narcsell = (BN[0][wnarc][0] * narc) * lex;
 					var boozesell = (BN[1][wbooze][0] * booze) * lex;
-					var pay = (Math.round(narcsell * [0, 0.11, 0.11, 0, 0.12][fam])+Math.round(boozesell * [0, 0.11, 0.11, 0, 0.12][fam]));
+					var pay = (Math.round(narcsell * [0, 0.11, 0.11, 0, 0.1][fam])+Math.round(boozesell * [0, 0.11, 0.11, 0, 0.1][fam])); // famless, member no capo, capo, top3, member with capo
 					totalProfit = totalProfit - pay;
 					allProfits.push(totalProfit);
 
@@ -6376,7 +6616,11 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 					}
 					var total = n_amount.sum();
 					var missing = narcs - n_amount[i-9];
-					var value = parseInt(inpt[i].value);
+					if(lbooze) {
+						var value = parseInt(inpt[i-9].value);
+					} else {
+						var value = parseInt(inpt[i].value);
+					}
 					if (n_amount[i-9] == 0 && total < narcs) {
 						if (value == 0) {
 							if(lbooze) {
@@ -6546,7 +6790,7 @@ if (dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') { // login pa
 }
 
 //---------------- NickReader ----------------
-if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' && dlp != '/menu.php' && dlp != '/info.php'){//if nickreader is on
+if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' && dlp != '/menu.php' && dlp != '/info.php' && dlp != '/main.php'){//if nickreader is on
 	var nickReaderIcon = GM_getResourceURL('nickreader');
 	function parseGrab(html, url){
 		var body = html.slice(html.indexOf('</head>')+7);//don't need <head>
