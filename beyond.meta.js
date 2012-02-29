@@ -1,21 +1,23 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.0
+// @version			1.20.0.2
 // @date			16-02-2012
+// @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
+// @homepageURL			http://www.omertabeyond.com/
+// @namespace			v3.omertabeyond.com
+// @updateURL			https://omertabeyond.googlecode.com/svn/trunk/beyond.meta.js
+// @supportURL			http://helpdesk.omertabeyond.com/
+// @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
+// @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
 // @author			OBDev Team <info@omertabeyond.com>
 // @author			vBm <vbm@omertabeyond.com>
 // @author			Dopedog <dopedog@omertabeyond.com>
 // @author			Rix <rix@omertabeyond.com>
 // @author			MrWhite <mrwhite@omertabeyond.com>
 // @license			GNU General Public License v3
-// @namespace			v3.omertabeyond.com
-// @homepageURL			http://www.omertabeyond.com/
-// @updateURL			https://omertabeyond.googlecode.com/svn/trunk/beyond.meta.js
-// @supportURL			http://helpdesk.omertabeyond.com/
-// @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
-// @icon			http://omertabeyond.googlecode.com/svn/trunk/images/logo.small.png
-// @screenshot			http://omertabeyond.googlecode.com/svn/trunk/images/sshot.png http://omertabeyond.googlecode.com/svn/trunk/images/sshot_tn.png
+// @contributionURL	https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ob%2edevs%40gmail%2ecom&lc=CA&item_name=OmertaBeyond&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
+// @contributionAmount	€3.00
 // @encoding			UTF-8
 // @priority			1
 // @require			http://omertabeyond.googlecode.com/svn/trunk/scripts/libs.js
