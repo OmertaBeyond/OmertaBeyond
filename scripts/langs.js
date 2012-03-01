@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.20.0.2
+Version: 1.20.0.3
 
 $Rev$:  Revision of last commit
 $Author$:  Author of last commit

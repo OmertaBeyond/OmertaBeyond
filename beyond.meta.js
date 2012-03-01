@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.2
-// @date			16-02-2012
+// @version			1.20.0.3
+// @date			01-03-2012
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com

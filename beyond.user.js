@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.2
-// @date			16-02-2012
+// @version			1.20.0.3
+// @date			01-03-2012
 // @description			Omerta Beyond 1.10 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
@@ -157,8 +157,8 @@ var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 1;
-var SCRIPT_SUBVERSION = 1;
+var SCRIPT_VERSION_BUILD = 3;
+var SCRIPT_SUBVERSION = 3;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -2374,20 +2374,19 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 
 		var self = (getTXT('/html/body//center/table/tbody/tr[3]/td[2]/a').toUpperCase() == getValue('nick').toUpperCase());//self/other
 		var other = getTXT('/html/body//center/table/tbody/tr/td/i');
+		var table = $X('//*[@id="user"]/tbody');
+		var tr = cEL('tr');
+		var td = cEL('td');
+		td.id = 'actions';
+		td.setAttribute('class', 'profilerow');
+		td.setAttribute('colspan', '2');
+		td.setAttribute('align', 'center');
+		td.setAttribute('style', 'display:none;');
+		td.innerHTML = '<a href="BeO/webroot/index.php?module=Heist&action=&who='+unick+'">Heist</a> | <a href="BeO/webroot/index.php?module=Spots&action=&driver='+unick+'">Raid</a> | <a href="kill.php?search='+unick+'">Hire Detectives</a>';
+		tr.appendChild(td);
+		table.insertBefore(tr, table.childNodes[1]);
 		var checkHistory = getTXT('//td[@class="tableheader"]/i');
-		var color = getValue('titleBg', '#3F505F');
-		var Y = ($X('//font[@color="red"]'))?'60px':'34px';
-		var chars = unick.length;
-		var X = (chars<=12 && chars>10)?'465px':(chars<=10 && chars>8)?'471px':(chars<=8 && chars>6)?'477px':(chars<=6 && chars>4)?'483px':(chars<=4 && chars>2)?'489px':'497px';
-		$x('//td[@class="tableheader"]')[0].innerHTML = (prefs[15] && !self && alive)?$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a> | <a href="" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Actions</a>':$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a>';
-		var actions = cEL('div');
-		actions.id = 'actions';
-		actions.setAttribute('style', 'display:none;');
-		actions.setAttribute('onmouseout', 'document.getElementById(\'actions\').setAttribute(\'style\', \'display:none;\');');
-		actions.innerHTML = '<a href="BeO/webroot/index.php?module=Heist&action=&who='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Heist</a><br />';
-		actions.innerHTML += '<a href="BeO/webroot/index.php?module=Spots&action=&driver='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Raid</a><br />';
-		actions.innerHTML += '<a href="kill.php?search='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Hire Detectives</a><br />';
-
+		$x('//*[@class="tableheader"]')[0].innerHTML = (prefs[15] && !self && alive)?$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a> | <a href="" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'visibility:visible;\');">Actions</a>':$x('//*[@class="tableheader"]')[0].innerHTML + ' | <a href="http://stats.omertabeyond.com/history.php?v='+sets.version.replace('_','')+'&name='+checkHistory+'">View History</a>';
 		if (prefs[3]) {
 			var names = getValue('bust', '');
 			var jhl_add = 1;
@@ -2403,12 +2402,11 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 				}
 			}
 			var text = (jhl_add == 1)?'Add to ':'Remove from ';
-			actions.innerHTML += '<a href="#" id="jhl_link" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">'+text+'busting list</a><br />';
+			getID('actions').innerHTML = getID('actions').innerHTML+' | <a href="#" id="jhl_link">'+text+'busting list</a>';
 		}
 		if (parseInt(getPow('bninfo',4,-1),10) === 3 && inFam === 'None') {//check for top3 position and if person is not in family
-			actions.innerHTML += '<a href="/BeO/webroot/index.php?module=Family&who='+unick+'" onmouseover="document.getElementById(\'actions\').setAttribute(\'style\', \'-moz-border-radius:4px;position:fixed;width:115px;padding:2px;visibility:visible;right:'+X+';top:'+Y+';background-color:'+color+';color:#FFF !important;text-decoration:none;border:2px double gray;opacity:.90;display:block;text-align:center;\');">Invite to Family</a>';
+			getID('actions').innerHTML = getID('actions').innerHTML+' | <a href="/BeO/webroot/index.php?module=Family&who='+unick+'">Invite to Family</a>';
 		}
-		db.appendChild(actions);
 
 		if (prefs[3]) {
 			getID('jhl_link').addEventListener('click', function () {
@@ -2419,6 +2417,8 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 					} else {
 						setValue('bust', names+','+unick+'|'+getValue('defpri', 2)+'|'+getValue('defcol', '33FF66'));
 					}
+					getID('jhl_link').innerHTML = 'Remove from busting list';
+					jhl_add = 0;
 					alert(unick+' '+lang.jhl[20]);
 				} else {
 					var a = names.length;
@@ -2430,6 +2430,8 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 						}
 					}
 					setValue('bust', str.substr(1));
+					getID('jhl_link').innerHTML = 'Add to busting list';
+					jhl_add = 1;
 					alert(unick+' '+lang.jhl[23]);
 				}
 			}, false);
@@ -5682,7 +5684,6 @@ if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editm
 	setValue('fontClr', getActualHex($X('//body'), 'color'));
 */
 }
-
 
 //---------------- Best Run Calculator ----------------
 if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php')) {
