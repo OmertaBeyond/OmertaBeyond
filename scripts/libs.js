@@ -4,11 +4,8 @@ This file contains helpers and useful functions for use with Project Omerta Beyo
 
 Feel free to use them, but please let us know.
 
-Version: 1.20.0.3
+Version: 1.20.0.4
 
-$Rev$:  Revision of last commit
-$Author$:  Author of last commit
-$Date$:  Date of last commit
 */
 
 var dl, ds, dlp, dls, dlh, lh, ls, db, i, I, arr, host, urlsearch, hOne;

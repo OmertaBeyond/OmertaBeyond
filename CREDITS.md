@@ -1,6 +1,6 @@
 In order of appearance in the SVN:
 
-Active: (with SVN commit rights)
+Active:
 
 vBm			<vbm@omertabeyond.com>			Founder, Minor code tweaks
 Dopedog			<dopedog@omertabeyond.com>		Admin, Developer
