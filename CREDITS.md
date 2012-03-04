@@ -1,13 +1,17 @@
-In order of appearance in the SVN:
+*Active*
 
-Active:
+[**vBm**](https://github.com/vBm "Founder, Minor code tweaks")  
+- Founder, Minor code tweaks  
+**Dopedog**  
+- Admin, Developer  
+[**Rix**](https://github.com/Gwildor "Admin, Developer")  
+- Admin, Developer  
+[**MrWhite**](https://github.com/Ivdbroek85 "Admin, Developer")  
+- Admin, Developer  
+**sbanks**  
+- Admin, Project Leader  
 
-vBm			<vbm@omertabeyond.com>			Founder, Minor code tweaks
-Dopedog			<dopedog@omertabeyond.com>		Admin, Developer
-Rix			<rix@omertabeyond.com>			Admin, Developer
-MrWhite			<mrwhite@omertabeyond.com>		Admin, Developer
 
+Many thanks to everyone who supported development without having svn write access.  
 
-Many thanks to everyone who supported development without having svn write access.
-
-OmertaBeyond © 2007-2012 (info@omertabeyond.com)
+[OmertaBeyond](http://www.omertabeyond.com/) © 2007-2012 (info@omertabeyond.com)
