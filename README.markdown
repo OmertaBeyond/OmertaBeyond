@@ -10,12 +10,14 @@ All of these separate addons are optional, there is a preference pane to turn ea
 
 ## Compatibility
 
-At the moment OB is fully compatible with:  
-Firefox  
- - [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/)  
- - [Scriptish](https://addons.mozilla.org/en-US/firefox/addon/scriptish/)  
-Google Chrome  
- - [TamperMonkey](https://chrome.google.com/webstore/detail/dhdgffkkebhmkfjojejmpbldmpobfkfo)  
+At the moment OB is fully compatible with:
+
+
+* Firefox  
+  * [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/)  
+  * [Scriptish](https://addons.mozilla.org/en-US/firefox/addon/scriptish/)  
+* Google Chrome  
+  * [TamperMonkey](https://chrome.google.com/webstore/detail/dhdgffkkebhmkfjojejmpbldmpobfkfo)  
 
 
 ## Info
