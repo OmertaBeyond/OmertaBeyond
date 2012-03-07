@@ -2,7 +2,7 @@
 // @name			Omerta Beyond
 // @id				Omerta Beyond
 // @version			1.20.0.5
-// @date			01-03-2012
+// @date			07-03-2012
 // @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
@@ -1778,8 +1778,8 @@ if(dlp == '/info.php'){
 		}
 	}
 	if (prefs[38]) { //remove Facebook API from news frame
-		$Del('//select[@id="fbdropdown"]');
-		$del('//iframe');
+		$Del('//div[@id="newscontainer"]/div/script');
+		$Del('//div[@id="newscontainer"]/div/div[last()]');
 	}
 }
 
