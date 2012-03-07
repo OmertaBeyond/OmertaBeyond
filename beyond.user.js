@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.4
+// @version			1.20.0.5
 // @date			01-03-2012
 // @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
@@ -89,7 +89,10 @@
 	setTimeout(function () {
 		window.location.reload();
 	}, 300000); // 5m
-} else if (db.innerHTML.indexOf('You can\'t do that as you are still in the safehouse') != -1) {
+} else if (db.innerHTML.indexOf('You can\'t do that as you are still in the safehouse') != -1 ||
+		   db.innerHTML.indexOf('Je kan dat niet doen omdat je nog in je onderduikadres') != -1 ||
+		   db.innerHTML.indexOf('You can\'t do that, you\'re in hiding!') != -1 ||
+		   db.innerHTML.indexOf('Halen guvenli evde oldugun icin bunu yapamazsin') != -1) {
 	setTimeout(function () {
 		window.location.reload();
 	}, 600000); // 10m
@@ -151,8 +154,8 @@ var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 4;
-var SCRIPT_SUBVERSION = 4;
+var SCRIPT_VERSION_BUILD = 5;
+var SCRIPT_SUBVERSION = 5;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
