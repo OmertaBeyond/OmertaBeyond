@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Variables depending on version
 
-Version: 1.20.0.4
+Version: 1.20.0.6
 
 */
 
@@ -19,10 +19,6 @@ var settings = {
 		polllink: '/html/poll/poll.php?v=com',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=com&d=n',
 		status: ['none', 'None'],
-		wrongcode: [
-			'The code you',
-			'<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'
-		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
@@ -243,10 +239,6 @@ var settings = {
 		status: [
 			'none',
 			'None'
-		],
-		wrongcode: [
-			'The code you',
-			'<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'
 		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
@@ -469,10 +461,6 @@ var settings = {
 			'none',
 			'Geen'
 		],
-		wrongcode: [
-			'De code die',
-			'<br><center><b>Leer typen, analfabeet!</b><br><br><a href="javascript:history.back()">Klik hier om terug te gaan of wacht een ogenblik</a></center>'
-		],
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'De prijs per kogel is net veranderd, als je de kogels echt wilt hebben, vul dan de velden opnieuw in.',
@@ -682,10 +670,6 @@ var settings = {
 		status: [
 			'none',
 			'None'
-		],
-		wrongcode: [
-			'The code you',
-			'<br><center><b>Learn to type, analphabetic!</b><br><br><a href="javascript:history.back()">Click here to go back or wait a second</a></center>'
 		],
 		failedBullets: [
 			'You may only buy 500 bullets.',

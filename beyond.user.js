@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.5
-// @date			07-03-2012
+// @version			1.20.0.6
+// @date			09-03-2012
 // @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
@@ -154,8 +154,8 @@ var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 5;
-var SCRIPT_SUBVERSION = 5;
+var SCRIPT_VERSION_BUILD = 6;
+var SCRIPT_SUBVERSION = 6;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -2281,7 +2281,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 
 		var status = $X('//span[@id="status"]').innerHTML;
 		var inFam = $X('//span[@id="family"]').innerHTML;
-		var alive = (status.indexOf(lang.profile[3])==-1);//alive/dead
+		var alive = (status.indexOf(sets.profile[3])==-1);//alive/dead
 		var unick = $X('//span[@id="username"]').innerHTML;
 
 		//DEAD or AKILLED ?
@@ -2346,9 +2346,9 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 		//Wealth
 		var tr, x, y, z, xpath;
 		tr = 11;
-		x = db.innerHTML.search(lang.profile[0]);
-		y = db.innerHTML.search(lang.profile[1]);
-		z = db.innerHTML.search(lang.profile[2]);
+		x = db.innerHTML.search(sets.profile[0]);
+		y = db.innerHTML.search(sets.profile[1]);
+		z = db.innerHTML.search(sets.profile[2]);
 
 		if (x == -1) { tr--; }
 		if (y == -1) { tr--; }
@@ -2357,7 +2357,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 		var wlth = $I(xpath);
 
 		var kind = ['', ' ($0 - $50.000)', ' ($50.001 - $100.000)', ' ($100.001 - $500.000)', ' ($1.000.001 - $5.000.000)', ' ($5.000.001 - $15.000.000)', ' ( > $15.000.001)', ' ($500.001 - $1.000.000)'], i=1;
-		lang.wealth.forEach(function($n){ if(wlth.search($n) != -1){ $I(xpath,$I(xpath) + kind[i]); i=0; } if(i!=0){ i++; }});
+		sets.wealth.forEach(function($n){ if(wlth.search($n) != -1){ $I(xpath,$I(xpath) + kind[i]); i=0; } if(i!=0){ i++; }});
 
 		//Raceform
 		var xpath2 = '/html/body//center/table/tbody/tr['+(tr+1)+']/td[2]';

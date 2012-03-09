@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.20.0.4
+Version: 1.20.0.6
 
 */
 
@@ -188,22 +188,6 @@ var langs = {
 			'You may only buy 1,000 bullets.'
 		],
 		race: 'You\'re still tired from your last race',
-		profile: [
-			'Marital status:',
-			'SMS Status',
-			'Family Buster of',
-			'Dead',
-			' History'
-		],
-		wealth: [
-			'Straydog',
-			'Poor',
-			'Nouveau Riche',
-			'Very rich',
-			'Too rich to be true',
-			'Richer than God',
-			'Rich'
-		],
 		driver: [
 			'Rookie',
 			'Co-Driver',
@@ -750,22 +734,6 @@ var langs = {
 			'You may only buy 1,000 bullets.'
 		],
 		race: 'You\'re still tired from your last race',
-		profile: [
-			'Marital status:',
-			'SMS Status',
-			'Family Buster of',
-			'Dead',
-			' History'
-		],
-		wealth: [
-			'Straydog',
-			'Poor',
-			'Nouveau Riche',
-			'Very rich',
-			'Too rich to be true',
-			'Richer than God',
-			'Rich'
-		],
 		driver: [
 			'Rookie',
 			'Co-Driver',
@@ -1313,22 +1281,6 @@ var langs = {
 			'You may only buy 1,000 bullets.'
 		],
 		race: 'Je bent nog moe van je vorige race',
-		profile: [
-			'Burgerlijke staat:',
-			'SMS Status',
-			'Familie Uitbreker van',
-			'Dood',
-			' Geschiedenis'
-		],
-		wealth: [
-			'Sloeber',
-			'Arm',
-			'Modaal',
-			'Erg rijk',
-			'Te rijk om waar te zijn',
-			'Rijker dan God',
-			'Rijk'
-		],
 		driver: [
 			'Nieuweling',
 			'Bijrijder',
@@ -1876,22 +1828,6 @@ var langs = {
 			'You may only buy 1,000 bullets.'
 		],
 		race: 'You\'re still tired from your last race',
-		profile: [
-			'Marital status:',
-			'SMS Status',
-			'Family Buster of',
-			'Dead',
-			' History'
-		],
-		wealth: [
-			'Straydog',
-			'Poor',
-			'Nouveau Riche',
-			'Very rich',
-			'Too rich to be true',
-			'Richer than God',
-			'Rich'
-		],
 		driver: [
 			'Rookie',
 			'Co-Driver',
