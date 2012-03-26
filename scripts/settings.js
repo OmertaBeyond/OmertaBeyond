@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Variables depending on version
 
-Version: 1.20.0.6
+Version: 1.20.0.7
 
 */
 
@@ -227,6 +227,12 @@ var settings = {
 		busttracker: [
 			'You busted this person out of jail',
 			'You busted this person out of jail & his/her cellmate out of jail'
+		],
+		slottracker: [
+			'Congratulations',
+			'You win \\$(\\d+)',
+			'Bummer',
+			'Congratulations! You won \\$(\\d+)'
 		]
 	},
 	dm: {
@@ -448,6 +454,12 @@ var settings = {
 		busttracker: [
 			'You busted this person out of jail',
 			'You busted this person out of jail & his/her cellmate out of jail'
+		],
+		slottracker: [
+			'Congratulations',
+			'You win \\$(\\d+)',
+			'Bummer',
+			'Congratulations! You won \\$(\\d+)'
 		]
 	},
 	nl: {
@@ -658,6 +670,12 @@ var settings = {
 		busttracker: [
 			'Je hebt deze gangster uit de gevangenis gebroken.',
 			'Je hebt deze persoon en zijn celmaat uit de gevangenis gebroken'
+		],
+		slottracker: [
+			'Gefeliciteerd',
+			'Je wint \\$(\\d+)',
+			'Helaas',
+			'Gefeliciteerd! Je wint \\$(\\d+)'
 		]
 	},
 	tr: {
@@ -879,6 +897,12 @@ var settings = {
 		busttracker: [
 			'You busted this person out of jail',
 			'You busted this person out of jail & his/her cellmate out of jail'
+		],
+		slottracker: [
+			'Congratulations',
+			'You win \\$(\\d+)',
+			'Bummer',
+			'Congratulations! You won \\$(\\d+)'
 		]
 	}
 };

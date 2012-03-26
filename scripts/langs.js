@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.20.0.6
+Version: 1.20.0.7
 
 */
 
@@ -453,9 +453,6 @@ var langs = {
 		],
 		slottracker: [
 			'SlotsTracker',
-			'Congratulations',
-			'Bummer',
-			'Congratulations! You won \\$(\\d+)',
 			'Jackpot:',
 			'Triple BAR:'
 		],
@@ -1000,9 +997,6 @@ var langs = {
 		],
 		slottracker: [
 			'SlotsTracker',
-			'Congratulations',
-			'Bummer',
-			'Congratulations! You won \\$(\\d+)',
 			'Jackpot:',
 			'Triple BAR:'
 		],
@@ -1547,9 +1541,6 @@ var langs = {
 		],
 		slottracker: [
 			'Fruitmachine Volger',
-			'Gefeliciteerd',
-			'Jammer',
-			'Gefeliciteerd! Je wint \\$(\\d+)',
 			'Hoofdprijs:',
 			'3 maal BAR:'
 		],
@@ -2087,9 +2078,6 @@ var langs = {
 		],
 		slottracker: [
 			'SlotsTracker',
-			'Congratulations',
-			'Bummer',
-			'Congratulations! You won \\$(\\d+)',
 			'Jackpot:',
 			'Triple BAR:'
 		],
