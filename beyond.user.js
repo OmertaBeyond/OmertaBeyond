@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.7
-// @date			26-03-2012
+// @version			1.20.0.8
+// @date			29-03-2012
 // @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
@@ -154,8 +154,8 @@ var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 7;
-var SCRIPT_SUBVERSION = 7;
+var SCRIPT_VERSION_BUILD = 8;
+var SCRIPT_SUBVERSION = 8;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1273,11 +1273,11 @@ if (dls == '?module=Launchpad') {
 				$I(x+'6]/td[2]', '<a href="http://dev.barafranca.com/translate/" target="_blank">'+getTXT(x+'6]/td[2]')+'</a>');
 			}
 
-			if ($X(famXP) && lang.status[1].match(getTXT(famXP))) {//Family status
+			if ($X(famXP) && sets.status[1].match(getTXT(famXP))) {//Family status
 				$I(famXP, '<a href="/family_recruitment.php"><b>'+getTXT(famXP)+'</b></a>');
 			}
 
-			if ($X(famXP) && getTXT(famXP) != lang.status[1]) {//Set family if in one
+			if ($X(famXP) && getTXT(famXP) != sets.status[1]) {//Set family if in one
 				setTimeout(function() {
 					setValue('family', getTXT(famXP));
 				}, 0);
@@ -1288,52 +1288,52 @@ if (dls == '?module=Launchpad') {
 				var tr = cEL('tr');
 				var timestamp = Math.round(parseInt(new Date().getTime(), 10) / 1000);
 				if (timestamp > banktleft) {
-					var when = '<b><font color="red">'+lang.status[9]+'</font></b>';
+					var when = '<b><font color="red">'+lang.status[7]+'</font></b>';
 				} else {
 					var left = (banktleft - timestamp);
 					var h = Math.floor(left / 3600);
 					var m = Math.floor((left % 3600) / 60);
 					var s = Math.floor(left % 60);
-					var when = lang.status[8]+' '+h+'h '+m+'m '+s+'s';
+					var when = lang.status[6]+' '+h+'h '+m+'m '+s+'s';
 				}
-				tr.innerHTML = '<td><b>'+lang.status[7]+'</b></td><td><a href="/bank.php">$ '+commafy(interest)+' ('+when+')</a></td>';
+				tr.innerHTML = '<td><b>'+lang.status[5]+'</b></td><td><a href="/bank.php">$ '+commafy(interest)+' ('+when+')</a></td>';
 				$x('//table[@class="thinline"]')[4].appendChild(tr);
 			}
 
 			if (prefs[35]) { // crime/car trackers
 				var perc = rounding(parseInt(crimeTracker,10)/parseInt($X(crimes).innerHTML.replace(',', '').trim(),10));
 				var perc2 = isNaN(perc) ? 0 : perc;
-				$X(crimetxt).innerHTML = $X(crimetxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
+				$X(crimetxt).innerHTML = $X(crimetxt).innerHTML +'<b>/'+lang.status[0]+'</b>';
 				$X(crimes).innerHTML = $X(crimes).innerHTML +'/'+commafy(crimeTracker)+'&nbsp;('+perc2+'%)';
 
 				var perc3 = rounding(parseInt(carTracker,10)/parseInt($X(carnicks).innerHTML.replace(',', '').trim(),10));
 				var perc4 = isNaN(perc3) ? 0 : perc3;
-				$X(cartxt).innerHTML = $X(cartxt).innerHTML +'<b>/'+lang.status[2]+'</b>';
+				$X(cartxt).innerHTML = $X(cartxt).innerHTML +'<b>/'+lang.status[0]+'</b>';
 				$X(carnicks).innerHTML = $X(carnicks).innerHTML +'/'+commafy(carTracker)+'&nbsp;('+perc4+'%)';
 
 				var crimetr = cEL('tr');
 				var crimeavg = Math.round(parseInt(crimemoney,10)/parseInt(crimeTracker,10));
 				var crimeavg = isNaN(crimeavg) ? 0 : crimeavg;
-				crimetr.innerHTML = '<td><b>'+lang.status[3]+'</b></td><td>$ '+commafy(crimemoney)+' ($'+commafy(crimeavg)+'/'+lang.status[4]+')</td>';
+				crimetr.innerHTML = '<td><b>'+lang.status[1]+'</b></td><td>$ '+commafy(crimemoney)+' ($'+commafy(crimeavg)+'/'+lang.status[2]+')</td>';
 				$x('//table[@class="thinline"]')[4].appendChild(crimetr);
 
 				var cartr = cEL('tr');
 				var caravg = Math.round(parseInt(carmoney,10)/parseInt(carTracker,10));
 				var caravg = isNaN(caravg) ? 0 : caravg;
-				cartr.innerHTML = '<td><b>'+lang.status[5]+'</b></td><td>$ '+commafy(carmoney)+' ($'+commafy(caravg)+'/'+lang.status[6]+')</td>';
+				cartr.innerHTML = '<td><b>'+lang.status[3]+'</b></td><td>$ '+commafy(carmoney)+' ($'+commafy(caravg)+'/'+lang.status[4]+')</td>';
 				$x('//table[@class="thinline"]')[4].appendChild(cartr);
 			}
 
 			$x('//a[contains(@href,"shoptabs=7")]')[0].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
 			$x('//a[contains(@href,"shoptabs=7")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
 			$X(bguardsXP).innerHTML = '<a href="/BeO/webroot/index.php?module=Bodyguards&action=">'+$X(bguardsXP).innerHTML+'</a>';
-			if ($X(planeXP) && lang.status[0].match(getTXT(planeXP))) {
+			if ($X(planeXP) && sets.status[0].match(getTXT(planeXP))) {
 				$I(planeXP, '<a href="/BeO/webroot/index.php?module=Shop&shoptabs=4"><b>'+getTXT(planeXP)+'</b></a>');
 			}
-			if ($X(handgunXP) && lang.status[0].match(getTXT(handgunXP))) {
+			if ($X(handgunXP) && sets.status[0].match(getTXT(handgunXP))) {
 				$I(handgunXP, '<a href="/BeO/webroot/index.php?module=Shop&shoptabs=1"><b>'+getTXT(handgunXP)+'</b></a>');
 			}
-			if ($X(tommygunXP) && lang.status[0].match(getTXT(tommygunXP))) {
+			if ($X(tommygunXP) && sets.status[0].match(getTXT(tommygunXP))) {
 				$I(tommygunXP, '<a href="/BeO/webroot/index.php?module=Shop&shoptabs=1"><b>'+getTXT(tommygunXP)+'</b></a>');
 			}
 		}
@@ -1639,7 +1639,7 @@ if (dlp == '/bullets2.php' && db.innerHTML.search(/table/i) != -1) { //If auto f
 	}
 }
 if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
-	if (db.innerHTML.search(lang.failedBullets[0]) != -1 || db.innerHTML.search(lang.failedBullets[1]) != -1 || db.innerHTML.search(lang.failedBullets[2]) != -1 || db.innerHTML.search(lang.failedBullets[3]) != -1 || db.innerHTML.search(lang.failedBullets[5]) != -1 || db.innerHTML.search(lang.failedBullets[6]) != -1) {
+	if (db.innerHTML.search(sets.failedBullets[0]) != -1 || db.innerHTML.search(sets.failedBullets[1]) != -1 || db.innerHTML.search(sets.failedBullets[2]) != -1 || db.innerHTML.search(sets.failedBullets[3]) != -1 || db.innerHTML.search(sets.failedBullets[5]) != -1 || db.innerHTML.search(sets.failedBullets[6]) != -1) {
 		var fail = db.textContent;
 		setTimeout(function () {
 			window.location = 'bullets2.php?fail='+fail;
@@ -1649,7 +1649,7 @@ if (prefs[7] && dlp == '/bullets2.php') { //if return back after wrong buy is on
 if(dls.search('fail') != -1){
 	var fail = GetParam('fail');
 	var span = cEL('span');
-	span.innerHTML = '<b>'+fail+'</b><br />';
+	span.innerHTML = '<b>'+fail+'</b><br /><br />';
 	db.firstChild.insertBefore(span, $X('//table[@class="thinline"]'));
 }
 
@@ -1698,8 +1698,6 @@ if(dlp == '/info.php'){
 						newsIcon = GM_getResourceURL('edoIco');
 					}
 					item.parentNode.parentNode.setAttribute('style', 'background:url(\''+newsIcon+'\') no-repeat 90% 20%;');
-				}
-				if(news[i][1].search(lang.login[2])!=-1){
 					item.setAttribute('target', 'main');
 				}
 				item.innerHTML = news[i][1];
@@ -2134,8 +2132,8 @@ if (dlp + dls == '/iminjail.php?buymeout=yes' && prefs[23]) {
 //---------------- wrongcode ----------------
 if (prefs[11]) {
 	if (urlsearch == '/BeO/webroot/index.php?module=Crimes&action=docrime' || urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
-		if (db.innerHTML.search(lang.wrongcode[0]) != -1) {
-			db.innerHTML = lang.wrongcode[1];
+		if (db.innerHTML.search(sets.wrongcode) != -1) {
+			db.innerHTML = lang.wrongcode;
 			setTimeout(function () {
 				history.back();
 			}, 1000);
@@ -3458,7 +3456,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 			var rpform = '';
 			var rex = new RegExp('\\(([\\w\\s]+)\\)');
 			var rpfam = owner.match(rex);
-			if (ownfam != lang.status[1]) {
+			if (ownfam != sets.status[1]) {
 				if (rpfam != null) { // owned by player
 					if (rpfam[1] != stripHTML(ownfam) && time == lang.raidpage[1]) { // not own fam
 						rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px; border-radius:5px;" type="submit" value="Go!" /></form>';

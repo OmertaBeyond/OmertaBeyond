@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Variables depending on version
 
-Version: 1.20.0.7
+Version: 1.20.0.8
 
 */
 
@@ -18,14 +18,19 @@ var settings = {
 		contactlink: '/contact.php?v=com',
 		polllink: '/html/poll/poll.php?v=com',
 		statslink: 'http://rix.omertabeyond.com/stats.php?v=com&d=n',
-		status: ['none', 'None'],
+		status: [
+			'none',
+			'None'
+		],
+		wrongcode: 'The code you',
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
 			'This factory doesn\'t have that many bullets.<br><br>The price of bullets may also have changed RIGHT NOW, please try again.3',
 			'You cant buy a negative amount of bullets',
 			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
-			'You don\'t have enough cash to make this deal.'
+			'You don\'t have enough cash to make this deal.',//5
+			'You may only buy 1,000 bullets.'
 		],
 		garage: 'Type',
 		race: 'You\'re still tired from your last race',
@@ -230,7 +235,7 @@ var settings = {
 		],
 		slottracker: [
 			'Congratulations',
-			'You win \\$(\\d+)',
+			'You Win \\$(\\d+)',
 			'Bummer',
 			'Congratulations! You won \\$(\\d+)'
 		]
@@ -246,13 +251,15 @@ var settings = {
 			'none',
 			'None'
 		],
+		wrongcode: 'The code you',
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
 			'This factory doesn\'t have that many bullets.<br><br>The price of bullets may also have changed RIGHT NOW, please try again.3',
 			'You cant buy a negative amount of bullets',
 			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
-			'You don\'t have enough cash to make this deal.'
+			'You don\'t have enough cash to make this deal.',//5
+			'You may only buy 1,000 bullets.'
 		],
 		garage: 'Type',
 		race: 'You\'re still tired from your last race',
@@ -457,7 +464,7 @@ var settings = {
 		],
 		slottracker: [
 			'Congratulations',
-			'You win \\$(\\d+)',
+			'You Win \\$(\\d+)',
 			'Bummer',
 			'Congratulations! You won \\$(\\d+)'
 		]
@@ -473,13 +480,15 @@ var settings = {
 			'none',
 			'Geen'
 		],
+		wrongcode: 'De code die',
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'De prijs per kogel is net veranderd, als je de kogels echt wilt hebben, vul dan de velden opnieuw in.',
 			'Deze fabriek heeft niet zoveel kogels.<br><br>De prijs van de kogels kan ook NU veranderd zijn, probeer het opnieuw.3',
 			'Je kunt geen negatief aantal kogels kopen',
 			'De code die je invoerde kwam niet overeen met die van de afbeelding. De code bevat alleen kleine letters en cijfers.',
-			'Je hebt niet genoeg geld voor deze deal.'
+			'Je hebt niet genoeg geld voor deze deal.',//5
+			'You may only buy 1,000 bullets.'
 		],
 		garage: 'Type',
 		race: 'Je bent nog moe van je vorige race',
@@ -673,7 +682,7 @@ var settings = {
 		],
 		slottracker: [
 			'Gefeliciteerd',
-			'Je wint \\$(\\d+)',
+			'Je Wint \\$(\\d+)',
 			'Helaas',
 			'Gefeliciteerd! Je wint \\$(\\d+)'
 		]
@@ -689,13 +698,15 @@ var settings = {
 			'none',
 			'None'
 		],
+		wrongcode: 'The code you',
 		failedBullets: [
 			'You may only buy 500 bullets.',
 			'The price per bullet just changed, so if you really want those bullets, fill in the form again',
 			'This factory doesn\'t have that many bullets.<br><br>The price of bullets may also have changed RIGHT NOW, please try again.3',
 			'You cant buy a negative amount of bullets',
 			'The code you verified didn\'t match the image code. The image code only contains lower case and numeric characters',
-			'You don\'t have enough cash to make this deal.'
+			'You don\'t have enough cash to make this deal.',//5
+			'You may only buy 1,000 bullets.'
 		],
 		garage: 'Type',
 		race: 'You\'re still tired from your last race',
@@ -900,7 +911,7 @@ var settings = {
 		],
 		slottracker: [
 			'Congratulations',
-			'You win \\$(\\d+)',
+			'You Win \\$(\\d+)',
 			'Bummer',
 			'Congratulations! You won \\$(\\d+)'
 		]
