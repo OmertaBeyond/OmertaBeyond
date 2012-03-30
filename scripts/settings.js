@@ -237,7 +237,8 @@ var settings = {
 			'Congratulations',
 			'You Win \\$(\\d+)',
 			'Bummer',
-			'Congratulations! You won \\$(\\d+)'
+			'Congratulations! You won \\$(\\d+)',
+			'YOU WON THE JACKPOT!!'
 		]
 	},
 	dm: {
@@ -466,7 +467,8 @@ var settings = {
 			'Congratulations',
 			'You Win \\$(\\d+)',
 			'Bummer',
-			'Congratulations! You won \\$(\\d+)'
+			'Congratulations! You won \\$(\\d+)',
+			'YOU WON THE JACKPOT!!'
 		]
 	},
 	nl: {
@@ -684,7 +686,8 @@ var settings = {
 			'Gefeliciteerd',
 			'Je Wint \\$(\\d+)',
 			'Helaas',
-			'Gefeliciteerd! Je wint \\$(\\d+)'
+			'Gefeliciteerd! Je wint \\$(\\d+)',
+			'YOU WON THE JACKPOT!!'//needs nl text
 		]
 	},
 	tr: {
@@ -913,7 +916,8 @@ var settings = {
 			'Congratulations',
 			'You Win \\$(\\d+)',
 			'Bummer',
-			'Congratulations! You won \\$(\\d+)'
+			'Congratulations! You won \\$(\\d+)',
+			'YOU WON THE JACKPOT!!'
 		]
 	}
 };

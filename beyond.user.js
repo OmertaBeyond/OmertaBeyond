@@ -5219,7 +5219,7 @@ if (dlp.indexOf('/gambling/slotmachine.php') != -1 && prefs[33]) {
 		}
 	}, true);
 
-	if (db.innerHTML.indexOf(sets.slottracker[0]) != -1) {//won
+	if (db.innerHTML.indexOf(sets.slottracker[0]) != -1 || db.innerHTML.indexOf(sets.slottracker[4]) != -1) {//won
 		var slotpic1 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[1]/center').replace(/">/g, '').split('/');
 		var slotpic2 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[2]/center').replace(/">/g, '').split('/');
 		var slotpic3 = $I('//center/table/tbody/tr[3]/td/table/tbody/tr/td[3]/center').replace(/">/g, '').split('/');
