@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.8
-// @date			29-03-2012
+// @version			1.20.0.9
+// @date			18-04-2012
 // @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
@@ -15,7 +15,7 @@
 // @author			Dopedog <dopedog@omertabeyond.com>
 // @author			Rix <rix@omertabeyond.com>
 // @author			MrWhite <mrwhite@omertabeyond.com>
-// @license			GNU General Public License v3
+// @license			GNU General Public License, version 3 (GPL-3.0)
 // @contributionURL		https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ob%2edevs%40gmail%2ecom&lc=CA&item_name=OmertaBeyond&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 // @contributionAmount		€3.00
 // @encoding			UTF-8
@@ -154,8 +154,8 @@ var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 8;
-var SCRIPT_SUBVERSION = 8;
+var SCRIPT_VERSION_BUILD = 9;
+var SCRIPT_SUBVERSION = 9;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
