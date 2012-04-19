@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Language arrays needed for multilingual OB
 
-Version: 1.20.0.8
+Version: 1.20.0.10
 
 */
 
@@ -359,10 +359,6 @@ var langs = {
 			'Bought today:',
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
-		],
-		crimetracker: [
-			'Well done! You made',
-			'Well done! You made \\$ (\\d+) from your crime.'
 		],
 		raidpage: [
 			'<b>now</b>',
@@ -890,10 +886,6 @@ var langs = {
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
 		],
-		crimetracker: [
-			'Well done! You made',
-			'Well done! You made \\$ (\\d+) from your crime.'
-		],
 		raidpage: [
 			'<b>now</b>',
 			'Now!',
@@ -1420,10 +1412,6 @@ var langs = {
 			'Op Obay gekocht:',
 			'*zitten niet bij het totaal of prijs per kogel'
 		],
-		crimetracker: [
-			'Goed gedaan! Je hebt',
-			'Goed gedaan! Je hebt \\$ (\\d+) gekregen van je misdaad.'
-		],
 		raidpage: [
 			'<b>nu</b>',
 			'Nu!',
@@ -1942,10 +1930,6 @@ var langs = {
 			'Bought today:',
 			'Bought on Obay:',
 			'*not included in total or price per bullet'
-		],
-		crimetracker: [
-			'Well done! You made',
-			'Well done! You made \\$ (\\d+) from your crime.'
 		],
 		raidpage: [
 			'<b>now</b>',

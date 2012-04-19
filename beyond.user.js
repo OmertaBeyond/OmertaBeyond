@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.8
-// @date			29-03-2012
+// @version			1.20.0.10
+// @date			20-04-2012
 // @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
@@ -15,7 +15,7 @@
 // @author			Dopedog <dopedog@omertabeyond.com>
 // @author			Rix <rix@omertabeyond.com>
 // @author			MrWhite <mrwhite@omertabeyond.com>
-// @license			GNU General Public License v3
+// @license			GNU General Public License, version 3 (GPL-3.0)
 // @contributionURL		https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ob%2edevs%40gmail%2ecom&lc=CA&item_name=OmertaBeyond&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 // @contributionAmount		€3.00
 // @encoding			UTF-8
@@ -154,8 +154,8 @@ var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 8;
-var SCRIPT_SUBVERSION = 8;
+var SCRIPT_VERSION_BUILD = 10;
+var SCRIPT_SUBVERSION = 10;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -532,14 +532,36 @@ if (dlp == '/game.php') { //just once on login
 if(dls.indexOf('?module=Account&action=omertician') != -1) {
 	if($X('//img[contains(@src, "grimreaper.gif")]')) {
 		if (confirm('Do you want to reset your trackers?')) {
+			setValue('bankleft', 0);
+			setValue('bj', 0);
+			setValue('bjgames', 0);
+			setValue('bjgwon', 0);
+			setValue('bjmwon', 0);
+			setValue('bjspent', 0);
+			setValue('bjtie', 0);
+			setValue('btbullets', 0);
+			setValue('btdate', 0);
+			setValue('btmoney', 0);
+			setValue('bttoday', 0);
 			setValue('carmoney', 0);
 			setValue('cars', 0);
 			setValue('crimemoney', 0);
 			setValue('crimes', 0);
+			setValue('interest', 0);
+			setValue('jpmwon', 0);
+			setValue('mils', 0);
+			setValue('monin', 0);
 			setValue('obaybul', 0);
-			setValue('btbullets', 0);
-			setValue('btmoney', 0);
-			setValue('bttoday', 0);
+			setValue('ptgplay', 0);
+			setValue('ptgwon', 0);
+			setValue('ptspent', 0);
+			setValue('scratches', 0);
+			setValue('slotbar', 0);
+			setValue('slotgames', 0);
+			setValue('slotgwon', 0);
+			setValue('slotjp', 0);
+			setValue('slotmwon', 0);
+			setValue('slotspent', 0);
 		}
 	}
 }
@@ -2151,11 +2173,11 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 	}
 }
 //--------------- crime succesfull ---------------
-if (urlsearch == '/BeO/webroot/index.php?module=Crimes&action=docrime') {
+if (urlsearch == '/BeO/webroot/index.php?module=Crimes_ac&action=docrime') {
 	var crimeTracker = getValue('crimes', 0);
 	var crimemoney = getValue('crimemoney', 0);
-	if (db.textContent.indexOf(lang.crimetracker[0]) != -1) {
-		var rex1 = new RegExp(lang.crimetracker[1]);
+	if (db.textContent.indexOf(sets.crimetracker[0]) != -1) {
+		var rex1 = new RegExp(sets.crimetracker[1]);
 		var str1 = db.innerHTML.replace(/,/g, '');
 		var r1 = str1.match(rex1);
 		crimemoney += parseInt(r1[1]);
@@ -2433,11 +2455,11 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 		}
 
 		if (alive) {
+			var HPxp = $X('//span[@id="hp"]');
 			if (!self) { //additions useless for self
-				$X('//span[@id="hp"]').innerHTML = '<a href="/honorpoints.php?who='+unick+'" class="red">'+$X('//span[@id="hp"]').innerHTML+'</a>'; //Send HP's
+				HPxp.innerHTML = '<a href="/honorpoints.php?who='+unick+'" class="red">'+HPxp.innerHTML+'</a>'; //Send HP's
 			} else {//Linkify self hp's
-				HPxp = $X('/html/body//center/table/tbody/tr[5]/td[2]');
-				HPxp.innerHTML = '<a href="/honorpoints.php"><span style="color:red"><i>'+HPxp.innerHTML+'</i></span></a>';
+				HPxp.innerHTML = '<a href="/honorpoints.php" class="red"><i>'+HPxp.innerHTML+'</i></a>';
 			}
 		}
 	}
@@ -2550,30 +2572,32 @@ if(dlp == '/garage.php'){
 
 	function garageCrusher() {
 		var rows = $x('//tr').length; //get number of rows
-		if(prefs[24]){ //crusher
-			//define car arrays
-			var titles = { h:'Heist', oc:'OC', moc:'MOC', tr:'Truck' };
-			var carValues = { h:'heist', oc:'oc', moc:'moc', tr:'truck' };
-			var base = getValue('titleBg', '#3F505F');
-			var carColors = { h:getTintedColor(base, 125), oc:getTintedColor(base, 75), moc:getTintedColor(base, 25), tr:getTintedColor(base, 150)};
-			var types = [['h', 8, 9, 13, 15, 16, 17, 18, 19, 21, 22, 27, 32, 34, 35, 40, 43], ['oc', 23, 25, 26, 28, 29, 30, 31, 33, 39, 41, 42], ['moc', 45, 47, 48], ['tr', 23, 47, 54]];
+		//define car arrays
+		var titles = { h:'Heist', oc:'OC', moc:'MOC', tr:'Truck' };
+		var carValues = { h:'heist', oc:'oc', moc:'moc', tr:'truck' };
+		var base = getValue('titleBg', '#3F505F');
+		var carColors = { h:getTintedColor(base, 125), oc:getTintedColor(base, 75), moc:getTintedColor(base, 25), tr:getTintedColor(base, 150)};
+		var types = [['h', 8, 9, 13, 15, 16, 17, 18, 19, 21, 22, 27, 32, 34, 35, 40, 43], ['oc', 23, 25, 26, 28, 29, 30, 31, 33, 39, 41, 42], ['moc', 45, 47, 48], ['tr', 23, 47, 54]];
 
+		if(prefs[24]){ //crusher
 			var indexTd = cEL('td'); //add type collumn to header
 			indexTd.setAttribute('class', 'tableheader');
 			indexTd.innerHTML = lang.garage[17];
 			$X('/html/body//form/center/table/tbody/tr').insertBefore(indexTd, $X('/html/body//form/center/table/tbody/tr/td[2]'));
+		}
 
-			var totVal = 0;
-			for(var i=2;i<rows-2;i++){ //loop rows
-				var carid = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td').innerHTML;
-				var y = '//html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
-				var car = $X(y).href.match(/\d*$/)[0];
-				var carType = '';
-				var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
-				var carVal = parseInt($X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td[4]').innerHTML.replace(',', '').replace('$', '')); //get value
-				carRow.setAttribute('onclick', 'var check = document.getElementsByName(\'carid['+(i-2)+']\')[0]; if(check.checked==true){check.checked=false;}else{check.checked=true;}');
-				$X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td[6]/input[2]').setAttribute('onclick', 'if(this.checked==true){this.checked=false;}else{this.checked=true;}');
-				totVal += carVal;
+		var totVal = 0;
+		for(var i=2;i<rows-2;i++){ //loop rows
+			var carid = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td').innerHTML;
+			var y = '//html/body//form//center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
+			var car = $X(y).href.match(/\d*$/)[0];
+			var carType = '';
+			var carRow = $X('/html/body//form//center/table/tbody/tr['+(i+2)+']'); //get the specific row
+			var carVal = parseInt($X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td[4]').innerHTML.replace(',', '').replace('$', '')); //get value
+			carRow.setAttribute('onclick', 'var check = document.getElementsByName(\'carid['+(i-2)+']\')[0]; if(check.checked==true){check.checked=false;}else{check.checked=true;}');
+			$X('/html/body//form//center/table/tbody/tr['+(i+2)+']/td[6]/input[2]').setAttribute('onclick', 'if(this.checked==true){this.checked=false;}else{this.checked=true;}');
+			totVal += carVal;
+			if(prefs[24]){ //crusher
 				types.forEach(function($n){ //loop car through types
 					if($n.indexOf(parseInt(car))>0){ //check if car is in this type array
 						carType = titles[$n[0]]; //set car type
@@ -2587,17 +2611,17 @@ if(dlp == '/garage.php'){
 				typeTd.innerHTML = carType;
 				carRow.insertBefore(typeTd, carRow.childNodes[3]);
 			}
-			//add amount of bullets
-			var head = $X('//h2');
-			var cars = head.textContent.match(/\d+/g)[2];
-			if(cars>0){
-				head.textContent = head.textContent+' | '+lang.garage[0]+' '+cars*12;
-			}
-			//add amount of money
-			var head = $X('//h2');
-			if(totVal>0){
-				head.textContent = head.textContent+' | '+lang.garage[18]+' $'+commafy(totVal);
-			}
+		}
+		//add amount of bullets
+		var head = $X('//h2');
+		var cars = head.textContent.match(/\d+/g)[2];
+		if(cars>0){
+			head.textContent = head.textContent+' | '+lang.garage[0]+' '+cars*12;
+		}
+		//add amount of money
+		var head = $X('//h2');
+		if(totVal>0){
+			head.textContent = head.textContent+' | '+lang.garage[18]+' $'+commafy(totVal);
 		}
 
 		var city = getValue('ship', 0);
@@ -2735,9 +2759,9 @@ if(dlp == '/garage.php'){
 			if(ls.indexOf('heist') != -1 || ls.indexOf('nodam') != -1 || ls.indexOf('max') != -1 || ls.indexOf('oc') != -1){
 				var max=GetPost('max'), truck=GetPost('truck'), oc=GetPost('ob_oc'), moc=GetPost('ob_moc'), heist=GetPost('ob_heist'), nodam=GetPost('nodam'), select=GetPost('select'), a=0, y, car, z, perc, types;
 				for(i=2;i<rows-2;i++){
-					y = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[3]/a';//get car
+					y = (prefs[24])?'//form/center/table/tbody/tr['+(i+2)+']/td[3]/a':'//form/center/table/tbody/tr['+(i+2)+']/td[2]/a';//get car
 					car = $X(y).href.match(/\d+/g)[0];
-					z = '/html/body//form/center/table/tbody/tr['+(i+2)+']/td[4]';//get percentage damage
+					z = (prefs[24])?'//form/center/table/tbody/tr['+(i+2)+']/td[4]':'//form/center/table/tbody/tr['+(i+2)+']/td[3]';//get percentage damage
 					perc = $I(z);
 					perc = parseInt(perc.slice(0, perc.indexOf('%')));
 
@@ -2760,7 +2784,8 @@ if(dlp == '/garage.php'){
 						tr = parseInt(tr);
 
 						if((tr < max && select==1)||(tr > max && select==0)){
-							$X('/html/body//form/center/table/tbody/tr['+(i+2)+']/td[7]/input[2]').checked = true;
+							var p = (prefs[24])?7:6;
+							$X('//form/center/table/tbody/tr['+(i+2)+']/td['+p+']/input[2]').checked = true;
 						}
 					}
 				}
@@ -2877,6 +2902,13 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 		}
 	}, false);
 }
+if (dlp.indexOf('allusers.php') != -1) {
+	var page = GetParam('start');
+	page = (page/15)+1;
+	var pagenum = cEL('p');
+	pagenum.innerHTML = 'Page: '+page;
+	$X('//h4').parentNode.insertBefore(pagenum, $X('//center').nextSibling);
+}
 
 //---------------- look it's me ----------------
 if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dls.indexOf('global_stats') != -1) {
@@ -2890,6 +2922,7 @@ if (dls.indexOf('users_online') != -1 || dlp.indexOf('allusers.php') != -1 || dl
 		});
 	}
 }
+
 //---------------- Family page ----------------
 if (dlp == '/family.php') {
 	if ((prefs[3])&&(dls.indexOf('join=yes') == -1)) {

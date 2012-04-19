@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Variables depending on version
 
-Version: 1.20.0.8
+Version: 1.20.0.10
 
 */
 
@@ -239,7 +239,11 @@ var settings = {
 			'Bummer',
 			'Congratulations! You won \\$(\\d+)',
 			'YOU WON THE JACKPOT!!'
-		]
+		],
+		crimetracker: [
+			'Well done! You made',
+			'Well done! You made \\$ (\\d+) from your crime.'
+		]			
 	},
 	dm: {
 		version: '_dm',
@@ -469,6 +473,10 @@ var settings = {
 			'Bummer',
 			'Congratulations! You won \\$(\\d+)',
 			'YOU WON THE JACKPOT!!'
+		],
+		crimetracker: [
+			'Well done! You made',
+			'Well done! You made \\$ (\\d+) from your crime.'
 		]
 	},
 	nl: {
@@ -688,6 +696,10 @@ var settings = {
 			'Helaas',
 			'Gefeliciteerd! Je wint \\$(\\d+)',
 			'YOU WON THE JACKPOT!!'//needs nl text
+		],
+		crimetracker: [
+			'Goed gedaan! Je hebt',
+			'Goed gedaan! Je hebt \\$ (\\d+) gekregen van je misdaad.'
 		]
 	},
 	tr: {
@@ -918,6 +930,10 @@ var settings = {
 			'Bummer',
 			'Congratulations! You won \\$(\\d+)',
 			'YOU WON THE JACKPOT!!'
+		],
+		crimetracker: [
+			'Well done! You made',
+			'Well done! You made \\$ (\\d+) from your crime.'
 		]
 	}
 };
