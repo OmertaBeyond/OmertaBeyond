@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.10
-// @date			20-04-2012
+// @version			1.20.0.11
+// @date			25-07-2012
 // @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
@@ -154,8 +154,8 @@ var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 10;
-var SCRIPT_SUBVERSION = 10;
+var SCRIPT_VERSION_BUILD = 11;
+var SCRIPT_SUBVERSION = 11;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -1571,6 +1571,8 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 		trdump += '<tr style="background-color:'+color+'">';
 		trdump += '<td style="text-align:center;">'+lang.bgov[8]+':</td>';
 		trdump += '<td style="text-align:center;">&nbsp;</td>';
+
+
 		trdump += '<td style="text-align:center;">'+rounding(totlvls / 50)+'% '+lang.bgov[11]+'</td>';
 		trdump += '<td style="text-align:center;">'+lang.bgov[9]+': '+totatt+'</td>';
 		trdump += '<td style="text-align:center;">'+lang.bgov[10]+': '+totdef+'</td>';
@@ -3524,7 +3526,7 @@ if ((dls == '?module=Spots' || dls == '?module=Spots&action=' || dls.indexOf('dr
 		function timers() {
 			for(var i=0;i<am;i++) {
 				if(secs[i]>0) {
-					var rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+id+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px; border-radius:5px;" type="submit" value="Go!" /></form>';
+					var rpform = '<form name="startraid" method="post" style="display:inline" action="index.php?module=Spots&action=start_raid"><input type="hidden" name="type" value="'+i+'" /><input type="hidden" name="bullets" /><input type="hidden" name="driver" /><input style="-moz-border-radius:5px; border-radius:5px;" type="submit" value="Go!" /></form>';
 					timer(secs[i], i, 'Now!', rpform);
 				}
 			}
