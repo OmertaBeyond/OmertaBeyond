@@ -61,9 +61,3 @@
 // @exclude			http://*barafranca.*/BeO/webroot/index.php?module=Donate.*
 // @exclude			http://*barafranca.*/game-register.php*
 // ==/UserScript==
-
-/*
-$Rev: 760 $:  Revision of last commit
-$Author: the.vbm $:  Author of last commit
-$Date: 2012-02-16 17:21:03 +0100 (Thu, 16 Feb 2012) $:  Date of last commit
-*/
