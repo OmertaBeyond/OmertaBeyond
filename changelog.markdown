@@ -1,70 +1,33 @@
 # Omerta Beyond
 
-## v1.10.0.85 - 16 February 2012
+## v1.20.0.12 - 17 November 2012
 
-**NEW**
 
-* Better compatibility with Scriptish, LubeMonkey and TamperMonkey.
-* Script works on Chrome and Fennec now. \o/
-* Support for auto update. (GM 0.9.12+ required)
-* Ability to reset trackers at death.
-* Added link to full changelog for changes and deaths (links to OBN site).
-* Added Local crush button when stealing a car if user is famless.
-* Added focus for elements on various places.
-* Showing traveltime when traveling thru marquee
-* Added price-per-bullet info in Sluggs logs.
-* Added option to remove "Sluggs laughed" from it's logs.
-* Added quick lookup options:
- * (#021) If partial name is written page will show suggestions.
- * (#050) If no name has been entered we'll redirect to own profile.
-* Lackey II tweaks:
- * (#111) Added k/m usage.
- * (#112) Added commafy.
- * (#120) Added focus on popups.
-* (#020) Visual tweaks for Inbox.
-* (#031) Added countdown timers on spotraid page.
-* (#040) Added Custom sytem delete messages.
-* (#061) Show (BF) at deaths with bf kills.
-
-**CHANGED**
-
-* Various code cleanups and tweaks to comply with ECMAScript standards.
-* Removed obsolete functions and OB features.
-* Excluded all donate pages and game register.
-* Several visual tweaks to better use available screen resolution.
-* Moved around several options to give it better usability.
-* Translated all remaining strings into Dutch.
-* Fam info is saved on both join and/or leave.
-* Rewrote the complete cote for 1 Click Voter.
-* (#022) Changed nickReader buttons (only shift now)
-* (#028) Merged custom menu and hotkeys page.
-* (#055) Changed default priority for Jail Highlighter.
-
-**FIXED**
-
-* Various typo errors and spelling mistakes.
-* Several visual fixes.
-* Fixed Crime Tracker.
-* Fixed Traveling thru marquee.
-* Tweaked Raid page and fixed errors that were breaking the page.
-* Fixed broken focus on various places.
-* Fixed not showing quick links in inbox after delete msg.
-* Fixed problems for Heist and OC.
-* Fixed OB's breaking Poker page.
-* Several fixes applied to prevent clicklimit:
- * (#005) Faster clicklimit when using OB.
- * (#110) Fixed refresh while being in SH (causing clicklimit).
-* (#011) Coke prices broken on .nl
-* BRC:
- * (#003) Fixed Smuggling page auto fill deselection.
- * (#027) Wrong calculation if user has capo.
- * (#041) Fixed not filling all b/n or setting wrong options.
- * (#059) fixed BN links dont listen to selected mode.
-* (#054) Reply quicklink was broken.
-* (#065) Fixed family not being set.
-* (#068) Fixed logo not being changed on login page.
-* (#079) Fixed problem with GMSCommands (update checker).
-* (#081) Garage buttons dont show up when browser window is too small.
-* (#096) Fixed OBNews not showing properly.
-* (#115)(#118) Fixed wrong links on wedding and condoleance messages.
-* (#119) Fixed hotkeys for inbox/smuggling dont work if set in menu.
+* Changed Paypal link
+* Fixed bug on spotraid page
+* Fixed: (#131) Crimetracker stopped working
+* Fixed: (#129) Wrong linkify for HP's on self profile.
+* Changed: Garage pref only highlights cars now, rest is default
+* Added: Pagenumber on all users page
+* Change: (#122) partially cleaned settings and lang files
+* re-arranged some sets and langs
+* Fixed small typo on slot JP win
+* Stupid me another slots change
+* Fixed bug when winning slots jackpot
+* Put langs and sets in the right place
+* Change: (#0000122) partially cleaned settings and lang files
+* Change: Improved removal of Facebook API from News frame.
+* Change: Improve prevention of clicklimit for Dutch, English UK and Turkish while being in SH
+* Moved to github
+* Changed actions div on userprofile
+* Reorder of meta keys
+* Added @Contribution meta key
+* Bumped version to push update
+* Fixed nickReader and bnupdate triggered on marquee
+* Fixed unsafewindow setvalue error
+* Added quicklink to capo table @ manage users
+* fixed linkify on condoleances msg .nl
+* fixed mk being added to hidden inputs on roullete page
+* Added Remember last bet for gambling
+* fixed error on smuggling page when orourke running
+* fixed wrong paying % at brc
