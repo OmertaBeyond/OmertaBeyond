@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.12
+<<<<<<< .mine// @version			1.20.0.12
 // @date			21-01-2013
-// @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
+=======// @version			1.20.0.12
+// @date			17-11-2012
+>>>>>>> .theirs// @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
 // @updateURL			https://raw.github.com/OmertaBeyond/OmertaBeyond/master/beyond.meta.js
@@ -16,7 +18,7 @@
 // @author			Rix <rix@omertabeyond.com>
 // @author			MrWhite <mrwhite@omertabeyond.com>
 // @license			GNU General Public License, version 3 (GPL-3.0)
-// @contributionURL		https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ob%2edevs%40gmail%2ecom&lc=CA&item_name=OmertaBeyond&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
+// @contributionURL		https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=sbanks%40omertabeyond%2ecom&lc=GB&item_name=Omerta%20Beyond&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 // @contributionAmount		€3.00
 // @encoding			UTF-8
 // @priority			1
