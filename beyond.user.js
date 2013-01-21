@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.11
-// @date			25-07-2012
+// @version			1.20.0.12
+// @date			21-01-2013
 // @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
@@ -154,8 +154,8 @@ var SCRIPT_VERSION = '1.20';
 var SCRIPT_VERSION_MAJOR = 1;
 var SCRIPT_VERSION_MINOR = 20;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 11;
-var SCRIPT_SUBVERSION = 11;
+var SCRIPT_VERSION_BUILD = 12;
+var SCRIPT_SUBVERSION = 12;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';
@@ -218,7 +218,6 @@ if (bmsgon) {
 					var msg = new Bmsg();
 					msg.Bmsg(id, type, title, text);
 					msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
-
 					msg.add();
 					setValue('lastbmsg', response["deaths"][0]["ts"]);
 				} else if (lastbmsg < response["deaths"][len-1]["ts"]) {
@@ -233,7 +232,6 @@ if (bmsgon) {
 						var fam = (response['deaths'][i]['fam'] == '')?'(None)':'('+response['deaths'][i]['fam']+')';
 						text += time+' '+extra+' <a href="user.php?name='+response['deaths'][i]['name']+'">'+response['deaths'][i]['name']+'</a> '+response['deaths'][i]['rank_text']+' '+fam+'<br />';
 					}
-
 					var msg = new Bmsg();
 					msg.Bmsg(id, type, title, text);
 					//msg.setIcon('http://dump.omertabeyond.com/images/104error.png');
@@ -986,16 +984,6 @@ if (dlp == '/menu.php') {
 			}, 1000);
 		}, true);
 	});
-	if(!dls) {
-		//got to own profile when empty search
-		$X('//form[@action="./user.php"]').addEventListener('submit', function(evt) {
-			var user = $X('//input[@name="nick"]');
-			if(!user.value) {
-				evt.preventDefault();
-				top.frames[2].location = 'http://' + window.location.hostname + '/user.php';
-			}
-		});
-	}
 }
 
 //---------------- Contact page 'tweaks' ----------------
@@ -1571,8 +1559,6 @@ if ((dls == '?module=Shop') || dls.indexOf('?module=Bodyguards') != -1 && dlp.in
 		trdump += '<tr style="background-color:'+color+'">';
 		trdump += '<td style="text-align:center;">'+lang.bgov[8]+':</td>';
 		trdump += '<td style="text-align:center;">&nbsp;</td>';
-
-
 		trdump += '<td style="text-align:center;">'+rounding(totlvls / 50)+'% '+lang.bgov[11]+'</td>';
 		trdump += '<td style="text-align:center;">'+lang.bgov[9]+': '+totatt+'</td>';
 		trdump += '<td style="text-align:center;">'+lang.bgov[10]+': '+totdef+'</td>';
@@ -2458,11 +2444,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 
 		if (alive) {
 			var HPxp = $X('//span[@id="hp"]');
-			if (!self) { //additions useless for self
-				HPxp.innerHTML = '<a href="/honorpoints.php?who='+unick+'" class="red">'+HPxp.innerHTML+'</a>'; //Send HP's
-			} else {//Linkify self hp's
-				HPxp.innerHTML = '<a href="/honorpoints.php" class="red"><i>'+HPxp.innerHTML+'</i></a>';
-			}
+			HPxp.innerHTML = '<a href="/honorpoints.php">'+HPxp.innerHTML+'</a>';
 		}
 	}
 }
@@ -4146,22 +4128,6 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 //---------- All poker thingies (except tracker) -----------
 if (dls.search('module=Poker') != -1) {
-	//allin
-	var goall = 0;
-	var money = $X('//td[@class="tableitem"]/b').innerHTML.replace(/,/g, '').replace('$', '');
-	var allin = cEL('span');
-	allin.innerHTML = 'All In';
-	allin.setAttribute('style', 'color:#404040;font-family:Verdana,Tahoma;font-size:x-small;background-color:#CFCFCF;border-width:1px;border-style:none solid solid none;padding:3px 15px 0px 15px;cursor:pointer;');
-	allin.addEventListener('click', function(){
-		$X('//input[@name="raiseby"]').value = money;
-		goall = confirm('Are you sure you wanna go All-In with $'+commafy(money)+'?');
-		if(goall) {
-			$X('//input[@name="raise"]').click();
-		}
-	}, true);
-	if ($X('//input[@name="raiseby"]')) {
-		$X('//center/form/table/tbody/tr[5]/td/table/tbody/tr/td[3]').appendChild(allin);
-	}
 	//refresh
 	var refresh = $X('//span/a[contains(@href, "BeO/webroot/index.php?module=Poker")]');
 	if (refresh != undefined) {
@@ -4171,10 +4137,10 @@ if (dls.search('module=Poker') != -1) {
 		var span = cEL('span');
 		span.setAttribute('style', 'background-color:#8fcbfc;border-width:1px;border-style:none solid solid none');
 		span.appendChild(refresh2);
-		if (db.textContent.search('Poker') != -1){
-			$X('//center').insertBefore(span, $X('//form'));
-		} else {
+		if (db.innerHTML.search(lang.pokertracker[11]) != -1){
 			$X('//center').insertBefore(span, $X('//table[@class="thinline"]'));
+		} else {
+			$X('//center').insertBefore(span, $X('//form'));
 		}
 	}
 	//poker tracker
@@ -4232,59 +4198,59 @@ if (dls.search('module=Poker') != -1) {
 	}
 
 	// add easy selecting cards for swapping
-	if ($X('//input[@name="c0"]') != null) { // user must check cards
-
-		var cards = $x('//tbody/tr[2]/td/img');
-		var y = 0;
-		for (x in cards) { // loop through cards
-			if (y <= 4) {
-				if (cards[x].getAttribute('src').indexOf('closed.gif') == -1) { // it's one of our cards
-					cards[x].setAttribute('style', 'cursor:pointer');
-					$x('//td//tbody/tr[2]/td')[x].setAttribute('style', 'padding-top:7px;padding-bottom:7px;');
-					$x('//td//tbody/tr[2]/td')[x].setAttribute('id', 'card_td_'+y);
-					cards[x].setAttribute('onclick', 'var cb=document.getElementsByName(\'c'+y+'\')[0];if(cb.checked){cb.checked=false;document.getElementById(\'card_td_'+y+'\').style.backgroundColor=\'green\';}else{cb.checked=true;document.getElementById(\'card_td_'+y+'\').style.backgroundColor=\'#009966\';}');
-					++y;
-				}
-			}
-		}
-
-		// Add style switchers on checkboxes
-		getELNAME('c0')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c0"]').checked) {
-				getID('card_td_0').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_0').style.backgroundColor='green';
-			}
-		}, true);
-		getELNAME('c1')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c1"]').checked) {
-				getID('card_td_1').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_1').style.backgroundColor='green';
-			}
-		}, true);
-		getELNAME('c2')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c2"]').checked) {
-				getID('card_td_2').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_2').style.backgroundColor='green';
-			}
-		}, true);
-		getELNAME('c3')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c3"]').checked) {
-				getID('card_td_3').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_3').style.backgroundColor='green';
-			}
-		}, true);
-		getELNAME('c4')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c4"]').checked) {
-				getID('card_td_4').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_4').style.backgroundColor='green';
-			}
-		}, true);
-	}
+//	if ($X('//input[@name="c0"]') != null) { // user must check cards
+//
+//		var cards = $x('//tbody/tr[2]/td/img');
+//		var y = 0;
+//		for (x in cards) { // loop through cards
+//			if (y <= 4) {
+//				if (cards[x].getAttribute('src').indexOf('closed.gif') == -1) { // it's one of our cards
+//					cards[x].setAttribute('style', 'cursor:pointer');
+//					$x('//td//tbody/tr[2]/td')[x].setAttribute('style', 'padding-top:7px;padding-bottom:7px;');
+//					$x('//td//tbody/tr[2]/td')[x].setAttribute('id', 'card_td_'+y);
+//					cards[x].setAttribute('onclick', 'var cb=document.getElementsByName(\'c'+y+'\')[0];if(cb.checked){cb.checked=false;document.getElementById(\'card_td_'+y+'\').style.backgroundColor=\'green\';}else{cb.checked=true;document.getElementById(\'card_td_'+y+'\').style.backgroundColor=\'#009966\';}');
+//					++y;
+//				}
+//			}
+//		}
+//
+//		// Add style switchers on checkboxes
+//		getELNAME('c0')[0].addEventListener('click', function() {
+//			if ($X('//input[@name="c0"]').checked) {
+//				getID('card_td_0').style.backgroundColor='#009966';
+//			} else {
+//				getID('card_td_0').style.backgroundColor='green';
+//			}
+//		}, true);
+//		getELNAME('c1')[0].addEventListener('click', function() {
+//			if ($X('//input[@name="c1"]').checked) {
+//				getID('card_td_1').style.backgroundColor='#009966';
+//			} else {
+//				getID('card_td_1').style.backgroundColor='green';
+//			}
+//		}, true);
+//		getELNAME('c2')[0].addEventListener('click', function() {
+//			if ($X('//input[@name="c2"]').checked) {
+//				getID('card_td_2').style.backgroundColor='#009966';
+//			} else {
+//				getID('card_td_2').style.backgroundColor='green';
+//			}
+//		}, true);
+//		getELNAME('c3')[0].addEventListener('click', function() {
+//			if ($X('//input[@name="c3"]').checked) {
+//				getID('card_td_3').style.backgroundColor='#009966';
+//			} else {
+//				getID('card_td_3').style.backgroundColor='green';
+//			}
+//		}, true);
+//		getELNAME('c4')[0].addEventListener('click', function() {
+//			if ($X('//input[@name="c4"]').checked) {
+//				getID('card_td_4').style.backgroundColor='#009966';
+//			} else {
+//				getID('card_td_4').style.backgroundColor='green';
+//			}
+//		}, true);
+//	}
 }
 
 //---------- m/k usage roulette -----------
@@ -4959,9 +4925,9 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 			setValue('ptgplay', ptgplay);
 
 			// adding the ante
-			a = $x('//tr').length - 21; // total tr's with gameinfo
-			for (y=5;y<=a;y+=1) {
-				if ($x('/html/body/center/table/tbody/tr['+y+']/td[8]')[0].innerHTML.indexOf('<a href="/user.php?nick='+ptself+'">') != -1) {
+			a = $x('//tr').length-21; // total tr's with gameinfo
+			for (var y=5;y<=a;y+=1) {
+				if ($X('/html/body/center/table/tbody/tr['+y+']/td[8]').innerHTML.indexOf('<a href="/user.php?nick='+ptself+'">') != -1) {
 					var ptMyOwNum = y;
 				}
 			}
@@ -5428,68 +5394,6 @@ if (dls.indexOf('?module=PuntoBanco') != -1) {
 			pblastBet(false);
 		} else {
 			pblastBet(true);
-		}
-	}, true);
-}
-
-//------------ Remember last bet Roul ------------
-if (dlp.indexOf('/gambling/roulette.php') != -1) {
-	var betinput = $x('//input');
-	betinput.forEach(function ($n) {
-		$n.addEventListener('keyup', function() {
-			var string = '';
-			for(i=2;i<betinput.length-2;i++) {
-				if(betinput[i].value != '') {
-					string += betinput[i].name+'|'+betinput[i].value+'*';
-					setValue('roulwhat', string);
-				}
-			}
-		});
-	});
-	function roullastBet(toff) {
-		setValue('roullastbet', toff);
-		roullastbet = toff;
-		if (toff) {
-			roulwhat = getValue('roulwhat', '');
-			if(roulwhat != '') {
-				roulwhat = roulwhat.substr(0, (roulwhat.length - 1));
-				var what = [];
-				roulwhat = roulwhat.split('*');
-				a = roulwhat.length;
-				for (y = 0; y < a; y++) {
-					what = roulwhat[y].split('|');
-					$X('//input[@name="'+what[0]+'"]').value = what[1];
-				}
-			}
-		} else {
-			for(i=2;i<betinput.length-2;i++) {
-				$x('//input')[i].value = '';
-			}
-		}
-	}
-	var br = cEL('br');
-	var span = cEL('span');
-	span.innerHTML = '<label for="roulcb">Remember last bet</label>';
-	span.setAttribute('style', 'float:left;bottom:0px;');
-	$X('//table/tbody/tr[4]/td').removeAttribute('valign');
-	var roulcb = cEL('input');
-	roulcb.setAttribute('type', 'checkbox');
-	roulcb.id = 'roulcb';
-	var roullastbet = getValue('roullastbet', false);
-	if (roullastbet) {
-		roulcb.setAttribute('checked', 'checked');
-		roullastBet(true);
-	}
-	span.appendChild(roulcb)
-	var rows = $x('//table/tbody/tr[4]/td[2]/table/tbody/tr').length;
-	var i = (rows=='17') ? 17 : 12;
-	$X('//table/tbody/tr[4]/td[2]/table/tbody/tr['+i+']/td').appendChild(br);
-	$X('/html/body/form/center/table/tbody/tr[4]/td').appendChild(span);
-	roulcb.addEventListener('click', function() {
-		if (roullastbet) {
-			roullastBet(false);
-		} else {
-			roullastBet(true);
 		}
 	}, true);
 }
