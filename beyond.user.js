@@ -693,6 +693,8 @@ if(dlp == '/marquee.php'){
 					}
 					link.innerHTML = priceStr;
 					return link;
+
+
 				}
 				var span, priceandtime, link, city, owncity;
 				span = cEL('span');
@@ -4171,10 +4173,10 @@ if (dls.search('module=Poker') != -1) {
 		var span = cEL('span');
 		span.setAttribute('style', 'background-color:#8fcbfc;border-width:1px;border-style:none solid solid none');
 		span.appendChild(refresh2);
-		if (db.textContent.search('Poker') != -1){
-			$X('//center').insertBefore(span, $X('//form'));
-		} else {
+		if (db.innerHTML.search(lang.pokertracker[11]) != -1){
 			$X('//center').insertBefore(span, $X('//table[@class="thinline"]'));
+		} else {
+			$X('//center').insertBefore(span, $X('//form'));
 		}
 	}
 	//poker tracker
@@ -4229,61 +4231,6 @@ if (dls.search('module=Poker') != -1) {
 		inputs.forEach(function ($n) {
 			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
 		});
-	}
-
-	// add easy selecting cards for swapping
-	if ($X('//input[@name="c0"]') != null) { // user must check cards
-
-		var cards = $x('//tbody/tr[2]/td/img');
-		var y = 0;
-		for (x in cards) { // loop through cards
-			if (y <= 4) {
-				if (cards[x].getAttribute('src').indexOf('closed.gif') == -1) { // it's one of our cards
-					cards[x].setAttribute('style', 'cursor:pointer');
-					$x('//td//tbody/tr[2]/td')[x].setAttribute('style', 'padding-top:7px;padding-bottom:7px;');
-					$x('//td//tbody/tr[2]/td')[x].setAttribute('id', 'card_td_'+y);
-					cards[x].setAttribute('onclick', 'var cb=document.getElementsByName(\'c'+y+'\')[0];if(cb.checked){cb.checked=false;document.getElementById(\'card_td_'+y+'\').style.backgroundColor=\'green\';}else{cb.checked=true;document.getElementById(\'card_td_'+y+'\').style.backgroundColor=\'#009966\';}');
-					++y;
-				}
-			}
-		}
-
-		// Add style switchers on checkboxes
-		getELNAME('c0')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c0"]').checked) {
-				getID('card_td_0').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_0').style.backgroundColor='green';
-			}
-		}, true);
-		getELNAME('c1')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c1"]').checked) {
-				getID('card_td_1').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_1').style.backgroundColor='green';
-			}
-		}, true);
-		getELNAME('c2')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c2"]').checked) {
-				getID('card_td_2').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_2').style.backgroundColor='green';
-			}
-		}, true);
-		getELNAME('c3')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c3"]').checked) {
-				getID('card_td_3').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_3').style.backgroundColor='green';
-			}
-		}, true);
-		getELNAME('c4')[0].addEventListener('click', function() {
-			if ($X('//input[@name="c4"]').checked) {
-				getID('card_td_4').style.backgroundColor='#009966';
-			} else {
-				getID('card_td_4').style.backgroundColor='green';
-			}
-		}, true);
 	}
 }
 
@@ -4492,6 +4439,7 @@ if (dlp == '/familylog.php') {
 		}
 	});
 }
+
 /*
 //---------------------- MaybeUsefulCrap -----------
 var OBMIcon = GM_getResourceURL('favoriteIco');
@@ -4950,6 +4898,7 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 				setValue('ptmwon', ptmwon);
 				setValue('ptchecked', true);
 			}
+			alert(r[1]+' '+r[2]+' '+r[3]);
 		}
 	}
 	else { // game isn't active
