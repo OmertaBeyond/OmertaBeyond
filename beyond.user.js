@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.12
-// @date			17-11-2012
+// @version			1.20.0.13
+// @date			22-01-2013
 // @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
@@ -988,16 +988,6 @@ if (dlp == '/menu.php') {
 			}, 1000);
 		}, true);
 	});
-	if(!dls) {
-		//got to own profile when empty search
-		$X('//form[@action="./user.php"]').addEventListener('submit', function(evt) {
-			var user = $X('//input[@name="nick"]');
-			if(!user.value) {
-				evt.preventDefault();
-				top.frames[2].location = 'http://' + window.location.hostname + '/user.php';
-			}
-		});
-	}
 }
 
 //---------------- Contact page 'tweaks' ----------------
@@ -2460,11 +2450,7 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 
 		if (alive) {
 			var HPxp = $X('//span[@id="hp"]');
-			if (!self) { //additions useless for self
-				HPxp.innerHTML = '<a href="/honorpoints.php?who='+unick+'" class="red">'+HPxp.innerHTML+'</a>'; //Send HP's
-			} else {//Linkify self hp's
-				HPxp.innerHTML = '<a href="/honorpoints.php" class="red"><i>'+HPxp.innerHTML+'</i></a>';
-			}
+			HPxp.innerHTML = '<a href="/honorpoints.php" class="red"><i>'+HPxp.innerHTML+'</i></a>';
 		}
 	}
 }
@@ -4148,22 +4134,6 @@ if (dls.indexOf('action=showMsg') != -1) {
 
 //---------- All poker thingies (except tracker) -----------
 if (dls.search('module=Poker') != -1) {
-	//allin
-	var goall = 0;
-	var money = $X('//td[@class="tableitem"]/b').innerHTML.replace(/,/g, '').replace('$', '');
-	var allin = cEL('span');
-	allin.innerHTML = 'All In';
-	allin.setAttribute('style', 'color:#404040;font-family:Verdana,Tahoma;font-size:x-small;background-color:#CFCFCF;border-width:1px;border-style:none solid solid none;padding:3px 15px 0px 15px;cursor:pointer;');
-	allin.addEventListener('click', function(){
-		$X('//input[@name="raiseby"]').value = money;
-		goall = confirm('Are you sure you wanna go All-In with $'+commafy(money)+'?');
-		if(goall) {
-			$X('//input[@name="raise"]').click();
-		}
-	}, true);
-	if ($X('//input[@name="raiseby"]')) {
-		$X('//center/form/table/tbody/tr[5]/td/table/tbody/tr/td[3]').appendChild(allin);
-	}
 	//refresh
 	var refresh = $X('//span/a[contains(@href, "BeO/webroot/index.php?module=Poker")]');
 	if (refresh != undefined) {
@@ -4852,7 +4822,7 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 	var ptself = getValue('nick', '');
 	var ptchecked = getValue('ptchecked', false);
 	var str = db.innerHTML.replace(/,/g, '');
-	if (db.innerHTML.indexOf('<img src="/static/images/game/casino/cards') != -1) {//game active
+	if (db.innerHTML.indexOf('src="/static/images/game/casino/cards') != -1) {//game active
 		if (db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[1]) != -1) {// game started
 			setValue('ptoldbet', 0);
 			ptoldbet = 0;
@@ -4898,10 +4868,8 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 				setValue('ptmwon', ptmwon);
 				setValue('ptchecked', true);
 			}
-			alert(r[1]+' '+r[2]+' '+r[3]);
 		}
-	}
-	else { // game isn't active
+	} else { // game isn't active
 		if (db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[1]) != -1 || db.innerHTML.indexOf('<font color="green"><b>'+lang.pokertracker[10]) != -1) {// user joins game
 			setValue('ptoldbet', 0);
 			ptgplay += 1; //games played +1;
@@ -4910,7 +4878,7 @@ if (dls.indexOf('?module=Poker') != -1 && prefs[33]) {
 			// adding the ante
 			a = $x('//tr').length - 21; // total tr's with gameinfo
 			for (y=5;y<=a;y+=1) {
-				if ($x('/html/body/center/table/tbody/tr['+y+']/td[8]')[0].innerHTML.indexOf('<a href="/user.php?nick='+ptself+'">') != -1) {
+				if ($X('/html/body/center/table/tbody/tr['+y+']/td[8]').innerHTML.indexOf('<a href="/user.php?nick='+ptself+'">') != -1) {
 					var ptMyOwNum = y;
 				}
 			}
@@ -5377,68 +5345,6 @@ if (dls.indexOf('?module=PuntoBanco') != -1) {
 			pblastBet(false);
 		} else {
 			pblastBet(true);
-		}
-	}, true);
-}
-
-//------------ Remember last bet Roul ------------
-if (dlp.indexOf('/gambling/roulette.php') != -1) {
-	var betinput = $x('//input');
-	betinput.forEach(function ($n) {
-		$n.addEventListener('keyup', function() {
-			var string = '';
-			for(i=2;i<betinput.length-2;i++) {
-				if(betinput[i].value != '') {
-					string += betinput[i].name+'|'+betinput[i].value+'*';
-					setValue('roulwhat', string);
-				}
-			}
-		});
-	});
-	function roullastBet(toff) {
-		setValue('roullastbet', toff);
-		roullastbet = toff;
-		if (toff) {
-			roulwhat = getValue('roulwhat', '');
-			if(roulwhat != '') {
-				roulwhat = roulwhat.substr(0, (roulwhat.length - 1));
-				var what = [];
-				roulwhat = roulwhat.split('*');
-				a = roulwhat.length;
-				for (y = 0; y < a; y++) {
-					what = roulwhat[y].split('|');
-					$X('//input[@name="'+what[0]+'"]').value = what[1];
-				}
-			}
-		} else {
-			for(i=2;i<betinput.length-2;i++) {
-				$x('//input')[i].value = '';
-			}
-		}
-	}
-	var br = cEL('br');
-	var span = cEL('span');
-	span.innerHTML = '<label for="roulcb">Remember last bet</label>';
-	span.setAttribute('style', 'float:left;bottom:0px;');
-	$X('//table/tbody/tr[4]/td').removeAttribute('valign');
-	var roulcb = cEL('input');
-	roulcb.setAttribute('type', 'checkbox');
-	roulcb.id = 'roulcb';
-	var roullastbet = getValue('roullastbet', false);
-	if (roullastbet) {
-		roulcb.setAttribute('checked', 'checked');
-		roullastBet(true);
-	}
-	span.appendChild(roulcb)
-	var rows = $x('//table/tbody/tr[4]/td[2]/table/tbody/tr').length;
-	var i = (rows=='17') ? 17 : 12;
-	$X('//table/tbody/tr[4]/td[2]/table/tbody/tr['+i+']/td').appendChild(br);
-	$X('/html/body/form/center/table/tbody/tr[4]/td').appendChild(span);
-	roulcb.addEventListener('click', function() {
-		if (roullastbet) {
-			roullastBet(false);
-		} else {
-			roullastBet(true);
 		}
 	}, true);
 }
@@ -6264,6 +6170,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/
 				none.name = 'brc';
 				wrap4.appendChild(none);
 				div.appendChild(wrap4);
+
 
 				//add coolness icon
 				icon = cEL('img');
