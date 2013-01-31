@@ -1321,7 +1321,7 @@ if (dlhash == '#/information.php') {
 				$x('//table[@class="thinline"]')[4].appendChild(tr);
 			}
 
-//			if (prefs[35]) { // crime/car trackers
+			if (prefs[35]) { // crime/car trackers
 				var perc = rounding(parseInt(crimeTracker,10)/parseInt($X(crimes).innerHTML.replace(',', '').trim(),10));
 				var perc2 = isNaN(perc) ? 0 : perc;
 				$X(crimetxt).innerHTML = $X(crimetxt).innerHTML +'<b>/'+lang.status[0]+'</b>';
@@ -1343,29 +1343,20 @@ if (dlhash == '#/information.php') {
 				var caravg = isNaN(caravg) ? 0 : caravg;
 				cartr.innerHTML = '<td><b>'+lang.status[3]+'</b></td><td>$ '+commafy(carmoney)+' ($'+commafy(caravg)+'/'+lang.status[4]+')</td>';
 				$x('//table[@class="thinline"]')[4].appendChild(cartr);
-//			}
+			}
 
-			$x('//a[contains(@href,"shoptabs=7")]')[0].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
-			$x('//a[contains(@href,"shoptabs=7")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
-			$X(bguardsXP).innerHTML = '<a href="/BeO/webroot/index.php?module=Bodyguards&action=">'+$X(bguardsXP).innerHTML+'</a>';
 			if ($X(planeXP) && sets.status[0].match(getTXT(planeXP))) {
-				$I(planeXP, '<a href="/BeO/webroot/index.php?module=Shop&shoptabs=4"><b>'+getTXT(planeXP)+'</b></a>');
+				$I(planeXP, '<a href="/BeO/webroot/index.php?module=Shop&action=display_section&id=7"><b>'+getTXT(planeXP)+'</b></a>');
 			}
 			if ($X(handgunXP) && sets.status[0].match(getTXT(handgunXP))) {
-				$I(handgunXP, '<a href="/BeO/webroot/index.php?module=Shop&shoptabs=1"><b>'+getTXT(handgunXP)+'</b></a>');
+				$I(handgunXP, '<a href="/BeO/webroot/index.php?module=Shop&action=display_section&id=8"><b>'+getTXT(handgunXP)+'</b></a>');
 			}
 			if ($X(tommygunXP) && sets.status[0].match(getTXT(tommygunXP))) {
-				$I(tommygunXP, '<a href="/BeO/webroot/index.php?module=Shop&shoptabs=1"><b>'+getTXT(tommygunXP)+'</b></a>');
-			}
-		}
-		if (tab == '/profile.php' && prefs[14]) {//remove kill passwords
-			for (i=9;i>1;i--) {
-				$Del('//div[@id="smsdivcontainer"]//center/table/tbody/tr[5]');
+				$I(tommygunXP, '<a href="/BeO/webroot/index.php?module=Shop&action=display_section&id=8"><b>'+getTXT(tommygunXP)+'</b></a>');
 			}
 		}
 		nickReader();//apply nickReader again
 	}, false );
-
 
 	//Try and grab info on page load
 	var attempt = setInterval(function() {//using setInterval to enable use of setValue which fails in eventListener above
@@ -1878,6 +1869,7 @@ if (prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')) {
 	var famRGB = $x('//td[@width="125px"]')[0].style.backgroundColor;
 	if (famRGB == '') {
 		famHex = '';
+
 	} else {
 		famRGB = famRGB.replace(/[^0-9,]/g, '');
 		famRGB = famRGB.split(',');
@@ -2871,6 +2863,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 				if (x > 3) { // skip header of table
 					if ($X('//center/table[4]//tr['+x+']/td[1]').innerHTML.indexOf('(A)') == -1) { // skip akills
 						if (times[$X('//center/table[4]//tr['+x+']/td[2]').innerHTML] >= 2) {
+
 							$X('//center/table[4]//tr['+x+']/td[1]').innerHTML = '(<b>BF</b>) '+$X('//center/table[4]//tr['+x+']/td[1]').innerHTML;
 						}
 					}
@@ -6303,6 +6296,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/game.php' || dlp == '/trave
 	if (getValue('bninfo', -1) > 0) { //do we have info data?
 		if (getValue('brcAF', 0) == 1 && prefs[18]) { //remove blue calculation texts
 			if (db.innerHTML.search('<font color="blue">') != -1) {
+
 				$del('//font[@color="blue"]');
 			}
 		}
@@ -6818,7 +6812,6 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' 
 			if(getID('proc').innerHTML == 0){
 				grabHTML(url, parseGrab);//(url to grab, function to execute after)
 				getID('proc').innerHTML = 1;
-
 			} else {
 				getID(url).innerHTML += lang.NR.misc[4];
 			}
