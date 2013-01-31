@@ -53,6 +53,7 @@
 // @include			http://barafranca.us/*
 // @include			http://dm.barafranca.com/*
 // @include			http://deathmatch.barafranca.com/*
+// @include			http://anotheralpha.barafranca.com/*
 // @include			http://www.barafranca.nl/*
 // @include			http://barafranca.nl/*
 // @include			http://www.barafranca.gen.tr/*
@@ -576,15 +577,19 @@ $x('//*[@accesskey]').forEach(function ($n) {
 });
 
 //---------------- Cocaine Prices ----------------
-if(dlp == '/marquee.php'){
-	document.addEventListener('dblclick', function(){ window.location.reload(); }, true);
+if(dlp == '/game.php'){
 	if(prefs[1]){
 		GM_xmlhttpRequest({
 			method: 'GET',
 			url: 'http://'+dlh+'/BeO/webroot/index.php?module=API&action=smuggling_prices',
 			onload: function(resp){
-				var marquee = getTAG('div')[0];
-				marquee.innerHTML = '';
+				var loc = getID('game_header_content');
+				var marquee = cEL('div');
+				marquee.id = 'marquee';
+				marquee.style.position = 'absolute';
+				marquee.style.bottom = '56px';
+				marquee.style.align = 'center';
+				marquee.style.width = '100%';
 
 				var parser = new DOMParser();
 				var dom = parser.parseFromString(resp.responseText, 'application/xml');
@@ -620,7 +625,7 @@ if(dlp == '/marquee.php'){
 
 				var hoverdiv = cEL('div');
 				hoverdiv.id = 'hiddenbox';
-				hoverdiv.setAttribute('style', 'display:none; position:absolute; background-color:#000; border:1px solid #FFF; font-size:9px; top:2px; width:520px; text-align:center');
+				hoverdiv.setAttribute('style', 'display:none; position:absolute; background-color:#fff; border:1px solid #FFF; font-size:9px; top:2px; width:520px; text-align:center');
 				marquee.appendChild(hoverdiv);
 
 				function hoverlink(city, priceStr) {
@@ -663,7 +668,7 @@ if(dlp == '/marquee.php'){
 						if (mycity-4 == city) {
 							alert(lang.marquee[3]);
 						} else if (confirm(lang.marquee[0] + lang.cities[city] + '?')) {
-							top.frames[2].location='BeO/webroot/index.php?module=Travel&action=FetchInfo&CityId='+((city == 'nul') ? 0 : city)+'&travel=yes';
+							window.location = '/BeO/webroot/index.php?module=Travel&action=FetchInfo&CityId='+((city == 'nul') ? 0 : city)+'&travel=yes';
 						}
 					}, true);
 
@@ -724,6 +729,8 @@ if(dlp == '/marquee.php'){
 				span.style.color = '#FFF';
 				span.style.fontSize = '10px';
 				marquee.appendChild(span);
+				
+				loc.appendChild(marquee);
 
 				city = getPow('bninfo', 2, -1);
 				if(city > 0){
@@ -731,7 +738,6 @@ if(dlp == '/marquee.php'){
 					owncity = city;
 					getID(city).setAttribute('style',getID(city).getAttribute('style')+'font-style:italic');
 				}
-				window.onload = setTimeout(function(){ window.location.reload(); }, 60000);
 			}
 		});
 	}
@@ -750,13 +756,14 @@ if (dlp == '/menu.php') {
 	}
 	//--add additional submenus
 	function appMenu(x) {
-		innerHTML += '</tbody></table></div></td></tr></tbody>';
 		subMenu.innerHTML = innerHTML;
 		subMenu.setAttribute('cellspacing', '0');
 		subMenu.setAttribute('cellpadding', '0');
-
-		var table = $X('/html/body/div/table['+x+']');
-		table.parentNode.insertBefore(subMenu, table);
+		if (document.readyState === "complete") {
+			var table = $X('//div[@id="game_menu"]/a[2]');
+			table.parentNodeinsertBefore(subMenu, table);
+			alert(x);
+		}
 	}
 	function checkKey(id) {
 		var buyout = getValue('buyout', '/');
@@ -773,10 +780,11 @@ if (dlp == '/menu.php') {
 	}
 
 	//add beyond menu
-	var subMenu = cEL('table');
-	var innerHTML = '<tbody><tr><th onclick="Menu.toggle(this);">Beyond</th></tr><tr><td><div class="subnav" style="overflow:hidden"><table cellspacing="0" cellpadding="0"><tbody>';
+	var subMenuHead = cEL('a');
+	var subMenu = cEL('div');
+	var innerHTML = '';
 	for (i = 0; i < qlinks.length; i++) {
-		innerHTML += '<tr><td><a target="main" onmousedown="return false;" href="'+ qlinks[i] +'" class="menuLink" title="'+qtitle[i]+'">'+descr[i]+'</a></td></tr>';
+		innerHTML += '<a onmousedown="return false;" href="'+ qlinks[i] +'" class="sublink" title="'+qtitle[i]+'">'+descr[i]+'</a>';
 	}
 	appMenu(2);
 
@@ -907,87 +915,87 @@ if (dlp == '/menu.php') {
 		}
 
 		//add save button
-		$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
-		$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
+//		$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
+//		$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
 
-		getID('save_button').addEventListener('click', function() {
-			var letsrem = '';
-			for (i = 1; i <= totlinks; i++) {
-				if (getID('cb['+i+']').checked == false) { //assembling string for pages we want gone
-					letsrem += getID('cb['+i+']').value + '*';
-				}
-			}
-			letsrem = letsrem.substr(0, (letsrem.length - 1));
-			setValue('remlinks', letsrem);
-
-			var shotkeys = '';
-			for (i = 1; i <= totlinks; i++) {
-				if (getID('ip'+i).value != '') {
-					shotkeys += getID('cb['+i+']').value+'|'+getID('ip'+i).value+'*';
-				}
-			}
-			shotkeys = shotkeys.substr(0, (shotkeys.length - 1));
-			setValue('ourhotkeys', shotkeys);
-
-			$X('html/body').innerHTML = '<span class="red">Menu'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML; //succes msg
-			$X('html/body').style.backgroundColor=getValue('titleBg', '#3F505F');
-			setTimeout(function() { location.href='menu.php'; }, 1500); //refresh to see our results
-		}, true);
+//		getID('save_button').addEventListener('click', function() {
+//			var letsrem = '';
+//			for (i = 1; i <= totlinks; i++) {
+//				if (getID('cb['+i+']').checked == false) { //assembling string for pages we want gone
+//					letsrem += getID('cb['+i+']').value + '*';
+//				}
+//			}
+//			letsrem = letsrem.substr(0, (letsrem.length - 1));
+//			setValue('remlinks', letsrem);
+//
+//			var shotkeys = '';
+//			for (i = 1; i <= totlinks; i++) {
+//				if (getID('ip'+i).value != '') {
+//					shotkeys += getID('cb['+i+']').value+'|'+getID('ip'+i).value+'*';
+//				}
+//			}
+//			shotkeys = shotkeys.substr(0, (shotkeys.length - 1));
+//			setValue('ourhotkeys', shotkeys);
+//
+//			$X('html/body').innerHTML = '<span class="red">Menu'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML; //succes msg
+//			$X('html/body').style.backgroundColor=getValue('titleBg', '#3F505F');
+//			setTimeout(function() { location.href='menu.php'; }, 1500); //refresh to see our results
+//		}, true);
 	}
-	if (!dls) {
+//	if (!dls) {
 		//add action buttons (change menu, change hotkeys, reset menu)
-		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img title="'+lang.cusmenu[3]+'" onclick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" class="menuImg" /> <img id="reset_button" title="'+lang.cusmenu[4]+'" src="'+GM_getResourceURL('buttonReset')+'" class="menuImg" /></span>';
-		getID('reset_button').addEventListener('click', function() {
-			if (confirm(lang.cusmenu[0])) { // are you sure?
-				setValue('remlinks', ''); //reset
-				setValue('ourhotkeys', '');
-			}
-			setTimeout(function() { location.href='menu.php'; }, 250);
-		}, true);
-	}
-	$X('//td[@class="container"]').setAttribute('colspan', '3'); //addept quick lookup colspan to match customs interface's
+//		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img title="'+lang.cusmenu[3]+'" onclick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" class="menuImg" /> <img id="reset_button" title="'+lang.cusmenu[4]+'" src="'+GM_getResourceURL('buttonReset')+'" class="menuImg" /></span>';
+//		getID('reset_button').addEventListener('click', function() {
+//			if (confirm(lang.cusmenu[0])) { // are you sure?
+//				setValue('remlinks', ''); //reset
+//				setValue('ourhotkeys', '');
+//			}
+//			setTimeout(function() { location.href='menu.php'; }, 250);
+//		}, true);
+//	}
+//	$X('//td[@class="container"]').setAttribute('colspan', '3'); //addept quick lookup colspan to match customs interface's
 
 	//beautify for fully collapsed menu in dark theme
-	$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
-	$X('//div[@id="menubg"]').style.width = '99.5%';
+//	$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
+//	$X('//div[@id="menubg"]').style.width = '99.5%';
 
 	//extra city checker
-	menuCity = $I('//th[@id="travel_cityname"]');
-	for (i=0;i<8;i++) {
-		if (menuCity.search(lang.cities[i])!=-1) {
-			setPow('bninfo',2,i+4);
-		}
-	}
+//	menuCity = $I('//th[@id="travel_cityname"]');
+//	for (i=0;i<8;i++) {
+//		if (menuCity.search(lang.cities[i])!=-1) {
+//			setPow('bninfo',2,i+4);
+//		}
+//	}
 
 	//Preserve state of menu captions
-	$x('//th').forEach(function($n){
-		var caps = getValue('menuCaption', '');
-		if(caps.search($n.innerHTML)!=-1){
-			if($n.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
-				var caption = $n.parentNode.nextSibling.firstChild.firstChild;
-			} else {
-				var caption = $n.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
-			}
-			caption.style.display = 'none';
-		}
-		$n.addEventListener('click', function(e){
-			if(e.target.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
-				var caption = e.target.parentNode.nextSibling.firstChild.firstChild;
-			} else {
-				var caption = e.target.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
-			}
-			setTimeout(function(){ //add delay to allow full motion
-				var name = e.target.innerHTML;
-				var names = getValue('menuCaption', '');
-				if(names.search(name)==-1){
-					names += name; //save as collapsed
-				} else { //
-					names = names.replace(name,''); //remove from collapsed list
-				}
-				setValue('menuCaption', names);
-			}, 1000);
-		}, true);
-	});
+//	$x('//th').forEach(function($n){
+//		var caps = getValue('menuCaption', '');
+//		if(caps.search($n.innerHTML)!=-1){
+//			if($n.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
+//				var caption = $n.parentNode.nextSibling.firstChild.firstChild;
+//			} else {
+//				var caption = $n.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
+//			}
+//			caption.style.display = 'none';
+//		}
+//		$n.addEventListener('click', function(e){
+//			if(e.target.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
+//				var caption = e.target.parentNode.nextSibling.firstChild.firstChild;
+//			} else {
+//				var caption = e.target.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
+//			}
+//			setTimeout(function(){ //add delay to allow full motion
+//				var name = e.target.innerHTML;
+//				var names = getValue('menuCaption', '');
+//				if(names.search(name)==-1){
+//					names += name; //save as collapsed
+//				} else { //
+//					names = names.replace(name,''); //remove from collapsed list
+//				}
+//				setValue('menuCaption', names);
+//			}, 1000);
+//		}, true);
+//	});
 }
 
 //---------------- Contact page 'tweaks' ----------------
@@ -1063,7 +1071,7 @@ if (dlp == '/jail.php' || dlp == '/iminjail.php' || (dlp == '/kill.php' && dls !
 //---------------- Info Grabber ----------------
 //pref bnUpdate and wait for a caller
 function bnUpdate(current){
-	var xpath = current ? '//div[@id="smsdivcontainer"]' : '//div[@id="str2dom"]';//use current page OR xhr str2dom
+	var xpath = current ? '/html/body/div[2]/div[3]' : '//div[@id="str2dom"]';//use current page OR xhr str2dom
 	var tables = $x(xpath + '//table[@class="thinline"]');
 	var values = tables[0].getElementsByTagName('td');
 
@@ -1227,7 +1235,7 @@ if (dls.indexOf('?module=Travel&action=FetchInfo') != -1) {
 	}
 }
 //---------------- My Account / Statuspage ----------------
-if (dls == '?module=Launchpad') {
+if (dlhash == '#/information.php') {
 	var carTracker, crimeTracker, crimemoney, carmoney, interest, bankleft, pad, x, famXP, x2, x3, planeXP, handgunXP, tommygunXP, bguardsXP, jailBustXP, bustTracker, carnicks, cartxt, crimes, crimetxt, isCapo, capo;
 	carTracker = getValue('cars', 0);
 	crimeTracker = getValue('crimes', 0);
@@ -1235,19 +1243,19 @@ if (dls == '?module=Launchpad') {
 	carmoney = getValue('carmoney', 0);
 	interest = getValue('interest', 0);
 	banktleft = getValue('banktleft', 0);
-	function runCode(tab) {
-		if (tab == '/information.php') {
-			pad = '//div[@id="smsdivcontainer"]';
-			x = pad + '//center/table/tbody/tr/td/table/tbody/tr[';
+	getID('game_container').addEventListener('DOMNodeInserted', function (event) {
+		if (event.target.innerHTML.search('<b>Status</b>') != -1) {
+			pad = '/html/body/div[2]/div[3]';
+			x = pad + '/table/tbody/tr/td/table/tbody/tr[';
 			famXP = x + '4]/td[2]';
-			x2 = pad + '//center/table/tbody/tr/td[3]/table[2]/tbody/tr[';
-			x3 = pad + '//center/table/tbody/tr/td[3]/table[4]/tbody/tr[';
+			x2 = pad + '/table/tbody/tr/td[3]/table[2]/tbody/tr[';
+			x3 = pad + '/table/tbody/tr/td[3]/table[4]/tbody/tr[';
 			planeXP = x2+'3]/td[2]';
 			handgunXP = x2+'5]/td[2]';
 			tommygunXP = x2+'6]/td[2]';
 			bguardsXP = x2+'7]/td[2]';
-			jailBustXP = pad + '//center/table/tbody/tr/td[3]/table[1]/tbody/tr[';
-			bustTracker = $X(pad+'//center/table/tbody/tr/td[3]/table[4]/tbody/tr[3]/td[2]').innerHTML;
+			jailBustXP = pad + '/table/tbody/tr/td[3]/table[1]/tbody/tr[';
+			bustTracker = $x(pad+'/table/tbody/tr/td[3]/table[4]/tbody/tr[3]/td[2]')[0].innerHTML;
 			bustTracker = parseInt(bustTracker.replace(/,/g, ''), 10);
 			carnicks = x3+'5]/td[2]';
 			cartxt = x3+'5]/td[1]';
@@ -1258,8 +1266,7 @@ if (dls == '?module=Launchpad') {
 				setValue('bustouts', bustTracker);
 			}, 0);
 
-			$X('//table[@class="thinline"][3]/tbody/tr[4]/td/a').innerHTML = '<b>'+ $X('//table[@class="thinline"][3]/tbody/tr[4]/td/a').innerHTML +'</b>';
-			//cosmetic fix devs forgot
+			$x('//table[@class="thinline"][3]/tbody/tr[4]/td/a')[0].innerHTML = '<b>'+ $X('//table[@class="thinline"][3]/tbody/tr[4]/td/a').innerHTML +'</b>'; //cosmetic fix devs forgot on bank account
 
 			if (prefs[6]) {//if remove Jailbusting Skill is on
 				$Del(jailBustXP + '5]');
@@ -1279,8 +1286,8 @@ if (dls == '?module=Launchpad') {
 					$X(x+'5]/td[2]').innerHTML = '<a href="/user.php?nick=' + capo + '">'+ capo +'</a>';
 				}
 			}
-
-			//linkify player nick
+			
+			//linkify testament
 			$X(x+'12]/td[2]').innerHTML = '<a href="/user.php?nick=' + getTXT(x+'12]/td[2]').split('\t')[1] + '">'+ getTXT(x+'12]/td[2]').split('\t')[1] +'</a>';
 
 			if (/\bTranslation\b/.test(getTXT(x+'6]/td[2]'))) {//Translation link
@@ -1314,7 +1321,7 @@ if (dls == '?module=Launchpad') {
 				$x('//table[@class="thinline"]')[4].appendChild(tr);
 			}
 
-			if (prefs[35]) { // crime/car trackers
+//			if (prefs[35]) { // crime/car trackers
 				var perc = rounding(parseInt(crimeTracker,10)/parseInt($X(crimes).innerHTML.replace(',', '').trim(),10));
 				var perc2 = isNaN(perc) ? 0 : perc;
 				$X(crimetxt).innerHTML = $X(crimetxt).innerHTML +'<b>/'+lang.status[0]+'</b>';
@@ -1336,7 +1343,7 @@ if (dls == '?module=Launchpad') {
 				var caravg = isNaN(caravg) ? 0 : caravg;
 				cartr.innerHTML = '<td><b>'+lang.status[3]+'</b></td><td>$ '+commafy(carmoney)+' ($'+commafy(caravg)+'/'+lang.status[4]+')</td>';
 				$x('//table[@class="thinline"]')[4].appendChild(cartr);
-			}
+//			}
 
 			$x('//a[contains(@href,"shoptabs=7")]')[0].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//next bloodbuy
 			$x('//a[contains(@href,"shoptabs=7")]')[1].setAttribute('href', '/BeO/webroot/index.php?module=Bloodbank&action=');//timer
@@ -1357,22 +1364,14 @@ if (dls == '?module=Launchpad') {
 			}
 		}
 		nickReader();//apply nickReader again
-	}
-
-	//grab ajax event
-	getID('smsdivcontainer').addEventListener('DOMNodeInserted', function (event) {
-		if (event.target.innerHTML.search('<b>Status</b>') != -1 || event.target.innerHTML.search('<b>Your profile </b>') != -1) {
-			runCode(selectedTab());//we found html in the Node => run the code
-		}
 	}, false );
+
 
 	//Try and grab info on page load
 	var attempt = setInterval(function() {//using setInterval to enable use of setValue which fails in eventListener above
 		if($X('//a[contains(@href, "/BeO/webroot/index.php?module=Crimes")]')){//if page contains crime timer
 			clearInterval(attempt);
 			bnUpdate(1);//call update function
-
-
 		}
 	},1000);//no rush on updating bninfo, wait for page to load properly
 
@@ -1670,7 +1669,7 @@ if(dls.search('fail') != -1){
 }
 
 //---------------- OB/Edo News ----------------
-if(dlp == '/info.php'){
+if(dlp == '/news.php'){
 	if(prefs[2]) {
 		function addNews(){
 			//sort Omerta's news
@@ -2158,8 +2157,8 @@ if (prefs[11]) {
 }
 
 //----------------- Crime Page ----------------
-if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
-	if (db.innerHTML.search(/table/i) != -1 && prefs[8]) {
+if (dlhash == '#./BeO/webroot/index.php?module=Crimes') {
+	if (db.innerHTML.search(/table/i) != -1) {
 		$x('//input[@type="radio"]')[4].checked = true;
 	}
 	if ($X('//input[@type="text"]')) {
@@ -2167,7 +2166,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes') {
 	}
 }
 //--------------- crime succesfull ---------------
-if (urlsearch == '/BeO/webroot/index.php?module=Crimes_ac&action=docrime') {
+if (dlhash == '/BeO/webroot/index.php?module=Crimes_ac&action=docrime') {
 	var crimeTracker = getValue('crimes', 0);
 	var crimemoney = getValue('crimemoney', 0);
 	if (db.textContent.indexOf(sets.crimetracker[0]) != -1) {
@@ -2181,8 +2180,8 @@ if (urlsearch == '/BeO/webroot/index.php?module=Crimes_ac&action=docrime') {
 	}
 }
 //---------------- Cars Page ----------------
-if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
-	if (db.innerHTML.search(/table/i) > -1 && prefs[8]) { //if Car Nick AF is enabled
+if (dlhash == '#./BeO/webroot/index.php?module=Cars') {
+	if (db.innerHTML.search(/table/i) > -1) { //if Car Nick AF is enabled
 		for (p = [], i = 0; i <= 3; i++) { //Get percentages
 			p.push($i('//form//td[3]', i).replace(/\D|/g, ''));
 		}
@@ -2194,7 +2193,7 @@ if (urlsearch == '/BeO/webroot/index.php?module=Cars') {
 }
 
 //--------------- we got the car ---------------
-if (urlsearch == '/BeO/webroot/index.php?module=Cars&action=docar') {
+if (dlhash == '/BeO/webroot/index.php?module=Cars&action=docar') {
 	function setCity(id) {
 		setValue('ship', id);
 	}
@@ -2456,97 +2455,105 @@ if (urlsearch == ('/user.php' + dls) && dls != '?editmode=true') {
 }
 
 //---------------- Bank ----------------
-if (dlp == '/bank.php') {
-	if (db.innerHTML.search(lang.bank) != -1) {
-		db.innerHTML += '<br /><b>'+lang.calc[6]+'</b>';
-		setTimeout(function () {
-			history.back();
-		}, 1000);
-	}
-	if (db.innerHTML.search('<table') == -1) { //auto reload after transfer
-		setTimeout(function () {
-			window.location = 'http://' + dlh + '/bank.php';
-		}, 1000);
-	}
-
-	//add amt of interest next to %
-	if($x('//table')[2]) {
-		var money = $x('//table')[2].getElementsByTagName('td')[2].textContent; //check for banked money
-		if (!money.split(' ')[1]) { //money in bank
-			var rx = $x('//table')[2].getElementsByTagName('td')[6].textContent; //get recieved amt
-			var tmp = 1 * rx.replace(/\D/g, '') - 1 * money.replace(/\D/g, ''); //calc interest
-			var intLine = $x('//table')[2].getElementsByTagName('td')[4];
-			intLine.innerHTML += ' &rarr; ($'+commafy(tmp)+')';
-			setValue('interest', tmp);
-
-			//interest reminder
-			var seconds = 0;
-			if ($X('//span[@id="counter__days_value"]') != null) {
-				seconds = (seconds + (parseInt(getTXT('//span[@id="counter__days_value"]'), 10) * 86400));
+if (dlhash == '#./bank.php') {
+	getID('game_container').addEventListener('DOMNodeInserted', function (event) {
+		if (event.target.innerHTML.search('Bankaccount') != -1) {
+			if (db.innerHTML.search(lang.bank) != -1) {
+				db.innerHTML += '<br /><b>'+lang.calc[6]+'</b>';
+				setTimeout(function () {
+					history.back();
+				}, 1000);
 			}
-			if ($X('//span[@id="counter__hours_value"]') != null) {
-				seconds = (seconds + (parseInt(getTXT('//span[@id="counter__hours_value"]'), 10) * 3600));
+			if (db.innerHTML.search('<table') == -1) { //auto reload after transfer
+				setTimeout(function () {
+					window.location = 'http://' + dlh + '/game.php#./bank.php';
+				}, 1000);
 			}
-			if ($X('//span[@id="counter__minutes_value"]') != null) {
-				seconds = (seconds + (parseInt(getTXT('//span[@id="counter__minutes_value"]'), 10) * 60));
+		
+			//add amt of interest next to %
+			if($x('//table')[2]) {
+				var money = $x('//table')[2].getElementsByTagName('td')[2].textContent; //check for banked money
+				if (!money.split(' ')[1]) { //money in bank
+					var rx = $x('//table')[2].getElementsByTagName('td')[6].textContent; //get recieved amt
+					var tmp = 1 * rx.replace(/\D/g, '') - 1 * money.replace(/\D/g, ''); //calc interest
+					var intLine = $x('//table')[2].getElementsByTagName('td')[4];
+					intLine.innerHTML += ' &rarr; ($'+commafy(tmp)+')';
+					setTimeout(function() {
+						setValue('interest', tmp);
+					}, 0);
+		
+					//interest reminder
+					var seconds = 0;
+					if ($X('//span[@id="counter__days_value"]') != null) {
+						seconds = (seconds + (parseInt(getTXT('//span[@id="counter__days_value"]'), 10) * 86400));
+					}
+					if ($X('//span[@id="counter__hours_value"]') != null) {
+						seconds = (seconds + (parseInt(getTXT('//span[@id="counter__hours_value"]'), 10) * 3600));
+					}
+					if ($X('//span[@id="counter__minutes_value"]') != null) {
+						seconds = (seconds + (parseInt(getTXT('//span[@id="counter__minutes_value"]'), 10) * 60));
+					}
+					if ($X('//span[@id="counter__seconds_value"]') != null) {
+						seconds = (seconds + parseInt(getTXT('//span[@id="counter__seconds_value"]'), 10));
+					}
+		
+					//when do we get interest?
+					setTimeout(function() {
+						setValue('banktleft', (time() + seconds));
+					}, 0);
+				}
 			}
-			if ($X('//span[@id="counter__seconds_value"]') != null) {
-				seconds = (seconds + parseInt(getTXT('//span[@id="counter__seconds_value"]'), 10));
+		
+			//Calculators
+			var func1 = 'javascript: var amt=this.value.replace(/\\D/g,\'\'); if(amt){ get = document.getElementById(\''; //put ID here
+			var func2 = '\'); if(get){ tmp = \'\'+Math.round(amt'; //put factor here
+			var func3 = '); str =\'\'; while(tmp > 0){ if(str!=\'\'){ while(str.length % 4 !=3 ){ str = \'0\' + str;};';
+			func3 += 'str = \',\' + str;};dec = (tmp % 1000)+\'\';str = dec + str;tmp = Math.floor(tmp/1000);};';
+			func3 += 'get.textContent = \'$\' + str}; };';
+			var func_switch = '* (amt >= 1000000 ? (amt >= 3000000 ? (amt >= 6000000 ? (amt >= 10000000 ? (amt >= 15000000 ? ';
+			func_switch += '(amt >= 21000000 ? (amt >= 27000000 ? (amt >= 35000000 ? 1.01 : 1.015) : 1.02) : 1.025 ) : 1.03) : 1.035)';
+			func_switch += ' : 1.04) : 1.045) : 1.05 )';
+		
+			var tbl = '<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
+			tbl += '<tr><td align="left" width="33%">'+lang.calc[0]+'</td>';
+			tbl += '<td align="left" width="13%"><input name="amount" type="text" value="" onKeyUp="' + func1 + 'get' + func2 + '*0.9' + func3 + '" size="15" maxlength="11" /></td>';
+			tbl += '<td align="left" width="28%">'+lang.calc[1]+'</td><td align="center" id="get">$0</td></tr>';
+			tbl += '<tr><td align="left" width="33%">'+lang.calc[2]+'</td>';
+			tbl += '<td align="left" width="13%"><input name="amount" type="text" value="" onKeyUp="' + func1 + 'give' + func2 + '/0.9' + func3 + '" size="15" maxlength="11" /></td>';
+			tbl += '<td align="left" width="28%">'+lang.calc[3]+'</td><td align="center" id="give">$0</td></tr>';
+			tbl += '<tr><td align="left" width="33%">'+lang.calc[4]+'</td>';
+			tbl += '<td align="left" width="13%"><input name="amount" type="text" value="" onKeyUp="' + func1 + 'int' + func2 + func_switch + func3 + '" size="15" maxlength="11" /></td>';
+			tbl += '<td align="left" width="28%">'+lang.calc[5]+'</td><td align="center" id="int">$0</td></tr>';
+		
+			//DOM-ify
+			var dummy = cEL('table');
+			dummy.setAttribute('class', 'thinline');
+			dummy.setAttribute('width', '100%');
+			dummy.setAttribute('align', 'center');
+			dummy.setAttribute('rules', 'none');
+			dummy.innerHTML = tbl;
+			if($x('//td[@width="33%"]')[2]) {
+				$x('//td[@width="33%"]')[2].appendChild(dummy);
 			}
-
-			//when do we get interest?
-			setValue('banktleft', (time() + seconds));
+		
+			function blockAlpha(event) {
+				if (event.keyCode == 75) {
+					$n.value = $n.value + '000';
+				} else if (event.keyCode == 77) {
+					$n.value = $n.value + '000000';
+				}
+				return false;
+			}
+		
+			//add m/k usage in amount boxes
+			if (prefs[5]) {
+				var inputs = $x('//input[@name="amount"] | //input[@name="amounttpob"]');
+				inputs.forEach(function ($n) {
+					$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
+				});
+			}
 		}
-	}
-
-	//Calculators
-	var func1 = 'javascript: var amt=this.value.replace(/\\D/g,\'\'); if(amt){ get = document.getElementById(\''; //put ID here
-	var func2 = '\'); if(get){ tmp = \'\'+Math.round(amt'; //put factor here
-	var func3 = '); str =\'\'; while(tmp > 0){ if(str!=\'\'){ while(str.length % 4 !=3 ){ str = \'0\' + str;};';
-	func3 += 'str = \',\' + str;};dec = (tmp % 1000)+\'\';str = dec + str;tmp = Math.floor(tmp/1000);};';
-	func3 += 'get.textContent = \'$\' + str}; };';
-	var func_switch = '* (amt >= 1000000 ? (amt >= 3000000 ? (amt >= 6000000 ? (amt >= 10000000 ? (amt >= 15000000 ? ';
-	func_switch += '(amt >= 21000000 ? (amt >= 27000000 ? (amt >= 35000000 ? 1.01 : 1.015) : 1.02) : 1.025 ) : 1.03) : 1.035)';
-	func_switch += ' : 1.04) : 1.045) : 1.05 )';
-
-	var tbl = '<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
-	tbl += '<tr><td align="left" width="33%">'+lang.calc[0]+'</td>';
-	tbl += '<td align="left" width="13%"><input name="amount" type="text" value="" onKeyUp="' + func1 + 'get' + func2 + '*0.9' + func3 + '" size="15" maxlength="11" /></td>';
-	tbl += '<td align="left" width="28%">'+lang.calc[1]+'</td><td align="center" id="get">$0</td></tr>';
-	tbl += '<tr><td align="left" width="33%">'+lang.calc[2]+'</td>';
-	tbl += '<td align="left" width="13%"><input name="amount" type="text" value="" onKeyUp="' + func1 + 'give' + func2 + '/0.9' + func3 + '" size="15" maxlength="11" /></td>';
-	tbl += '<td align="left" width="28%">'+lang.calc[3]+'</td><td align="center" id="give">$0</td></tr>';
-	tbl += '<tr><td align="left" width="33%">'+lang.calc[4]+'</td>';
-	tbl += '<td align="left" width="13%"><input name="amount" type="text" value="" onKeyUp="' + func1 + 'int' + func2 + func_switch + func3 + '" size="15" maxlength="11" /></td>';
-	tbl += '<td align="left" width="28%">'+lang.calc[5]+'</td><td align="center" id="int">$0</td></tr>';
-
-	//DOM-ify
-	var dummy = cEL('table');
-	dummy.setAttribute('class', 'thinline');
-	dummy.setAttribute('width', '100%');
-	dummy.setAttribute('align', 'center');
-	dummy.setAttribute('rules', 'none');
-	dummy.innerHTML = tbl;
-	if($x('//td[@width="33%"]')[2]) {
-		$x('//td[@width="33%"]')[2].appendChild(dummy);
-	}
-
-	function blockAlpha(event) {
-		if (event.keyCode == 75) {
-			$n.value = $n.value + '000';
-		} else if (event.keyCode == 77) {
-			$n.value = $n.value + '000000';
-		}
-		return false;
-	}
-
-	//add m/k usage in amount boxes
-	if (prefs[5]) {
-		var inputs = $x('//input[@name="amount"] | //input[@name="amounttpob"]');
-		inputs.forEach(function ($n) {
-			$n.setAttribute('onkeydown', 'javascript:var symcode = event.which;if(symcode == 75){ this.value = this.value + "000"; } if(symcode == 77){ this.value = this.value + "000000"; }this.value = this.value.replace(/k|m/g,""); return (symcode == 75||symcode == 77)?false:true;');
-		});
-	}
+	}, false);
 }
 
 //---------------- Garage Crusher ----------------
@@ -5573,7 +5580,7 @@ if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editm
 }
 
 //---------------- Best Run Calculator ----------------
-if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php')) {
+if (editmode==0 && (dlp == '/prices.php' || dlp == '/game.php' || dlp == '/travel.php')) {
 	//variable soup :D
 	var pp, sp, tp, bninfo, values, carry_n, carry_b, n_amount, b_amount, selling_n, fail_n, boxes, narc, booze, city, plane, fam;
 	var smugCity, nCityprofit, bCityprofit, border, table, tr, td, mOver, mOut, bestNarc, bestBooze, d, lex, lexHour, lexDay;
@@ -6607,7 +6614,7 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 	}
 }
 //------------------ Quick lookup ------------------
-if (dlp.indexOf('user.php') != -1 && dls.indexOf('page=user') != -1) {
+if (document.location.hash.indexOf('page=user') != -1) {
 	var input = GetParam('nick');
 	if(getTXT('/html/body').search(lang.lookup[0]) != -1 && input != false){
 		GM_xmlhttpRequest({ //grab data from xml
@@ -6811,6 +6818,7 @@ if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' 
 			if(getID('proc').innerHTML == 0){
 				grabHTML(url, parseGrab);//(url to grab, function to execute after)
 				getID('proc').innerHTML = 1;
+
 			} else {
 				getID(url).innerHTML += lang.NR.misc[4];
 			}

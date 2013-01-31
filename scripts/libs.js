@@ -17,6 +17,7 @@ dlp = document.location.pathname;
 dls = document.location.search;
 ls = document.location.search;
 dlh = document.location.hostname;
+dlhash = document.location.hash;
 lh = location.href;
 host = location.hostname.toLowerCase();
 urlsearch = location.pathname + location.search;

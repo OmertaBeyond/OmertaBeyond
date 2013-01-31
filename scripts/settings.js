@@ -63,6 +63,18 @@ var settings = {
 			'Race Supremo',
 			'Champion'
 		],
+		busts: [
+			'Rookie',
+			'Novice',
+			'Initiate',
+			'Decent',
+			'Apprentice',
+			'Intermediate',
+			'Professional',
+			'Expert',
+			'Ultimate',
+			'Extrem Expert'
+		],
 		friends: 'Friends:',
 		bank: 'You cannot transfer less than 100 dollars',
 		smuggling: [
