@@ -567,8 +567,8 @@ if(dls.indexOf('?module=Account&action=omertician') != -1) {
 	}
 }
 //--------------------- Redirect on main ---------------------
-if (dlp == '/main.php') {
-	window.location = 'http://'+dlh+'/BeO/webroot/index.php?module=Launchpad';
+if (dlhash == '#./main.php') {
+	window.location = 'http://'+dlh+'/game.php#./information.php';
 }
 
 //---------------- Remove Third-party Hotkeys ----------------
@@ -729,7 +729,6 @@ if(dlp == '/game.php'){
 				span.style.color = '#FFF';
 				span.style.fontSize = '10px';
 				marquee.appendChild(span);
-				
 				loc.appendChild(marquee);
 
 				city = getPow('bninfo', 2, -1);
@@ -744,258 +743,262 @@ if(dlp == '/game.php'){
 }
 //---------------- Menu and submenus ----------------
 if (dlp == '/menu.php') {
-  	db.innerHTML = db.innerHTML.replace(/(| )\[\w\]/ig,'').replace(/accesskey=\"\w\"/,''); //remove third party hotkey leftovers
-	var descr = [lang.prefsname].concat(lang.menuitem); //beyond menu descriptions
-	var qlinks = [PrefsLink +'&ob='+OB, PollLink, ContactLink, SCRIPT_LINK + '/?p=faq', PricesLink, sets.statslink]; //beyond menu links
-	var qtitle = lang.menutitle; //beyond menu titles
-
-	if(sets.version=='_tr'){ // no point in having stats links for .tr being that we don't log that at all
-		descr.pop();
-		qlinks.pop();
-		qtitle.pop();
-	}
-	//--add additional submenus
-	function appMenu(x) {
-		subMenu.innerHTML = innerHTML;
-		subMenu.setAttribute('cellspacing', '0');
-		subMenu.setAttribute('cellpadding', '0');
-		if (document.readyState === "complete") {
-			var table = $X('//div[@id="game_menu"]/a[2]');
-			table.parentNodeinsertBefore(subMenu, table);
-			alert(x);
-		}
-	}
-	function checkKey(id) {
-		var buyout = getValue('buyout', '/');
-		var nokey = [buyout, '-',  '[', ']', ';', '\''];
-		var am = (($x('//input').length-1) / 2);
-		for (i = 1;i <= am;i++) {
-			var val = getID('ip'+i).value.toUpperCase();
-			if ((val == getID(id).value.toUpperCase() && 'ip'+(i) != id && getID(id).value.toUpperCase() != '') || in_array(val, nokey) || val.match(/\d+/g) != null) {
-				alert(lang.cusmenu[2]);
-				getID(id).value = '';
-				i = 100;
+	getID('game_container').addEventListener('DOMNodeInserted', function (event) {
+		if (event.target.innerHTML.search('Omerta') != -1) {
+			db.innerHTML = db.innerHTML.replace(/(| )\[\w\]/ig,'').replace(/accesskey=\"\w\"/,''); //remove third party hotkey leftovers
+			var descr = [lang.prefsname].concat(lang.menuitem); //beyond menu descriptions
+			var qlinks = [PrefsLink +'&ob='+OB, PollLink, ContactLink, SCRIPT_LINK + '/?p=faq', PricesLink, sets.statslink]; //beyond menu links
+			var qtitle = lang.menutitle; //beyond menu titles
+		
+			if(sets.version=='_tr'){ // no point in having stats links for .tr being that we don't log that at all
+				descr.pop();
+				qlinks.pop();
+				qtitle.pop();
 			}
-		}
-	}
-
-	//add beyond menu
-	var subMenuHead = cEL('a');
-	var subMenu = cEL('div');
-	var innerHTML = '';
-	for (i = 0; i < qlinks.length; i++) {
-		innerHTML += '<a onmousedown="return false;" href="'+ qlinks[i] +'" class="sublink" title="'+qtitle[i]+'">'+descr[i]+'</a>';
-	}
-	appMenu(2);
-
-	var totlinks = $x('//a').length;
-
-	//what links to remove?
-	var remlinks = getValue('remlinks', '');
-	var rem = [];
-	remlinks = remlinks.split('*');
-	a = remlinks.length;
-	for (y = 0; y < a; y++) {
-		rem[remlinks[y]] = 1;
-	}
-
-	//what hotkeys?
-	var hks = getValue('ourhotkeys', '');
-	var hotkeys = [];
-	var hotk = [];
-	hks = hks.split('*');
-	a = hks.length;
-	for (y = 0; y < a; y++) {
-		hotk = hks[y].split('|');
-		hotkeys[hotk[0]] = hotk[1];
-	}
-
-	//get # of submenu's
-	var tables = $X('//div[not(@id="_firebugConsole")]').getElementsByTagName('table').length;
-	var subs = tables / 2;
-	if (db.innerHTML.search('./crewstats.php') != -1) { //check for crew submenu
-		subs--;
-	}
-	//get # of buttons in submenu's
-	var buttons = [];
-	for (i = 1, j = 0; i <= subs; i++, j++) {
-		var num = parseInt($X('/html/body//div/table[' + (i) + ']/tbody/tr' + (i == 1 ? '' : '[2]') + '/td/div/table/tbody').getElementsByTagName('tr').length, 10);
-		buttons[j] = num;
-		if (i == subs) { //BETA QL thingy
-			buttons[j]--;
-		}
-	}
-
-	var xp_tr, xp_a, href, a, link, but, content; //pref vars
-	if (!dls) { //normal menu
-		var removed = 0;
-		for (i = subs; i >= 1; i--) {
-			removed = 0;
-			for (j = buttons[i-1]; j >= 1; j--) {
-				xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
-				xp_a = xp_tr + '/td/a';
-				href = $X(xp_tr + '/td/a').href;
-				a = href.split("/");
-				link = a[(a.length-1)];
-				if (link == '' || link == 'index.php') {
-					link = a[(a.length-2)];
-				}
-				if (rem[link]) {
-					$Del(xp_tr);//delete it!
-					removed++;
-				} else if (hotkeys[link]) {//look for a hotkey
-					but = $X(xp_tr + '/td/a');
-					but.accessKey = hotkeys[link];//add it too!
-					but.innerHTML = but.innerHTML + ' ('+ hotkeys[link].toUpperCase() +')';
-					but.addEventListener('focus', function(){this.blur();}, false);
+			//--add additional submenus
+			function appMenu(x) {
+				subMenu.innerHTML = innerHTML;
+				subMenu.setAttribute('cellspacing', '0');
+				subMenu.setAttribute('cellpadding', '0');
+				if (document.readyState === "complete") {
+					var table = $X('//div[@id="game_menu"]/a[2]');
+					table.parentNodeinsertBefore(subMenu, table);
+					alert(x);
 				}
 			}
-			if (removed == buttons[i-1] && i < subs) {
-				$Del('/html/body//div/table['+i+']');//remove entire submenu
-			}
-		}
-	} else if (dls.indexOf('?menu') != -1) { //changing menu
-		for (i = 1, q = 1; i <= subs; i++) {
-			for (j = 1; j <= buttons[i-1]; j++, q++) {
-				xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
-				xp_a = xp_tr + '/td/a';
-				href = $X(xp_a).href;
-				//making up the link
-				a = href.split("/");
-				link = a[(a.length-1)];
-				if (link == '' || link == 'index.php') {
-					link = a[(a.length-2)];
-				}
-				content = $X(xp_a).textContent;
-				$Del(xp_a);
-				$Del(xp_tr+'/td');
-
-				var cbtd = cEL('td');
-				cbtd.id = 'beyonditems';
-				cbtd.width = '10%';
-				cbtd.setAttribute('style', 'padding-left:5px;');
-
-				var cb = cEL('input');
-				cb.type = 'checkbox';
-				cb.setAttribute('checked', 'checked');
-				cb.id = 'cb['+q+']';
-				cb.value = link;
-				cbtd.appendChild(cb);
-
-				var hktd = cEL('td');
-				hktd.id = 'beyondkeys';
-				hktd.width = '15%';
-				cbtd.setAttribute('style', 'padding-left:5px;');
-
-				var input = cEL('input');
-				input.type = 'text';
-				input.id = 'ip'+q;
-				input.size = '1';
-				input.setAttribute('maxlength', '1');
-				input.setAttribute('style', 'text-align:center;-moz-border-radius:4px;border-radius:4px;padding-left:3px');
-				input.addEventListener('change', function() { checkKey(this.id) }, false);
-				hktd.appendChild(input);
-
-				var atd = cEL('td');
-				atd.width = '80%';
-				atd.setAttribute('style', 'text-align:left;text-decoration:none;color:#fff;');
-				atd.innerHTML = content;
-
-				$X(xp_tr).insertBefore(atd, $X(xp_tr+'/td'));
-				$X(xp_tr).insertBefore(hktd, $X(xp_tr+'/td'));
-				$X(xp_tr).insertBefore(cbtd, $X(xp_tr+'/td'));
-
-				if (rem[link]) {
-					getID('cb['+q+']').checked = false;
-				}
-				if (hotkeys[link]) {
-					getID('ip'+q).value = hotkeys[link];
+			function checkKey(id) {
+				var buyout = getValue('buyout', '/');
+				var nokey = [buyout, '-',  '[', ']', ';', '\''];
+				var am = (($x('//input').length-1) / 2);
+				for (i = 1;i <= am;i++) {
+					var val = getID('ip'+i).value.toUpperCase();
+					if ((val == getID(id).value.toUpperCase() && 'ip'+(i) != id && getID(id).value.toUpperCase() != '') || in_array(val, nokey) || val.match(/\d+/g) != null) {
+						alert(lang.cusmenu[2]);
+						getID(id).value = '';
+						i = 100;
+					}
 				}
 			}
-		}
+		
+			//add beyond menu
+			var subMenuHead = cEL('a');
+			var subMenu = cEL('div');
+			var innerHTML = '';
+			for (i = 0; i < qlinks.length; i++) {
+				innerHTML += '<a onmousedown="return false;" href="'+ qlinks[i] +'" class="sublink" title="'+qtitle[i]+'">'+descr[i]+'</a>';
+			}
+			appMenu(2);
+		
+			var totlinks = $x('//a').length;
+		
+			//what links to remove?
+			var remlinks = getValue('remlinks', '');
+			var rem = [];
+			remlinks = remlinks.split('*');
+			a = remlinks.length;
+			for (y = 0; y < a; y++) {
+				rem[remlinks[y]] = 1;
+			}
+		
+			//what hotkeys?
+			var hks = getValue('ourhotkeys', '');
+			var hotkeys = [];
+			var hotk = [];
+			hks = hks.split('*');
+			a = hks.length;
+			for (y = 0; y < a; y++) {
+				hotk = hks[y].split('|');
+				hotkeys[hotk[0]] = hotk[1];
+			}
+		
+			//get # of submenu's
+			var tables = $X('//div[not(@id="_firebugConsole")]').getElementsByTagName('table').length;
+			var subs = tables / 2;
+			if (db.innerHTML.search('./crewstats.php') != -1) { //check for crew submenu
+				subs--;
+			}
+			//get # of buttons in submenu's
+			var buttons = [];
+			for (i = 1, j = 0; i <= subs; i++, j++) {
+				var num = parseInt($X('/html/body//div/table[' + (i) + ']/tbody/tr' + (i == 1 ? '' : '[2]') + '/td/div/table/tbody').getElementsByTagName('tr').length, 10);
+				buttons[j] = num;
+				if (i == subs) { //BETA QL thingy
+					buttons[j]--;
+				}
+			}
 
-		//add save button
-//		$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
-//		$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
+			var xp_tr, xp_a, href, a, link, but, content; //pref vars
+			if (!dls) { //normal menu
+				var removed = 0;
+				for (i = subs; i >= 1; i--) {
+					removed = 0;
+					for (j = buttons[i-1]; j >= 1; j--) {
+						xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
+						xp_a = xp_tr + '/td/a';
+						href = $X(xp_tr + '/td/a').href;
+						a = href.split("/");
+						link = a[(a.length-1)];
+						if (link == '' || link == 'index.php') {
+							link = a[(a.length-2)];
+						}
+						if (rem[link]) {
+							$Del(xp_tr);//delete it!
+							removed++;
+						} else if (hotkeys[link]) {//look for a hotkey
+							but = $X(xp_tr + '/td/a');
+							but.accessKey = hotkeys[link];//add it too!
+							but.innerHTML = but.innerHTML + ' ('+ hotkeys[link].toUpperCase() +')';
+							but.addEventListener('focus', function(){this.blur();}, false);
+						}
+					}
+					if (removed == buttons[i-1] && i < subs) {
+						$Del('/html/body//div/table['+i+']');//remove entire submenu
+					}
+				}
+			} else if (dls.indexOf('?menu') != -1) { //changing menu
+				for (i = 1, q = 1; i <= subs; i++) {
+					for (j = 1; j <= buttons[i-1]; j++, q++) {
+						xp_tr = '/html/body//div/table['+i+']/tbody/tr'+(i==1?'':'[2]')+'/td/div/table/tbody/tr['+j+']';
+						xp_a = xp_tr + '/td/a';
+						href = $X(xp_a).href;
+						//making up the link
+						a = href.split("/");
+						link = a[(a.length-1)];
+						if (link == '' || link == 'index.php') {
+							link = a[(a.length-2)];
+						}
+						content = $X(xp_a).textContent;
+						$Del(xp_a);
+						$Del(xp_tr+'/td');
+		
+						var cbtd = cEL('td');
+						cbtd.id = 'beyonditems';
+						cbtd.width = '10%';
+						cbtd.setAttribute('style', 'padding-left:5px;');
+		
+						var cb = cEL('input');
+						cb.type = 'checkbox';
+						cb.setAttribute('checked', 'checked');
+						cb.id = 'cb['+q+']';
+						cb.value = link;
+						cbtd.appendChild(cb);
+		
+						var hktd = cEL('td');
+						hktd.id = 'beyondkeys';
+						hktd.width = '15%';
+						cbtd.setAttribute('style', 'padding-left:5px;');
+		
+						var input = cEL('input');
+						input.type = 'text';
+						input.id = 'ip'+q;
+						input.size = '1';
+						input.setAttribute('maxlength', '1');
+						input.setAttribute('style', 'text-align:center;-moz-border-radius:4px;border-radius:4px;padding-left:3px');
+						input.addEventListener('change', function() { checkKey(this.id) }, false);
+						hktd.appendChild(input);
+		
+						var atd = cEL('td');
+						atd.width = '80%';
+						atd.setAttribute('style', 'text-align:left;text-decoration:none;color:#fff;');
+						atd.innerHTML = content;
+		
+						$X(xp_tr).insertBefore(atd, $X(xp_tr+'/td'));
+						$X(xp_tr).insertBefore(hktd, $X(xp_tr+'/td'));
+						$X(xp_tr).insertBefore(cbtd, $X(xp_tr+'/td'));
+		
+						if (rem[link]) {
+							getID('cb['+q+']').checked = false;
+						}
+						if (hotkeys[link]) {
+							getID('ip'+q).value = hotkeys[link];
+						}
+					}
+				}
 
-//		getID('save_button').addEventListener('click', function() {
-//			var letsrem = '';
-//			for (i = 1; i <= totlinks; i++) {
-//				if (getID('cb['+i+']').checked == false) { //assembling string for pages we want gone
-//					letsrem += getID('cb['+i+']').value + '*';
+				//add save button
+//				$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
+//				$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
+//		
+//				getID('save_button').addEventListener('click', function() {
+//					var letsrem = '';
+//					for (i = 1; i <= totlinks; i++) {
+//						if (getID('cb['+i+']').checked == false) { //assembling string for pages we want gone
+//							letsrem += getID('cb['+i+']').value + '*';
+//						}
+//					}
+//					letsrem = letsrem.substr(0, (letsrem.length - 1));
+//					setValue('remlinks', letsrem);
+//		
+//					var shotkeys = '';
+//					for (i = 1; i <= totlinks; i++) {
+//						if (getID('ip'+i).value != '') {
+//							shotkeys += getID('cb['+i+']').value+'|'+getID('ip'+i).value+'*';
+//						}
+//					}
+//					shotkeys = shotkeys.substr(0, (shotkeys.length - 1));
+//					setValue('ourhotkeys', shotkeys);
+//		
+//					$X('html/body').innerHTML = '<span class="red">Menu'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML; //succes msg
+//					$X('html/body').style.backgroundColor=getValue('titleBg', '#3F505F');
+//					setTimeout(function() { location.href='menu.php'; }, 1500); //refresh to see our results
+//				}, true);
+			}
+//			if (!dls) {
+				//add action buttons (change menu, change hotkeys, reset menu)
+//				$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img title="'+lang.cusmenu[3]+'" onclick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" class="menuImg" /> <img id="reset_button" title="'+lang.cusmenu[4]+'" src="'+GM_getResourceURL('buttonReset')+'" class="menuImg" /></span>';
+//				getID('reset_button').addEventListener('click', function() {
+//					if (confirm(lang.cusmenu[0])) { // are you sure?
+//						setValue('remlinks', ''); //reset
+//						setValue('ourhotkeys', '');
+//					}
+//					setTimeout(function() { location.href='menu.php'; }, 250);
+//				}, true);
+//			}
+//			$X('//td[@class="container"]').setAttribute('colspan', '3'); //addept quick lookup colspan to match customs interface's
+//		
+			//beautify for fully collapsed menu in dark theme
+//			$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
+//			$X('//div[@id="menubg"]').style.width = '99.5%';
+//		
+			//extra city checker
+//			menuCity = $I('//th[@id="travel_cityname"]');
+//			for (i=0;i<8;i++) {
+//				if (menuCity.search(lang.cities[i])!=-1) {
+//					setPow('bninfo',2,i+4);
 //				}
 //			}
-//			letsrem = letsrem.substr(0, (letsrem.length - 1));
-//			setValue('remlinks', letsrem);
-//
-//			var shotkeys = '';
-//			for (i = 1; i <= totlinks; i++) {
-//				if (getID('ip'+i).value != '') {
-//					shotkeys += getID('cb['+i+']').value+'|'+getID('ip'+i).value+'*';
+
+			//Preserve state of menu captions
+			//$x('//th').forEach(function($n){
+//				var caps = getValue('menuCaption', '');
+//				if(caps.search($n.innerHTML)!=-1){
+//					if($n.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
+//						var caption = $n.parentNode.nextSibling.firstChild.firstChild;
+//					} else {
+//						var caption = $n.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
+//					}
+//					caption.style.display = 'none';
 //				}
-//			}
-//			shotkeys = shotkeys.substr(0, (shotkeys.length - 1));
-//			setValue('ourhotkeys', shotkeys);
-//
-//			$X('html/body').innerHTML = '<span class="red">Menu'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML; //succes msg
-//			$X('html/body').style.backgroundColor=getValue('titleBg', '#3F505F');
-//			setTimeout(function() { location.href='menu.php'; }, 1500); //refresh to see our results
-//		}, true);
-	}
-//	if (!dls) {
-		//add action buttons (change menu, change hotkeys, reset menu)
-//		$X('//td[@class="container"]').innerHTML = $X('//td[@class="container"]').innerHTML + '<span class="quicklook">Menu: <img title="'+lang.cusmenu[3]+'" onclick="location.href=\'menu.php?menu\'" src="'+GM_getResourceURL('buttonMenu')+'" class="menuImg" /> <img id="reset_button" title="'+lang.cusmenu[4]+'" src="'+GM_getResourceURL('buttonReset')+'" class="menuImg" /></span>';
-//		getID('reset_button').addEventListener('click', function() {
-//			if (confirm(lang.cusmenu[0])) { // are you sure?
-//				setValue('remlinks', ''); //reset
-//				setValue('ourhotkeys', '');
-//			}
-//			setTimeout(function() { location.href='menu.php'; }, 250);
-//		}, true);
-//	}
-//	$X('//td[@class="container"]').setAttribute('colspan', '3'); //addept quick lookup colspan to match customs interface's
-
-	//beautify for fully collapsed menu in dark theme
-//	$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
-//	$X('//div[@id="menubg"]').style.width = '99.5%';
-
-	//extra city checker
-//	menuCity = $I('//th[@id="travel_cityname"]');
-//	for (i=0;i<8;i++) {
-//		if (menuCity.search(lang.cities[i])!=-1) {
-//			setPow('bninfo',2,i+4);
-//		}
-//	}
-
-	//Preserve state of menu captions
-//	$x('//th').forEach(function($n){
-//		var caps = getValue('menuCaption', '');
-//		if(caps.search($n.innerHTML)!=-1){
-//			if($n.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
-//				var caption = $n.parentNode.nextSibling.firstChild.firstChild;
-//			} else {
-//				var caption = $n.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
-//			}
-//			caption.style.display = 'none';
-//		}
-//		$n.addEventListener('click', function(e){
-//			if(e.target.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
-//				var caption = e.target.parentNode.nextSibling.firstChild.firstChild;
-//			} else {
-//				var caption = e.target.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
-//			}
-//			setTimeout(function(){ //add delay to allow full motion
-//				var name = e.target.innerHTML;
-//				var names = getValue('menuCaption', '');
-//				if(names.search(name)==-1){
-//					names += name; //save as collapsed
-//				} else { //
-//					names = names.replace(name,''); //remove from collapsed list
-//				}
-//				setValue('menuCaption', names);
-//			}, 1000);
-//		}, true);
-//	});
+//				$n.addEventListener('click', function(e){
+//					if(e.target.innerHTML == 'Beyond'){ //apperently we don't use textNodes which messes up the path :D
+//						var caption = e.target.parentNode.nextSibling.firstChild.firstChild;
+//					} else {
+//						var caption = e.target.parentNode.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling;
+//					}
+//					setTimeout(function(){ //add delay to allow full motion
+//						var name = e.target.innerHTML;
+//						var names = getValue('menuCaption', '');
+//						if(names.search(name)==-1){
+//							names += name; //save as collapsed
+//						} else {
+//							names = names.replace(name,''); //remove from collapsed list
+//						}
+//						setValue('menuCaption', names);
+//					}, 1000);
+//				}, true);
+//			});
+		}
+	}, false);
 }
 
 //---------------- Contact page 'tweaks' ----------------
@@ -1247,6 +1250,7 @@ if (dlhash == '#/information.php') {
 		if (event.target.innerHTML.search('<b>Status</b>') != -1) {
 			pad = '/html/body/div[2]/div[3]';
 			x = pad + '/table/tbody/tr/td/table/tbody/tr[';
+
 			famXP = x + '4]/td[2]';
 			x2 = pad + '/table/tbody/tr/td[3]/table[2]/tbody/tr[';
 			x3 = pad + '/table/tbody/tr/td[3]/table[4]/tbody/tr[';
@@ -1367,12 +1371,12 @@ if (dlhash == '#/information.php') {
 	},1000);//no rush on updating bninfo, wait for page to load properly
 
 	//Grab latest theme colors for our external pages
-	setValue('bodyBg', getActualHex($X('//body'), 'background-color'));
-	setValue('titleBg' ,getActualHex($X('//a[@class="selected"]'), 'background-color'));
-	var dummy = cEL('table'); dummy.id = 'dummyT'; dummy.setAttribute('class', 'thinline'); db.appendChild(dummy);
-	setValue('tableBg', getActualHex($X('//table[@id="dummyT"]'), 'background-color'));
-	$Del('//table[@id="dummyT"]');
-	setValue('fontClr', getActualHex($X('//body'), 'color'));
+//	setValue('bodyBg', getActualHex($X('//body'), 'background-color'));
+//	setValue('titleBg' ,getActualHex($X('//a[@class="selected"]'), 'background-color'));
+//	var dummy = cEL('table'); dummy.id = 'dummyT'; dummy.setAttribute('class', 'thinline'); db.appendChild(dummy);
+//	setValue('tableBg', getActualHex($X('//table[@id="dummyT"]'), 'background-color'));
+//	$Del('//table[@id="dummyT"]');
+//	setValue('fontClr', getActualHex($X('//body'), 'color'));
 }
 
 //---------------- Bodyguards -----------------------------------
@@ -1869,7 +1873,6 @@ if (prefs[3] && dlp == '/jail.php' && $X('/html/body//form/center')) {
 	var famRGB = $x('//td[@width="125px"]')[0].style.backgroundColor;
 	if (famRGB == '') {
 		famHex = '';
-
 	} else {
 		famRGB = famRGB.replace(/[^0-9,]/g, '');
 		famRGB = famRGB.split(',');
@@ -2863,7 +2866,6 @@ if (urlsearch == '/BeO/webroot/index.php?module=Statistics') {
 				if (x > 3) { // skip header of table
 					if ($X('//center/table[4]//tr['+x+']/td[1]').innerHTML.indexOf('(A)') == -1) { // skip akills
 						if (times[$X('//center/table[4]//tr['+x+']/td[2]').innerHTML] >= 2) {
-
 							$X('//center/table[4]//tr['+x+']/td[1]').innerHTML = '(<b>BF</b>) '+$X('//center/table[4]//tr['+x+']/td[1]').innerHTML;
 						}
 					}
@@ -5573,7 +5575,7 @@ if (['/prices.php', '/smuggling.php', '/travel.php'].indexOf(dlp) != -1 && editm
 }
 
 //---------------- Best Run Calculator ----------------
-if (editmode==0 && (dlp == '/prices.php' || dlp == '/game.php' || dlp == '/travel.php')) {
+if (editmode==0 && (dlp == '/prices.php' || dlp == '/smuggling.php' || dlp == '/travel.php')) {
 	//variable soup :D
 	var pp, sp, tp, bninfo, values, carry_n, carry_b, n_amount, b_amount, selling_n, fail_n, boxes, narc, booze, city, plane, fam;
 	var smugCity, nCityprofit, bCityprofit, border, table, tr, td, mOver, mOut, bestNarc, bestBooze, d, lex, lexHour, lexDay;
@@ -5596,6 +5598,7 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/game.php' || dlp == '/trave
 	//grab Lex
 	if ($X('//span[@id="lexhelpsyou"]')) {
 		lex = parseInt($I('//span[@id="lexhelpsyou"]').replace(/[^0-9]/g,''), 10);
+
 		setValue('lex', lex);
 		d = new Date();
 		lexDay = d.getDay();
@@ -6296,7 +6299,6 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/game.php' || dlp == '/trave
 	if (getValue('bninfo', -1) > 0) { //do we have info data?
 		if (getValue('brcAF', 0) == 1 && prefs[18]) { //remove blue calculation texts
 			if (db.innerHTML.search('<font color="blue">') != -1) {
-
 				$del('//font[@color="blue"]');
 			}
 		}
@@ -6329,7 +6331,6 @@ if (editmode==0 && (dlp == '/prices.php' || dlp == '/game.php' || dlp == '/trave
 			appBRC(BN);
 		}
 		if (sp || tp) { //we need prices from elsewhere
-
 			function parsePrices(resp, url) {
 				parser = new DOMParser();
 				dom = parser.parseFromString(resp, 'application/xml');
@@ -6608,7 +6609,7 @@ if (editmode==0 && (prefs[28] && dlp == '/smuggling.php')) { //mainly add AF lin
 	}
 }
 //------------------ Quick lookup ------------------
-if (document.location.hash.indexOf('page=user') != -1) {
+if (dlhash.indexOf('page=user') != -1) {
 	var input = GetParam('nick');
 	if(getTXT('/html/body').search(lang.lookup[0]) != -1 && input != false){
 		GM_xmlhttpRequest({ //grab data from xml
@@ -6618,16 +6619,16 @@ if (document.location.hash.indexOf('page=user') != -1) {
 				var parser = new DOMParser();
 				var xml = parser.parseFromString(resp.responseText, 'application/xml');
 				var total = xml.getElementsByTagName('totalresults')[0].textContent;
-					db.innerHTML = 'This user does not exist: '+input;
+					getID('game_container').innerHTML = 'This user does not exist: '+input;
 				if(input.length<3){
-					db.innerHTML += '<br />'+lang.lookup[3];
+					getID('game_container').innerHTML += '<br />'+lang.lookup[3];
 				}
 				else if(total!='0'){
-					db.innerHTML += (total<=50)?'<br />'+lang.lookup[1]+'<br />':'<br />'+lang.lookup[1]+'<br />'+lang.lookup[4]+' '+total+' '+lang.lookup[5]+'<br />';
+					getID('game_container').innerHTML += (total<=50)?'<br />'+lang.lookup[1]+'<br />':'<br />'+lang.lookup[1]+'<br />'+lang.lookup[4]+' '+total+' '+lang.lookup[5]+'<br />';
 					var num = (total<=50)?total:50;
 					for(var i=0;i<num;i++){
 						var results = xml.getElementsByTagName('name')[i].textContent;
-						db.innerHTML += '<br /><a href="'+dlp+'?nick='+results+'" id="'+i+'" class="sel">'+results+'</a>';
+						getID('game_container').innerHTML += '<br /><a href="'+dlp+'?nick='+results+'" id="'+i+'" class="sel">'+results+'</a>';
 					}
 					nickReader();
 					getID('0').focus();
@@ -6635,7 +6636,7 @@ if (document.location.hash.indexOf('page=user') != -1) {
 					window.addEventListener('keydown', function(event) { if(event.keyCode == 40) { if(j<num-1) { j++; getID(j).focus(); } } });
 					window.addEventListener('keydown', function(event) { if(event.keyCode == 38) { if(j!=0) { j--; getID(j).focus(); } } });
 				} else {
-					db.innerHTML += '<br />'+lang.lookup[2];
+					getID('game_container').innerHTML += '<br />'+lang.lookup[2];
 				}
 			}
 		});
@@ -6682,7 +6683,7 @@ if (dlp == '/' || dlp == '/index.php' || dlp == '/game-login.php') { // login pa
 }
 
 //---------------- NickReader ----------------
-if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/game.php' && dlp != '/menu.php' && dlp != '/info.php' && dlp != '/main.php'){//if nickreader is on
+if(prefs[16] && dlp != '/mid.php' && dlp != '/banner.php' && dlp != '/menu.php' && dlp != '/info.php' && dlp != '/main.php'){//if nickreader is on
 	var nickReaderIcon = GM_getResourceURL('nickreader');
 	function parseGrab(html, url){
 		var body = html.slice(html.indexOf('</head>')+7);//don't need <head>
@@ -6914,7 +6915,7 @@ if ((dlp == '/' || dlp == '/index.php' || dlp == '/game.php' || dlp == '/game-lo
 }
 
 //---------------- Beyond Logo Replacer ----------------
-var logoXpath = '//img[contains(@src, "logo0.gif")] | //img[contains(@src, "omertalo.gif")] | //img[contains(@src, "deathmatch.gif")] | //img[contains(@src, "omdmlogo.png")] | //img[contains(@src, "./static/images/game/layout/logo.png")] | //img[contains(@src, "omerta-game-logo.gif")]';
+var logoXpath = '//img[contains(@src, "logo0.gif")] | //img[contains(@src, "omertalo.gif")] | //img[contains(@src, "deathmatch.gif")] | //img[contains(@src, "omdmlogo.png")] | //img[contains(@src, "./static/images/game/layout/logo.png")] | //img[contains(@src, "omerta-game-logo.gif")] | //img[contains(@src, "banner_left.png")]';
 $x(logoXpath).forEach(function ($n) {
 	$n.src = GM_getResourceURL(sets.version.replace('_', '') + 'Logo');
 	if (dlp != '/servers.php') {
