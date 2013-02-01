@@ -1,11 +1,9 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-<<<<<<< .mine// @version			1.20.0.12
-// @date			21-01-2013
-=======// @version			1.20.0.12
-// @date			17-11-2012
->>>>>>> .theirs// @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
+// @version			1.30.0
+// @date			01-02-2013
+// @description			Omerta Beyond 1.30 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
 // @updateURL			https://raw.github.com/OmertaBeyond/OmertaBeyond/master/beyond.meta.js
@@ -55,6 +53,7 @@
 // @include			http://barafranca.us/*
 // @include			http://dm.barafranca.com/*
 // @include			http://deathmatch.barafranca.com/*
+// @include			http://anotheralpha.barafranca.com/*
 // @include			http://www.barafranca.nl/*
 // @include			http://barafranca.nl/*
 // @include			http://www.barafranca.gen.tr/*
