@@ -4,7 +4,7 @@ This file contains helpers and useful functions for use with Project Omerta Beyo
 
 Feel free to use them, but please let us know.
 
-Version: 1.20.0.12
+Version: 1.30.0
 
 */
 

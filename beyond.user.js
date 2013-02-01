@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name			Omerta Beyond
 // @id				Omerta Beyond
-// @version			1.20.0.13
-// @date			22-01-2013
-// @description			Omerta Beyond 1.20 (Still the best 'legal' script! ;))
+// @version			1.30.0
+// @date			01-02-2013
+// @description			Omerta Beyond 1.30 (Still the best 'legal' script! ;))
 // @homepageURL			http://www.omertabeyond.com/
 // @namespace			v3.omertabeyond.com
 // @updateURL			https://raw.github.com/OmertaBeyond/OmertaBeyond/master/beyond.meta.js
@@ -151,12 +151,12 @@ if (whereToRun == 'com' || whereToRun == undefined) {
 }
 
 var SCRIPT_NAME = 'Omerta Beyond';
-var SCRIPT_VERSION = '1.20';
+var SCRIPT_VERSION = '1.30';
 var SCRIPT_VERSION_MAJOR = 1;
-var SCRIPT_VERSION_MINOR = 20;
+var SCRIPT_VERSION_MINOR = 30;
 var SCRIPT_VERSION_MAINTENANCE = 0;
-var SCRIPT_VERSION_BUILD = 12;
-var SCRIPT_SUBVERSION = 12;
+var SCRIPT_VERSION_BUILD = 0;
+var SCRIPT_SUBVERSION = 0;
 var minFFVersion = '4.0';
 var SITE_LINK = 'http://www.omertabeyond.com';
 var SCRIPT_LINK = 'http://gm.omertabeyond.com';

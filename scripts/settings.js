@@ -5,7 +5,7 @@ This file contains the language array we use for Project Omerta Beyond
 Don't change anything unless you know what are you doing.
 Variables depending on version
 
-Version: 1.20.0.12
+Version: 1.30.0
 
 */
 
