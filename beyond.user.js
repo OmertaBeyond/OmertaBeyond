@@ -749,7 +749,7 @@ if (dlp == '/menu.php') {
 			var descr = [lang.prefsname].concat(lang.menuitem); //beyond menu descriptions
 			var qlinks = [PrefsLink +'&ob='+OB, PollLink, ContactLink, SCRIPT_LINK + '/?p=faq', PricesLink, sets.statslink]; //beyond menu links
 			var qtitle = lang.menutitle; //beyond menu titles
-		
+
 			if(sets.version=='_tr'){ // no point in having stats links for .tr being that we don't log that at all
 				descr.pop();
 				qlinks.pop();
@@ -779,7 +779,7 @@ if (dlp == '/menu.php') {
 					}
 				}
 			}
-		
+
 			//add beyond menu
 			var subMenuHead = cEL('a');
 			var subMenu = cEL('div');
@@ -788,9 +788,9 @@ if (dlp == '/menu.php') {
 				innerHTML += '<a onmousedown="return false;" href="'+ qlinks[i] +'" class="sublink" title="'+qtitle[i]+'">'+descr[i]+'</a>';
 			}
 			appMenu(2);
-		
+
 			var totlinks = $x('//a').length;
-		
+
 			//what links to remove?
 			var remlinks = getValue('remlinks', '');
 			var rem = [];
@@ -799,7 +799,7 @@ if (dlp == '/menu.php') {
 			for (y = 0; y < a; y++) {
 				rem[remlinks[y]] = 1;
 			}
-		
+
 			//what hotkeys?
 			var hks = getValue('ourhotkeys', '');
 			var hotkeys = [];
@@ -810,7 +810,7 @@ if (dlp == '/menu.php') {
 				hotk = hks[y].split('|');
 				hotkeys[hotk[0]] = hotk[1];
 			}
-		
+
 			//get # of submenu's
 			var tables = $X('//div[not(@id="_firebugConsole")]').getElementsByTagName('table').length;
 			var subs = tables / 2;
@@ -870,24 +870,24 @@ if (dlp == '/menu.php') {
 						content = $X(xp_a).textContent;
 						$Del(xp_a);
 						$Del(xp_tr+'/td');
-		
+
 						var cbtd = cEL('td');
 						cbtd.id = 'beyonditems';
 						cbtd.width = '10%';
 						cbtd.setAttribute('style', 'padding-left:5px;');
-		
+
 						var cb = cEL('input');
 						cb.type = 'checkbox';
 						cb.setAttribute('checked', 'checked');
 						cb.id = 'cb['+q+']';
 						cb.value = link;
 						cbtd.appendChild(cb);
-		
+
 						var hktd = cEL('td');
 						hktd.id = 'beyondkeys';
 						hktd.width = '15%';
 						cbtd.setAttribute('style', 'padding-left:5px;');
-		
+
 						var input = cEL('input');
 						input.type = 'text';
 						input.id = 'ip'+q;
@@ -896,16 +896,16 @@ if (dlp == '/menu.php') {
 						input.setAttribute('style', 'text-align:center;-moz-border-radius:4px;border-radius:4px;padding-left:3px');
 						input.addEventListener('change', function() { checkKey(this.id) }, false);
 						hktd.appendChild(input);
-		
+
 						var atd = cEL('td');
 						atd.width = '80%';
 						atd.setAttribute('style', 'text-align:left;text-decoration:none;color:#fff;');
 						atd.innerHTML = content;
-		
+
 						$X(xp_tr).insertBefore(atd, $X(xp_tr+'/td'));
 						$X(xp_tr).insertBefore(hktd, $X(xp_tr+'/td'));
 						$X(xp_tr).insertBefore(cbtd, $X(xp_tr+'/td'));
-		
+
 						if (rem[link]) {
 							getID('cb['+q+']').checked = false;
 						}
@@ -918,7 +918,7 @@ if (dlp == '/menu.php') {
 				//add save button
 //				$X('//td[@class="container"]').setAttribute('style', 'padding: 5px; padding-left: 30px !important');
 //				$X('//td[@class="container"]').innerHTML = '<input type="button" value="Save!" id="save_button" />';
-//		
+//
 //				getID('save_button').addEventListener('click', function() {
 //					var letsrem = '';
 //					for (i = 1; i <= totlinks; i++) {
@@ -928,7 +928,7 @@ if (dlp == '/menu.php') {
 //					}
 //					letsrem = letsrem.substr(0, (letsrem.length - 1));
 //					setValue('remlinks', letsrem);
-//		
+//
 //					var shotkeys = '';
 //					for (i = 1; i <= totlinks; i++) {
 //						if (getID('ip'+i).value != '') {
@@ -937,7 +937,7 @@ if (dlp == '/menu.php') {
 //					}
 //					shotkeys = shotkeys.substr(0, (shotkeys.length - 1));
 //					setValue('ourhotkeys', shotkeys);
-//		
+//
 //					$X('html/body').innerHTML = '<span class="red">Menu'+lang.cusmenu[1]+'</span>'+$X('html/body').innerHTML; //succes msg
 //					$X('html/body').style.backgroundColor=getValue('titleBg', '#3F505F');
 //					setTimeout(function() { location.href='menu.php'; }, 1500); //refresh to see our results
@@ -955,11 +955,11 @@ if (dlp == '/menu.php') {
 //				}, true);
 //			}
 //			$X('//td[@class="container"]').setAttribute('colspan', '3'); //addept quick lookup colspan to match customs interface's
-//		
+//
 			//beautify for fully collapsed menu in dark theme
 //			$X('//div[@id="menubg"]').style.borderRight = '1px solid #666';
 //			$X('//div[@id="menubg"]').style.width = '99.5%';
-//		
+//
 			//extra city checker
 //			menuCity = $I('//th[@id="travel_cityname"]');
 //			for (i=0;i<8;i++) {
@@ -1290,7 +1290,7 @@ if (dlhash == '#/information.php') {
 					$X(x+'5]/td[2]').innerHTML = '<a href="/user.php?nick=' + capo + '">'+ capo +'</a>';
 				}
 			}
-			
+
 			//linkify testament
 			$X(x+'12]/td[2]').innerHTML = '<a href="/user.php?nick=' + getTXT(x+'12]/td[2]').split('\t')[1] + '">'+ getTXT(x+'12]/td[2]').split('\t')[1] +'</a>';
 
@@ -2464,7 +2464,7 @@ if (dlhash == '#./bank.php') {
 					window.location = 'http://' + dlh + '/game.php#./bank.php';
 				}, 1000);
 			}
-		
+
 			//add amt of interest next to %
 			if($x('//table')[2]) {
 				var money = $x('//table')[2].getElementsByTagName('td')[2].textContent; //check for banked money
@@ -2476,7 +2476,7 @@ if (dlhash == '#./bank.php') {
 					setTimeout(function() {
 						setValue('interest', tmp);
 					}, 0);
-		
+
 					//interest reminder
 					var seconds = 0;
 					if ($X('//span[@id="counter__days_value"]') != null) {
@@ -2491,14 +2491,14 @@ if (dlhash == '#./bank.php') {
 					if ($X('//span[@id="counter__seconds_value"]') != null) {
 						seconds = (seconds + parseInt(getTXT('//span[@id="counter__seconds_value"]'), 10));
 					}
-		
+
 					//when do we get interest?
 					setTimeout(function() {
 						setValue('banktleft', (time() + seconds));
 					}, 0);
 				}
 			}
-		
+
 			//Calculators
 			var func1 = 'javascript: var amt=this.value.replace(/\\D/g,\'\'); if(amt){ get = document.getElementById(\''; //put ID here
 			var func2 = '\'); if(get){ tmp = \'\'+Math.round(amt'; //put factor here
@@ -2508,7 +2508,7 @@ if (dlhash == '#./bank.php') {
 			var func_switch = '* (amt >= 1000000 ? (amt >= 3000000 ? (amt >= 6000000 ? (amt >= 10000000 ? (amt >= 15000000 ? ';
 			func_switch += '(amt >= 21000000 ? (amt >= 27000000 ? (amt >= 35000000 ? 1.01 : 1.015) : 1.02) : 1.025 ) : 1.03) : 1.035)';
 			func_switch += ' : 1.04) : 1.045) : 1.05 )';
-		
+
 			var tbl = '<tr><td class="tableheader" colspan="4">Calculators</td></tr>';
 			tbl += '<tr><td align="left" width="33%">'+lang.calc[0]+'</td>';
 			tbl += '<td align="left" width="13%"><input name="amount" type="text" value="" onKeyUp="' + func1 + 'get' + func2 + '*0.9' + func3 + '" size="15" maxlength="11" /></td>';
@@ -2519,7 +2519,7 @@ if (dlhash == '#./bank.php') {
 			tbl += '<tr><td align="left" width="33%">'+lang.calc[4]+'</td>';
 			tbl += '<td align="left" width="13%"><input name="amount" type="text" value="" onKeyUp="' + func1 + 'int' + func2 + func_switch + func3 + '" size="15" maxlength="11" /></td>';
 			tbl += '<td align="left" width="28%">'+lang.calc[5]+'</td><td align="center" id="int">$0</td></tr>';
-		
+
 			//DOM-ify
 			var dummy = cEL('table');
 			dummy.setAttribute('class', 'thinline');
@@ -2530,7 +2530,7 @@ if (dlhash == '#./bank.php') {
 			if($x('//td[@width="33%"]')[2]) {
 				$x('//td[@width="33%"]')[2].appendChild(dummy);
 			}
-		
+
 			function blockAlpha(event) {
 				if (event.keyCode == 75) {
 					$n.value = $n.value + '000';
@@ -2539,7 +2539,7 @@ if (dlhash == '#./bank.php') {
 				}
 				return false;
 			}
-		
+
 			//add m/k usage in amount boxes
 			if (prefs[5]) {
 				var inputs = $x('//input[@name="amount"] | //input[@name="amounttpob"]');
@@ -2793,7 +2793,7 @@ if(dlp == '/garage.php'){
 			html += '</tr></table>';
 			footer.innerHTML = html;
 			$X('//center').parentNode.insertBefore(footer, $X('//center').nextSibling);
-	
+
 			var sheight = db.scrollHeight;
 			var cheight = db.clientHeight;
 			if (sheight <= cheight) {
@@ -4575,7 +4575,7 @@ if (dls == '?module=Lackeys') {
 					$x('//div[@id="lackey_popup_send_money"]//input[@type="button"]')[0].click();
 				}
 			}, false);
-		});		
+		});
 		var sc = $x('//input[@id="lackey_send_credits"]');
 		sc.forEach(function ($n) {
 			$n.addEventListener('keydown', function(event) {
@@ -4583,7 +4583,7 @@ if (dls == '?module=Lackeys') {
 					$x('//div[@id="lackey_popup_send_credits"]//input[@type="button"]')[0].click();
 				}
 			}, false);
-		});		
+		});
 		var hc = $x('//input[@id="lackey_hire_credits"]');
 		hc.forEach(function ($n) {
 			$n.addEventListener('keydown', function(event) {
@@ -4930,7 +4930,7 @@ if (dlp.indexOf('/gambling/blackjack.php') != -1 && prefs[33]) {
 		betinput.addEventListener('keyup', function() {
 			setValue('bjbet', parseInt(betinput.value, 10));
 		}, true);
-	
+
 		//remember last bet
 		function bjlastBet(toff) {
 			setValue('bjlastbet', toff);

@@ -255,7 +255,7 @@ var settings = {
 		crimetracker: [
 			'Well done! You made',
 			'Well done! You made \\$ (\\d+) from your crime.'
-		]			
+		]
 	},
 	dm: {
 		version: '_dm',
