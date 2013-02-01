@@ -1,4 +1,4 @@
-![OB](https://github.com/OmertaBeyond/OmertaBeyond/raw/master/images/logo.png "Omerta Beyond")
+![OB](images/logo.png "Omerta Beyond")
 
 ## About
 
